@@ -1,47 +1,29 @@
 {
-  "generated": "2026-06-09T08:59:30Z",
-  "count": 2,
+  "generated": "2026-06-09T09:12:51.236293+00:00",
+  "count": 1,
   "catalogs": [
     {
-      "url": "https://example.com/path/to/catalog.json",
-      "title": "My Catalog Title",
-      "description": "Brief description of what this catalog contains and its data sources.",
-      "maintainer": "Your Name or Organization",
-      "contact": "your.email@example.com",
-      "access": "public",
-      "tags": [
-        "example-tag"
-      ],
-      "submitted": "2026-06-09",
-      "validation": {
-        "tier": "unvalidated",
-        "last_checked": null,
-        "stac_valid": null,
-        "has_versions_json": null,
-        "has_portolan_dir": null
-      },
-      "id": "placeholder"
-    },
-    {
       "url": "https://data.source.coop/cholmes/portolan-nl/catalog.json",
-      "title": "Portolan Netherlands",
-      "description": "Open geospatial data for the Netherlands, including buildings, roads, and administrative boundaries from OpenStreetMap.",
-      "maintainer": "Chris Holmes",
-      "contact": "cholmes@radiant.earth",
-      "access": "public",
-      "tags": [
-        "netherlands",
-        "buildings",
-        "osm",
-        "openstreetmap"
+      "title": "Portolan NL \u2014 Cloud-Native Dutch Geodata",
+      "description": "A demonstration of Portolan as cloud-native infrastructure for the disclosure of open geodatasets from Dutch government authorities. Inspired by PDOK (Publieke Dienstverlening Op de Kaart), this catalog provides current and reliable geo-information as GeoParquet, PMTiles, and STAC metadata \u2014 open, standards-based, and freely accessible to everyone.",
+      "stac_version": "1.1.0",
+      "providers": null,
+      "keywords": null,
+      "bbox": [
+        2.681884,
+        50.56228344266039,
+        7.422374274109075,
+        55.681014
       ],
-      "submitted": "2026-06-09",
+      "license": "CC-BY-4.0",
+      "collection_count": 31,
+      "feature_count": 93358070,
+      "last_crawled": "2026-06-09T09:12:21.854888+00:00",
       "validation": {
-        "tier": "unvalidated",
-        "last_checked": null,
-        "stac_valid": null,
-        "has_versions_json": null,
-        "has_portolan_dir": null
+        "stac_valid": true,
+        "has_versions_json": false,
+        "has_portolan_dir": false,
+        "has_llms_txt": true
       },
       "id": "portolan-nl"
     }
