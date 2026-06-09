@@ -1,18 +1,1 @@
 url: https://data.source.coop/cholmes/portolan-nl/catalog.json
-title: Portolan Netherlands
-description: Open geospatial data for the Netherlands, including buildings, roads, and administrative boundaries from OpenStreetMap.
-maintainer: Chris Holmes
-contact: cholmes@radiant.earth
-access: public
-tags:
-  - netherlands
-  - buildings
-  - osm
-  - openstreetmap
-submitted: 2026-06-09
-validation:
-  tier: unvalidated
-  last_checked: null
-  stac_valid: null
-  has_versions_json: null
-  has_portolan_dir: null

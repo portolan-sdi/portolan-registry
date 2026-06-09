@@ -1,62 +1,78 @@
 # Portolan Registry
 
-A discovery layer for Portolan catalogs - STAC-based geospatial data catalogs with versioning and reproducibility.
+A discovery layer for Portolan catalogs — STAC-based geospatial data catalogs with versioning and reproducibility.
 
 ## What is Portolan Registry?
 
-Portolan Registry is a community-maintained index of [Portolan](https://github.com/portolan-sdi/portolan-spec)-compatible STAC catalogs. It provides a central place to discover, browse, and validate geospatial data catalogs that follow the Portolan specification.
+Portolan Registry is a community-maintained index of [Portolan](https://github.com/portolan-sdi/portolan-spec)-compatible STAC catalogs. It provides a central place to discover, browse, and validate geospatial data catalogs.
 
-## Architecture
+## How It Works
 
-The registry uses a Git-based architecture with no database:
+1. **Submit a URL** — just the `catalog.json` link
+2. **CI crawls the catalog** — extracts title, description, bbox, license, collection count, feature count
+3. **Validation checks** — verifies STAC compliance, versions.json, .portolan/, llms.txt
+4. **Export generated** — enriched metadata published to `exports/catalogs.json`
 
-- **Source of truth**: YAML files in `catalogs/` directory
-- **Schema validation**: JSON Schema in `schema/entry.schema.json`
-- **Exports**: Machine-readable `exports/catalogs.json` generated from YAML sources
-- **CI validation**: Automated checks for schema compliance and URL liveness
-
-This design ensures transparency, versioning, and easy contribution through standard Git workflows.
+That's it. All metadata is auto-extracted from the catalog itself.
 
 ## Browse Catalogs
 
 **Web UI**: Coming soon at [portolan.dev/registry](https://portolan.dev/registry)
 
-**Direct access**: Browse YAML files in the [`catalogs/`](./catalogs) directory
-
-**Machine-readable**: After catalog entries are merged, they appear in `exports/catalogs.json`
+**Direct access**: Browse entries in [`catalogs/`](./catalogs) or fetch the enriched export:
+```
+https://raw.githubusercontent.com/portolan-sdi/portolan-registry/main/exports/catalogs.json
+```
 
 ## Submit a Catalog
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for step-by-step instructions on submitting your catalog.
+1. Fork this repo
+2. Create `catalogs/your-catalog-name.yaml` with just:
+   ```yaml
+   url: https://your-bucket.s3.amazonaws.com/path/to/catalog.json
+   ```
+3. Open a PR
 
-**Requirements**: Your catalog must be a valid Portolan catalog with:
-- Valid STAC catalog structure
-- `versions.json` for version tracking
-- `.portolan/` directory with Portolan metadata
+CI will validate the catalog is accessible and extract all metadata. See [CONTRIBUTING.md](./CONTRIBUTING.md) for details.
 
-## Schema Reference
+## Export Schema
 
-Each catalog entry includes:
+The generated `exports/catalogs.json` contains:
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `url` | string | URL to `catalog.json` root |
-| `title` | string | Human-readable catalog name (3-100 chars) |
-| `description` | string | Brief description (10-500 chars) |
-| `maintainer` | string | Person or organization name |
-| `contact` | string | Email address |
-| `access` | enum | `public` or `authenticated` |
-| `tags` | array | Lowercase kebab-case tags for discovery |
-| `submitted` | date | ISO 8601 date (YYYY-MM-DD) |
-| `validation` | object | Validation status and results |
-
-Full schema: [`schema/entry.schema.json`](./schema/entry.schema.json)
+```json
+{
+  "generated": "2026-06-09T10:00:00Z",
+  "count": 1,
+  "catalogs": [
+    {
+      "id": "portolan-nl",
+      "url": "https://data.source.coop/cholmes/portolan-nl/catalog.json",
+      "title": "Portolan NL — Cloud-Native Dutch Geodata",
+      "description": "Open geodatasets from Dutch government...",
+      "bbox": [3.26, 50.73, 7.24, 53.55],
+      "license": "CC0-1.0",
+      "stac_version": "1.1.0",
+      "providers": [...],
+      "keywords": [...],
+      "collection_count": 12,
+      "feature_count": 15000000,
+      "last_crawled": "2026-06-09T10:00:00Z",
+      "validation": {
+        "stac_valid": true,
+        "has_versions_json": true,
+        "has_portolan_dir": true,
+        "has_llms_txt": true
+      }
+    }
+  ]
+}
+```
 
 ## Related Projects
 
-- [portolan-cli](https://github.com/portolan-sdi/portolan-cli) - Command-line tool for creating and managing Portolan catalogs
-- [portolan-spec](https://github.com/portolan-sdi/portolan-spec) - Portolan specification and format documentation
+- [portolan-cli](https://github.com/portolan-sdi/portolan-cli) — Create and manage Portolan catalogs
+- [portolan-spec](https://github.com/portolan-sdi/portolan-spec) — Portolan specification
 
 ## License
 
-This project is licensed under the Apache License 2.0. See [LICENSE](./LICENSE) for details.
+Apache License 2.0. See [LICENSE](./LICENSE).

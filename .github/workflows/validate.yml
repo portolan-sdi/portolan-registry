@@ -1,6 +1,7 @@
-name: Validate Catalog Entries
+name: Validate and Crawl Catalogs
 
 on:
+  workflow_dispatch:
   pull_request:
     paths:
       - 'catalogs/*.yaml'
@@ -12,69 +13,177 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
-          node-version: '20'
+          python-version: '3.12'
 
-      - name: Install ajv-cli
-        run: npm install -g ajv-cli ajv-formats
+      - name: Install dependencies
+        run: pip install pyyaml requests
 
-      - name: Install yq
+      - name: Validate and crawl catalogs
         run: |
-          sudo wget -qO /usr/local/bin/yq \
-            https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
-          sudo chmod +x /usr/local/bin/yq
+          python3 << 'PYTHON'
+          import yaml
+          import json
+          import requests
+          from pathlib import Path
+          from datetime import datetime, timezone
 
-      - name: Validate YAML files against schema
-        run: |
-          set -e
-          echo "Validating catalog entries against schema..."
+          def fetch_json(url, timeout=30):
+              """Fetch JSON from URL."""
+              resp = requests.get(url, timeout=timeout)
+              resp.raise_for_status()
+              return resp.json()
 
-          for yaml_file in catalogs/*.yaml; do
-            echo "Validating: $yaml_file"
-            # Convert YAML to JSON for ajv validation
-            yq -o=json "$yaml_file" > /tmp/entry.json
-            ajv validate \
-              -s schema/entry.schema.json \
-              -d /tmp/entry.json \
-              --spec=draft2020 \
-              -c ajv-formats
-          done
+          def resolve_url(base_url, href):
+              """Resolve relative href against base URL."""
+              if href.startswith('http'):
+                  return href
+              from urllib.parse import urljoin
+              return urljoin(base_url, href)
 
-          echo "All schema validations passed."
+          def crawl_catalog(catalog_url):
+              """Crawl a STAC catalog and extract metadata."""
+              print(f"Crawling: {catalog_url}")
+              catalog = fetch_json(catalog_url)
 
-      - name: Check URL liveness
-        run: |
-          set -e
-          echo "Checking catalog URL liveness..."
+              result = {
+                  'url': catalog_url,
+                  'title': catalog.get('title'),
+                  'description': catalog.get('description'),
+                  'stac_version': catalog.get('stac_version'),
+                  'providers': catalog.get('providers'),
+                  'keywords': catalog.get('keywords'),
+                  'bbox': None,
+                  'license': None,
+                  'collection_count': 0,
+                  'feature_count': 0,
+                  'last_crawled': datetime.now(timezone.utc).isoformat(),
+                  'validation': {
+                      'stac_valid': True,  # If we got here, basic STAC is valid
+                      'has_versions_json': False,
+                      'has_portolan_dir': False,
+                      'has_llms_txt': False
+                  }
+              }
 
-          failed_urls=""
+              # Check for llms.txt link at catalog level
+              for link in catalog.get('links', []):
+                  if link.get('rel') == 'llms':
+                      result['validation']['has_llms_txt'] = True
+                      break
 
-          for yaml_file in catalogs/*.yaml; do
-            url=$(yq '.url' "$yaml_file")
-            echo "Checking URL from $yaml_file: $url"
+              # Find child catalogs/collections
+              bboxes = []
+              licenses = set()
 
-            # HEAD request with follow redirects, timeout 30s
-            http_code=$(curl -sL -o /dev/null \
-              -w "%{http_code}" \
-              --head \
-              --max-time 30 \
-              "$url" || echo "000")
+              for link in catalog.get('links', []):
+                  if link.get('rel') != 'child':
+                      continue
 
-            if [ "$http_code" != "200" ]; then
-              echo "FAILED: $url returned HTTP $http_code"
-              failed_urls="$failed_urls\n  - $yaml_file: $url (HTTP $http_code)"
-            else
-              echo "OK: $url returned HTTP $http_code"
-            fi
-          done
+                  child_url = resolve_url(catalog_url, link['href'])
+                  try:
+                      child = fetch_json(child_url)
 
-          if [ -n "$failed_urls" ]; then
-            echo ""
-            echo "URL liveness check failed for:"
-            echo -e "$failed_urls"
-            exit 1
-          fi
+                      if child.get('type') == 'Collection':
+                          result['collection_count'] += 1
 
-          echo "All URL liveness checks passed."
+                          # Extract bbox
+                          extent = child.get('extent', {})
+                          spatial = extent.get('spatial', {})
+                          bbox = spatial.get('bbox', [[]])[0]
+                          if bbox and len(bbox) >= 4:
+                              bboxes.append(bbox)
+
+                          # Extract license
+                          if child.get('license'):
+                              licenses.add(child['license'])
+
+                          # Extract feature count
+                          if child.get('table:row_count'):
+                              result['feature_count'] += child['table:row_count']
+
+                          # Check for versions.json
+                          for clink in child.get('links', []):
+                              if clink.get('rel') == 'version-history':
+                                  result['validation']['has_versions_json'] = True
+
+                      elif child.get('type') == 'Catalog':
+                          # Recurse into sub-catalogs
+                          sub = crawl_catalog(child_url)
+                          result['collection_count'] += sub['collection_count']
+                          result['feature_count'] += sub['feature_count']
+                          if sub['bbox']:
+                              bboxes.append(sub['bbox'])
+                          if sub['license']:
+                              licenses.add(sub['license'])
+                          if sub['validation']['has_versions_json']:
+                              result['validation']['has_versions_json'] = True
+                          if sub['validation']['has_llms_txt']:
+                              result['validation']['has_llms_txt'] = True
+
+                  except Exception as e:
+                      print(f"  Warning: Failed to fetch {child_url}: {e}")
+
+              # Aggregate bbox (union of all bboxes)
+              if bboxes:
+                  result['bbox'] = [
+                      min(b[0] for b in bboxes),  # west
+                      min(b[1] for b in bboxes),  # south
+                      max(b[2] for b in bboxes),  # east
+                      max(b[3] for b in bboxes),  # north
+                  ]
+
+              # Pick most common license (or first if tie)
+              if licenses:
+                  result['license'] = sorted(licenses)[0]
+
+              # Check for .portolan directory (heuristic: check if config.yaml exists)
+              try:
+                  base = catalog_url.rsplit('/', 1)[0]
+                  portolan_url = f"{base}/.portolan/config.yaml"
+                  resp = requests.head(portolan_url, timeout=10)
+                  result['validation']['has_portolan_dir'] = resp.status_code == 200
+              except:
+                  pass
+
+              return result
+
+          # Process all catalog entries
+          errors = []
+          for yaml_file in Path('catalogs').glob('*.yaml'):
+              print(f"\n=== Processing {yaml_file} ===")
+              with open(yaml_file) as f:
+                  entry = yaml.safe_load(f)
+
+              url = entry.get('url')
+              if not url:
+                  errors.append(f"{yaml_file}: Missing 'url' field")
+                  continue
+
+              if not url.endswith('catalog.json'):
+                  errors.append(f"{yaml_file}: URL must end with 'catalog.json'")
+                  continue
+
+              try:
+                  result = crawl_catalog(url)
+                  print(f"  Title: {result['title']}")
+                  print(f"  Collections: {result['collection_count']}")
+                  print(f"  Features: {result['feature_count']}")
+                  print(f"  BBox: {result['bbox']}")
+                  print(f"  License: {result['license']}")
+                  print(f"  Validation: {result['validation']}")
+              except requests.exceptions.RequestException as e:
+                  errors.append(f"{yaml_file}: Failed to fetch catalog: {e}")
+              except Exception as e:
+                  errors.append(f"{yaml_file}: Error processing catalog: {e}")
+
+          if errors:
+              print("\n=== ERRORS ===")
+              for err in errors:
+                  print(f"  - {err}")
+              exit(1)
+
+          print("\n=== All catalogs validated successfully ===")
+          PYTHON

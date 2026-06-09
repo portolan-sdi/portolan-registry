@@ -1,7 +1,7 @@
 name: Publish Catalog Export
 
 on:
-  workflow_dispatch:  # Allow manual trigger
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -20,52 +20,176 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install yq
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install pyyaml requests
+
+      - name: Crawl catalogs and generate export
         run: |
-          sudo wget -qO /usr/local/bin/yq \
-            https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
-          sudo chmod +x /usr/local/bin/yq
+          python3 << 'PYTHON'
+          import yaml
+          import json
+          import requests
+          from pathlib import Path
+          from datetime import datetime, timezone
 
-      - name: Generate catalogs.json export
-        run: |
-          set -e
-          echo "Generating catalogs.json export..."
+          def fetch_json(url, timeout=30):
+              """Fetch JSON from URL."""
+              resp = requests.get(url, timeout=timeout)
+              resp.raise_for_status()
+              return resp.json()
 
-          # Create exports directory if it doesn't exist
-          mkdir -p exports
+          def resolve_url(base_url, href):
+              """Resolve relative href against base URL."""
+              if href.startswith('http'):
+                  return href
+              from urllib.parse import urljoin
+              return urljoin(base_url, href)
 
-          # Get current timestamp in ISO 8601 format
-          generated=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          def crawl_catalog(catalog_url):
+              """Crawl a STAC catalog and extract metadata."""
+              print(f"Crawling: {catalog_url}")
+              catalog = fetch_json(catalog_url)
 
-          # Build the catalogs array
-          catalogs_json="[]"
-          count=0
+              result = {
+                  'url': catalog_url,
+                  'title': catalog.get('title'),
+                  'description': catalog.get('description'),
+                  'stac_version': catalog.get('stac_version'),
+                  'providers': catalog.get('providers'),
+                  'keywords': catalog.get('keywords'),
+                  'bbox': None,
+                  'license': None,
+                  'collection_count': 0,
+                  'feature_count': 0,
+                  'last_crawled': datetime.now(timezone.utc).isoformat(),
+                  'validation': {
+                      'stac_valid': True,
+                      'has_versions_json': False,
+                      'has_portolan_dir': False,
+                      'has_llms_txt': False
+                  }
+              }
 
-          for yaml_file in catalogs/*.yaml; do
-            # Extract id from filename (without .yaml extension)
-            id=$(basename "$yaml_file" .yaml)
+              # Check for llms.txt link at catalog level
+              for link in catalog.get('links', []):
+                  if link.get('rel') == 'llms':
+                      result['validation']['has_llms_txt'] = True
+                      break
 
-            # Convert YAML to JSON and add the id field
-            entry_json=$(yq -o=json "$yaml_file" | jq --arg id "$id" '. + {id: $id}')
+              # Find child catalogs/collections
+              bboxes = []
+              licenses = set()
 
-            # Append to catalogs array
-            catalogs_json=$(echo "$catalogs_json" | jq --argjson entry "$entry_json" '. + [$entry]')
-            count=$((count + 1))
-          done
+              for link in catalog.get('links', []):
+                  if link.get('rel') != 'child':
+                      continue
 
-          # Build final JSON structure
-          jq -n \
-            --arg generated "$generated" \
-            --argjson count "$count" \
-            --argjson catalogs "$catalogs_json" \
-            '{
-              generated: $generated,
-              count: $count,
-              catalogs: $catalogs
-            }' > exports/catalogs.json
+                  child_url = resolve_url(catalog_url, link['href'])
+                  try:
+                      child = fetch_json(child_url)
 
-          echo "Generated exports/catalogs.json with $count catalog(s)"
-          cat exports/catalogs.json
+                      if child.get('type') == 'Collection':
+                          result['collection_count'] += 1
+
+                          # Extract bbox
+                          extent = child.get('extent', {})
+                          spatial = extent.get('spatial', {})
+                          bbox = spatial.get('bbox', [[]])[0]
+                          if bbox and len(bbox) >= 4:
+                              bboxes.append(bbox)
+
+                          # Extract license
+                          if child.get('license'):
+                              licenses.add(child['license'])
+
+                          # Extract feature count
+                          if child.get('table:row_count'):
+                              result['feature_count'] += child['table:row_count']
+
+                          # Check for versions.json
+                          for clink in child.get('links', []):
+                              if clink.get('rel') == 'version-history':
+                                  result['validation']['has_versions_json'] = True
+
+                      elif child.get('type') == 'Catalog':
+                          # Recurse into sub-catalogs
+                          sub = crawl_catalog(child_url)
+                          result['collection_count'] += sub['collection_count']
+                          result['feature_count'] += sub['feature_count']
+                          if sub['bbox']:
+                              bboxes.append(sub['bbox'])
+                          if sub['license']:
+                              licenses.add(sub['license'])
+                          if sub['validation']['has_versions_json']:
+                              result['validation']['has_versions_json'] = True
+                          if sub['validation']['has_llms_txt']:
+                              result['validation']['has_llms_txt'] = True
+
+                  except Exception as e:
+                      print(f"  Warning: Failed to fetch {child_url}: {e}")
+
+              # Aggregate bbox (union of all bboxes)
+              if bboxes:
+                  result['bbox'] = [
+                      min(b[0] for b in bboxes),
+                      min(b[1] for b in bboxes),
+                      max(b[2] for b in bboxes),
+                      max(b[3] for b in bboxes),
+                  ]
+
+              # Pick most common license (or first if tie)
+              if licenses:
+                  result['license'] = sorted(licenses)[0]
+
+              # Check for .portolan directory
+              try:
+                  base = catalog_url.rsplit('/', 1)[0]
+                  portolan_url = f"{base}/.portolan/config.yaml"
+                  resp = requests.head(portolan_url, timeout=10)
+                  result['validation']['has_portolan_dir'] = resp.status_code == 200
+              except:
+                  pass
+
+              return result
+
+          # Process all catalog entries
+          catalogs = []
+          for yaml_file in sorted(Path('catalogs').glob('*.yaml')):
+              print(f"\n=== Processing {yaml_file} ===")
+              with open(yaml_file) as f:
+                  entry = yaml.safe_load(f)
+
+              url = entry.get('url')
+              if not url:
+                  print(f"  Skipping: Missing URL")
+                  continue
+
+              try:
+                  result = crawl_catalog(url)
+                  result['id'] = yaml_file.stem
+                  catalogs.append(result)
+                  print(f"  OK: {result['title']} ({result['collection_count']} collections)")
+              except Exception as e:
+                  print(f"  Error: {e}")
+
+          # Generate export
+          export = {
+              'generated': datetime.now(timezone.utc).isoformat(),
+              'count': len(catalogs),
+              'catalogs': catalogs
+          }
+
+          Path('exports').mkdir(exist_ok=True)
+          with open('exports/catalogs.json', 'w') as f:
+              json.dump(export, f, indent=2)
+
+          print(f"\n=== Generated exports/catalogs.json with {len(catalogs)} catalog(s) ===")
+          PYTHON
 
       - name: Commit and push export
         run: |
@@ -74,7 +198,6 @@ jobs:
 
           git add exports/catalogs.json
 
-          # Check if there are changes to commit
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else

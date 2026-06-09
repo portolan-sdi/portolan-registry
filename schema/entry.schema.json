@@ -2,105 +2,81 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://portolan.dev/registry/schema/entry.schema.json",
   "title": "Portolan Registry Catalog Entry",
-  "description": "Schema for registering STAC catalogs in the Portolan Registry. All fields are required unless explicitly marked nullable.",
+  "description": "Schema for registering STAC catalogs. Only the URL is required; all other fields are auto-extracted from the catalog.",
   "type": "object",
-  "required": [
-    "url",
-    "title",
-    "description",
-    "maintainer",
-    "contact",
-    "access",
-    "tags",
-    "submitted",
-    "validation"
-  ],
+  "required": ["url"],
   "additionalProperties": false,
   "properties": {
     "url": {
       "type": "string",
       "format": "uri",
       "pattern": "catalog\\.json$",
-      "description": "The URL of the STAC catalog root. Must be a valid URI ending with 'catalog.json'."
+      "description": "The URL of the STAC catalog root. This is the ONLY field submitters provide."
     },
     "title": {
-      "type": "string",
-      "minLength": 3,
-      "maxLength": 100,
-      "description": "Human-readable title for the catalog. Should be concise but descriptive."
+      "type": ["string", "null"],
+      "description": "Auto-extracted from catalog.title"
     },
     "description": {
-      "type": "string",
-      "minLength": 10,
-      "maxLength": 500,
-      "description": "A brief description of the catalog's contents and purpose."
+      "type": ["string", "null"],
+      "description": "Auto-extracted from catalog.description"
     },
-    "maintainer": {
-      "type": "string",
-      "minLength": 1,
-      "description": "Name of the person or organization responsible for maintaining this catalog."
+    "bbox": {
+      "type": ["array", "null"],
+      "minItems": 4,
+      "maxItems": 4,
+      "items": { "type": "number" },
+      "description": "Auto-extracted bounding box [west, south, east, north] from collections"
     },
-    "contact": {
-      "type": "string",
-      "format": "email",
-      "description": "Contact email address for the catalog maintainer."
+    "license": {
+      "type": ["string", "null"],
+      "description": "Auto-extracted SPDX license from collections"
     },
-    "access": {
-      "type": "string",
-      "enum": ["public", "authenticated"],
-      "description": "Access level for the catalog. 'public' means no authentication required; 'authenticated' means credentials are needed."
-    },
-    "tags": {
-      "type": "array",
-      "minItems": 1,
-      "uniqueItems": true,
+    "providers": {
+      "type": ["array", "null"],
       "items": {
-        "type": "string",
-        "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
-        "description": "A lowercase kebab-case tag for categorizing the catalog."
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "roles": { "type": "array", "items": { "type": "string" } },
+          "url": { "type": "string" }
+        }
       },
-      "description": "Tags for categorizing and discovering the catalog. Must contain at least one tag in lowercase kebab-case format."
+      "description": "Auto-extracted from catalog/collection providers"
     },
-    "submitted": {
-      "type": "string",
-      "format": "date",
-      "description": "Date the catalog was submitted to the registry in ISO 8601 format (YYYY-MM-DD)."
+    "keywords": {
+      "type": ["array", "null"],
+      "items": { "type": "string" },
+      "description": "Auto-extracted keywords from catalog"
+    },
+    "stac_version": {
+      "type": ["string", "null"],
+      "description": "Auto-extracted STAC version"
+    },
+    "collection_count": {
+      "type": ["integer", "null"],
+      "minimum": 0,
+      "description": "Auto-extracted count of collections"
+    },
+    "feature_count": {
+      "type": ["integer", "null"],
+      "minimum": 0,
+      "description": "Auto-extracted total features across collections"
+    },
+    "last_crawled": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "When the catalog was last crawled for metadata"
     },
     "validation": {
-      "type": "object",
-      "required": [
-        "tier",
-        "last_checked",
-        "stac_valid",
-        "has_versions_json",
-        "has_portolan_dir"
-      ],
-      "additionalProperties": false,
-      "description": "Validation status and results for the catalog.",
+      "type": ["object", "null"],
       "properties": {
-        "tier": {
-          "type": "string",
-          "enum": ["unvalidated", "basic", "full"],
-          "description": "Validation tier: 'unvalidated' means no checks performed, 'basic' means STAC validity checked, 'full' means all Portolan compatibility checks passed."
-        },
-        "last_checked": {
-          "type": ["string", "null"],
-          "format": "date-time",
-          "description": "ISO 8601 datetime of the last validation check. Null if never checked."
-        },
-        "stac_valid": {
-          "type": ["boolean", "null"],
-          "description": "Whether the catalog passes STAC specification validation. Null if not yet checked."
-        },
-        "has_versions_json": {
-          "type": ["boolean", "null"],
-          "description": "Whether the catalog includes a versions.json file for version tracking. Null if not yet checked."
-        },
-        "has_portolan_dir": {
-          "type": ["boolean", "null"],
-          "description": "Whether the catalog includes a .portolan directory with Portolan-specific metadata. Null if not yet checked."
-        }
-      }
+        "stac_valid": { "type": ["boolean", "null"] },
+        "has_versions_json": { "type": ["boolean", "null"] },
+        "has_portolan_dir": { "type": ["boolean", "null"] },
+        "has_llms_txt": { "type": ["boolean", "null"] }
+      },
+      "description": "Auto-populated validation results"
     }
   }
 }
