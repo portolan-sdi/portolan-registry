@@ -95,6 +95,21 @@
       "format": "date-time",
       "description": "When the catalog was last crawled for metadata"
     },
+    "status": {
+      "type": ["string", "null"],
+      "enum": ["valid", "stale", "removed", null],
+      "description": "Current validity state from periodic re-validation"
+    },
+    "last_validated": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "When catalog was last validated for reachability"
+    },
+    "stale_since": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "When catalog first became stale (null if valid)"
+    },
     "validation": {
       "type": ["object", "null"],
       "properties": {

@@ -207,6 +207,14 @@ jobs:
 
               return result
 
+          # Load existing state for re-submission detection
+          state_file = Path('state/status.json')
+          if state_file.exists():
+              with open(state_file) as f:
+                  state = json.load(f)
+          else:
+              state = {}
+
           # Load all existing catalog URLs for duplicate detection
           existing_urls = {}
           for yaml_file in Path('catalogs').glob('*.yaml'):
@@ -240,6 +248,13 @@ jobs:
               if not url.endswith('catalog.json'):
                   errors.append(f"{yaml_file}: URL must end with 'catalog.json'")
                   continue
+
+              # Check catalog state
+              catalog_id = yaml_file.stem
+              catalog_state = state.get(catalog_id, {})
+              if catalog_state.get('status') == 'removed':
+                  print(f"  Note: Re-submitting previously removed catalog")
+                  print(f"  (Was removed due to: {catalog_state.get('failure_reason', 'unknown')})")
 
               # Check for duplicates
               normalized = normalize_url(url)
