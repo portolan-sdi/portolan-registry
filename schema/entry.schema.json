@@ -110,6 +110,10 @@
       "format": "date-time",
       "description": "When catalog first became stale (null if valid)"
     },
+    "failure_reason": {
+      "type": ["string", "null"],
+      "description": "Reason for validation failure (null if valid)"
+    },
     "validation": {
       "type": ["object", "null"],
       "properties": {

@@ -207,13 +207,17 @@ jobs:
 
               return result
 
-          # Load existing state for re-submission detection
-          state_file = Path('state/status.json')
-          if state_file.exists():
-              with open(state_file) as f:
-                  state = json.load(f)
-          else:
-              state = {}
+          # Load existing state from export for re-submission detection
+          export_file = Path('exports/catalogs.json')
+          state = {}
+          if export_file.exists():
+              with open(export_file) as f:
+                  existing = json.load(f)
+              for cat in existing.get('catalogs', []):
+                  state[cat['id']] = {
+                      'status': cat.get('status', 'valid'),
+                      'failure_reason': cat.get('failure_reason')
+                  }
 
           # Load all existing catalog URLs for duplicate detection
           existing_urls = {}

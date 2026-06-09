@@ -243,14 +243,19 @@ jobs:
           # Sort by id for consistent output
           catalogs.sort(key=lambda c: c['id'])
 
-          # Load existing state and merge into catalogs
-          state_file = Path('state/status.json')
-          state_file.parent.mkdir(exist_ok=True)
-          if state_file.exists():
-              with open(state_file) as f:
-                  state = json.load(f)
-          else:
-              state = {}
+          # Load existing state from export
+          export_file = Path('exports/catalogs.json')
+          state = {}
+          if export_file.exists():
+              with open(export_file) as f:
+                  existing = json.load(f)
+              for cat in existing.get('catalogs', []):
+                  state[cat['id']] = {
+                      'status': cat.get('status', 'valid'),
+                      'last_validated': cat.get('last_validated'),
+                      'stale_since': cat.get('stale_since'),
+                      'failure_reason': cat.get('failure_reason')
+                  }
 
           now = datetime.now(timezone.utc).isoformat()
 
@@ -267,16 +272,7 @@ jobs:
               catalog['status'] = 'valid'
               catalog['last_validated'] = now
               catalog['stale_since'] = None
-              state[catalog_id] = {
-                  'status': 'valid',
-                  'last_validated': now,
-                  'stale_since': None,
-                  'failure_reason': None
-              }
-
-          # Save updated state
-          with open(state_file, 'w') as f:
-              json.dump(state, f, indent=2)
+              catalog['failure_reason'] = None
 
           # Generate export
           export = {
@@ -298,7 +294,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add exports/catalogs.json state/status.json
+          git add exports/catalogs.json
 
           if git diff --staged --quiet; then
             echo "No changes to commit"
