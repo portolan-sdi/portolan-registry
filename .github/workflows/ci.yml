@@ -1,0 +1,73 @@
+# Basic CI - validates schema and catalog files
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  validate-schema:
+    name: Validate JSON Schema
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install ajv-cli
+        run: npm install -g ajv-cli ajv-formats
+
+      - name: Validate schema is valid JSON Schema
+        run: |
+          ajv compile \
+            --spec=draft2020 \
+            --all-errors \
+            -s schema/entry.schema.json
+
+      - name: Validate all catalog entries against schema
+        run: |
+          # Convert YAML to JSON and validate each
+          npm install -g js-yaml
+          for f in catalogs/*.yaml; do
+            echo "Validating $f..."
+            js-yaml "$f" | ajv validate \
+              --spec=draft2020 \
+              -s schema/entry.schema.json \
+              -d /dev/stdin \
+              --all-errors
+          done
+
+  json-lint:
+    name: Lint JSON Files
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check JSON formatting
+        run: |
+          # Validate all JSON files are valid
+          for f in $(find . -name '*.json' -not -path './.git/*'); do
+            echo "Checking $f..."
+            python3 -m json.tool "$f" > /dev/null
+          done
+
+  exports-valid:
+    name: Validate Exports
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check catalogs.json is valid
+        run: |
+          if [ -f exports/catalogs.json ]; then
+            python3 -m json.tool exports/catalogs.json > /dev/null
+            echo "exports/catalogs.json is valid JSON"
+          else
+            echo "No exports/catalogs.json found (will be created on first publish)"
+          fi
