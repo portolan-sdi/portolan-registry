@@ -1,7 +1,32 @@
 {
-  "generated": "2026-06-09T09:12:51.236293+00:00",
-  "count": 1,
+  "generated": "2026-06-09T10:31:12.764989+00:00",
+  "count": 2,
   "catalogs": [
+    {
+      "url": "https://data.source.coop/nlebovits/pergamino-ide/catalog.json",
+      "title": null,
+      "description": "A Portolan-managed STAC catalog",
+      "stac_version": "1.1.0",
+      "providers": null,
+      "keywords": null,
+      "bbox": [
+        -61.51124,
+        -35.19623836,
+        -58.84867369,
+        -32.9103978
+      ],
+      "license": "proprietary",
+      "collection_count": 178,
+      "feature_count": 706749,
+      "last_crawled": "2026-06-09T10:29:38.063468+00:00",
+      "validation": {
+        "stac_valid": true,
+        "has_versions_json": false,
+        "has_portolan_dir": true,
+        "has_llms_txt": false
+      },
+      "id": "pergamino-ide"
+    },
     {
       "url": "https://data.source.coop/cholmes/portolan-nl/catalog.json",
       "title": "Portolan NL \u2014 Cloud-Native Dutch Geodata",
@@ -18,7 +43,7 @@
       "license": "CC-BY-4.0",
       "collection_count": 31,
       "feature_count": 93358070,
-      "last_crawled": "2026-06-09T09:12:21.854888+00:00",
+      "last_crawled": "2026-06-09T10:30:48.064456+00:00",
       "validation": {
         "stac_valid": true,
         "has_versions_json": false,
