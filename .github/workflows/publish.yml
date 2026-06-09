@@ -192,6 +192,7 @@ jobs:
           PYTHON
 
       - name: Commit and push export
+        id: commit
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -200,8 +201,19 @@ jobs:
 
           if git diff --staged --quiet; then
             echo "No changes to commit"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             git commit -m "Update catalogs.json export [skip ci]"
             git push
             echo "Pushed updated catalogs.json"
+            echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
+
+      - name: Refresh portolan.dev catalog cache
+        if: steps.commit.outputs.changed == 'true'
+        run: |
+          curl -fsS -X POST \
+            -H "Authorization: Bearer $REVALIDATE_SECRET" \
+            https://www.portolan-sdi.org/api/revalidate
+        env:
+          REVALIDATE_SECRET: ${{ secrets.REVALIDATE_SECRET }}
