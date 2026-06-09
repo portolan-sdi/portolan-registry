@@ -1,0 +1,83 @@
+name: Publish Catalog Export
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'catalogs/*.yaml'
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install yq
+        run: |
+          sudo wget -qO /usr/local/bin/yq \
+            https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+          sudo chmod +x /usr/local/bin/yq
+
+      - name: Generate catalogs.json export
+        run: |
+          set -e
+          echo "Generating catalogs.json export..."
+
+          # Create exports directory if it doesn't exist
+          mkdir -p exports
+
+          # Get current timestamp in ISO 8601 format
+          generated=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+
+          # Build the catalogs array
+          catalogs_json="[]"
+          count=0
+
+          for yaml_file in catalogs/*.yaml; do
+            # Extract id from filename (without .yaml extension)
+            id=$(basename "$yaml_file" .yaml)
+
+            # Convert YAML to JSON and add the id field
+            entry_json=$(yq -o=json "$yaml_file" | jq --arg id "$id" '. + {id: $id}')
+
+            # Append to catalogs array
+            catalogs_json=$(echo "$catalogs_json" | jq --argjson entry "$entry_json" '. + [$entry]')
+            count=$((count + 1))
+          done
+
+          # Build final JSON structure
+          jq -n \
+            --arg generated "$generated" \
+            --argjson count "$count" \
+            --argjson catalogs "$catalogs_json" \
+            '{
+              generated: $generated,
+              count: $count,
+              catalogs: $catalogs
+            }' > exports/catalogs.json
+
+          echo "Generated exports/catalogs.json with $count catalog(s)"
+          cat exports/catalogs.json
+
+      - name: Commit and push export
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add exports/catalogs.json
+
+          # Check if there are changes to commit
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update catalogs.json export [skip ci]"
+            git push
+            echo "Pushed updated catalogs.json"
+          fi

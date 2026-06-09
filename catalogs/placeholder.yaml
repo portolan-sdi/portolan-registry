@@ -1,0 +1,21 @@
+# TODO: Replace with your catalog URL
+url: https://example.com/path/to/catalog.json
+# TODO: Update title
+title: My Catalog Title
+# TODO: Update description (10-500 characters)
+description: Brief description of what this catalog contains and its data sources.
+# TODO: Update maintainer name
+maintainer: Your Name or Organization
+# TODO: Update contact email
+contact: your.email@example.com
+access: public
+# TODO: Add relevant tags (lowercase, kebab-case)
+tags:
+  - example-tag
+submitted: 2026-06-09
+validation:
+  tier: unvalidated
+  last_checked: null
+  stac_valid: null
+  has_versions_json: null
+  has_portolan_dir: null

@@ -1,0 +1,80 @@
+name: Validate Catalog Entries
+
+on:
+  pull_request:
+    paths:
+      - 'catalogs/*.yaml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install ajv-cli
+        run: npm install -g ajv-cli ajv-formats
+
+      - name: Install yq
+        run: |
+          sudo wget -qO /usr/local/bin/yq \
+            https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+          sudo chmod +x /usr/local/bin/yq
+
+      - name: Validate YAML files against schema
+        run: |
+          set -e
+          echo "Validating catalog entries against schema..."
+
+          for yaml_file in catalogs/*.yaml; do
+            echo "Validating: $yaml_file"
+            # Convert YAML to JSON for ajv validation
+            yq -o=json "$yaml_file" > /tmp/entry.json
+            ajv validate \
+              -s schema/entry.schema.json \
+              -d /tmp/entry.json \
+              --spec=draft2020 \
+              -c ajv-formats
+          done
+
+          echo "All schema validations passed."
+
+      - name: Check URL liveness
+        run: |
+          set -e
+          echo "Checking catalog URL liveness..."
+
+          failed_urls=""
+
+          for yaml_file in catalogs/*.yaml; do
+            url=$(yq '.url' "$yaml_file")
+            echo "Checking URL from $yaml_file: $url"
+
+            # HEAD request with follow redirects, timeout 30s
+            http_code=$(curl -sL -o /dev/null \
+              -w "%{http_code}" \
+              --head \
+              --max-time 30 \
+              "$url" || echo "000")
+
+            if [ "$http_code" != "200" ]; then
+              echo "FAILED: $url returned HTTP $http_code"
+              failed_urls="$failed_urls\n  - $yaml_file: $url (HTTP $http_code)"
+            else
+              echo "OK: $url returned HTTP $http_code"
+            fi
+          done
+
+          if [ -n "$failed_urls" ]; then
+            echo ""
+            echo "URL liveness check failed for:"
+            echo -e "$failed_urls"
+            exit 1
+          fi
+
+          echo "All URL liveness checks passed."
