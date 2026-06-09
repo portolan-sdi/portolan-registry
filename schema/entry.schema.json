@@ -63,6 +63,33 @@
       "minimum": 0,
       "description": "Auto-extracted total features across collections"
     },
+    "item_count": {
+      "type": ["integer", "null"],
+      "minimum": 0,
+      "description": "Auto-extracted count of items across collections"
+    },
+    "asset_count": {
+      "type": ["integer", "null"],
+      "minimum": 0,
+      "description": "Auto-extracted count of assets across collections"
+    },
+    "total_size_bytes": {
+      "type": ["integer", "null"],
+      "minimum": 0,
+      "description": "Auto-extracted sum of file:size across assets"
+    },
+    "temporal_extent": {
+      "type": ["array", "null"],
+      "minItems": 2,
+      "maxItems": 2,
+      "items": { "type": ["string", "null"] },
+      "description": "Auto-extracted [start, end] from extent.temporal.interval"
+    },
+    "api_type": {
+      "type": ["string", "null"],
+      "enum": ["static", "api", null],
+      "description": "Auto-detected: 'api' if /search endpoint exists, else 'static'"
+    },
     "last_crawled": {
       "type": ["string", "null"],
       "format": "date-time",

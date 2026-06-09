@@ -7,12 +7,28 @@ on:
       - main
     paths:
       - 'catalogs/*.yaml'
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - 'catalogs/*.yaml'
 
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
+  auto-merge:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enable auto-merge
+        run: gh pr merge --auto --squash "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   publish:
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -20,22 +36,20 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v4
         with:
-          python-version: '3.12'
-
-      - name: Install dependencies
-        run: pip install pyyaml requests
+          enable-cache: true
 
       - name: Crawl catalogs and generate export
         run: |
-          python3 << 'PYTHON'
+          uv run --with pyyaml --with requests python3 << 'PYTHON'
           import yaml
           import json
           import requests
           from pathlib import Path
           from datetime import datetime, timezone
+          from concurrent.futures import ThreadPoolExecutor, as_completed
 
           def fetch_json(url, timeout=30):
               """Fetch JSON from URL."""
@@ -66,6 +80,11 @@ jobs:
                   'license': None,
                   'collection_count': 0,
                   'feature_count': 0,
+                  'item_count': 0,
+                  'asset_count': 0,
+                  'total_size_bytes': 0,
+                  'temporal_extent': None,
+                  'api_type': None,
                   'last_crawled': datetime.now(timezone.utc).isoformat(),
                   'validation': {
                       'stac_valid': True,
@@ -74,6 +93,14 @@ jobs:
                       'has_llms_txt': False
                   }
               }
+
+              # Detect API type (probe /search endpoint)
+              base = catalog_url.rsplit('/', 1)[0]
+              try:
+                  resp = requests.get(f"{base}/search", timeout=5)
+                  result['api_type'] = 'api' if resp.status_code == 200 else 'static'
+              except:
+                  result['api_type'] = 'static'
 
               # Check for llms.txt link at catalog level
               for link in catalog.get('links', []):
@@ -84,6 +111,7 @@ jobs:
               # Find child catalogs/collections
               bboxes = []
               licenses = set()
+              temporal_extents = []
 
               for link in catalog.get('links', []):
                   if link.get('rel') != 'child':
@@ -103,6 +131,11 @@ jobs:
                           if bbox and len(bbox) >= 4:
                               bboxes.append(bbox)
 
+                          # Extract temporal extent
+                          temporal = extent.get('temporal', {}).get('interval', [[]])[0]
+                          if temporal and len(temporal) >= 2:
+                              temporal_extents.append(temporal)
+
                           # Extract license
                           if child.get('license'):
                               licenses.add(child['license'])
@@ -110,6 +143,12 @@ jobs:
                           # Extract feature count
                           if child.get('table:row_count'):
                               result['feature_count'] += child['table:row_count']
+
+                          # Count assets and sizes
+                          for asset_key, asset in child.get('assets', {}).items():
+                              result['asset_count'] += 1
+                              if isinstance(asset, dict) and 'file:size' in asset:
+                                  result['total_size_bytes'] += asset['file:size']
 
                           # Check for versions.json
                           for clink in child.get('links', []):
@@ -121,10 +160,15 @@ jobs:
                           sub = crawl_catalog(child_url)
                           result['collection_count'] += sub['collection_count']
                           result['feature_count'] += sub['feature_count']
+                          result['item_count'] += sub['item_count']
+                          result['asset_count'] += sub['asset_count']
+                          result['total_size_bytes'] += sub['total_size_bytes']
                           if sub['bbox']:
                               bboxes.append(sub['bbox'])
                           if sub['license']:
                               licenses.add(sub['license'])
+                          if sub['temporal_extent']:
+                              temporal_extents.append(sub['temporal_extent'])
                           if sub['validation']['has_versions_json']:
                               result['validation']['has_versions_json'] = True
                           if sub['validation']['has_llms_txt']:
@@ -142,13 +186,21 @@ jobs:
                       max(b[3] for b in bboxes),
                   ]
 
+              # Aggregate temporal extent (union)
+              if temporal_extents:
+                  starts = [t[0] for t in temporal_extents if t[0]]
+                  ends = [t[1] for t in temporal_extents if t[1]]
+                  result['temporal_extent'] = [
+                      min(starts) if starts else None,
+                      max(ends) if ends else None
+                  ]
+
               # Pick most common license (or first if tie)
               if licenses:
                   result['license'] = sorted(licenses)[0]
 
               # Check for .portolan directory
               try:
-                  base = catalog_url.rsplit('/', 1)[0]
                   portolan_url = f"{base}/.portolan/config.yaml"
                   resp = requests.head(portolan_url, timeout=10)
                   result['validation']['has_portolan_dir'] = resp.status_code == 200
@@ -157,9 +209,8 @@ jobs:
 
               return result
 
-          # Process all catalog entries
-          catalogs = []
-          for yaml_file in sorted(Path('catalogs').glob('*.yaml')):
+          def process_catalog_file(yaml_file):
+              """Process a single catalog file."""
               print(f"\n=== Processing {yaml_file} ===")
               with open(yaml_file) as f:
                   entry = yaml.safe_load(f)
@@ -167,15 +218,30 @@ jobs:
               url = entry.get('url')
               if not url:
                   print(f"  Skipping: Missing URL")
-                  continue
+                  return None
 
               try:
                   result = crawl_catalog(url)
                   result['id'] = yaml_file.stem
-                  catalogs.append(result)
                   print(f"  OK: {result['title']} ({result['collection_count']} collections)")
+                  return result
               except Exception as e:
                   print(f"  Error: {e}")
+                  return None
+
+          # Process all catalog entries in parallel
+          catalog_files = sorted(Path('catalogs').glob('*.yaml'))
+          catalogs = []
+
+          with ThreadPoolExecutor(max_workers=4) as executor:
+              futures = {executor.submit(process_catalog_file, f): f for f in catalog_files}
+              for future in as_completed(futures):
+                  result = future.result()
+                  if result:
+                      catalogs.append(result)
+
+          # Sort by id for consistent output
+          catalogs.sort(key=lambda c: c['id'])
 
           # Generate export
           export = {
