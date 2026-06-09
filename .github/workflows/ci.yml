@@ -37,11 +37,12 @@ jobs:
           npm install -g js-yaml
           for f in catalogs/*.yaml; do
             echo "Validating $f..."
-            js-yaml "$f" | ajv validate \
+            js-yaml "$f" > /tmp/entry.json
+            ajv validate \
               --spec=draft2020 \
               -c ajv-formats \
               -s schema/entry.schema.json \
-              -d /dev/stdin \
+              -d /tmp/entry.json \
               --all-errors
           done
 
