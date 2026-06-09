@@ -243,9 +243,44 @@ jobs:
           # Sort by id for consistent output
           catalogs.sort(key=lambda c: c['id'])
 
+          # Load existing state and merge into catalogs
+          state_file = Path('state/status.json')
+          state_file.parent.mkdir(exist_ok=True)
+          if state_file.exists():
+              with open(state_file) as f:
+                  state = json.load(f)
+          else:
+              state = {}
+
+          now = datetime.now(timezone.utc).isoformat()
+
+          for catalog in catalogs:
+              catalog_id = catalog['id']
+              previous_state = state.get(catalog_id, {})
+              previous_status = previous_state.get('status')
+
+              # Successfully crawled catalogs are always valid
+              # This handles re-submissions of removed catalogs
+              if previous_status in ('stale', 'removed'):
+                  print(f"  Restoring {catalog_id} from {previous_status} to valid")
+
+              catalog['status'] = 'valid'
+              catalog['last_validated'] = now
+              catalog['stale_since'] = None
+              state[catalog_id] = {
+                  'status': 'valid',
+                  'last_validated': now,
+                  'stale_since': None,
+                  'failure_reason': None
+              }
+
+          # Save updated state
+          with open(state_file, 'w') as f:
+              json.dump(state, f, indent=2)
+
           # Generate export
           export = {
-              'generated': datetime.now(timezone.utc).isoformat(),
+              'generated': now,
               'count': len(catalogs),
               'catalogs': catalogs
           }
@@ -263,7 +298,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add exports/catalogs.json
+          git add exports/catalogs.json state/status.json
 
           if git diff --staged --quiet; then
             echo "No changes to commit"
