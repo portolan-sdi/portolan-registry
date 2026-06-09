@@ -209,7 +209,7 @@ jobs:
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Refresh portolan.dev catalog cache
+      - name: Refresh portolan-sdi.org catalog cache
         if: steps.commit.outputs.changed == 'true'
         run: |
           curl -fsS -X POST \

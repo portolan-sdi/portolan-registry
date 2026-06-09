@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://portolan.dev/registry/schema/entry.schema.json",
+  "$id": "https://www.portolan-sdi.org/registry/schema/entry.schema.json",
   "title": "Portolan Registry Catalog Entry",
   "description": "Schema for registering STAC catalogs. Only the URL is required; all other fields are auto-extracted from the catalog.",
   "type": "object",
