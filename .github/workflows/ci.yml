@@ -27,6 +27,7 @@ jobs:
         run: |
           ajv compile \
             --spec=draft2020 \
+            -c ajv-formats \
             --all-errors \
             -s schema/entry.schema.json
 
@@ -38,6 +39,7 @@ jobs:
             echo "Validating $f..."
             js-yaml "$f" | ajv validate \
               --spec=draft2020 \
+              -c ajv-formats \
               -s schema/entry.schema.json \
               -d /dev/stdin \
               --all-errors
