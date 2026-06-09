@@ -19,6 +19,10 @@
       "collection_count": 178,
       "feature_count": 706749,
       "last_crawled": "2026-06-09T10:29:38.063468+00:00",
+      "status": "valid",
+      "last_validated": "2026-06-09T12:00:00Z",
+      "stale_since": null,
+      "failure_reason": null,
       "validation": {
         "stac_valid": true,
         "has_versions_json": false,
@@ -29,8 +33,8 @@
     },
     {
       "url": "https://data.source.coop/cholmes/portolan-nl/catalog.json",
-      "title": "Portolan NL \u2014 Cloud-Native Dutch Geodata",
-      "description": "A demonstration of Portolan as cloud-native infrastructure for the disclosure of open geodatasets from Dutch government authorities. Inspired by PDOK (Publieke Dienstverlening Op de Kaart), this catalog provides current and reliable geo-information as GeoParquet, PMTiles, and STAC metadata \u2014 open, standards-based, and freely accessible to everyone.",
+      "title": "Portolan NL — Cloud-Native Dutch Geodata",
+      "description": "A demonstration of Portolan as cloud-native infrastructure for the disclosure of open geodatasets from Dutch government authorities. Inspired by PDOK (Publieke Dienstverlening Op de Kaart), this catalog provides current and reliable geo-information as GeoParquet, PMTiles, and STAC metadata — open, standards-based, and freely accessible to everyone.",
       "stac_version": "1.1.0",
       "providers": null,
       "keywords": null,
@@ -44,6 +48,10 @@
       "collection_count": 31,
       "feature_count": 93358070,
       "last_crawled": "2026-06-09T10:30:48.064456+00:00",
+      "status": "valid",
+      "last_validated": "2026-06-09T12:00:00Z",
+      "stale_since": null,
+      "failure_reason": null,
       "validation": {
         "stac_valid": true,
         "has_versions_json": false,

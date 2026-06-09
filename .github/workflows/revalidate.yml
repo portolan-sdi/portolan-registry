@@ -300,14 +300,19 @@ jobs:
               except Exception as e:
                   print(f"  Error sending notification: {e}")
 
-          # Load existing state
-          state_file = Path('state/status.json')
-          state_file.parent.mkdir(exist_ok=True)
-          if state_file.exists():
-              with open(state_file) as f:
-                  state = json.load(f)
-          else:
-              state = {}
+          # Load existing state from export
+          export_file = Path('exports/catalogs.json')
+          state = {}
+          if export_file.exists():
+              with open(export_file) as f:
+                  existing = json.load(f)
+              for cat in existing.get('catalogs', []):
+                  state[cat['id']] = {
+                      'status': cat.get('status', 'valid'),
+                      'last_validated': cat.get('last_validated'),
+                      'stale_since': cat.get('stale_since'),
+                      'failure_reason': cat.get('failure_reason')
+                  }
 
           # Track transitions for notifications
           newly_stale = []
@@ -370,10 +375,7 @@ jobs:
               for catalog_id, entry, failure_reason in newly_stale:
                   send_stale_notification(catalog_id, entry, failure_reason)
 
-          # Save updated state
-          with open(state_file, 'w') as f:
-              json.dump(state, f, indent=2)
-          print(f"\n=== Updated state/status.json ===")
+          print(f"\n=== State updated ===")
 
           # Generate export with status merged in
           catalogs = []
@@ -385,6 +387,7 @@ jobs:
                   data['status'] = catalog_state.get('status', 'valid')
                   data['last_validated'] = catalog_state.get('last_validated')
                   data['stale_since'] = catalog_state.get('stale_since')
+                  data['failure_reason'] = catalog_state.get('failure_reason')
                   catalogs.append(data)
               else:
                   # For removed/failed catalogs, create minimal entry
@@ -399,6 +402,7 @@ jobs:
                       'status': catalog_state.get('status', 'removed'),
                       'last_validated': catalog_state.get('last_validated'),
                       'stale_since': catalog_state.get('stale_since'),
+                      'failure_reason': catalog_state.get('failure_reason'),
                       'last_crawled': None,
                       'collection_count': 0,
                       'feature_count': 0
@@ -431,7 +435,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add state/status.json exports/catalogs.json
+          git add exports/catalogs.json
 
           if git diff --staged --quiet; then
             echo "No changes to commit"
