@@ -17,7 +17,7 @@ That's it. All metadata is auto-extracted from the catalog itself.
 
 ## Browse Catalogs
 
-**Web UI**: [portolan-sdi.org/registry](https://www.portolan-sdi.org/registry)
+**Web UI**: [portolan-sdi.org](https://www.portolan-sdi.org)
 
 **Direct access**: Browse entries in [`catalogs/`](./catalogs) or fetch the enriched export:
 ```
