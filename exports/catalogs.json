@@ -1,7 +1,44 @@
 {
-  "generated": "2026-06-09T10:31:12.764989+00:00",
-  "count": 2,
+  "generated": "2026-06-11T18:47:40.970107+00:00",
+  "count": 3,
   "catalogs": [
+    {
+      "url": "https://data.source.coop/nlebovits/ign-argentina/catalog.json",
+      "title": "Capas de Referencia del Instituto Geogr\u00e1fico Nacional de Argentina",
+      "description": "Capas de referencia oficiales del Instituto Geogr\u00e1fico Nacional (IGN) de la Rep\u00fablica Argentina, extra\u00eddas de su servicio WFS y publicadas como GeoParquet optimizado para la nube. Incluye hidrograf\u00eda, geomorfolog\u00eda y relieve, transporte e infraestructura vial, l\u00edmites pol\u00edtico-administrativos, asentamientos y edificios, vegetaci\u00f3n, geodesia y otras categor\u00edas del modelo de datos vectorial del IGN. Datos de uso p\u00fablico conforme al Art\u00edculo 2 de la Ley 27.275 de Derecho de Acceso a la Informaci\u00f3n P\u00fablica.",
+      "stac_version": "1.1.0",
+      "providers": null,
+      "keywords": null,
+      "bbox": [
+        -1.7976931348623157e+308,
+        -1.7976931348623157e+308,
+        180.0,
+        66.54998524
+      ],
+      "license": "other",
+      "collection_count": 192,
+      "feature_count": 1868449,
+      "item_count": 0,
+      "asset_count": 960,
+      "total_size_bytes": 0,
+      "temporal_extent": [
+        null,
+        null
+      ],
+      "api_type": "static",
+      "last_crawled": "2026-06-11T18:46:26.717206+00:00",
+      "validation": {
+        "stac_valid": true,
+        "has_versions_json": false,
+        "has_portolan_dir": false,
+        "has_llms_txt": false
+      },
+      "id": "catalog-1781203130384",
+      "status": "valid",
+      "last_validated": "2026-06-11T18:47:40.970107+00:00",
+      "stale_since": null,
+      "failure_reason": null
+    },
     {
       "url": "https://data.source.coop/nlebovits/pergamino-ide/catalog.json",
       "title": null,
@@ -16,25 +53,33 @@
         -32.9103978
       ],
       "license": "proprietary",
-      "collection_count": 178,
-      "feature_count": 706749,
-      "last_crawled": "2026-06-09T10:29:38.063468+00:00",
-      "status": "valid",
-      "last_validated": "2026-06-09T12:00:00Z",
-      "stale_since": null,
-      "failure_reason": null,
+      "collection_count": 177,
+      "feature_count": 706717,
+      "item_count": 0,
+      "asset_count": 927,
+      "total_size_bytes": 0,
+      "temporal_extent": [
+        null,
+        null
+      ],
+      "api_type": "static",
+      "last_crawled": "2026-06-11T18:46:26.947856+00:00",
       "validation": {
         "stac_valid": true,
         "has_versions_json": false,
         "has_portolan_dir": true,
         "has_llms_txt": false
       },
-      "id": "pergamino-ide"
+      "id": "pergamino-ide",
+      "status": "valid",
+      "last_validated": "2026-06-11T18:47:40.970107+00:00",
+      "stale_since": null,
+      "failure_reason": null
     },
     {
       "url": "https://data.source.coop/cholmes/portolan-nl/catalog.json",
-      "title": "Portolan NL — Cloud-Native Dutch Geodata",
-      "description": "A demonstration of Portolan as cloud-native infrastructure for the disclosure of open geodatasets from Dutch government authorities. Inspired by PDOK (Publieke Dienstverlening Op de Kaart), this catalog provides current and reliable geo-information as GeoParquet, PMTiles, and STAC metadata — open, standards-based, and freely accessible to everyone.",
+      "title": "Portolan NL \u2014 Cloud-Native Dutch Geodata",
+      "description": "A demonstration of Portolan as cloud-native infrastructure for the disclosure of open geodatasets from Dutch government authorities. Inspired by PDOK (Publieke Dienstverlening Op de Kaart), this catalog provides current and reliable geo-information as GeoParquet, PMTiles, and STAC metadata \u2014 open, standards-based, and freely accessible to everyone.",
       "stac_version": "1.1.0",
       "providers": null,
       "keywords": null,
@@ -47,18 +92,26 @@
       "license": "CC-BY-4.0",
       "collection_count": 31,
       "feature_count": 93358070,
-      "last_crawled": "2026-06-09T10:30:48.064456+00:00",
-      "status": "valid",
-      "last_validated": "2026-06-09T12:00:00Z",
-      "stale_since": null,
-      "failure_reason": null,
+      "item_count": 0,
+      "asset_count": 235,
+      "total_size_bytes": 0,
+      "temporal_extent": [
+        "2009-05-15T00:00:00Z",
+        "2025-05-15T00:00:00Z"
+      ],
+      "api_type": "static",
+      "last_crawled": "2026-06-11T18:46:26.822234+00:00",
       "validation": {
         "stac_valid": true,
         "has_versions_json": false,
         "has_portolan_dir": false,
         "has_llms_txt": true
       },
-      "id": "portolan-nl"
+      "id": "portolan-nl",
+      "status": "valid",
+      "last_validated": "2026-06-11T18:47:40.970107+00:00",
+      "stale_since": null,
+      "failure_reason": null
     }
   ]
 }
