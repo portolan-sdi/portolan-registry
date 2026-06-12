@@ -25,15 +25,29 @@ jobs:
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
         run: |
-          uv run --with pyyaml --with requests python3 << 'PYTHON'
+          uv run --with pyyaml --with requests --with email-validator python3 << 'PYTHON'
           import yaml
           import json
           import requests
           import os
           from pathlib import Path
           from datetime import datetime, timezone, timedelta
+          from email_validator import validate_email, EmailNotValidError
 
           STALE_THRESHOLD_DAYS = 30
+
+          def validate_maintainer_email(email, catalog_id):
+              """Validate maintainer email - returns normalized email or None if invalid."""
+              if not email:
+                  return None
+
+              # Full validation: syntax + MX record check
+              try:
+                  v = validate_email(email, check_deliverability=True)
+                  return v.normalized
+              except EmailNotValidError as e:
+                  print(f"  Invalid maintainer email for {catalog_id}: {email} - {e}")
+                  return None
 
           def fetch_json(url, timeout=30):
               """Fetch JSON from URL."""
@@ -262,6 +276,12 @@ jobs:
 
               if not maintainer_email:
                   print(f"  Skipping notification: No maintainer email found")
+                  return
+
+              # Validate email before sending
+              maintainer_email = validate_maintainer_email(maintainer_email, catalog_id)
+              if not maintainer_email:
+                  print(f"  Skipping notification: Invalid maintainer email")
                   return
 
               title = catalog_data.get('title') or catalog_id
