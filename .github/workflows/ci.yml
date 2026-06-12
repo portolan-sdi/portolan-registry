@@ -60,6 +60,19 @@ jobs:
             python3 -m json.tool "$f" > /dev/null
           done
 
+  test-email-validation:
+    name: Test Email Validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v7
+
+      - name: Run email validation tests
+        working-directory: scripts
+        run: uv run --with pytest --with email-validator pytest test_validate_email.py -v
+
   exports-valid:
     name: Validate Exports
     runs-on: ubuntu-latest

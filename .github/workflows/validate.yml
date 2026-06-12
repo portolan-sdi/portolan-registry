@@ -29,13 +29,37 @@ jobs:
       - name: Validate changed catalogs
         if: steps.changed.outputs.count != '0'
         run: |
-          uv run --with pyyaml --with requests python3 << 'PYTHON'
+          uv run --with pyyaml --with requests --with email-validator python3 << 'PYTHON'
           import yaml
           import json
           import requests
           from pathlib import Path
           from datetime import datetime, timezone
           from urllib.parse import urlparse, urlunparse
+          from email_validator import validate_email, EmailNotValidError
+
+          def validate_maintainer_email(email, catalog_id):
+              """Validate maintainer email - hard fail on syntax or deliverability issues."""
+              if not email:
+                  return None
+
+              # Full validation: syntax + MX record check
+              try:
+                  v = validate_email(email, check_deliverability=True)
+                  return v.normalized
+              except EmailNotValidError as e:
+                  raise ValueError(f"Invalid maintainer email: {email} - {e}")
+
+          def extract_maintainer_email(providers):
+              """Extract first maintainer email from providers list."""
+              if not providers:
+                  return None
+              for provider in providers:
+                  if isinstance(provider, dict):
+                      contact = provider.get('contact') or {}
+                      if isinstance(contact, dict) and contact.get('email'):
+                          return contact['email']
+              return None
 
           def normalize_url(url):
               """Normalize URL for deduplication."""
@@ -281,6 +305,15 @@ jobs:
                       print(f"  BBox: {result['bbox']}")
                       print(f"  License: {result['license']}")
                       print(f"  Validation: {result['validation']}")
+
+                      # Validate maintainer email if present
+                      maintainer_email = extract_maintainer_email(result.get('providers'))
+                      if maintainer_email:
+                          try:
+                              validated = validate_maintainer_email(maintainer_email, catalog_id)
+                              print(f"  Maintainer email: {validated}")
+                          except ValueError as e:
+                              errors.append(f"{yaml_file}: {e}")
                   except requests.exceptions.RequestException as e:
                       errors.append(f"{yaml_file}: Failed to fetch catalog: {e}")
                   except Exception as e:
