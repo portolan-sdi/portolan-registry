@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-12T10:43:00.759327+00:00",
+  "generated": "2026-06-13T09:02:42.942885+00:00",
   "count": 3,
   "catalogs": [
     {
@@ -16,17 +16,17 @@
         66.54998524
       ],
       "license": "other",
-      "collection_count": 189,
-      "feature_count": 1855934,
+      "collection_count": 192,
+      "feature_count": 1868449,
       "item_count": 0,
-      "asset_count": 945,
+      "asset_count": 960,
       "total_size_bytes": 0,
       "temporal_extent": [
         null,
         null
       ],
       "api_type": "static",
-      "last_crawled": "2026-06-12T10:40:35.883540+00:00",
+      "last_crawled": "2026-06-13T08:57:43.579811+00:00",
       "validation": {
         "stac_valid": true,
         "has_versions_json": false,
@@ -35,7 +35,7 @@
       },
       "id": "catalog-1781203130384",
       "status": "valid",
-      "last_validated": "2026-06-12T10:41:37.032748+00:00",
+      "last_validated": "2026-06-13T09:00:00.939350+00:00",
       "stale_since": null,
       "failure_reason": null
     },
@@ -63,7 +63,7 @@
         null
       ],
       "api_type": "static",
-      "last_crawled": "2026-06-12T10:41:37.523560+00:00",
+      "last_crawled": "2026-06-13T09:00:02.231389+00:00",
       "validation": {
         "stac_valid": true,
         "has_versions_json": false,
@@ -72,7 +72,7 @@
       },
       "id": "pergamino-ide",
       "status": "valid",
-      "last_validated": "2026-06-12T10:42:32.501822+00:00",
+      "last_validated": "2026-06-13T09:01:40.451117+00:00",
       "stale_since": null,
       "failure_reason": null
     },
@@ -100,7 +100,7 @@
         "2025-05-15T00:00:00Z"
       ],
       "api_type": "static",
-      "last_crawled": "2026-06-12T10:42:33.005087+00:00",
+      "last_crawled": "2026-06-13T09:01:40.742986+00:00",
       "validation": {
         "stac_valid": true,
         "has_versions_json": false,
@@ -109,7 +109,7 @@
       },
       "id": "portolan-nl",
       "status": "valid",
-      "last_validated": "2026-06-12T10:43:00.759297+00:00",
+      "last_validated": "2026-06-13T09:02:42.942521+00:00",
       "stale_since": null,
       "failure_reason": null
     }
