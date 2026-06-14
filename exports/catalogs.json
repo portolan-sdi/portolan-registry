@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-13T09:02:42.942885+00:00",
+  "generated": "2026-06-14T09:36:44.272602+00:00",
   "count": 3,
   "catalogs": [
     {
@@ -26,7 +26,7 @@
         null
       ],
       "api_type": "static",
-      "last_crawled": "2026-06-13T08:57:43.579811+00:00",
+      "last_crawled": "2026-06-14T09:33:43.175732+00:00",
       "validation": {
         "stac_valid": true,
         "has_versions_json": false,
@@ -35,7 +35,7 @@
       },
       "id": "catalog-1781203130384",
       "status": "valid",
-      "last_validated": "2026-06-13T09:00:00.939350+00:00",
+      "last_validated": "2026-06-14T09:35:01.823993+00:00",
       "stale_since": null,
       "failure_reason": null
     },
@@ -63,7 +63,7 @@
         null
       ],
       "api_type": "static",
-      "last_crawled": "2026-06-13T09:00:02.231389+00:00",
+      "last_crawled": "2026-06-14T09:35:02.249852+00:00",
       "validation": {
         "stac_valid": true,
         "has_versions_json": false,
@@ -72,7 +72,7 @@
       },
       "id": "pergamino-ide",
       "status": "valid",
-      "last_validated": "2026-06-13T09:01:40.451117+00:00",
+      "last_validated": "2026-06-14T09:36:14.411589+00:00",
       "stale_since": null,
       "failure_reason": null
     },
@@ -100,7 +100,7 @@
         "2025-05-15T00:00:00Z"
       ],
       "api_type": "static",
-      "last_crawled": "2026-06-13T09:01:40.742986+00:00",
+      "last_crawled": "2026-06-14T09:36:15.209830+00:00",
       "validation": {
         "stac_valid": true,
         "has_versions_json": false,
@@ -109,7 +109,7 @@
       },
       "id": "portolan-nl",
       "status": "valid",
-      "last_validated": "2026-06-13T09:02:42.942521+00:00",
+      "last_validated": "2026-06-14T09:36:44.272566+00:00",
       "stale_since": null,
       "failure_reason": null
     }
