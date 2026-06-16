@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: Get PR number
         id: pr
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             const run = await github.rest.actions.getWorkflowRun({
@@ -49,7 +49,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Wait for merge and trigger publish
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             const run = await github.rest.actions.getWorkflowRun({
