@@ -1,6 +1,6 @@
 {
-  "generated": "2026-06-16T11:11:18.699907+00:00",
-  "count": 3,
+  "generated": "2026-06-17T10:18:43.813801+00:00",
+  "count": 4,
   "catalogs": [
     {
       "url": "https://data.source.coop/nlebovits/ign-argentina/catalog.json",
@@ -26,7 +26,7 @@
         null
       ],
       "api_type": "static",
-      "last_crawled": "2026-06-16T11:09:42.230442+00:00",
+      "last_crawled": "2026-06-17T10:17:46.309522+00:00",
       "validation": {
         "stac_valid": true,
         "has_versions_json": false,
@@ -35,7 +35,44 @@
       },
       "id": "catalog-1781203130384",
       "status": "valid",
-      "last_validated": "2026-06-16T11:10:24.611314+00:00",
+      "last_validated": "2026-06-17T10:18:43.813801+00:00",
+      "stale_since": null,
+      "failure_reason": null
+    },
+    {
+      "url": "https://data.source.coop/nlebovits/jrc-glofas/catalog.json",
+      "title": "JRC GloFAS Global Flood Hazard Maps",
+      "description": "Global riverine flood hazard maps from the Joint Research Centre CEMS-GLOFAS v2.1.2. Includes flood depth and hazard classification rasters for return periods 10, 20, 50, 75, 100, 200, and 500 years, plus permanent water body and spurious depth auxiliary layers.",
+      "stac_version": "1.1.0",
+      "providers": null,
+      "keywords": null,
+      "bbox": [
+        -170.00124920555788,
+        -59.98709999999092,
+        179.96958509975573,
+        80.00123333333333
+      ],
+      "license": "proprietary",
+      "collection_count": 16,
+      "feature_count": 0,
+      "item_count": 0,
+      "asset_count": 0,
+      "total_size_bytes": 0,
+      "temporal_extent": [
+        null,
+        null
+      ],
+      "api_type": "static",
+      "last_crawled": "2026-06-17T10:17:46.332276+00:00",
+      "validation": {
+        "stac_valid": true,
+        "has_versions_json": false,
+        "has_portolan_dir": false,
+        "has_llms_txt": false
+      },
+      "id": "jrc-glofas",
+      "status": "valid",
+      "last_validated": "2026-06-17T10:18:43.813801+00:00",
       "stale_since": null,
       "failure_reason": null
     },
@@ -63,7 +100,7 @@
         null
       ],
       "api_type": "static",
-      "last_crawled": "2026-06-16T11:10:25.003944+00:00",
+      "last_crawled": "2026-06-17T10:17:46.255220+00:00",
       "validation": {
         "stac_valid": true,
         "has_versions_json": false,
@@ -72,7 +109,7 @@
       },
       "id": "pergamino-ide",
       "status": "valid",
-      "last_validated": "2026-06-16T11:11:04.172184+00:00",
+      "last_validated": "2026-06-17T10:18:43.813801+00:00",
       "stale_since": null,
       "failure_reason": null
     },
@@ -100,7 +137,7 @@
         "2025-05-15T00:00:00Z"
       ],
       "api_type": "static",
-      "last_crawled": "2026-06-16T11:11:04.407929+00:00",
+      "last_crawled": "2026-06-17T10:17:46.240935+00:00",
       "validation": {
         "stac_valid": true,
         "has_versions_json": false,
@@ -109,7 +146,7 @@
       },
       "id": "portolan-nl",
       "status": "valid",
-      "last_validated": "2026-06-16T11:11:18.699851+00:00",
+      "last_validated": "2026-06-17T10:18:43.813801+00:00",
       "stale_since": null,
       "failure_reason": null
     }
