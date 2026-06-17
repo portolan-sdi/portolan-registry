@@ -285,9 +285,21 @@ jobs:
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             git commit -m "Update catalogs.json export [skip ci]"
-            git push
-            echo "Pushed updated catalogs.json"
-            echo "changed=true" >> "$GITHUB_OUTPUT"
+
+            # Retry loop to handle concurrent pushes
+            for attempt in 1 2 3; do
+              if git push; then
+                echo "Pushed updated catalogs.json"
+                echo "changed=true" >> "$GITHUB_OUTPUT"
+                exit 0
+              fi
+              echo "Push failed (attempt $attempt), rebasing..."
+              git fetch origin main
+              git rebase origin/main
+            done
+
+            echo "Failed to push after 3 attempts"
+            exit 1
           fi
 
       - name: Refresh portolan-sdi.org catalog cache
