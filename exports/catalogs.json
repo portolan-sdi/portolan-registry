@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-19T10:28:44.671381+00:00",
+  "generated": "2026-06-20T08:57:47.457803+00:00",
   "count": 4,
   "catalogs": [
     {
@@ -16,17 +16,17 @@
         66.54998524
       ],
       "license": "other",
-      "collection_count": 192,
-      "feature_count": 1868449,
+      "collection_count": 191,
+      "feature_count": 1864399,
       "item_count": 0,
-      "asset_count": 960,
+      "asset_count": 955,
       "total_size_bytes": 0,
       "temporal_extent": [
         null,
         null
       ],
       "api_type": "static",
-      "last_crawled": "2026-06-19T10:25:26.203340+00:00",
+      "last_crawled": "2026-06-20T08:55:07.010689+00:00",
       "validation": {
         "stac_valid": true,
         "has_versions_json": false,
@@ -35,7 +35,7 @@
       },
       "id": "catalog-1781203130384",
       "status": "valid",
-      "last_validated": "2026-06-19T10:26:47.109904+00:00",
+      "last_validated": "2026-06-20T08:56:14.119739+00:00",
       "stale_since": null,
       "failure_reason": null
     },
@@ -63,7 +63,7 @@
         null
       ],
       "api_type": "static",
-      "last_crawled": "2026-06-19T10:26:48.056021+00:00",
+      "last_crawled": "2026-06-20T08:56:14.715308+00:00",
       "validation": {
         "stac_valid": true,
         "has_versions_json": false,
@@ -72,7 +72,7 @@
       },
       "id": "jrc-glofas",
       "status": "valid",
-      "last_validated": "2026-06-19T10:26:56.067636+00:00",
+      "last_validated": "2026-06-20T08:56:21.831885+00:00",
       "stale_since": null,
       "failure_reason": null
     },
@@ -100,7 +100,7 @@
         null
       ],
       "api_type": "static",
-      "last_crawled": "2026-06-19T10:26:56.772567+00:00",
+      "last_crawled": "2026-06-20T08:56:22.341462+00:00",
       "validation": {
         "stac_valid": true,
         "has_versions_json": false,
@@ -109,7 +109,7 @@
       },
       "id": "pergamino-ide",
       "status": "valid",
-      "last_validated": "2026-06-19T10:28:12.739664+00:00",
+      "last_validated": "2026-06-20T08:57:22.507729+00:00",
       "stale_since": null,
       "failure_reason": null
     },
@@ -137,7 +137,7 @@
         "2025-05-15T00:00:00Z"
       ],
       "api_type": "static",
-      "last_crawled": "2026-06-19T10:28:13.327614+00:00",
+      "last_crawled": "2026-06-20T08:57:23.178742+00:00",
       "validation": {
         "stac_valid": true,
         "has_versions_json": false,
@@ -146,7 +146,7 @@
       },
       "id": "portolan-nl",
       "status": "valid",
-      "last_validated": "2026-06-19T10:28:44.671345+00:00",
+      "last_validated": "2026-06-20T08:57:47.457465+00:00",
       "stale_since": null,
       "failure_reason": null
     }
