@@ -258,8 +258,32 @@ jobs:
               catalog['stale_since'] = None
               catalog['failure_reason'] = None
 
-          # Generate export
+          # Generate export as a valid STAC Catalog so STAC Browser can
+          # navigate it as a "super catalog" of all registered catalogs.
+          # Each registered catalog becomes a rel="child" link, and the
+          # custom registry fields (generated/count/catalogs) are retained
+          # alongside the STAC fields for the portolan-sdi.org website.
+          root_url = 'https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json'
+
+          links = [
+              {'rel': 'root', 'href': root_url, 'type': 'application/json', 'title': 'Portolan Registry'},
+              {'rel': 'self', 'href': root_url, 'type': 'application/json'},
+          ]
+          for catalog in catalogs:
+              links.append({
+                  'rel': 'child',
+                  'href': catalog['url'],
+                  'type': 'application/json',
+                  'title': catalog.get('title') or catalog['id'],
+              })
+
           export = {
+              'type': 'Catalog',
+              'stac_version': '1.1.0',
+              'id': 'portolan-registry',
+              'title': 'Portolan Registry',
+              'description': 'A unified registry of Portolan catalogs. Each child link points to a registered cloud-native STAC catalog.',
+              'links': links,
               'generated': now,
               'count': len(catalogs),
               'catalogs': catalogs

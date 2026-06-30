@@ -1,4 +1,46 @@
 {
+  "type": "Catalog",
+  "stac_version": "1.1.0",
+  "id": "portolan-registry",
+  "title": "Portolan Registry",
+  "description": "A unified registry of Portolan catalogs. Each child link points to a registered cloud-native STAC catalog.",
+  "links": [
+    {
+      "rel": "root",
+      "href": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
+      "type": "application/json",
+      "title": "Portolan Registry"
+    },
+    {
+      "rel": "self",
+      "href": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "child",
+      "href": "https://data.source.coop/nlebovits/ign-argentina/catalog.json",
+      "type": "application/json",
+      "title": "Capas de Referencia del Instituto Geogr\u00e1fico Nacional de Argentina"
+    },
+    {
+      "rel": "child",
+      "href": "https://data.source.coop/nlebovits/jrc-glofas/catalog.json",
+      "type": "application/json",
+      "title": "JRC GloFAS Global Flood Hazard Maps"
+    },
+    {
+      "rel": "child",
+      "href": "https://data.source.coop/nlebovits/pergamino-ide/catalog.json",
+      "type": "application/json",
+      "title": "pergamino-ide"
+    },
+    {
+      "rel": "child",
+      "href": "https://data.source.coop/cholmes/portolan-nl/catalog.json",
+      "type": "application/json",
+      "title": "Portolan NL \u2014 Cloud-Native Dutch Geodata"
+    }
+  ],
   "generated": "2026-06-30T09:35:48.866383+00:00",
   "count": 4,
   "catalogs": [
