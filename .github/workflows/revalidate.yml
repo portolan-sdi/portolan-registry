@@ -324,12 +324,14 @@ jobs:
           if export_file.exists():
               with open(export_file) as f:
                   existing = json.load(f)
-              for cat in existing.get('catalogs', []):
-                  state[cat['id']] = {
-                      'status': cat.get('status', 'valid'),
-                      'last_validated': cat.get('last_validated'),
-                      'stale_since': cat.get('stale_since'),
-                      'failure_reason': cat.get('failure_reason')
+              for link in existing.get('links', []):
+                  if link.get('rel') != 'child' or not link.get('portolan:id'):
+                      continue
+                  state[link['portolan:id']] = {
+                      'status': link.get('portolan:status', 'valid'),
+                      'last_validated': link.get('portolan:last_validated'),
+                      'stale_since': link.get('portolan:stale_since'),
+                      'failure_reason': link.get('portolan:failure_reason')
                   }
 
           # Track transitions for notifications
@@ -429,10 +431,52 @@ jobs:
           # Sort by id
           catalogs.sort(key=lambda c: c['id'])
 
+          # Emit as a STAC Catalog whose rel="child" links point at each
+          # registered catalog. Registry-only metadata (status, counts,
+          # validation flags, crawl timestamps) is carried inline on each
+          # link under the "portolan:" prefix.
+          root_url = 'https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json'
+
+          def child_link(catalog):
+              validation = catalog.get('validation') or {}
+              return {
+                  'rel': 'child',
+                  'href': catalog['url'],
+                  'type': 'application/json',
+                  'title': catalog.get('title') or catalog['id'],
+                  'portolan:id': catalog['id'],
+                  'portolan:status': catalog.get('status', 'valid'),
+                  'portolan:api_type': catalog.get('api_type'),
+                  'portolan:collection_count': catalog.get('collection_count', 0),
+                  'portolan:feature_count': catalog.get('feature_count', 0),
+                  'portolan:item_count': catalog.get('item_count', 0),
+                  'portolan:asset_count': catalog.get('asset_count', 0),
+                  'portolan:total_size_bytes': catalog.get('total_size_bytes', 0),
+                  'portolan:last_crawled': catalog.get('last_crawled'),
+                  'portolan:last_validated': catalog.get('last_validated'),
+                  'portolan:stale_since': catalog.get('stale_since'),
+                  'portolan:failure_reason': catalog.get('failure_reason'),
+                  'portolan:stac_valid': validation.get('stac_valid', True),
+                  'portolan:has_versions_json': validation.get('has_versions_json', False),
+                  'portolan:has_portolan_dir': validation.get('has_portolan_dir', False),
+                  'portolan:has_llms_txt': validation.get('has_llms_txt', False),
+              }
+
+          links = [
+              {'rel': 'root', 'href': root_url, 'type': 'application/json', 'title': 'Portolan Registry'},
+              {'rel': 'self', 'href': root_url, 'type': 'application/json'},
+          ]
+          links.extend(child_link(catalog) for catalog in catalogs)
+
           export = {
+              'type': 'Catalog',
+              'stac_version': '1.1.0',
+              'id': 'portolan-registry',
+              'title': 'Portolan Registry',
+              'description': 'A unified registry of Portolan catalogs. Each child link points to a registered cloud-native STAC catalog.',
               'generated': datetime.now(timezone.utc).isoformat(),
               'count': len(catalogs),
-              'catalogs': catalogs
+              'links': links
           }
 
           Path('exports').mkdir(exist_ok=True)
