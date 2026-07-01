@@ -235,10 +235,12 @@ jobs:
           if export_file.exists():
               with open(export_file) as f:
                   existing = json.load(f)
-              for cat in existing.get('catalogs', []):
-                  state[cat['id']] = {
-                      'status': cat.get('status', 'valid'),
-                      'failure_reason': cat.get('failure_reason')
+              for link in existing.get('links', []):
+                  if link.get('rel') != 'child' or not link.get('portolan:id'):
+                      continue
+                  state[link['portolan:id']] = {
+                      'status': link.get('portolan:status', 'valid'),
+                      'failure_reason': link.get('portolan:failure_reason')
                   }
 
           # Load all existing catalog URLs for duplicate detection
