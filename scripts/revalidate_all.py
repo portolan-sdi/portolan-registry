@@ -23,6 +23,7 @@ from registry.export import (
     ExportRefused,
     build_export,
     check_export_safe,
+    export_changed,
     load_links,
     load_state,
     write_export,
@@ -162,11 +163,14 @@ def main(argv: list[str] | None = None) -> int:
         log(f"\n=== REFUSING TO WRITE EXPORT: {e} ===")
         return 1
 
+    output = Path(args.output)
     if args.output == "-":
         json.dump(export, sys.stdout, indent=2)
         sys.stdout.write("\n")
+    elif not export_changed(export, output):
+        log(f"\n=== No change beyond timestamps; left {args.output} untouched ===")
     else:
-        write_export(export, Path(args.output))
+        write_export(export, output)
         log(f"\n=== Generated {args.output} with {export['count']} catalog(s) ===")
 
     counts = {"valid": 0, "stale": 0, "removed": 0}

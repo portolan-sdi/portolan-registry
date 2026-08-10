@@ -4,16 +4,19 @@ from __future__ import annotations
 
 import json
 import math
+from datetime import timedelta
 
 import pytest
 
 from conftest import FIXTURES, FROZEN
 from registry.crawl import crawl_catalog
 from registry.export import (
+    TIMESTAMP_REFRESH_DAYS,
     ExportRefused,
     build_export,
     check_export_safe,
     child_link,
+    export_changed,
     load_links,
     load_state,
 )
@@ -138,6 +141,103 @@ class TestExportSafety:
                 "gone": {"status": None, "stale_since": None, "failure_reason": None}
             },
         )
+
+
+class TestExportChanged:
+    """What the nightly commits, and what it leaves alone."""
+
+    LATER = FROZEN.replace(day=16)
+
+    def written(self, tmp_path, catalogs, now=FROZEN):
+        path = tmp_path / "catalogs.json"
+        path.write_text(json.dumps(build_export(catalogs, now=now), indent=2))
+        return path
+
+    def catalog(self, **overrides):
+        base = {
+            "id": "a",
+            "url": ROOT,
+            "status": "valid",
+            "collection_count": 3,
+            "last_crawled": FROZEN.isoformat(),
+            "last_validated": FROZEN.isoformat(),
+        }
+        return {**base, **overrides}
+
+    def test_writes_when_there_is_no_previous_export(self, tmp_path):
+        export = build_export([self.catalog()], now=FROZEN)
+        assert export_changed(export, tmp_path / "catalogs.json", now=FROZEN)
+
+    def test_ignores_a_run_that_only_moved_the_clock(self, tmp_path):
+        path = self.written(tmp_path, [self.catalog()])
+        tonight = self.catalog(
+            last_crawled=self.LATER.isoformat(),
+            last_validated=self.LATER.isoformat(),
+        )
+        export = build_export([tonight], now=self.LATER)
+        assert not export_changed(export, path, now=self.LATER)
+
+    def test_notices_a_status_transition(self, tmp_path):
+        path = self.written(tmp_path, [self.catalog()])
+        tonight = self.catalog(
+            status="stale",
+            stale_since=self.LATER.isoformat(),
+            failure_reason="timeout",
+            last_crawled=self.LATER.isoformat(),
+            last_validated=self.LATER.isoformat(),
+        )
+        export = build_export([tonight], now=self.LATER)
+        assert export_changed(export, path, now=self.LATER)
+
+    def test_notices_a_count_change(self, tmp_path):
+        path = self.written(tmp_path, [self.catalog()])
+        tonight = self.catalog(collection_count=4)
+        export = build_export([tonight], now=self.LATER)
+        assert export_changed(export, path, now=self.LATER)
+
+    def test_notices_a_new_bbox(self, tmp_path):
+        path = self.written(tmp_path, [self.catalog()])
+        tonight = self.catalog(bbox=[-1.0, -2.0, 3.0, 4.0])
+        export = build_export([tonight], now=self.LATER)
+        assert export_changed(export, path, now=self.LATER)
+
+    def test_notices_a_catalog_joining_the_registry(self, tmp_path):
+        path = self.written(tmp_path, [self.catalog()])
+        tonight = build_export(
+            [self.catalog(), self.catalog(id="b")], now=self.LATER
+        )
+        assert export_changed(tonight, path, now=self.LATER)
+
+    def test_notices_a_catalog_leaving_the_registry(self, tmp_path):
+        path = self.written(tmp_path, [self.catalog(), self.catalog(id="b")])
+        export = build_export([self.catalog()], now=self.LATER)
+        assert export_changed(export, path, now=self.LATER)
+
+    def test_overwrites_an_unreadable_export(self, tmp_path):
+        path = tmp_path / "catalogs.json"
+        path.write_text("{ truncated")
+        assert export_changed(build_export([self.catalog()]), path, now=FROZEN)
+
+    def test_refreshes_the_timestamps_after_a_quiet_week(self, tmp_path):
+        """The timestamps are a freshness signal, so they must not freeze."""
+        path = self.written(tmp_path, [self.catalog()])
+        week_later = FROZEN + timedelta(days=TIMESTAMP_REFRESH_DAYS)
+        export = build_export([self.catalog()], now=week_later)
+        assert export_changed(export, path, now=week_later)
+
+    def test_stays_quiet_inside_the_refresh_window(self, tmp_path):
+        path = self.written(tmp_path, [self.catalog()])
+        day_six = FROZEN + timedelta(days=TIMESTAMP_REFRESH_DAYS - 1)
+        export = build_export([self.catalog()], now=day_six)
+        assert not export_changed(export, path, now=day_six)
+
+    def test_refreshes_an_export_with_no_readable_generated(self, tmp_path):
+        path = self.written(tmp_path, [self.catalog()])
+        previous = json.loads(path.read_text())
+        previous["generated"] = "whenever"
+        path.write_text(json.dumps(previous, indent=2))
+        export = build_export([self.catalog()], now=self.LATER)
+        assert export_changed(export, path, now=self.LATER)
 
 
 class TestCommittedExport:

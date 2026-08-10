@@ -27,6 +27,7 @@ jobs:
         run: uv run --frozen scripts/revalidate_all.py
 
       - name: Commit changes
+        id: commit
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -35,14 +36,16 @@ jobs:
 
           if git diff --staged --quiet; then
             echo "No changes to commit"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             git commit -m "chore: update catalog validity states [skip ci]"
             git push
             echo "Pushed updated state and export"
+            echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Refresh portolan-sdi.org catalog cache
-        if: success()
+        if: steps.commit.outputs.changed == 'true'
         continue-on-error: true
         run: |
           curl -fsS -X POST \
