@@ -32,6 +32,7 @@ jobs:
           uv run --with pyyaml --with requests --with email-validator python3 << 'PYTHON'
           import yaml
           import json
+          import math
           import requests
           from pathlib import Path
           from datetime import datetime, timezone
@@ -83,6 +84,46 @@ jobs:
                   return href
               from urllib.parse import urljoin
               return urljoin(base_url, href)
+
+          # Portolan requires every bbox to be WGS84, 4 or 6 elements, free of
+          # NaN/infinity and of "effectively infinite" sentinels such as
+          # +/-1.79e308. Third-party catalogs violate this: one collection in
+          # the IGN Argentina catalog carries -1.79e308 (an uninitialised
+          # float) for west and south, which poisons the whole union and would
+          # publish a world-spanning box. Drop error values outright and clamp
+          # honest floating-point overshoot (e.g. latitude -90.00000001).
+          BBOX_SENTINEL = 1e300
+
+          def clean_bbox(bbox):
+              """Return a valid WGS84 bbox, or None if it cannot be salvaged."""
+              if not bbox or len(bbox) not in (4, 6):
+                  return None
+              if not all(isinstance(v, (int, float)) and not isinstance(v, bool)
+                         for v in bbox):
+                  return None
+              if any(math.isnan(v) or math.isinf(v) or abs(v) > BBOX_SENTINEL
+                     for v in bbox):
+                  return None
+              half = len(bbox) // 2
+              mins, maxs = list(bbox[:half]), list(bbox[half:])
+              for axis, limit in ((0, 180.0), (1, 90.0)):
+                  mins[axis] = max(-limit, min(limit, mins[axis]))
+                  maxs[axis] = max(-limit, min(limit, maxs[axis]))
+              if mins[1] > maxs[1]:
+                  return None
+              return mins + maxs
+
+          def union_bboxes(bboxes):
+              """Union cleaned bboxes. Splits by length rather than hardcoding
+              indices, because a 6-element bbox is ordered
+              [west, south, min_alt, east, north, max_alt] -- indexing 0-3 would
+              read min_alt as east. A mixed set degrades to 2D."""
+              if not bboxes:
+                  return None
+              half = min(len(b) // 2 for b in bboxes)
+              mins = [min(b[i] for b in bboxes) for i in range(half)]
+              maxs = [max(b[len(b) // 2 + i] for b in bboxes) for i in range(half)]
+              return mins + maxs
 
           def crawl_catalog(catalog_url):
               """Crawl a STAC catalog and extract metadata."""
@@ -144,12 +185,17 @@ jobs:
                       if child.get('type') == 'Collection':
                           result['collection_count'] += 1
 
-                          # Extract bbox
-                          extent = child.get('extent', {})
-                          spatial = extent.get('spatial', {})
-                          bbox = spatial.get('bbox', [[]])[0]
-                          if bbox and len(bbox) >= 4:
+                          # Extract bbox. Guard every level: a collection whose
+                          # spatial extent is missing, empty or invalid must
+                          # still be counted, so never let it raise here.
+                          extent = child.get('extent') or {}
+                          spatial = extent.get('spatial') or {}
+                          raw_bboxes = spatial.get('bbox') or []
+                          bbox = clean_bbox(raw_bboxes[0]) if raw_bboxes else None
+                          if bbox:
                               bboxes.append(bbox)
+                          elif raw_bboxes:
+                              print(f"  Warning: discarding invalid bbox on {child_url}: {raw_bboxes[0]}")
 
                           # Extract temporal extent
                           temporal = extent.get('temporal', {}).get('interval', [[]])[0]
@@ -198,13 +244,7 @@ jobs:
                       print(f"  Warning: Failed to fetch {child_url}: {e}")
 
               # Aggregate bbox (union of all bboxes)
-              if bboxes:
-                  result['bbox'] = [
-                      min(b[0] for b in bboxes),
-                      min(b[1] for b in bboxes),
-                      max(b[2] for b in bboxes),
-                      max(b[3] for b in bboxes),
-                  ]
+              result['bbox'] = union_bboxes(bboxes)
 
               # Aggregate temporal extent (union)
               if temporal_extents:
