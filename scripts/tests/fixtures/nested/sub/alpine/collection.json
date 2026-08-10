@@ -1,0 +1,11 @@
+{
+  "type": "Collection",
+  "stac_version": "1.1.0",
+  "id": "alpine",
+  "title": "Alpine",
+  "description": "Alpine terrain, no usable spatial extent.",
+  "license": "CC-BY-4.0",
+  "extent": {"spatial": {"bbox": []}},
+  "assets": {},
+  "links": []
+}

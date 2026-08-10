@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/main/schema/export.schema.json",
+  "title": "Portolan Registry Export",
+  "description": "exports/catalogs.json: a STAC Catalog whose child links are the registered Portolan catalogs.",
+  "type": "object",
+  "required": ["type", "stac_version", "id", "title", "generated", "count", "links"],
+  "properties": {
+    "type": {"const": "Catalog"},
+    "stac_version": {"type": "string"},
+    "id": {"const": "portolan-registry"},
+    "title": {"type": "string", "minLength": 1},
+    "description": {"type": "string"},
+    "generated": {"type": "string", "format": "date-time"},
+    "count": {"type": "integer", "minimum": 0},
+    "links": {
+      "type": "array",
+      "description": "The root and self links, followed by one child link per registered catalog.",
+      "minItems": 2,
+      "items": {"$ref": "#/$defs/link"}
+    }
+  },
+  "$defs": {
+    "bbox": {
+      "description": "WGS84 bounding box, [west, south, east, north] or [west, south, min_alt, east, north, max_alt]. Range and ordering rules beyond arity are checked in the test suite.",
+      "type": "array",
+      "items": {"type": "number"},
+      "oneOf": [
+        {"minItems": 4, "maxItems": 4},
+        {"minItems": 6, "maxItems": 6}
+      ]
+    },
+    "link": {
+      "type": "object",
+      "required": ["rel", "href"],
+      "properties": {
+        "rel": {"type": "string"},
+        "href": {"type": "string", "minLength": 1},
+        "type": {"type": "string"},
+        "title": {"type": "string"},
+        "bbox": {"$ref": "#/$defs/bbox"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"rel": {"const": "child"}}, "required": ["rel"]},
+          "then": {
+            "required": [
+              "href",
+              "title",
+              "portolan:id",
+              "portolan:status",
+              "portolan:collection_count"
+            ],
+            "properties": {
+              "portolan:id": {"type": "string", "minLength": 1},
+              "portolan:status": {"enum": ["valid", "stale", "removed"]},
+              "portolan:api_type": {
+                "type": ["string", "null"],
+                "enum": ["api", "static", null]
+              },
+              "portolan:collection_count": {"type": "integer", "minimum": 0},
+              "portolan:feature_count": {"type": "integer", "minimum": 0},
+              "portolan:item_count": {"type": "integer", "minimum": 0},
+              "portolan:asset_count": {"type": "integer", "minimum": 0},
+              "portolan:total_size_bytes": {"type": "integer", "minimum": 0},
+              "portolan:last_crawled": {"type": ["string", "null"]},
+              "portolan:last_validated": {"type": ["string", "null"]},
+              "portolan:stale_since": {"type": ["string", "null"]},
+              "portolan:failure_reason": {"type": ["string", "null"]},
+              "portolan:stac_valid": {"type": "boolean"},
+              "portolan:has_versions_json": {"type": "boolean"},
+              "portolan:has_portolan_dir": {"type": "boolean"},
+              "portolan:has_llms_txt": {"type": "boolean"}
+            }
+          }
+        }
+      ]
+    }
+  }
+}

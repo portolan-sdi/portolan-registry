@@ -1,0 +1,50 @@
+{
+  "type": "Catalog",
+  "stac_version": "1.1.0",
+  "id": "portolan-registry",
+  "title": "Portolan Registry",
+  "description": "A unified registry of Portolan catalogs. Each child link points to a registered cloud-native STAC catalog.",
+  "generated": "2026-01-15T12:00:00+00:00",
+  "count": 1,
+  "links": [
+    {
+      "rel": "root",
+      "href": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
+      "type": "application/json",
+      "title": "Portolan Registry"
+    },
+    {
+      "rel": "self",
+      "href": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "child",
+      "href": "https://ex.org/catalog.json",
+      "type": "application/json",
+      "title": "Example Catalog",
+      "bbox": [
+        -1.0,
+        48.0,
+        7.0,
+        55.0
+      ],
+      "portolan:id": "example",
+      "portolan:status": "valid",
+      "portolan:api_type": "static",
+      "portolan:collection_count": 3,
+      "portolan:feature_count": 1500,
+      "portolan:item_count": 0,
+      "portolan:asset_count": 3,
+      "portolan:total_size_bytes": 6144,
+      "portolan:last_crawled": "2026-01-15T12:00:00+00:00",
+      "portolan:last_validated": "2026-01-15T12:00:00+00:00",
+      "portolan:stale_since": null,
+      "portolan:failure_reason": null,
+      "portolan:stac_valid": true,
+      "portolan:has_versions_json": true,
+      "portolan:has_portolan_dir": false,
+      "portolan:has_llms_txt": true
+    }
+  ]
+}

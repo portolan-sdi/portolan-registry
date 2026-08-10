@@ -1,0 +1,11 @@
+{
+  "type": "Catalog",
+  "stac_version": "1.1.0",
+  "id": "sub",
+  "title": "Sub Catalog",
+  "description": "Nested catalog.",
+  "links": [
+    {"rel": "child", "href": "./inland/collection.json", "type": "application/json", "title": "Inland"},
+    {"rel": "child", "href": "./alpine/collection.json", "type": "application/json", "title": "Alpine"}
+  ]
+}

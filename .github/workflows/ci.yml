@@ -62,8 +62,8 @@ jobs:
             python3 -m json.tool "$f" > /dev/null
           done
 
-  test-email-validation:
-    name: Test Email Validation
+  test:
+    name: Python Tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -71,9 +71,10 @@ jobs:
       - name: Setup uv
         uses: astral-sh/setup-uv@v7
 
-      - name: Run email validation tests
-        working-directory: scripts
-        run: uv run --with pytest --with email-validator pytest test_validate_email.py -v
+      # Discovery and import paths come from pyproject.toml, so this runs
+      # from the repository root. Tests marked `network` are deselected.
+      - name: Run tests
+        run: uv run --frozen --group dev pytest -v
 
   exports-valid:
     name: Validate Exports
@@ -81,11 +82,24 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - name: Check catalogs.json is valid
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '20'
+
+      - name: Install ajv-cli
+        run: npm install -g ajv-cli ajv-formats
+
+      - name: Validate export against schema
         run: |
           if [ -f exports/catalogs.json ]; then
             python3 -m json.tool exports/catalogs.json > /dev/null
-            echo "exports/catalogs.json is valid JSON"
+            ajv validate \
+              --spec=draft2020 \
+              -c ajv-formats \
+              -s schema/export.schema.json \
+              -d exports/catalogs.json \
+              --all-errors
           else
             echo "No exports/catalogs.json found (will be created on first publish)"
           fi
