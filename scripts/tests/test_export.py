@@ -14,6 +14,7 @@ from registry.export import (
     build_export,
     check_export_safe,
     child_link,
+    export_changed,
     load_links,
     load_state,
 )
@@ -138,6 +139,79 @@ class TestExportSafety:
                 "gone": {"status": None, "stale_since": None, "failure_reason": None}
             },
         )
+
+
+class TestExportChanged:
+    """What the nightly commits, and what it leaves alone."""
+
+    LATER = FROZEN.replace(day=16)
+
+    def written(self, tmp_path, catalogs, now=FROZEN):
+        path = tmp_path / "catalogs.json"
+        path.write_text(json.dumps(build_export(catalogs, now=now), indent=2))
+        return path
+
+    def catalog(self, **overrides):
+        base = {
+            "id": "a",
+            "url": ROOT,
+            "status": "valid",
+            "collection_count": 3,
+            "last_crawled": FROZEN.isoformat(),
+            "last_validated": FROZEN.isoformat(),
+        }
+        return {**base, **overrides}
+
+    def test_writes_when_there_is_no_previous_export(self, tmp_path):
+        export = build_export([self.catalog()], now=FROZEN)
+        assert export_changed(export, tmp_path / "catalogs.json")
+
+    def test_ignores_a_run_that_only_moved_the_clock(self, tmp_path):
+        path = self.written(tmp_path, [self.catalog()])
+        tonight = self.catalog(
+            last_crawled=self.LATER.isoformat(),
+            last_validated=self.LATER.isoformat(),
+        )
+        assert not export_changed(build_export([tonight], now=self.LATER), path)
+
+    def test_notices_a_status_transition(self, tmp_path):
+        path = self.written(tmp_path, [self.catalog()])
+        tonight = self.catalog(
+            status="stale",
+            stale_since=self.LATER.isoformat(),
+            failure_reason="timeout",
+            last_crawled=self.LATER.isoformat(),
+            last_validated=self.LATER.isoformat(),
+        )
+        assert export_changed(build_export([tonight], now=self.LATER), path)
+
+    def test_notices_a_count_change(self, tmp_path):
+        path = self.written(tmp_path, [self.catalog()])
+        tonight = self.catalog(
+            collection_count=4, last_crawled=self.LATER.isoformat()
+        )
+        assert export_changed(build_export([tonight], now=self.LATER), path)
+
+    def test_notices_a_new_bbox(self, tmp_path):
+        path = self.written(tmp_path, [self.catalog()])
+        tonight = self.catalog(bbox=[-1.0, -2.0, 3.0, 4.0])
+        assert export_changed(build_export([tonight], now=self.LATER), path)
+
+    def test_notices_a_catalog_joining_the_registry(self, tmp_path):
+        path = self.written(tmp_path, [self.catalog()])
+        tonight = build_export(
+            [self.catalog(), self.catalog(id="b")], now=self.LATER
+        )
+        assert export_changed(tonight, path)
+
+    def test_notices_a_catalog_leaving_the_registry(self, tmp_path):
+        path = self.written(tmp_path, [self.catalog(), self.catalog(id="b")])
+        assert export_changed(build_export([self.catalog()], now=self.LATER), path)
+
+    def test_overwrites_an_unreadable_export(self, tmp_path):
+        path = tmp_path / "catalogs.json"
+        path.write_text("{ truncated")
+        assert export_changed(build_export([self.catalog()], now=FROZEN), path)
 
 
 class TestCommittedExport:

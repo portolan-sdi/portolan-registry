@@ -196,6 +196,42 @@ def check_export_safe(
         )
 
 
+# Rewritten on every run whether or not a catalog moved. Ignoring them is
+# what lets a quiet night leave the file alone instead of committing three
+# fresh timestamps, pinging the site cache, and burying real changes in the
+# history.
+VOLATILE_FIELDS = frozenset(
+    {"generated", "portolan:last_crawled", "portolan:last_validated"}
+)
+
+
+def _without_volatile(export: Mapping) -> dict:
+    stripped = {k: v for k, v in export.items() if k not in VOLATILE_FIELDS}
+    stripped["links"] = [
+        {k: v for k, v in link.items() if k not in VOLATILE_FIELDS}
+        for link in export.get("links", [])
+    ]
+    return stripped
+
+
+def export_changed(export: Mapping, export_path: Path = EXPORT_PATH) -> bool:
+    """True when `export` differs from what is on disk beyond its timestamps.
+
+    A status transition, a count, an extent, an added or dropped catalog: all
+    of those still compare as changed. Only the clock is ignored, so the
+    committed timestamps read as "when the registry last actually moved".
+    """
+    if not export_path.exists():
+        return True
+    try:
+        with open(export_path) as f:
+            previous = json.load(f)
+    except (OSError, json.JSONDecodeError):
+        # An unreadable file is one we want overwritten, not one we compare to.
+        return True
+    return _without_volatile(export) != _without_volatile(previous)
+
+
 def write_export(export: Mapping, export_path: Path = EXPORT_PATH) -> None:
     """Write the export as pretty-printed JSON."""
     export_path.parent.mkdir(parents=True, exist_ok=True)
