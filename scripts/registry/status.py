@@ -13,7 +13,7 @@ from datetime import datetime, timedelta, timezone
 STALE_THRESHOLD_DAYS = 30
 
 
-def _parse(ts: str | None) -> datetime | None:
+def parse_timestamp(ts: str | None) -> datetime | None:
     if not ts:
         return None
     try:
@@ -60,7 +60,7 @@ def update_status(
         # here. That raise escaped the caller's except block, failed the
         # step, and skipped the commit -- freezing every catalog's state
         # with no error anyone would notice. Treat the clock as starting now.
-        stale_dt = _parse(stale_since)
+        stale_dt = parse_timestamp(stale_since)
         if stale_dt is None:
             return {
                 "status": "stale",

@@ -9,8 +9,10 @@ from __future__ import annotations
 
 import json
 from collections.abc import Mapping, Sequence
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
+
+from registry.status import parse_timestamp
 
 EXPORT_PATH = Path("exports/catalogs.json")
 
@@ -196,13 +198,17 @@ def check_export_safe(
         )
 
 
-# Rewritten on every run whether or not a catalog moved. Ignoring them is
-# what lets a quiet night leave the file alone instead of committing three
-# fresh timestamps, pinging the site cache, and burying real changes in the
-# history.
+# These three are rewritten on every run, whether or not a catalog moved.
+# The nightly ignores them, so a quiet night writes nothing instead of
+# committing fresh timestamps and pinging the site cache.
 VOLATILE_FIELDS = frozenset(
     {"generated", "portolan:last_crawled", "portolan:last_validated"}
 )
+
+# The timestamps are still a freshness signal, so they must not freeze. A
+# quiet week ends with one commit that refreshes them. This bounds their lag
+# at 7 days and cuts the nightly commits from 30 a month to about 4.
+TIMESTAMP_REFRESH_DAYS = 7
 
 
 def _without_volatile(export: Mapping) -> dict:
@@ -214,12 +220,19 @@ def _without_volatile(export: Mapping) -> dict:
     return stripped
 
 
-def export_changed(export: Mapping, export_path: Path = EXPORT_PATH) -> bool:
-    """True when `export` differs from what is on disk beyond its timestamps.
+def export_changed(
+    export: Mapping,
+    export_path: Path = EXPORT_PATH,
+    *,
+    now: datetime | None = None,
+    refresh_after: timedelta = timedelta(days=TIMESTAMP_REFRESH_DAYS),
+) -> bool:
+    """True when the run must write `export` to `export_path`.
 
-    A status transition, a count, an extent, an added or dropped catalog: all
-    of those still compare as changed. Only the clock is ignored, so the
-    committed timestamps read as "when the registry last actually moved".
+    A status transition, a count, an extent, or an added or dropped catalog
+    is a change. A new timestamp alone is not, until the timestamps on disk
+    are older than `refresh_after`. `now` is injected so tests can age the
+    file without waiting a week.
     """
     if not export_path.exists():
         return True
@@ -227,9 +240,17 @@ def export_changed(export: Mapping, export_path: Path = EXPORT_PATH) -> bool:
         with open(export_path) as f:
             previous = json.load(f)
     except (OSError, json.JSONDecodeError):
-        # An unreadable file is one we want overwritten, not one we compare to.
+        # Overwrite an unreadable file. Do not compare against it.
         return True
-    return _without_volatile(export) != _without_volatile(previous)
+
+    if _without_volatile(export) != _without_volatile(previous):
+        return True
+
+    now = now or datetime.now(timezone.utc)
+    written = parse_timestamp(previous.get("generated"))
+    # An export with no readable `generated` has no age to check, so refresh
+    # it and give the next run something to measure.
+    return written is None or now - written >= refresh_after
 
 
 def write_export(export: Mapping, export_path: Path = EXPORT_PATH) -> None:
