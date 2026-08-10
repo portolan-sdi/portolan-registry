@@ -23,10 +23,13 @@
     },
     "bbox": {
       "type": ["array", "null"],
-      "minItems": 4,
-      "maxItems": 4,
       "items": { "type": "number" },
-      "description": "Auto-extracted bounding box [west, south, east, north] from collections"
+      "oneOf": [
+        { "minItems": 4, "maxItems": 4 },
+        { "minItems": 6, "maxItems": 6 },
+        { "type": "null" }
+      ],
+      "description": "Auto-extracted bounding box from collections, [west, south, east, north] or [west, south, min_alt, east, north, max_alt]"
     },
     "license": {
       "type": ["string", "null"],

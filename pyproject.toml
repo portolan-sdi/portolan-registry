@@ -1,0 +1,32 @@
+[project]
+name = "portolan-registry-scripts"
+version = "0"
+description = "Crawler and export tooling for the Portolan registry."
+requires-python = ">=3.11"
+dependencies = [
+    "pyyaml>=6",
+    "requests>=2.32",
+    "email-validator>=2.2",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+    "responses>=0.25",
+]
+
+# Dependencies only. There is nothing to build or install, so uv skips the
+# build backend entirely and just resolves the environment.
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+# `scripts` rather than `scripts/tests`, so tests import the package as
+# `registry.crawl`. Without this pytest prepends the test directory instead
+# and the import fails.
+pythonpath = ["scripts"]
+testpaths = ["scripts/tests"]
+markers = [
+    "network: hits the real network; deselected by default",
+]
+addopts = "-m 'not network' -q"

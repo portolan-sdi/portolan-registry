@@ -1,0 +1,18 @@
+{
+  "type": "Collection",
+  "stac_version": "1.1.0",
+  "id": "coastal",
+  "title": "Coastal",
+  "description": "Coastal zones.",
+  "license": "CC-BY-4.0",
+  "table:row_count": 1200,
+  "extent": {
+    "spatial": {"bbox": [[2.0, 50.0, 7.0, 55.0]]},
+    "temporal": {"interval": [["2020-01-01T00:00:00Z", "2023-06-30T00:00:00Z"]]}
+  },
+  "assets": {
+    "data": {"href": "./data.parquet", "file:size": 4096},
+    "thumbnail": {"href": "./thumb.png"}
+  },
+  "links": []
+}

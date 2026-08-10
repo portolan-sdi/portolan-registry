@@ -9,3 +9,14 @@ updates:
       - "dependencies"
       - "github-actions"
     open-pull-requests-limit: 5
+
+  # Python dependencies for the registry crawler. The workflows run with
+  # `uv run --frozen`, so a stale lockfile fails every job. Keep it fresh.
+  - package-ecosystem: "uv"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+      - "python"
+    open-pull-requests-limit: 5

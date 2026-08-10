@@ -17,3 +17,10 @@ node_modules/
 .vscode/
 *.swp
 *.swo
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.benchmarks/
