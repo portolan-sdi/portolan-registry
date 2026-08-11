@@ -1,7 +1,14 @@
-"""Maintainer contact details from STAC providers.
+"""The address answerable for a registry entry.
 
-One implementation, two call-site policies: validate_entries treats an
-invalid address as a hard error, revalidate_all catches and logs it.
+This is a registry concern, not a spec one. The Portolan spec requires a
+maintainer contact on each collection's `host` provider, but it accepts a `url`
+in place of an `email`, so a conformant catalog can publish no address at all.
+The registry needs one regardless: something has to reach whoever submitted an
+entry when it stops validating. So the address is a field on the entry file,
+supplied at submission, and the two parties need not be the same.
+
+One implementation, two call-site policies: validate_entries treats an invalid
+address as a hard error, revalidate_all catches and logs it.
 """
 
 from __future__ import annotations
@@ -9,7 +16,7 @@ from __future__ import annotations
 from email_validator import EmailNotValidError, validate_email
 
 
-def validate_maintainer_email(
+def validate_submitter_email(
     email: str | None,
     catalog_id: str,
     *,
@@ -17,28 +24,16 @@ def validate_maintainer_email(
 ) -> str:
     """Return the normalized address, or raise ValueError.
 
-    Set `check_deliverability=False` to check syntax only, which avoids a
+    Set `check_deliverability=False` to check syntax only, which avoids the
     DNS lookup.
     """
     if not email:
-        raise ValueError(f"Empty email for catalog {catalog_id}")
+        raise ValueError(f"Missing submitter_email for catalog {catalog_id}")
 
     try:
         result = validate_email(email, check_deliverability=check_deliverability)
     except EmailNotValidError as e:
         raise ValueError(
-            f"Invalid maintainer email for {catalog_id}: {email} - {e}"
+            f"Invalid submitter_email for catalog {catalog_id}: {email} - {e}"
         ) from e
     return result.normalized
-
-
-def extract_maintainer_email(providers: list | None) -> str | None:
-    """First provider contact email, or None."""
-    if not providers:
-        return None
-    for provider in providers:
-        if isinstance(provider, dict):
-            contact = provider.get("contact") or {}
-            if isinstance(contact, dict) and contact.get("email"):
-                return contact["email"]
-    return None

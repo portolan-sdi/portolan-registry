@@ -26,5 +26,26 @@ jobs:
           cat changed.txt
           echo "count=$(wc -l < changed.txt | tr -d ' ')" >> "$GITHUB_OUTPUT"
 
+      # Written before the validation step, so the notifier can still find
+      # the pull request when validation fails. The `workflow_run` payload
+      # names no pull request for a run that started on a fork.
+      - name: Record the pull request number
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: echo "$PR_NUMBER" > pr-number.txt
+
       - name: Validate changed catalogs
-        run: uv run --frozen scripts/validate_entries.py --changed-file changed.txt
+        run: |
+          uv run --frozen scripts/validate_entries.py \
+            --changed-file changed.txt \
+            --report report.json
+
+      - name: Upload the outcome
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: validation-report
+          path: |
+            report.json
+            pr-number.txt
+          retention-days: 7

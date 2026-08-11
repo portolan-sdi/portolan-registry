@@ -2,20 +2,26 @@
 """Validate changed registry entries in a pull request.
 
 Reads the list of changed files (one path per line) and, for each one that is
-a catalog entry, checks the URL shape, rejects duplicates, crawls the catalog,
-and validates the maintainer address.
+a catalog entry, checks the URL shape, validates the submitter address, rejects
+duplicates, and crawls the catalog.
 
     uv run --frozen scripts/validate_entries.py --changed-file changed.txt
+
+Pass `--report` to also write the outcome as JSON. The pull request gate runs
+on `pull_request`, so on a fork it holds a read-only token and cannot report a
+failure itself; it hands this file to the notifier over an artifact instead.
 """
 
 from __future__ import annotations
 
 import argparse
+import json
+import traceback
 from pathlib import Path
 
 import requests
 
-from registry.contacts import extract_maintainer_email, validate_maintainer_email
+from registry.contacts import validate_submitter_email
 from registry.crawl import crawl_catalog
 from registry.entries import CATALOG_DIR, load_entries, load_entry, normalize_url
 from registry.export import EXPORT_PATH, load_state
@@ -46,6 +52,15 @@ def check_entry(
         return [f"{path}: Missing 'url' field"]
     if not url.endswith("catalog.json"):
         return [f"{path}: URL must end with 'catalog.json'"]
+
+    # Checked before the crawl: it costs one DNS lookup rather than a walk of
+    # the whole catalog tree, and an entry the registry cannot write back to
+    # is rejected whether or not the catalog itself turns out to be sound.
+    try:
+        submitter = validate_submitter_email(entry.get("submitter_email"), path.stem)
+    except ValueError as e:
+        return [f"{path}: {e}"]
+    log(f"  Submitter: {submitter}")
 
     catalog_state = state.get(path.stem, {})
     if catalog_state.get("status") == "removed":
@@ -82,15 +97,42 @@ def check_entry(
         log("  Warning: this catalog declares more than one Portolan version")
     log(f"  Validation: {result['validation']}")
 
-    maintainer_email = extract_maintainer_email(result.get("providers"))
-    if maintainer_email:
-        try:
-            validated = validate_maintainer_email(maintainer_email, path.stem)
-        except ValueError as e:
-            return [f"{path}: {e}"]
-        log(f"  Maintainer email: {validated}")
-
     return []
+
+
+def collect_errors(*, changed_file: Path, catalog_dir: Path) -> list[str]:
+    """Validate every changed entry. Returns error strings, and never raises.
+
+    A crash would leave the notifier with no report to read, and the submitter
+    with a red check and no explanation. So an unexpected failure becomes an
+    error string like any other. The traceback still reaches the run log.
+    """
+    try:
+        state = load_state(EXPORT_PATH)
+        existing_urls = {
+            normalize_url(entry["url"]): f"{cid}.yaml"
+            for cid, entry in load_entries(catalog_dir).items()
+            if entry.get("url")
+        }
+
+        fetcher = HttpFetcher()
+        errors: list[str] = []
+        for path in changed_entries(changed_file):
+            errors.extend(
+                check_entry(
+                    path, existing_urls=existing_urls, state=state, fetcher=fetcher
+                )
+            )
+        return errors
+    except Exception as e:
+        log(traceback.format_exc())
+        return [f"The validation run failed before it could check the entry: {e}"]
+
+
+def write_report(path: Path, errors: list[str]) -> None:
+    """Record the outcome where the notifier can find it."""
+    report = {"ok": not errors, "errors": errors}
+    path.write_text(json.dumps(report, indent=2) + "\n")
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -101,24 +143,19 @@ def main(argv: list[str] | None = None) -> int:
         help="File listing changed paths, one per line.",
     )
     parser.add_argument("--catalog-dir", default=str(CATALOG_DIR))
+    parser.add_argument(
+        "--report",
+        help="Write the outcome to this path as JSON. See the module docstring.",
+    )
     args = parser.parse_args(argv)
 
-    catalog_dir = Path(args.catalog_dir)
-    state = load_state(EXPORT_PATH)
-    existing_urls = {
-        normalize_url(entry["url"]): f"{cid}.yaml"
-        for cid, entry in load_entries(catalog_dir).items()
-        if entry.get("url")
-    }
+    errors = collect_errors(
+        changed_file=Path(args.changed_file),
+        catalog_dir=Path(args.catalog_dir),
+    )
 
-    fetcher = HttpFetcher()
-    errors: list[str] = []
-    for path in changed_entries(Path(args.changed_file)):
-        errors.extend(
-            check_entry(
-                path, existing_urls=existing_urls, state=state, fetcher=fetcher
-            )
-        )
+    if args.report:
+        write_report(Path(args.report), errors)
 
     if errors:
         log("\n=== ERRORS ===")

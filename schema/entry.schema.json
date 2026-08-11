@@ -2,16 +2,21 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://www.portolan-sdi.org/registry/schema/entry.schema.json",
   "title": "Portolan Registry Catalog Entry",
-  "description": "Schema for registering STAC catalogs. Only the URL is required; all other fields are auto-extracted from the catalog.",
+  "description": "Schema for registering STAC catalogs. Submitters provide the catalog URL and a contact address; every other field is auto-extracted from the catalog.",
   "type": "object",
-  "required": ["url"],
+  "required": ["url", "submitter_email"],
   "additionalProperties": false,
   "properties": {
     "url": {
       "type": "string",
       "format": "uri",
       "pattern": "catalog\\.json$",
-      "description": "The URL of the STAC catalog root. This is the ONLY field submitters provide."
+      "description": "The URL of the STAC catalog root."
+    },
+    "submitter_email": {
+      "type": "string",
+      "format": "email",
+      "description": "Address of the party answerable for this registration, used to report validation failures. This is a registry field, separate from the maintainer contact the Portolan spec requires on a collection's host provider: a catalog may satisfy that requirement with a URL and no address, and the two parties need not be the same."
     },
     "title": {
       "type": ["string", "null"],

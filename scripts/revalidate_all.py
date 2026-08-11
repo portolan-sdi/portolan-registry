@@ -42,7 +42,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--no-notify",
         action="store_true",
-        help="Never send maintainer email. Use for manual and test runs.",
+        help="Never send submitter email. Use for manual and test runs.",
     )
     args = parser.parse_args(argv)
 
@@ -113,9 +113,7 @@ def main(argv: list[str] | None = None) -> int:
         for catalog_id, entry, failure_reason in newly_stale:
             send_stale_notification(
                 catalog_id,
-                # The address lives in the catalog's own providers, and the
-                # catalog is exactly what we could not fetch. See notify.py.
-                maintainer_email=None,
+                submitter_email=entry.get("submitter_email"),
                 url=entry.get("url", "unknown"),
                 failure_reason=failure_reason,
                 enabled=not args.no_notify,

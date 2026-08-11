@@ -12,9 +12,16 @@ Submit a catalog URL → CI crawls & validates → metadata exported to [`export
 
 ## Submit a Catalog
 
-**Web**: [portolan-sdi.org](https://www.portolan-sdi.org) — enter your `catalog.json` URL
+**Web**: [portolan-sdi.org](https://www.portolan-sdi.org) — enter your `catalog.json` URL and an email address
 
-**GitHub**: Fork, add `catalogs/your-catalog.yaml` with `url: https://...catalog.json`, open PR
+**GitHub**: Fork, add `catalogs/your-catalog.yaml`, open PR:
+
+```yaml
+url: https://example.org/catalog.json
+submitter_email: you@example.org
+```
+
+The address is how the registry reaches you when your catalog stops validating. It stays in `catalogs/`, and never appears in [`exports/catalogs.json`](./exports/catalogs.json).
 
 See [Portolan spec](https://github.com/portolan-sdi/portolan-spec) for requirements.
 
