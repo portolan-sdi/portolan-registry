@@ -9,6 +9,7 @@ and the assertion. Real HTTP behavior is covered in test_fetch.py.
 from __future__ import annotations
 
 import json
+import mimetypes
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
@@ -34,6 +35,8 @@ class FakeFetcher:
     docs: dict[str, Any] = field(default_factory=dict)
     ok: set[str] = field(default_factory=set)
     calls: list[str] = field(default_factory=list)
+    # URL -> response headers for `head`. A URL absent here does not answer.
+    heads: dict[str, dict[str, str]] = field(default_factory=dict)
 
     def get_json(self, url: str, timeout: float = 30) -> Any:
         self.calls.append(url)
@@ -48,19 +51,32 @@ class FakeFetcher:
         self.calls.append(f"{method} {url}")
         return url in self.ok
 
+    def head(self, url: str, timeout: float = 5) -> dict[str, str] | None:
+        self.calls.append(f"HEAD {url}")
+        return self.heads.get(url)
+
 
 def load_tree(name: str) -> FakeFetcher:
     """Build a FakeFetcher from a fixture directory.
 
     Each `*.json` file under `fixtures/<name>/` is served at
-    `https://ex.org/<relative path>`.
+    `https://ex.org/<relative path>`. Any other file is served to `head` alone,
+    with a content type guessed from its name, which is all the crawler asks of
+    an image.
     """
     root = FIXTURES / name
     docs = {}
-    for path in sorted(root.rglob("*.json")):
-        rel = path.relative_to(root).as_posix()
-        docs[f"https://ex.org/{rel}"] = json.loads(path.read_text())
-    return FakeFetcher(docs=docs)
+    heads: dict[str, dict[str, str]] = {}
+    for path in sorted(root.rglob("*")):
+        if not path.is_file():
+            continue
+        url = f"https://ex.org/{path.relative_to(root).as_posix()}"
+        if path.suffix == ".json":
+            docs[url] = json.loads(path.read_text())
+            continue
+        content_type, _ = mimetypes.guess_type(path.name)
+        heads[url] = {"Content-Type": content_type or "application/octet-stream"}
+    return FakeFetcher(docs=docs, heads=heads)
 
 
 @pytest.fixture

@@ -35,6 +35,11 @@
       "portolan_registry:spec_version": "0.1.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
+      "portolan_registry:logo": {
+        "href": "https://ex.org/_assets/logo.png",
+        "type": "image/png",
+        "title": "Example"
+      },
       "portolan_registry:updated": "2026-01-10T08:30:00Z",
       "portolan_registry:first_registered": null,
       "portolan_registry:licenses": {

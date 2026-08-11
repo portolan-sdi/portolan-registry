@@ -18,6 +18,7 @@ from typing import Any, TypedDict
 
 from registry.bbox import collection_bbox, union_bboxes
 from registry.fetch import Fetcher, resolve_url
+from registry.logo import catalog_logo
 from registry.report import log
 
 # The Portolan profile defines no fields, so the versioned schema URI in
@@ -78,6 +79,7 @@ class CrawlResult(TypedDict, total=False):
     updated: str | None
     providers: list | None
     keywords: list | None
+    logo: dict[str, str] | None
     bbox: list[float] | None
     licenses: dict[str, int]
     collection_count: int
@@ -105,6 +107,9 @@ def _empty_result(catalog_url: str, catalog: Mapping, now: datetime) -> CrawlRes
         "updated": catalog.get("updated"),
         "providers": catalog.get("providers"),
         "keywords": catalog.get("keywords"),
+        # Filled in by crawl_catalog, which has the fetcher needed to check the
+        # image is really there.
+        "logo": None,
         "bbox": None,
         "licenses": {},
         "collection_count": 0,
@@ -169,6 +174,7 @@ def crawl_catalog(
     `spec_version_mixed` off the outermost result.
     """
     now = now or datetime.now(timezone.utc)
+    is_root = seen is None
     seen = seen if seen is not None else set()
     seen.add(catalog_url)
     versions = versions if versions is not None else set()
@@ -186,6 +192,11 @@ def crawl_catalog(
         if link.get("rel") == "llms":
             result["validation"]["has_llms_txt"] = True
             break
+
+    # Only the registered catalog has a logo. A sub-catalog's icon belongs to
+    # that sub-catalog, and the registry lists neither it nor its branding.
+    if is_root:
+        result["logo"] = catalog_logo(catalog, catalog_url, fetcher)
 
     bboxes: list[list[float]] = []
     temporal_extents: list[list[str | None]] = []

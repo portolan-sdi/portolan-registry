@@ -44,6 +44,30 @@ class TestAggregation:
         # llms link sits on the root.
         assert r["validation"]["has_llms_txt"] is True
 
+    def test_the_root_logo_is_read_and_resolved(self, tree):
+        assert crawl_catalog(ROOT, tree, now=FROZEN)["logo"] == {
+            "href": "https://ex.org/_assets/logo.png",
+            "type": "image/png",
+            "title": "Example",
+        }
+
+    def test_a_catalog_without_an_icon_reports_no_logo(self):
+        f = FakeFetcher(docs={ROOT: catalog()})
+        assert crawl_catalog(ROOT, f, now=FROZEN)["logo"] is None
+
+    def test_a_sub_catalogs_icon_is_not_the_registered_logo(self):
+        """Only the catalog someone registered gets listed, so only its own
+        branding belongs on the registry."""
+        sub = catalog()
+        sub["links"].append(
+            {"rel": "icon", "href": "./sub.png", "type": "image/png"}
+        )
+        f = FakeFetcher(
+            docs={ROOT: catalog("./sub/catalog.json"), "https://ex.org/sub/catalog.json": sub},
+            heads={"https://ex.org/sub/sub.png": {"Content-Type": "image/png"}},
+        )
+        assert crawl_catalog(ROOT, f, now=FROZEN)["logo"] is None
+
     def test_license_mix_is_counted_across_the_whole_tree(self, tree):
         # coastal and alpine are CC-BY-4.0, inland is ODbL-1.0. inland sits
         # under the sub-catalog, and the old single-license roll-up dropped

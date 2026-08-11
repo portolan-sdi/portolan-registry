@@ -94,3 +94,44 @@ class TestResolveUrl:
         assert resolve_url(URL, "sub/collection.json") == (
             "https://ex.org/sub/collection.json"
         )
+
+
+class TestHead:
+    LOGO = "https://ex.org/logo.png"
+
+    @responses.activate
+    def test_returns_headers_on_200(self):
+        responses.add(
+            responses.HEAD,
+            self.LOGO,
+            status=200,
+            headers={"Content-Type": "image/png"},
+        )
+        assert HttpFetcher().head(self.LOGO)["Content-Type"] == "image/png"
+
+    @responses.activate
+    def test_none_on_404_without_raising(self):
+        responses.add(responses.HEAD, self.LOGO, status=404)
+        assert HttpFetcher().head(self.LOGO) is None
+
+    @responses.activate
+    def test_none_on_transport_error(self):
+        responses.add(responses.HEAD, self.LOGO, body=requests.ConnectTimeout())
+        assert HttpFetcher().head(self.LOGO) is None
+
+    @responses.activate
+    def test_follows_a_redirect(self):
+        """A logo served from a CDN commonly answers with a 302 first."""
+        responses.add(
+            responses.HEAD,
+            self.LOGO,
+            status=302,
+            headers={"Location": "https://cdn.ex.org/logo.png"},
+        )
+        responses.add(
+            responses.HEAD,
+            "https://cdn.ex.org/logo.png",
+            status=200,
+            headers={"Content-Type": "image/png"},
+        )
+        assert HttpFetcher().head(self.LOGO)["Content-Type"] == "image/png"

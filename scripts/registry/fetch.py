@@ -1,12 +1,13 @@
 """HTTP access for the crawler.
 
-The entire network surface of the crawler is the two methods on `Fetcher`.
+The entire network surface of the crawler is the three methods on `Fetcher`.
 Keeping it that small is what makes `crawl_catalog` testable: tests pass a
 fake and assert on crawl decisions rather than on HTTP transactions.
 """
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from typing import Any, Protocol
 from urllib.parse import urljoin
 
@@ -27,6 +28,16 @@ class Fetcher(Protocol):
 
     def probe(self, url: str, *, method: str = "GET", timeout: float = 5) -> bool:
         """Report whether `url` answers 200. Never raises."""
+        ...
+
+    def head(self, url: str, timeout: float = 5) -> Mapping[str, str] | None:
+        """Response headers for a HEAD, or None if the URL does not answer 200.
+
+        `probe` reports reachability alone, which cannot tell a logo apart from
+        the HTML error page some hosts serve at 200 in place of a 404. Reading
+        the headers lets a caller check what came back as well as that
+        something did. Never raises.
+        """
         ...
 
 
@@ -57,6 +68,15 @@ class HttpFetcher:
         except requests.RequestException:
             return False
         return resp.status_code == 200
+
+    def head(self, url: str, timeout: float = 5) -> Mapping[str, str] | None:
+        try:
+            resp = self._session.head(url, timeout=timeout, allow_redirects=True)
+        except requests.RequestException:
+            return None
+        if resp.status_code != 200:
+            return None
+        return resp.headers
 
 
 def resolve_url(base_url: str, href: str) -> str:
