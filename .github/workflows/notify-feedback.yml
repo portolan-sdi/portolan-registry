@@ -1,9 +1,10 @@
 # Mails the submitter of a catalog when someone files feedback against it.
 #
-# It runs on `labeled` as well as `opened`, because the issue form applies the
-# label at creation and a maintainer re-applying it by hand is the way to
-# re-send after a reporter corrects the catalog id. Removing and re-adding the
-# label is deliberate, so mailing again is what was asked for.
+# It runs on `labeled` alone. Applying the label is the trigger, and the issue
+# form applies it at creation, so a filed report fires exactly once. Adding
+# `opened` fired it twice for the same report, once per event. A maintainer
+# re-applying the label by hand is how to re-send after a reporter corrects
+# the catalog id, and that repeat is deliberate.
 #
 # The issue body is attacker-controlled text. It reaches the script through
 # `env:` and never through a `run:` string.
@@ -11,7 +12,7 @@ name: Notify on Catalog Feedback
 
 on:
   issues:
-    types: [opened, labeled]
+    types: [labeled]
 
 permissions:
   contents: read
@@ -22,7 +23,7 @@ concurrency:
 
 jobs:
   notify:
-    if: contains(github.event.issue.labels.*.name, 'catalog-feedback')
+    if: github.event.label.name == 'catalog-feedback'
     runs-on: ubuntu-latest
     permissions:
       contents: read
