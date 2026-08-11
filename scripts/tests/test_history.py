@@ -11,7 +11,7 @@ import subprocess
 
 import pytest
 
-from registry.history import first_registered
+from registry.history import _canonical, first_registered
 
 
 def git(*args, cwd):
@@ -48,6 +48,25 @@ def test_reads_the_add_commit(repo):
     assert first_registered(repo / "catalogs" / "example.yaml") == (
         "2026-03-04T09:00:00+00:00"
     )
+
+
+def test_spells_a_utc_offset_the_way_the_export_does():
+    """Recent git writes `Z`, older git writes `+00:00`; the export needs one.
+
+    Asserted on the raw strings so the test fails on every git, not only on the
+    versions whose spelling changed.
+    """
+    assert _canonical("2026-03-04T09:00:00Z") == "2026-03-04T09:00:00+00:00"
+    assert _canonical("2026-03-04T09:00:00+00:00") == "2026-03-04T09:00:00+00:00"
+
+
+def test_keeps_an_authors_own_offset():
+    """Published entries carry non-UTC offsets; rewriting them churns the export."""
+    assert _canonical("2026-06-09T10:55:36+02:00") == "2026-06-09T10:55:36+02:00"
+
+
+def test_passes_through_a_timestamp_it_cannot_parse():
+    assert _canonical("not a date") == "not a date"
 
 
 def test_reports_the_oldest_add_after_a_later_edit(repo):

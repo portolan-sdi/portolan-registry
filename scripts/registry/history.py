@@ -9,9 +9,25 @@ shells out; the crawler stays free of the working tree.
 from __future__ import annotations
 
 import subprocess
+from datetime import datetime
 from pathlib import Path
 
 from registry.report import log
+
+
+def _canonical(stamp: str) -> str:
+    """Render a git timestamp the way the rest of the registry writes RFC 3339.
+
+    Git spells a zero UTC offset as `Z` in recent versions and as `+00:00` in
+    older ones. Both are RFC 3339, so pin the spelling that `datetime.isoformat`
+    produces everywhere else in the registry. Without this the export rewrites
+    every entry the day a runner's git changes, which is the spurious-diff
+    churn issue #52 removed. A non-UTC offset is left as the author wrote it.
+    """
+    try:
+        return datetime.fromisoformat(stamp).isoformat()
+    except ValueError:
+        return stamp
 
 
 def first_registered(path: Path) -> str | None:
@@ -55,4 +71,4 @@ def first_registered(path: Path) -> str | None:
     # A renamed entry has one add per name under --follow, newest first. The
     # oldest is when the catalog joined the registry.
     dates = [line.strip() for line in completed.stdout.splitlines() if line.strip()]
-    return dates[-1] if dates else None
+    return _canonical(dates[-1]) if dates else None
