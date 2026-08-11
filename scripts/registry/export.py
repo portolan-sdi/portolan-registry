@@ -93,6 +93,12 @@ def child_link(catalog: Mapping) -> dict:
             "portolan:id": catalog["id"],
             "portolan:status": catalog.get("status", "valid"),
             "portolan:api_type": catalog.get("api_type"),
+            # SPDX id -> how many collections declare it. The registry
+            # publishes the mix rather than a single label, so a consumer can
+            # see a catalog is mostly ODbL-1.0 with two CC-BY-4.0 collections
+            # in it. Collections declaring nothing are the difference against
+            # portolan:collection_count.
+            "portolan:licenses": catalog.get("licenses") or {},
             "portolan:collection_count": catalog.get("collection_count", 0),
             "portolan:feature_count": catalog.get("feature_count", 0),
             "portolan:item_count": catalog.get("item_count", 0),

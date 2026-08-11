@@ -75,7 +75,7 @@ def check_entry(
     log(f"  Temporal: {result['temporal_extent']}")
     log(f"  API Type: {result['api_type']}")
     log(f"  BBox: {result['bbox']}")
-    log(f"  License: {result['license']}")
+    log(f"  Licenses: {result['licenses']}")
     log(f"  Validation: {result['validation']}")
 
     maintainer_email = extract_maintainer_email(result.get("providers"))

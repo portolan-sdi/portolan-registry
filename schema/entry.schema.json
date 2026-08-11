@@ -31,9 +31,10 @@
       ],
       "description": "Auto-extracted bounding box from collections, [west, south, east, north] or [west, south, min_alt, east, north, max_alt]"
     },
-    "license": {
-      "type": ["string", "null"],
-      "description": "Auto-extracted SPDX license from collections"
+    "licenses": {
+      "type": ["object", "null"],
+      "additionalProperties": { "type": "integer", "minimum": 1 },
+      "description": "Auto-extracted license mix: identifier -> number of collections declaring it. The identifier is whatever the collection declares, an SPDX id or a STAC convention such as 'proprietary' or 'other'. Collections declaring no license are the difference against collection_count."
     },
     "providers": {
       "type": ["array", "null"],
