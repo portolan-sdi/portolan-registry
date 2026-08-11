@@ -57,6 +57,25 @@
       "type": ["string", "null"],
       "description": "Auto-extracted STAC version"
     },
+    "spec_version": {
+      "type": ["string", "null"],
+      "pattern": "^[0-9]+(\\.[0-9]+)*$",
+      "description": "Auto-extracted Portolan specification version, parsed from the versioned schema URI in the catalog's stac_extensions"
+    },
+    "spec_version_mixed": {
+      "type": ["boolean", "null"],
+      "description": "Auto-detected: true when objects beneath the root declare more than one Portolan version"
+    },
+    "updated": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "Auto-extracted from the catalog's own top-level `updated`"
+    },
+    "first_registered": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "When this entry file was added to the registry, from git history"
+    },
     "collection_count": {
       "type": ["integer", "null"],
       "minimum": 0,

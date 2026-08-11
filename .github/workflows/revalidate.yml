@@ -16,6 +16,9 @@ jobs:
         uses: actions/checkout@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          # The export dates each catalog by the commit that added its entry
+          # file. A shallow clone cannot see that commit.
+          fetch-depth: 0
 
       - name: Setup uv
         uses: astral-sh/setup-uv@v7

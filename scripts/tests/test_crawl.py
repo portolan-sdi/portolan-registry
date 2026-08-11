@@ -190,6 +190,103 @@ class TestCycles:
         assert r["feature_count"] == 10
 
 
+V010 = "https://schemas.portolan-sdi.org/portolan/v0.1.0/schema.json"
+V011 = "https://schemas.portolan-sdi.org/portolan/v0.1.1/schema.json"
+
+
+class TestSpecVersion:
+    """The versioned schema URI is the only signal of specification version."""
+
+    def declaring(self, uri, **kw):
+        return {"stac_extensions": [uri], **kw}
+
+    def test_reads_the_version_the_root_declares(self, tree):
+        r = crawl_catalog(ROOT, tree, now=FROZEN)
+        assert r["spec_version"] == "0.1.0"
+        assert r["spec_version_mixed"] is False
+
+    def test_reports_none_when_nothing_is_declared(self):
+        f = FakeFetcher(docs={ROOT: catalog()})
+        assert crawl_catalog(ROOT, f, now=FROZEN)["spec_version"] is None
+
+    def test_ignores_other_extensions(self):
+        doc = catalog()
+        doc["stac_extensions"] = [
+            "https://stac-extensions.github.io/file/v2.1.0/schema.json"
+        ]
+        f = FakeFetcher(docs={ROOT: doc})
+        assert crawl_catalog(ROOT, f, now=FROZEN)["spec_version"] is None
+
+    def test_ignores_an_unversioned_portolan_uri(self):
+        doc = catalog()
+        doc["stac_extensions"] = [
+            "https://schemas.portolan-sdi.org/portolan/latest/schema.json"
+        ]
+        f = FakeFetcher(docs={ROOT: doc})
+        assert crawl_catalog(ROOT, f, now=FROZEN)["spec_version"] is None
+
+    def test_accepts_a_two_component_version(self):
+        """The org owns the URI. A shorter version is a declaration, not
+        silence."""
+        doc = catalog()
+        doc["stac_extensions"] = [
+            "https://schemas.portolan-sdi.org/portolan/v0.2/schema.json"
+        ]
+        f = FakeFetcher(docs={ROOT: doc})
+        assert crawl_catalog(ROOT, f, now=FROZEN)["spec_version"] == "0.2"
+
+    def test_a_collection_on_another_version_is_mixed(self):
+        f = FakeFetcher(
+            docs={
+                ROOT: {**catalog("./c/collection.json"), "stac_extensions": [V010]},
+                "https://ex.org/c/collection.json": collection(
+                    stac_extensions=[V011]
+                ),
+            }
+        )
+        r = crawl_catalog(ROOT, f, now=FROZEN)
+        assert r["spec_version"] == "0.1.0"
+        assert r["spec_version_mixed"] is True
+
+    def test_a_sub_catalog_on_another_version_is_mixed(self):
+        f = FakeFetcher(
+            docs={
+                ROOT: {**catalog("./s/catalog.json"), "stac_extensions": [V010]},
+                "https://ex.org/s/catalog.json": {
+                    **catalog(),
+                    "stac_extensions": [V011],
+                },
+            }
+        )
+        assert crawl_catalog(ROOT, f, now=FROZEN)["spec_version_mixed"] is True
+
+    def test_an_undeclared_collection_is_not_a_mismatch(self):
+        """Declaring nothing is a conformance failure for the validator, not a
+        disagreement about which version this catalog is on."""
+        f = FakeFetcher(
+            docs={
+                ROOT: {**catalog("./c/collection.json"), "stac_extensions": [V010]},
+                "https://ex.org/c/collection.json": collection(),
+            }
+        )
+        assert crawl_catalog(ROOT, f, now=FROZEN)["spec_version_mixed"] is False
+
+    def test_the_version_is_kept_per_collection(self, tree):
+        r = crawl_catalog(ROOT, tree, now=FROZEN)
+        assert all(c.spec_version is None for c in r["collections"])
+
+
+class TestUpdated:
+    def test_passes_the_catalogs_own_updated_through(self, tree):
+        assert crawl_catalog(ROOT, tree, now=FROZEN)["updated"] == (
+            "2026-01-10T08:30:00Z"
+        )
+
+    def test_is_none_when_the_catalog_sets_none(self):
+        f = FakeFetcher(docs={ROOT: catalog()})
+        assert crawl_catalog(ROOT, f, now=FROZEN)["updated"] is None
+
+
 class TestProbes:
     def test_search_endpoint_marks_catalog_as_api(self):
         f = FakeFetcher(docs={ROOT: catalog()}, ok={"https://ex.org/search"})

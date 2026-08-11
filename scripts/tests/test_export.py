@@ -47,6 +47,31 @@ class TestChildLink:
         assert link["portolan:id"] == "x"
         assert link["portolan:collection_count"] == 7
 
+    def test_carries_the_version_and_dates(self):
+        link = child_link(
+            {
+                "id": "x",
+                "url": ROOT,
+                "spec_version": "0.1.0",
+                "spec_version_mixed": True,
+                "stac_version": "1.1.0",
+                "updated": "2026-08-02T18:02:50Z",
+                "first_registered": "2026-06-09T14:38:00+00:00",
+            }
+        )
+        assert link["portolan:spec_version"] == "0.1.0"
+        assert link["portolan:spec_version_mixed"] is True
+        assert link["portolan:stac_version"] == "1.1.0"
+        assert link["portolan:updated"] == "2026-08-02T18:02:50Z"
+        assert link["portolan:first_registered"] == "2026-06-09T14:38:00+00:00"
+
+    def test_an_undeclared_catalog_reports_nulls(self):
+        link = child_link({"id": "x", "url": ROOT})
+        assert link["portolan:spec_version"] is None
+        assert link["portolan:spec_version_mixed"] is False
+        assert link["portolan:updated"] is None
+        assert link["portolan:first_registered"] is None
+
 
 class TestBuildExport:
     def test_has_root_and_self_links_before_children(self):
@@ -85,10 +110,9 @@ class TestBuildExport:
 
 class TestGolden:
     def test_export_matches_the_golden(self, tree):
-        """The golden was produced by the pre-extraction crawler against these
-        same fixtures, so a match was evidence that the move changed nothing.
-        It has since gained one deliberate addition, `portolan:licenses`, so
-        it now also pins the license mix the export publishes."""
+        """The golden pins every field the export publishes for one catalog,
+        including the license mix and the declared specification version, so
+        any change to the shape of a child link has to be made on purpose."""
         result = crawl_catalog(ROOT, tree, now=FROZEN)
         result.update(
             id="example",
@@ -194,6 +218,13 @@ class TestExportChanged:
     def test_notices_a_count_change(self, tmp_path):
         path = self.written(tmp_path, [self.catalog()])
         tonight = self.catalog(collection_count=4)
+        export = build_export([tonight], now=self.LATER)
+        assert export_changed(export, path, now=self.LATER)
+
+    def test_notices_a_catalog_moving_to_a_new_spec_version(self, tmp_path):
+        """The whole point of tracking the version is seeing a migration."""
+        path = self.written(tmp_path, [self.catalog(spec_version="0.1.0")])
+        tonight = self.catalog(spec_version="0.2.0")
         export = build_export([tonight], now=self.LATER)
         assert export_changed(export, path, now=self.LATER)
 

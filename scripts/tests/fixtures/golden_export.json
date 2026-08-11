@@ -32,6 +32,11 @@
       "portolan:id": "example",
       "portolan:status": "valid",
       "portolan:api_type": "static",
+      "portolan:spec_version": "0.1.0",
+      "portolan:spec_version_mixed": false,
+      "portolan:stac_version": "1.1.0",
+      "portolan:updated": "2026-01-10T08:30:00Z",
+      "portolan:first_registered": null,
       "portolan:licenses": {
         "CC-BY-4.0": 2,
         "ODbL-1.0": 1
