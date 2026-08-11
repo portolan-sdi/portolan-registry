@@ -72,10 +72,13 @@ def load_links(export_path: Path = EXPORT_PATH) -> dict[str, dict]:
 def child_link(catalog: Mapping) -> dict:
     """One rel="child" link.
 
-    Registry-only metadata (status, counts, validation flags, crawl
-    timestamps) is not present in the child catalogs themselves, so it rides
-    inline under the "portolan:" prefix. Spatial extent is the exception: it
-    is standard STAC/GeoJSON, so it stays unprefixed as "bbox".
+    Everything the registry knows about a catalog rides inline under the
+    "portolan:" prefix, including the few values copied from the catalog
+    itself, such as `stac_version` and `updated`. STAC defines none of them on
+    a link, so an unprefixed name would read as a property of the link rather
+    than of the catalog it points at. Spatial extent is the exception: STAC
+    Browser reads `bbox` off a child link to draw the map, so it stays
+    unprefixed.
     """
     validation = catalog.get("validation") or {}
     link = {
@@ -93,6 +96,11 @@ def child_link(catalog: Mapping) -> dict:
             "portolan:id": catalog["id"],
             "portolan:status": catalog.get("status", "valid"),
             "portolan:api_type": catalog.get("api_type"),
+            "portolan:spec_version": catalog.get("spec_version"),
+            "portolan:spec_version_mixed": catalog.get("spec_version_mixed", False),
+            "portolan:stac_version": catalog.get("stac_version"),
+            "portolan:updated": catalog.get("updated"),
+            "portolan:first_registered": catalog.get("first_registered"),
             # SPDX id -> how many collections declare it. The registry
             # publishes the mix rather than a single label, so a consumer can
             # see a catalog is mostly ODbL-1.0 with two CC-BY-4.0 collections

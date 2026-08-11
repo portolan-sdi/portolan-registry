@@ -63,6 +63,24 @@
                 "description": "License identifier -> number of collections beneath this catalog declaring it. The identifier is whatever the collection declares: an SPDX id, or a STAC convention such as 'proprietary' or 'other'. Collections declaring no license are the difference against portolan:collection_count.",
                 "additionalProperties": {"type": "integer", "minimum": 1}
               },
+              "portolan:spec_version": {
+                "description": "Portolan specification version the catalog claims, parsed from the versioned schema URI in its stac_extensions. Null when it declares none.",
+                "type": ["string", "null"],
+                "pattern": "^[0-9]+(\\.[0-9]+)*$"
+              },
+              "portolan:spec_version_mixed": {
+                "description": "True when objects beneath the root declare more than one Portolan version. The spec permits this and asks for a warning, not a rejection.",
+                "type": "boolean"
+              },
+              "portolan:stac_version": {"type": ["string", "null"]},
+              "portolan:updated": {
+                "description": "The catalog's own top-level `updated`, RFC 3339. Null when it sets none.",
+                "type": ["string", "null"]
+              },
+              "portolan:first_registered": {
+                "description": "When the entry file was added to this registry, RFC 3339.",
+                "type": ["string", "null"]
+              },
               "portolan:collection_count": {"type": "integer", "minimum": 0},
               "portolan:feature_count": {"type": "integer", "minimum": 0},
               "portolan:item_count": {"type": "integer", "minimum": 0},

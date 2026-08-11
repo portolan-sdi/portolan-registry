@@ -29,6 +29,7 @@ from registry.export import (
     write_export,
 )
 from registry.fetch import HttpFetcher
+from registry.history import first_registered
 from registry.report import log
 from registry.notify import send_stale_notification
 from registry.status import update_status
@@ -98,6 +99,11 @@ def main(argv: list[str] | None = None) -> int:
             continue
 
         result["id"] = catalog_id
+        # A shallow clone cannot see the add commit. Keep the date already
+        # published rather than moving the catalog's registration to today.
+        result["first_registered"] = first_registered(path) or previous_links.get(
+            catalog_id, {}
+        ).get("portolan:first_registered")
         crawled[catalog_id] = result
         log(f"  OK: {result['title']} ({result['collection_count']} collections)")
         state[catalog_id] = update_status(current_state, passed=True, now=now)

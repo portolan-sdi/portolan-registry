@@ -29,12 +29,15 @@ from registry.export import (
     write_export,
 )
 from registry.fetch import HttpFetcher
+from registry.history import first_registered
 from registry.report import log
 
 MAX_WORKERS = 4
 
 
-def process_entry(path: Path, now: datetime) -> dict | None:
+def process_entry(
+    path: Path, now: datetime, previous_links: dict[str, dict]
+) -> dict | None:
     """Crawl one registry entry. Returns None if it could not be crawled."""
     log(f"\n=== Processing {path} ===")
     entry = load_entry(path)
@@ -53,6 +56,11 @@ def process_entry(path: Path, now: datetime) -> dict | None:
         return None
 
     result["id"] = path.stem
+    # A shallow clone cannot see the add commit. Keep the date already
+    # published rather than moving the catalog's registration to today.
+    result["first_registered"] = first_registered(path) or previous_links.get(
+        path.stem, {}
+    ).get("portolan:first_registered")
     log(f"  OK: {result['title']} ({result['collection_count']} collections)")
     return result
 
@@ -75,10 +83,13 @@ def main(argv: list[str] | None = None) -> int:
     catalog_dir = Path(args.catalog_dir)
     paths = entry_paths(catalog_dir)
     now = datetime.now(timezone.utc)
+    previous_links = load_links(EXPORT_PATH)
 
     catalogs: list[dict] = []
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
-        futures = {executor.submit(process_entry, p, now): p for p in paths}
+        futures = {
+            executor.submit(process_entry, p, now, previous_links): p for p in paths
+        }
         for future in as_completed(futures):
             result = future.result()
             if result:
@@ -101,7 +112,6 @@ def main(argv: list[str] | None = None) -> int:
     # Anything we failed to crawl keeps the link it already had, rather than
     # falling out of the export and off the registry map.
     crawled = {c["id"] for c in catalogs}
-    previous_links = load_links(EXPORT_PATH)
     carried = [
         link for cid, link in previous_links.items()
         if cid not in crawled and cid in {p.stem for p in paths}

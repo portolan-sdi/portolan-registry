@@ -76,6 +76,10 @@ def check_entry(
     log(f"  API Type: {result['api_type']}")
     log(f"  BBox: {result['bbox']}")
     log(f"  Licenses: {result['licenses']}")
+    log(f"  Updated: {result['updated']}")
+    log(f"  Portolan version: {result['spec_version'] or 'not declared'}")
+    if result["spec_version_mixed"]:
+        log("  Warning: this catalog declares more than one Portolan version")
     log(f"  Validation: {result['validation']}")
 
     maintainer_email = extract_maintainer_email(result.get("providers"))
