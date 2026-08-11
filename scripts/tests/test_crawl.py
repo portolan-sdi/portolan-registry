@@ -84,9 +84,96 @@ class TestAggregation:
         assert by_id["alpine"].bbox is None
         assert by_id["inland"].row_count == 300
 
-    def test_item_count_stays_zero(self, tree):
-        # Nothing walks rel="item" links; the field is a known placeholder.
-        assert crawl_catalog(ROOT, tree, now=FROZEN)["item_count"] == 0
+
+class TestItemCount:
+    """Counting items must stay free.
+
+    A registered catalog's items outnumber its collections by orders of
+    magnitude: one catalog alone publishes 4,065 item links against 15
+    collections. Counting the links the collection already handed us costs
+    nothing; fetching them would multiply the crawl.
+    """
+
+    def test_counts_item_links_across_the_tree(self, tree):
+        # coastal links 2, inland links 3, alpine links none.
+        assert crawl_catalog(ROOT, tree, now=FROZEN)["item_count"] == 5
+
+    def test_never_fetches_an_item(self, tree):
+        crawl_catalog(ROOT, tree, now=FROZEN)
+        assert not [c for c in tree.calls if "/items/" in c]
+
+    def test_an_items_endpoint_does_not_hide_inline_links(self, tree):
+        # coastal publishes rel="items" *and* links its items inline. The
+        # endpoint's presence must not mark it unenumerable.
+        r = crawl_catalog(ROOT, tree, now=FROZEN)
+        coastal = next(c for c in r["collections"] if c.id == "coastal")
+        assert coastal.item_count == 2
+        assert coastal.items_unenumerable is False
+        assert r["counts_partial"] is False
+
+    def test_null_when_no_item_is_countable(self, unmeasured):
+        # Every collection holding items hides them behind rel="items", so the
+        # honest answer is "not measured", not "zero items".
+        r = crawl_catalog(ROOT, unmeasured, now=FROZEN)
+        assert r["item_count"] is None
+        assert r["counts_partial"] is True
+
+    def test_zero_when_enumerable_and_empty(self):
+        # A collection with no items and no endpoint really does have none.
+        f = FakeFetcher(
+            docs={
+                ROOT: catalog("./c/collection.json"),
+                "https://ex.org/c/collection.json": collection(links=[]),
+            }
+        )
+        r = crawl_catalog(ROOT, f, now=FROZEN)
+        assert r["item_count"] == 0
+        assert r["counts_partial"] is False
+
+    def test_a_hidden_branch_does_not_erase_a_counted_one(self):
+        # One unenumerable collection must not null out items counted
+        # elsewhere. The count becomes a floor, and the flag says so.
+        f = FakeFetcher(
+            docs={
+                ROOT: catalog("./a/collection.json", "./b/collection.json"),
+                "https://ex.org/a/collection.json": collection(
+                    links=[{"rel": "item", "href": "./items/1.json"}]
+                ),
+                "https://ex.org/b/collection.json": collection(
+                    links=[{"rel": "items", "href": "./items"}]
+                ),
+            }
+        )
+        r = crawl_catalog(ROOT, f, now=FROZEN)
+        assert r["item_count"] == 1
+        assert r["counts_partial"] is True
+
+
+class TestUnmeasuredSize:
+    def test_null_when_nothing_declares_a_size(self, unmeasured):
+        r = crawl_catalog(ROOT, unmeasured, now=FROZEN)
+        assert r["total_size_bytes"] is None
+        # The assets are there; only their sizes are missing.
+        assert r["asset_count"] == 2
+
+    def test_keeps_a_partial_measurement(self, tree):
+        # coastal declares one size and omits another. A sum from some sized
+        # assets is still a measurement, so it stays a number.
+        r = crawl_catalog(ROOT, tree, now=FROZEN)
+        assert r["total_size_bytes"] == 6144
+
+
+class TestPartialCrawls:
+    def test_a_failed_child_marks_the_counts_partial(self, tree):
+        tree.docs["https://ex.org/sub/catalog.json"] = TimeoutError("read timed out")
+        r = crawl_catalog(ROOT, tree, now=FROZEN)
+        # The crawl still reports what it reached, and admits it is a floor.
+        assert r["counts_partial"] is True
+        assert r["collection_count"] == 1
+        assert r["item_count"] == 2
+
+    def test_a_complete_crawl_is_not_partial(self, tree):
+        assert crawl_catalog(ROOT, tree, now=FROZEN)["counts_partial"] is False
 
 
 class TestDegenerateCollections:

@@ -1,0 +1,16 @@
+{
+  "type": "Collection",
+  "stac_version": "1.1.0",
+  "id": "hidden",
+  "title": "Hidden",
+  "description": "Lists its items behind a rel=items endpoint and links none of them inline. The crawler does not page, so this collection's items are not countable.",
+  "license": "CC-BY-4.0",
+  "extent": {
+    "spatial": {"bbox": [[0.0, 0.0, 1.0, 1.0]]},
+    "temporal": {"interval": [["2021-01-01T00:00:00Z", "2022-01-01T00:00:00Z"]]}
+  },
+  "assets": {},
+  "links": [
+    {"rel": "items", "href": "./items", "type": "application/geo+json"}
+  ]
+}

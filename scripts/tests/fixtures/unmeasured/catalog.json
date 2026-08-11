@@ -1,0 +1,11 @@
+{
+  "type": "Catalog",
+  "stac_version": "1.1.0",
+  "id": "unmeasured",
+  "title": "Unmeasured Catalog",
+  "description": "A catalog the crawler cannot measure: its items sit behind an endpoint and none of its assets declare a size. Both counts must publish null rather than zero.",
+  "links": [
+    {"rel": "child", "href": "./hidden/collection.json", "type": "application/json", "title": "Hidden"},
+    {"rel": "child", "href": "./unsized/collection.json", "type": "application/json", "title": "Unsized"}
+  ]
+}

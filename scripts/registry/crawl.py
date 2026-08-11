@@ -58,6 +58,16 @@ class CollectionSummary:
     row_count: int = 0
     asset_count: int = 0
     size_bytes: int = 0
+    item_count: int = 0
+    # How many of `asset_count` declared `file:size`. A collection can publish
+    # assets and no sizes, and the registry has to tell that apart from a
+    # collection whose assets really do sum to zero bytes.
+    sized_asset_count: int = 0
+    # A STAC API that lists its items behind `rel="items"` instead of linking
+    # them one by one. The crawler does not page, so this collection's items
+    # cannot be counted without a request per page.
+    items_unenumerable: bool = False
+    has_version_history: bool = False
 
 
 class CrawlResult(TypedDict, total=False):
@@ -82,9 +92,17 @@ class CrawlResult(TypedDict, total=False):
     licenses: dict[str, int]
     collection_count: int
     feature_count: int
-    item_count: int
+    # None when no item was countable: every collection that has items hides
+    # them behind a `rel="items"` endpoint. Zero means the catalog was fully
+    # enumerable and holds no items.
+    item_count: int | None
     asset_count: int
-    total_size_bytes: int
+    # None when nothing in the catalog declared `file:size`. Zero would read as
+    # a measurement of an empty catalog; this is the absence of a measurement.
+    total_size_bytes: int | None
+    # True when a count below is a floor rather than a total: a child failed to
+    # fetch, or a collection's items could not be enumerated.
+    counts_partial: bool
     temporal_extent: list[str | None] | None
     api_type: str | None
     last_crawled: str | None
@@ -112,6 +130,7 @@ def _empty_result(catalog_url: str, catalog: Mapping, now: datetime) -> CrawlRes
         "item_count": 0,
         "asset_count": 0,
         "total_size_bytes": 0,
+        "counts_partial": False,
         "temporal_extent": None,
         "api_type": None,
         "last_crawled": now.isoformat(),
@@ -143,7 +162,23 @@ def _summarize_collection(url: str, collection: Mapping) -> CollectionSummary:
     for asset in (collection.get("assets") or {}).values():
         summary.asset_count += 1
         if isinstance(asset, dict) and "file:size" in asset:
+            summary.sized_asset_count += 1
             summary.size_bytes += asset["file:size"]
+
+    # Items are counted from the links already in hand, never fetched. A
+    # catalog's items outnumber its collections by orders of magnitude, so
+    # fetching them would multiply the crawl for a number the collection has
+    # already told us.
+    has_items_endpoint = False
+    for link in collection.get("links") or []:
+        rel = link.get("rel")
+        if rel == "item":
+            summary.item_count += 1
+        elif rel == "items":
+            has_items_endpoint = True
+        elif rel == "version-history":
+            summary.has_version_history = True
+    summary.items_unenumerable = has_items_endpoint and summary.item_count == 0
 
     return summary
 
@@ -208,8 +243,11 @@ def crawl_catalog(
                 result["collections"].append(summary)
                 result["collection_count"] += 1
                 result["feature_count"] += summary.row_count
+                result["item_count"] += summary.item_count
                 result["asset_count"] += summary.asset_count
                 result["total_size_bytes"] += summary.size_bytes
+                if summary.items_unenumerable:
+                    result["counts_partial"] = True
 
                 if summary.bbox:
                     bboxes.append(summary.bbox)
@@ -231,9 +269,8 @@ def crawl_catalog(
                             f"{result['spec_version']}"
                         )
 
-                for clink in child.get("links", []):
-                    if clink.get("rel") == "version-history":
-                        result["validation"]["has_versions_json"] = True
+                if summary.has_version_history:
+                    result["validation"]["has_versions_json"] = True
 
             elif child.get("type") == "Catalog":
                 sub = crawl_catalog(
@@ -242,9 +279,14 @@ def crawl_catalog(
                 result["collections"].extend(sub["collections"])
                 result["collection_count"] += sub["collection_count"]
                 result["feature_count"] += sub["feature_count"]
-                result["item_count"] += sub["item_count"]
+                # A sub-catalog has already resolved its own unmeasurable
+                # counts to None. Add what it did measure and let this level
+                # decide again, over the whole merged collection list.
+                result["item_count"] += sub["item_count"] or 0
                 result["asset_count"] += sub["asset_count"]
-                result["total_size_bytes"] += sub["total_size_bytes"]
+                result["total_size_bytes"] += sub["total_size_bytes"] or 0
+                if sub["counts_partial"]:
+                    result["counts_partial"] = True
                 if sub["bbox"]:
                     bboxes.append(sub["bbox"])
                 if sub["temporal_extent"]:
@@ -265,7 +307,23 @@ def crawl_catalog(
                     result["validation"]["has_llms_txt"] = True
 
         except Exception as e:
+            # The crawl keeps going: one unreachable sub-tree should not cost
+            # the registry every other catalog. But the counts below are now a
+            # floor, and publishing them as totals is what made a failed fetch
+            # indistinguishable from a small catalog.
+            result["counts_partial"] = True
             log(f"  Warning: Failed to fetch {child_url}: {e}")
+
+    # Decided here, over `result["collections"]`, which already holds every
+    # collection merged up from every sub-catalog. A nested catalog therefore
+    # keeps a measurement any descendant managed to make, instead of one
+    # unmeasurable branch turning the whole tree null.
+    if not any(c.sized_asset_count for c in result["collections"]):
+        result["total_size_bytes"] = None
+    if result["item_count"] == 0 and any(
+        c.items_unenumerable for c in result["collections"]
+    ):
+        result["item_count"] = None
 
     result["bbox"] = union_bboxes(bboxes)
 

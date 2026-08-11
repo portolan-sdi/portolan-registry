@@ -1,0 +1,18 @@
+{
+  "type": "Collection",
+  "stac_version": "1.1.0",
+  "id": "unsized",
+  "title": "Unsized",
+  "description": "Publishes assets and declares no file:size on any of them, which is what most registered catalogs do.",
+  "license": "CC-BY-4.0",
+  "table:row_count": 500,
+  "extent": {
+    "spatial": {"bbox": [[1.0, 1.0, 2.0, 2.0]]},
+    "temporal": {"interval": [["2021-01-01T00:00:00Z", "2022-01-01T00:00:00Z"]]}
+  },
+  "assets": {
+    "data": {"href": "./data.parquet"},
+    "thumbnail": {"href": "./thumb.png"}
+  },
+  "links": []
+}

@@ -67,3 +67,9 @@ def load_tree(name: str) -> FakeFetcher:
 def tree() -> FakeFetcher:
     """A nested catalog: root -> sub-catalog -> collections."""
     return load_tree("nested")
+
+
+@pytest.fixture
+def unmeasured() -> FakeFetcher:
+    """A catalog nothing can be measured from: hidden items, unsized assets."""
+    return load_tree("unmeasured")

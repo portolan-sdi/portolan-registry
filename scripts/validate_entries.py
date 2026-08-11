@@ -85,8 +85,13 @@ def check_entry(
     log(f"  Title: {result['title']}")
     log(f"  Collections: {result['collection_count']}")
     log(f"  Features: {result['feature_count']}")
+    items = result["item_count"]
+    log(f"  Items: {'not countable' if items is None else items}")
     log(f"  Assets: {result['asset_count']}")
-    log(f"  Size: {result['total_size_bytes']} bytes")
+    size = result["total_size_bytes"]
+    log(f"  Size: {'no file:size declared' if size is None else f'{size} bytes'}")
+    if result["counts_partial"]:
+        log("  Warning: counts are a floor; part of this catalog did not enumerate")
     log(f"  Temporal: {result['temporal_extent']}")
     log(f"  API Type: {result['api_type']}")
     log(f"  BBox: {result['bbox']}")
