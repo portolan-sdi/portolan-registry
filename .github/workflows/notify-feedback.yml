@@ -1,0 +1,61 @@
+# Mails the submitter of a catalog when someone files feedback against it.
+#
+# It runs on `labeled` as well as `opened`, because the issue form applies the
+# label at creation and a maintainer re-applying it by hand is the way to
+# re-send after a reporter corrects the catalog id. Removing and re-adding the
+# label is deliberate, so mailing again is what was asked for.
+#
+# The issue body is attacker-controlled text. It reaches the script through
+# `env:` and never through a `run:` string.
+name: Notify on Catalog Feedback
+
+on:
+  issues:
+    types: [opened, labeled]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: catalog-feedback-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+jobs:
+  notify:
+    if: contains(github.event.issue.labels.*.name, 'catalog-feedback')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v7
+
+      # The script prints a comment only when it could not resolve the
+      # catalog. A resolved report says nothing on the issue: the mail went
+      # out and the thread belongs to the people talking on it.
+      - name: Resolve the catalog and mail its submitter
+        id: notify
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+        run: |
+          uv run --frozen scripts/notify_feedback.py > comment.md
+          if [ -s comment.md ]; then
+            echo "comment=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Report an unresolved catalog on the issue
+        if: steps.notify.outputs.comment == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          NUMBER: ${{ github.event.issue.number }}
+        run: gh issue comment "$NUMBER" --body-file comment.md

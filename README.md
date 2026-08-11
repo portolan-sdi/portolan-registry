@@ -42,6 +42,12 @@ The href may be relative to your catalog or absolute. `type` is required and mus
 
 The registry checks the image resolves before publishing it. A logo that does not is left out, and nothing else about your catalog changes.
 
+## Report a Problem with a Catalog
+
+Found a registered catalog serving bad data, a schema that contradicts itself, or an asset nobody can read? Open a [catalog feedback issue](https://github.com/portolan-sdi/portolan-registry/issues/new?template=catalog-feedback.yml). Name the catalog by its registry id, the stem of its file in [`catalogs/`](./catalogs), and paste the command you ran and what it printed.
+
+Filing one mails whoever registered that catalog. The registry itself changes nothing: validation state comes from the nightly crawl, not from feedback.
+
 ## Schema
 
 [`schema/entry.schema.json`](./schema/entry.schema.json)

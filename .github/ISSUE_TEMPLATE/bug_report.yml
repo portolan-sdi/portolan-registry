@@ -1,0 +1,42 @@
+name: Bug report
+description: Something is wrong or crashes
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Keep this under 200 words outside code blocks. Paste evidence rather
+        than describing it. Prose follows the
+        [Portolan voice](https://github.com/portolan-sdi/portolan-ops/blob/main/VOICE.md).
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: The command or steps you ran, and the output you got.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+      description: One or two sentences.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Minimal reproduction
+      description: >-
+        The smallest input that triggers the problem, run against real data.
+        Give the command, its output, and the dataset it read: a URL or a
+        catalog path. Strip anything private.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Tool version, or commit SHA for unreleased builds.
+    validations:
+      required: true

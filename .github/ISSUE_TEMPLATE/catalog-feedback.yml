@@ -1,0 +1,68 @@
+name: Catalog feedback
+description: Report a problem with a catalog registered here
+labels: [catalog-feedback]
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        This is for problems with the data a registered catalog serves, not
+        with the registry itself. The submitter of the catalog is mailed when
+        you file this, so name the catalog exactly. Keep it under 200 words
+        outside code blocks. Prose follows the
+        [Portolan voice](https://github.com/portolan-sdi/portolan-ops/blob/main/VOICE.md).
+  - type: input
+    id: catalog-id
+    attributes:
+      label: Catalog ID
+      description: >-
+        The registry id, which is the stem of `catalogs/{id}.yaml` and the
+        `portolan_registry:id` of the catalog's link in
+        [the export](https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json).
+      placeholder: pergamino-ide
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind of problem
+      options:
+        - Data quality
+        - Schema
+        - Accessibility
+        - Documentation
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: what-you-found
+    attributes:
+      label: What you found
+      description: >-
+        The problem and which collection or asset carries it. Six lines at
+        most, so put detail in the block below.
+    validations:
+      required: true
+  - type: textarea
+    id: how-you-hit-it
+    attributes:
+      label: How you hit it
+      description: >-
+        The command you ran against the catalog and the output it printed.
+        Paste both, and give the URL or path the command read.
+      render: shell
+    validations:
+      required: true
+  - type: input
+    id: observed
+    attributes:
+      label: Date observed
+      description: Catalogs change, so date what you saw.
+      placeholder: 2026-08-11
+    validations:
+      required: true
+  - type: input
+    id: tool
+    attributes:
+      label: Tool or agent
+      description: What you were using, with its version. Leave blank if a person filed this by hand.
+      placeholder: portolan-cli 0.4.2
