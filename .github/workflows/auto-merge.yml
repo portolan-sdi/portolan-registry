@@ -27,10 +27,27 @@ jobs:
               run_id: context.payload.workflow_run.id
             });
             const prs = run.data.pull_requests;
-            if (prs && prs.length > 0) {
-              return prs[0].number;
+            if (!prs || prs.length === 0) {
+              return null;
             }
-            return null;
+            const number = prs[0].number;
+            // Validate Catalogs now runs on every pull request, so passing it
+            // no longer means "a catalog submission is sound". Only a change
+            // confined to entry files merges itself. Anything touching code
+            // waits for a human.
+            const files = await github.paginate(github.rest.pulls.listFiles, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: number
+            });
+            const entriesOnly = files.length > 0 && files.every(
+              f => /^catalogs\/[^/]+\.yaml$/.test(f.filename)
+            );
+            if (!entriesOnly) {
+              console.log(`PR #${number} changes more than entries; leaving it`);
+              return null;
+            }
+            return number;
           result-encoding: string
 
       - name: Enable auto-merge
@@ -64,6 +81,22 @@ jobs:
             }
 
             const prNumber = prs[0].number;
+
+            // Same reason as the auto-merge job: a passing gate no longer
+            // implies a catalog submission. Publishing is what a new entry
+            // needs, and a code merge does not need it here.
+            const files = await github.paginate(github.rest.pulls.listFiles, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: prNumber
+            });
+            const entriesOnly = files.length > 0 && files.every(
+              f => /^catalogs\/[^/]+\.yaml$/.test(f.filename)
+            );
+            if (!entriesOnly) {
+              console.log(`PR #${prNumber} changes more than entries; no publish`);
+              return;
+            }
 
             // Poll until PR is merged (max 5 minutes)
             for (let i = 0; i < 30; i++) {

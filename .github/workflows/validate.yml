@@ -1,10 +1,12 @@
 name: Validate Catalogs
 
+# No `paths` filter. This is a required check, and a required check that a
+# path filter skips is never reported at all, which leaves every pull request
+# waiting on a run that will not happen. A pull request that changes no entry
+# costs one diff and no crawl.
 on:
   workflow_dispatch:
   pull_request:
-    paths:
-      - 'catalogs/*.yaml'
 
 jobs:
   validate:
