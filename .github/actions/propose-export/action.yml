@@ -1,0 +1,83 @@
+name: Propose an export update
+description: >
+  Open or update the pull request carrying a regenerated
+  exports/catalogs.json. A bot cannot push to main, which requires status
+  checks a direct push can never satisfy, so the export reaches main the
+  way every other change does.
+
+inputs:
+  client-id:
+    description: Client id of the portolan-registry-bot app.
+    required: true
+  private-key:
+    description: Private key of the portolan-registry-bot app.
+    required: true
+  commit-message:
+    description: Subject line for the export commit.
+    required: true
+
+outputs:
+  changed:
+    description: Whether the export differed and a pull request is now open.
+    value: ${{ steps.propose.outputs.changed }}
+
+runs:
+  using: composite
+  steps:
+    # An app token, not GITHUB_TOKEN: a pull request opened with GITHUB_TOKEN
+    # raises no `pull_request` event, so the required checks never run and it
+    # waits forever on a green that cannot arrive.
+    - uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+      id: token
+      with:
+        client-id: ${{ inputs.client-id }}
+        private-key: ${{ inputs.private-key }}
+        owner: ${{ github.repository_owner }}
+        repositories: ${{ github.event.repository.name }}
+        permission-contents: write
+        permission-pull-requests: write
+
+    - name: Open or update the export pull request
+      id: propose
+      shell: bash
+      env:
+        GH_TOKEN: ${{ steps.token.outputs.token }}
+        COMMIT_MESSAGE: ${{ inputs.commit-message }}
+        BODY_FILE: ${{ github.action_path }}/pr-body.md
+        BRANCH: bot/export
+      run: |
+        if git diff --quiet -- exports/catalogs.json; then
+          echo "Export unchanged"
+          echo "changed=false" >> "$GITHUB_OUTPUT"
+          exit 0
+        fi
+
+        git config user.name "portolan-registry-bot[bot]"
+        git config user.email \
+          "portolan-registry-bot[bot]@users.noreply.github.com"
+
+        # Push as the app too. The checkout's credentials belong to
+        # GITHUB_TOKEN, whose pushes raise no `synchronize` event, which would
+        # leave an old green standing over a new diff.
+        git remote set-url origin \
+          "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+
+        # One branch, force-pushed. The newest crawl supersedes any older
+        # proposal, so only one export pull request is ever open.
+        git checkout -B "$BRANCH"
+        git add exports/catalogs.json
+        git commit -m "$COMMIT_MESSAGE"
+        git push --force origin "$BRANCH"
+
+        open=$(gh pr list --head "$BRANCH" --state open \
+          --json number --jq '.[0].number // empty')
+
+        if [ -n "$open" ]; then
+          echo "Updated open pull request #${open}"
+        else
+          gh pr create --head "$BRANCH" --base main \
+            --title "chore: update the catalog export" \
+            --body-file "$BODY_FILE"
+        fi
+
+        echo "changed=true" >> "$GITHUB_OUTPUT"

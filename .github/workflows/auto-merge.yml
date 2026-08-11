@@ -33,17 +33,22 @@ jobs:
             const number = prs[0].number;
             // Validate Catalogs now runs on every pull request, so passing it
             // no longer means "a catalog submission is sound". Only a change
-            // confined to entry files merges itself. Anything touching code
-            // waits for a human.
+            // confined to generated files merges itself. Anything touching
+            // code waits for a human.
+            //
+            // The export earns its place here for the same reason an entry
+            // does: a bot wrote it, and Validate Exports checks it against
+            // the schema. Nobody is waiting to read it.
             const files = await github.paginate(github.rest.pulls.listFiles, {
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: number
             });
-            const entriesOnly = files.length > 0 && files.every(
+            const generatedOnly = files.length > 0 && files.every(
               f => /^catalogs\/[^/]+\.yaml$/.test(f.filename)
+                || f.filename === 'exports/catalogs.json'
             );
-            if (!entriesOnly) {
+            if (!generatedOnly) {
               console.log(`PR #${number} changes more than entries; leaving it`);
               return null;
             }
@@ -85,6 +90,10 @@ jobs:
             // Same reason as the auto-merge job: a passing gate no longer
             // implies a catalog submission. Publishing is what a new entry
             // needs, and a code merge does not need it here.
+            //
+            // Entries only, deliberately narrower than the auto-merge job
+            // above. Publishing produces an export pull request, so counting
+            // an export merge as a reason to publish would crawl forever.
             const files = await github.paginate(github.rest.pulls.listFiles, {
               owner: context.repo.owner,
               repo: context.repo.repo,
