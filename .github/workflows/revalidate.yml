@@ -8,6 +8,12 @@ on:
 permissions:
   contents: write
 
+# Shared with Publish Catalog Export: both propose the export on the same
+# branch, so they take turns rather than overwrite each other.
+concurrency:
+  group: catalog-export
+  cancel-in-progress: false
+
 jobs:
   revalidate:
     runs-on: ubuntu-latest
@@ -29,30 +35,9 @@ jobs:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
         run: uv run --frozen scripts/revalidate_all.py
 
-      - name: Commit changes
-        id: commit
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          git add exports/catalogs.json
-
-          if git diff --staged --quiet; then
-            echo "No changes to commit"
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-          else
-            git commit -m "chore: update catalog validity states [skip ci]"
-            git push
-            echo "Pushed updated state and export"
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Refresh portolan-sdi.org catalog cache
-        if: steps.commit.outputs.changed == 'true'
-        continue-on-error: true
-        run: |
-          curl -fsS -X POST \
-            -H "Authorization: Bearer $REVALIDATE_SECRET" \
-            https://www.portolan-sdi.org/api/revalidate
-        env:
-          REVALIDATE_SECRET: ${{ secrets.REVALIDATE_SECRET }}
+      - name: Propose the export
+        uses: ./.github/actions/propose-export
+        with:
+          client-id: ${{ secrets.REGISTRY_BOT_APP_CLIENT_ID }}
+          private-key: ${{ secrets.REGISTRY_BOT_APP_KEY }}
+          commit-message: "chore: update catalog validity states"

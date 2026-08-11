@@ -12,6 +12,13 @@ on:
 permissions:
   contents: write
 
+# One crawl at a time. Both this and Scheduled Re-validation propose the
+# export on the same branch, and a second run force-pushing mid-flight would
+# leave the open pull request describing a crawl nobody kept.
+concurrency:
+  group: catalog-export
+  cancel-in-progress: false
+
 jobs:
   publish:
     if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
@@ -31,41 +38,9 @@ jobs:
       - name: Crawl catalogs and generate export
         run: uv run --frozen scripts/publish_export.py
 
-      - name: Commit and push export
-        id: commit
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          git add exports/catalogs.json
-
-          if git diff --staged --quiet; then
-            echo "No changes to commit"
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-          else
-            git commit -m "Update catalogs.json export [skip ci]"
-
-            # Retry loop to handle concurrent pushes
-            for attempt in 1 2 3; do
-              if git push; then
-                echo "Pushed updated catalogs.json"
-                echo "changed=true" >> "$GITHUB_OUTPUT"
-                exit 0
-              fi
-              echo "Push failed (attempt $attempt), rebasing..."
-              git fetch origin main
-              git rebase origin/main
-            done
-
-            echo "Failed to push after 3 attempts"
-            exit 1
-          fi
-
-      - name: Refresh portolan-sdi.org catalog cache
-        if: steps.commit.outputs.changed == 'true'
-        run: |
-          curl -fsS -X POST \
-            -H "Authorization: Bearer $REVALIDATE_SECRET" \
-            https://www.portolan-sdi.org/api/revalidate
-        env:
-          REVALIDATE_SECRET: ${{ secrets.REVALIDATE_SECRET }}
+      - name: Propose the export
+        uses: ./.github/actions/propose-export
+        with:
+          client-id: ${{ secrets.REGISTRY_BOT_APP_CLIENT_ID }}
+          private-key: ${{ secrets.REGISTRY_BOT_APP_KEY }}
+          commit-message: "chore: update the catalog export"

@@ -1,0 +1,27 @@
+name: Refresh Site Cache
+
+# The export now reaches main through a pull request, so the moment worth
+# telling the site about is the merge, not the crawl. Both crawling workflows
+# finish while their export is still a proposal.
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'exports/catalogs.json'
+
+permissions:
+  contents: read
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Refresh portolan-sdi.org catalog cache
+        continue-on-error: true
+        run: |
+          curl -fsS -X POST \
+            -H "Authorization: Bearer $REVALIDATE_SECRET" \
+            https://www.portolan-sdi.org/api/revalidate
+        env:
+          REVALIDATE_SECRET: ${{ secrets.REVALIDATE_SECRET }}
