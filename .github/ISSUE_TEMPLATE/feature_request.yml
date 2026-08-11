@@ -1,0 +1,36 @@
+name: Feature request
+description: Propose a new capability
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Keep this under 200 words outside code blocks. Show the gap rather than
+        arguing for it. Prose follows the
+        [Portolan voice](https://github.com/portolan-sdi/portolan-ops/blob/main/VOICE.md).
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: >-
+        The situation where current behavior falls short. For spec-related
+        features, name the spec requirement involved.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Show the gap
+      description: >-
+        Run the thing against real data and paste what you got. Name the
+        dataset: a URL or a catalog path. If the capability is missing
+        entirely, show the workaround you use today and what it costs.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: What the tool should do instead. Three or four sentences.
+    validations:
+      required: true
