@@ -32,6 +32,10 @@
       "portolan:id": "example",
       "portolan:status": "valid",
       "portolan:api_type": "static",
+      "portolan:licenses": {
+        "CC-BY-4.0": 2,
+        "ODbL-1.0": 1
+      },
       "portolan:collection_count": 3,
       "portolan:feature_count": 1500,
       "portolan:item_count": 0,

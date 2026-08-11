@@ -44,9 +44,37 @@ class TestAggregation:
         # llms link sits on the root.
         assert r["validation"]["has_llms_txt"] is True
 
-    def test_license_is_alphabetically_first(self, tree):
-        # CC-BY-4.0 and ODbL-1.0 are both present.
-        assert crawl_catalog(ROOT, tree, now=FROZEN)["license"] == "CC-BY-4.0"
+    def test_license_mix_is_counted_across_the_whole_tree(self, tree):
+        # coastal and alpine are CC-BY-4.0, inland is ODbL-1.0. inland sits
+        # under the sub-catalog, and the old single-license roll-up dropped
+        # it: each level collapsed to one license before merging upward.
+        assert crawl_catalog(ROOT, tree, now=FROZEN)["licenses"] == {
+            "CC-BY-4.0": 2,
+            "ODbL-1.0": 1,
+        }
+
+    def test_unlicensed_collections_are_absent_from_the_mix(self):
+        # Not counted under any key, so `collection_count` minus the sum of
+        # the counts is how many collections declare nothing.
+        f = FakeFetcher(
+            docs={
+                ROOT: catalog("./a/collection.json", "./b/collection.json"),
+                "https://ex.org/a/collection.json": collection(license="CC-BY-4.0"),
+                "https://ex.org/b/collection.json": collection(),
+            }
+        )
+        r = crawl_catalog(ROOT, f, now=FROZEN)
+        assert r["licenses"] == {"CC-BY-4.0": 1}
+        assert r["collection_count"] == 2
+
+    def test_no_licenses_anywhere_is_an_empty_mix(self):
+        f = FakeFetcher(
+            docs={
+                ROOT: catalog("./a/collection.json"),
+                "https://ex.org/a/collection.json": collection(),
+            }
+        )
+        assert crawl_catalog(ROOT, f, now=FROZEN)["licenses"] == {}
 
     def test_per_collection_summaries_are_retained(self, tree):
         r = crawl_catalog(ROOT, tree, now=FROZEN)
@@ -80,7 +108,7 @@ class TestDegenerateCollections:
         r = crawl_catalog(ROOT, f, now=FROZEN)
         assert r["collection_count"] == 1
         assert r["feature_count"] == 17
-        assert r["license"] == "CC-BY-4.0"
+        assert r["licenses"] == {"CC-BY-4.0": 1}
         assert r["bbox"] is None
 
     def test_empty_temporal_interval_still_counts_the_collection(self):

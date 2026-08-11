@@ -84,9 +84,11 @@ class TestBuildExport:
 
 
 class TestGolden:
-    def test_extraction_preserves_pre_refactor_output(self, tree):
+    def test_export_matches_the_golden(self, tree):
         """The golden was produced by the pre-extraction crawler against these
-        same fixtures, so a match is evidence the move changed nothing."""
+        same fixtures, so a match was evidence that the move changed nothing.
+        It has since gained one deliberate addition, `portolan:licenses`, so
+        it now also pins the license mix the export publishes."""
         result = crawl_catalog(ROOT, tree, now=FROZEN)
         result.update(
             id="example",

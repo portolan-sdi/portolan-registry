@@ -58,6 +58,11 @@
                 "type": ["string", "null"],
                 "enum": ["api", "static", null]
               },
+              "portolan:licenses": {
+                "type": "object",
+                "description": "License identifier -> number of collections beneath this catalog declaring it. The identifier is whatever the collection declares: an SPDX id, or a STAC convention such as 'proprietary' or 'other'. Collections declaring no license are the difference against portolan:collection_count.",
+                "additionalProperties": {"type": "integer", "minimum": 1}
+              },
               "portolan:collection_count": {"type": "integer", "minimum": 0},
               "portolan:feature_count": {"type": "integer", "minimum": 0},
               "portolan:item_count": {"type": "integer", "minimum": 0},

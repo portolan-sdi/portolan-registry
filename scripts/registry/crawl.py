@@ -9,6 +9,7 @@ unioning the collections beneath.
 
 from __future__ import annotations
 
+from collections import Counter
 from collections.abc import Mapping
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -55,7 +56,7 @@ class CrawlResult(TypedDict, total=False):
     providers: list | None
     keywords: list | None
     bbox: list[float] | None
-    license: str | None
+    licenses: dict[str, int]
     collection_count: int
     feature_count: int
     item_count: int
@@ -77,7 +78,7 @@ def _empty_result(catalog_url: str, catalog: Mapping, now: datetime) -> CrawlRes
         "providers": catalog.get("providers"),
         "keywords": catalog.get("keywords"),
         "bbox": None,
-        "license": None,
+        "licenses": {},
         "collection_count": 0,
         "feature_count": 0,
         "item_count": 0,
@@ -149,7 +150,6 @@ def crawl_catalog(
             break
 
     bboxes: list[list[float]] = []
-    licenses: set[str] = set()
     temporal_extents: list[list[str | None]] = []
 
     for link in catalog.get("links", []):
@@ -179,8 +179,6 @@ def crawl_catalog(
                     log(f"  Warning: discarding invalid bbox on {child_url}")
                 if summary.temporal:
                     temporal_extents.append(summary.temporal)
-                if summary.license:
-                    licenses.add(summary.license)
 
                 for clink in child.get("links", []):
                     if clink.get("rel") == "version-history":
@@ -196,8 +194,6 @@ def crawl_catalog(
                 result["total_size_bytes"] += sub["total_size_bytes"]
                 if sub["bbox"]:
                     bboxes.append(sub["bbox"])
-                if sub["license"]:
-                    licenses.add(sub["license"])
                 if sub["temporal_extent"]:
                     temporal_extents.append(sub["temporal_extent"])
                 if sub["validation"]["has_versions_json"]:
@@ -218,10 +214,16 @@ def crawl_catalog(
             max(ends) if ends else None,
         ]
 
-    # Alphabetically first, not most common. Deterministic but arbitrary;
-    # tracked separately now that per-collection licenses are retained.
-    if licenses:
-        result["license"] = sorted(licenses)[0]
+    # The whole mix, weighted, rather than one license standing in for the
+    # rest. A catalog of 190 ODbL-1.0 collections and 2 CC-BY-4.0 ones has a
+    # mix, and any single label for it hides that. Counted from
+    # `result["collections"]`, which already holds the collections merged up
+    # from every sub-catalog, so a nested tree keeps its licenses instead of
+    # collapsing once per level. Sorted by identifier to keep the export diff
+    # quiet when nothing moved. Collections declaring no license are absent
+    # here; their count is `collection_count` minus the sum of these.
+    counts = Counter(c.license for c in result["collections"] if c.license)
+    result["licenses"] = dict(sorted(counts.items()))
 
     result["validation"]["has_portolan_dir"] = fetcher.probe(
         f"{base}/.portolan/config.yaml", method="HEAD", timeout=10
