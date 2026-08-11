@@ -47,53 +47,53 @@
             "required": [
               "href",
               "title",
-              "portolan:id",
-              "portolan:status",
-              "portolan:collection_count"
+              "portolan_registry:id",
+              "portolan_registry:status",
+              "portolan_registry:collection_count"
             ],
             "properties": {
-              "portolan:id": {"type": "string", "minLength": 1},
-              "portolan:status": {"enum": ["valid", "stale", "removed"]},
-              "portolan:api_type": {
+              "portolan_registry:id": {"type": "string", "minLength": 1},
+              "portolan_registry:status": {"enum": ["valid", "stale", "removed"]},
+              "portolan_registry:api_type": {
                 "type": ["string", "null"],
                 "enum": ["api", "static", null]
               },
-              "portolan:licenses": {
+              "portolan_registry:licenses": {
                 "type": "object",
-                "description": "License identifier -> number of collections beneath this catalog declaring it. The identifier is whatever the collection declares: an SPDX id, or a STAC convention such as 'proprietary' or 'other'. Collections declaring no license are the difference against portolan:collection_count.",
+                "description": "License identifier -> number of collections beneath this catalog declaring it. The identifier is whatever the collection declares: an SPDX id, or a STAC convention such as 'proprietary' or 'other'. Collections declaring no license are the difference against portolan_registry:collection_count.",
                 "additionalProperties": {"type": "integer", "minimum": 1}
               },
-              "portolan:spec_version": {
+              "portolan_registry:spec_version": {
                 "description": "Portolan specification version the catalog claims, parsed from the versioned schema URI in its stac_extensions. Null when it declares none.",
                 "type": ["string", "null"],
                 "pattern": "^[0-9]+(\\.[0-9]+)*$"
               },
-              "portolan:spec_version_mixed": {
+              "portolan_registry:spec_version_mixed": {
                 "description": "True when objects beneath the root declare more than one Portolan version. The spec permits this and asks for a warning, not a rejection.",
                 "type": "boolean"
               },
-              "portolan:stac_version": {"type": ["string", "null"]},
-              "portolan:updated": {
+              "portolan_registry:stac_version": {"type": ["string", "null"]},
+              "portolan_registry:updated": {
                 "description": "The catalog's own top-level `updated`, RFC 3339. Null when it sets none.",
                 "type": ["string", "null"]
               },
-              "portolan:first_registered": {
+              "portolan_registry:first_registered": {
                 "description": "When the entry file was added to this registry, RFC 3339.",
                 "type": ["string", "null"]
               },
-              "portolan:collection_count": {"type": "integer", "minimum": 0},
-              "portolan:feature_count": {"type": "integer", "minimum": 0},
-              "portolan:item_count": {"type": "integer", "minimum": 0},
-              "portolan:asset_count": {"type": "integer", "minimum": 0},
-              "portolan:total_size_bytes": {"type": "integer", "minimum": 0},
-              "portolan:last_crawled": {"type": ["string", "null"]},
-              "portolan:last_validated": {"type": ["string", "null"]},
-              "portolan:stale_since": {"type": ["string", "null"]},
-              "portolan:failure_reason": {"type": ["string", "null"]},
-              "portolan:stac_valid": {"type": "boolean"},
-              "portolan:has_versions_json": {"type": "boolean"},
-              "portolan:has_portolan_dir": {"type": "boolean"},
-              "portolan:has_llms_txt": {"type": "boolean"}
+              "portolan_registry:collection_count": {"type": "integer", "minimum": 0},
+              "portolan_registry:feature_count": {"type": "integer", "minimum": 0},
+              "portolan_registry:item_count": {"type": "integer", "minimum": 0},
+              "portolan_registry:asset_count": {"type": "integer", "minimum": 0},
+              "portolan_registry:total_size_bytes": {"type": "integer", "minimum": 0},
+              "portolan_registry:last_crawled": {"type": ["string", "null"]},
+              "portolan_registry:last_validated": {"type": ["string", "null"]},
+              "portolan_registry:stale_since": {"type": ["string", "null"]},
+              "portolan_registry:failure_reason": {"type": ["string", "null"]},
+              "portolan_registry:stac_valid": {"type": "boolean"},
+              "portolan_registry:has_versions_json": {"type": "boolean"},
+              "portolan_registry:has_portolan_dir": {"type": "boolean"},
+              "portolan_registry:has_llms_txt": {"type": "boolean"}
             }
           }
         }

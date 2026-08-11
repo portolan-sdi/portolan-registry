@@ -29,31 +29,31 @@
         7.0,
         55.0
       ],
-      "portolan:id": "example",
-      "portolan:status": "valid",
-      "portolan:api_type": "static",
-      "portolan:spec_version": "0.1.0",
-      "portolan:spec_version_mixed": false,
-      "portolan:stac_version": "1.1.0",
-      "portolan:updated": "2026-01-10T08:30:00Z",
-      "portolan:first_registered": null,
-      "portolan:licenses": {
+      "portolan_registry:id": "example",
+      "portolan_registry:status": "valid",
+      "portolan_registry:api_type": "static",
+      "portolan_registry:spec_version": "0.1.0",
+      "portolan_registry:spec_version_mixed": false,
+      "portolan_registry:stac_version": "1.1.0",
+      "portolan_registry:updated": "2026-01-10T08:30:00Z",
+      "portolan_registry:first_registered": null,
+      "portolan_registry:licenses": {
         "CC-BY-4.0": 2,
         "ODbL-1.0": 1
       },
-      "portolan:collection_count": 3,
-      "portolan:feature_count": 1500,
-      "portolan:item_count": 0,
-      "portolan:asset_count": 3,
-      "portolan:total_size_bytes": 6144,
-      "portolan:last_crawled": "2026-01-15T12:00:00+00:00",
-      "portolan:last_validated": "2026-01-15T12:00:00+00:00",
-      "portolan:stale_since": null,
-      "portolan:failure_reason": null,
-      "portolan:stac_valid": true,
-      "portolan:has_versions_json": true,
-      "portolan:has_portolan_dir": false,
-      "portolan:has_llms_txt": true
+      "portolan_registry:collection_count": 3,
+      "portolan_registry:feature_count": 1500,
+      "portolan_registry:item_count": 0,
+      "portolan_registry:asset_count": 3,
+      "portolan_registry:total_size_bytes": 6144,
+      "portolan_registry:last_crawled": "2026-01-15T12:00:00+00:00",
+      "portolan_registry:last_validated": "2026-01-15T12:00:00+00:00",
+      "portolan_registry:stale_since": null,
+      "portolan_registry:failure_reason": null,
+      "portolan_registry:stac_valid": true,
+      "portolan_registry:has_versions_json": true,
+      "portolan_registry:has_portolan_dir": false,
+      "portolan_registry:has_llms_txt": true
     }
   ]
 }
