@@ -110,9 +110,21 @@
               },
               "portolan_registry:collection_count": {"type": "integer", "minimum": 0},
               "portolan_registry:feature_count": {"type": "integer", "minimum": 0},
-              "portolan_registry:item_count": {"type": "integer", "minimum": 0},
+              "portolan_registry:item_count": {
+                "description": "STAC Items beneath this catalog, counted from the rel=\"item\" links its collections publish. The crawler counts those links and never fetches them. Null when no item was countable because every collection holding items lists them behind a rel=\"items\" endpoint, which the crawler does not page. Zero means the catalog was fully enumerable and holds no items. Read portolan_registry:counts_partial before treating a number here as a total.",
+                "type": ["integer", "null"],
+                "minimum": 0
+              },
               "portolan_registry:asset_count": {"type": "integer", "minimum": 0},
-              "portolan_registry:total_size_bytes": {"type": "integer", "minimum": 0},
+              "portolan_registry:total_size_bytes": {
+                "description": "Sum of file:size over the collection-level assets beneath this catalog. Null when nothing declared file:size, which is common: most publishers omit it. Null is the absence of a measurement, where zero would claim the catalog holds no bytes.",
+                "type": ["integer", "null"],
+                "minimum": 0
+              },
+              "portolan_registry:counts_partial": {
+                "description": "True when the counts above are a floor rather than a total, because a child failed to fetch or a collection's items could not be enumerated. Absent on entries carried forward from an export published before this field existed; treat absent as false.",
+                "type": "boolean"
+              },
               "portolan_registry:last_crawled": {"type": ["string", "null"]},
               "portolan_registry:last_validated": {"type": ["string", "null"]},
               "portolan_registry:stale_since": {"type": ["string", "null"]},

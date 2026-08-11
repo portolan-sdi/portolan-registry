@@ -39,6 +39,26 @@ class TestChildLink:
     def test_omits_bbox_when_none(self):
         assert "bbox" not in child_link({"id": "x", "url": ROOT, "bbox": None})
 
+    def test_publishes_null_counts_rather_than_zero(self):
+        # An uncrawled catalog measured nothing. Zero would claim it holds no
+        # items and no bytes, which is a stronger and different claim.
+        link = child_link({"id": "x", "url": ROOT})
+        assert link["portolan_registry:item_count"] is None
+        assert link["portolan_registry:total_size_bytes"] is None
+        assert link["portolan_registry:counts_partial"] is False
+
+    def test_carries_a_measured_zero_through(self):
+        # A fully enumerable catalog that really holds no items keeps its zero.
+        link = child_link(
+            {"id": "x", "url": ROOT, "item_count": 0, "total_size_bytes": 0}
+        )
+        assert link["portolan_registry:item_count"] == 0
+        assert link["portolan_registry:total_size_bytes"] == 0
+
+    def test_carries_the_partial_flag(self):
+        link = child_link({"id": "x", "url": ROOT, "counts_partial": True})
+        assert link["portolan_registry:counts_partial"] is True
+
     def test_falls_back_to_id_for_title(self):
         assert child_link({"id": "x", "url": ROOT})["title"] == "x"
 

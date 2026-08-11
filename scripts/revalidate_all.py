@@ -148,6 +148,12 @@ def main(argv: list[str] | None = None) -> int:
                 "portolan_registry:id": catalog_id,
                 "portolan_registry:collection_count": 0,
                 "portolan_registry:feature_count": 0,
+                # Never crawled and with no previous link to carry, so nothing
+                # here was measured. Null and the partial flag say that; a zero
+                # would claim an empty catalog.
+                "portolan_registry:item_count": None,
+                "portolan_registry:total_size_bytes": None,
+                "portolan_registry:counts_partial": True,
             }
         link["portolan_registry:status"] = catalog_state.get("status", "removed")
         link["portolan_registry:last_validated"] = catalog_state.get("last_validated")

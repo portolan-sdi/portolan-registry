@@ -139,9 +139,17 @@ def child_link(catalog: Mapping) -> dict:
             "portolan_registry:licenses": catalog.get("licenses") or {},
             "portolan_registry:collection_count": catalog.get("collection_count", 0),
             "portolan_registry:feature_count": catalog.get("feature_count", 0),
-            "portolan_registry:item_count": catalog.get("item_count", 0),
+            # Null, not zero, when the crawl could measure nothing: no item was
+            # countable, or no asset declared `file:size`. A zero here would
+            # read as a catalog that holds no items or no bytes, which is a
+            # different and much stronger claim than "not measured".
+            "portolan_registry:item_count": catalog.get("item_count"),
             "portolan_registry:asset_count": catalog.get("asset_count", 0),
-            "portolan_registry:total_size_bytes": catalog.get("total_size_bytes", 0),
+            "portolan_registry:total_size_bytes": catalog.get("total_size_bytes"),
+            # True when the counts above are a floor: a child failed to fetch,
+            # or a collection listed its items behind an endpoint the crawler
+            # does not page.
+            "portolan_registry:counts_partial": catalog.get("counts_partial", False),
             "portolan_registry:last_crawled": catalog.get("last_crawled"),
             "portolan_registry:last_validated": catalog.get("last_validated"),
             "portolan_registry:stale_since": catalog.get("stale_since"),
