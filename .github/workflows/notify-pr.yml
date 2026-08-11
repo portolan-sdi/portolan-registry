@@ -1,0 +1,95 @@
+# Reports the outcome of Validate Catalogs on the pull request itself.
+#
+# It runs on `workflow_run` rather than inside the gate. The gate runs on
+# `pull_request`, which hands a fork a read-only token, and almost every
+# submission arrives from a fork. This workflow runs on the base repository
+# with a writable token instead, and reads the gate's findings from an
+# artifact. It checks out nothing and runs no submitted code.
+name: Report Validation Outcome
+
+on:
+  workflow_run:
+    workflows: ["Validate Catalogs"]
+    types: [completed]
+
+permissions:
+  contents: read
+
+jobs:
+  report:
+    if: github.event.workflow_run.event == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      pull-requests: write
+    steps:
+      - name: Download the validation outcome
+        id: download
+        continue-on-error: true
+        uses: actions/download-artifact@v8
+        with:
+          name: validation-report
+          path: outcome
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      # A cancelled run uploads nothing. There is no outcome to report and
+      # nothing has changed, so leave any existing comment as it stands.
+      - name: Read the pull request number
+        id: pr
+        if: steps.download.outcome == 'success'
+        run: |
+          number="$(tr -dc '0-9' < outcome/pr-number.txt)"
+          if [ -z "$number" ]; then
+            echo "No pull request number recorded"
+          fi
+          echo "number=$number" >> "$GITHUB_OUTPUT"
+
+      - name: Write the comment
+        if: steps.pr.outputs.number != ''
+        env:
+          CONCLUSION: ${{ github.event.workflow_run.conclusion }}
+          RUN_URL: ${{ github.event.workflow_run.html_url }}
+        run: |
+          if [ "$CONCLUSION" = "success" ]; then
+            echo "## Catalog validation passed" > comment.md
+          else
+            echo "## Catalog validation failed" > comment.md
+            echo >> comment.md
+            if [ -f outcome/report.json ]; then
+              jq -r '.errors[] | "- " + .' outcome/report.json >> comment.md
+            else
+              echo "- The run ended before it recorded a reason." >> comment.md
+            fi
+            echo >> comment.md
+            echo "Fix the entry and push again. This check runs on every push." \
+              >> comment.md
+          fi
+          echo >> comment.md
+          echo "[Full log]($RUN_URL)" >> comment.md
+          cat comment.md
+
+      # One comment per pull request, rewritten on each push. `--edit-last`
+      # fails when there is nothing to edit, which is the whole story on a
+      # first run: create it on failure, and stay silent on a success that
+      # never had a failure to retract.
+      - name: Post the comment
+        if: steps.pr.outputs.number != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+          REPO: ${{ github.repository }}
+          CONCLUSION: ${{ github.event.workflow_run.conclusion }}
+        run: |
+          post() {
+            gh pr comment "$PR_NUMBER" --repo "$REPO" \
+              --body-file comment.md "$@"
+          }
+          if post --edit-last; then
+            exit 0
+          fi
+          if [ "$CONCLUSION" = "success" ]; then
+            echo "Nothing to retract on this pull request"
+            exit 0
+          fi
+          post

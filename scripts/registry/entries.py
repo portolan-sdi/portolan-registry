@@ -1,7 +1,8 @@
 """Reading the `catalogs/` directory of registry entries.
 
-Each entry is a YAML file whose stem is the registry id and whose only
-required key is `url`, per schema/entry.schema.json.
+Each entry is a YAML file whose stem is the registry id. It carries the two
+keys a submitter supplies, `url` and `submitter_email`, per
+schema/entry.schema.json. Every other field is crawled from the catalog.
 """
 
 from __future__ import annotations

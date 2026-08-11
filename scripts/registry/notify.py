@@ -1,12 +1,13 @@
-"""Maintainer notifications for catalogs that have gone stale.
+"""Mail to the submitter of a catalog that has gone stale.
 
-Known gap: a catalog only goes stale when its root catalog.json could not be
-fetched, and the maintainer address lives in that document's `providers`. So
-at the moment we want to send mail, there is nowhere left to read the address
-from. The registry stores no contact details of its own, and the export must
-not carry them, since it is public. Every caller therefore passes
-`maintainer_email=None` today and no mail is sent. Closing this needs a
-decision about where contacts live, tracked separately.
+A catalog goes stale when its root catalog.json could not be fetched, so at
+the moment we want to send mail the catalog itself is unreadable. Any address
+inside it is out of reach precisely when we need it. The registry therefore
+keeps its own copy: `submitter_email` on the entry file, which stays readable
+whatever happens to the catalog.
+
+The export must never carry that address. It is built from crawl results
+rather than from entry files, so the address has no path into it.
 """
 
 from __future__ import annotations
@@ -37,13 +38,13 @@ def _body(title: str, url: str, failure_reason: str) -> str:
 def send_stale_notification(
     catalog_id: str,
     *,
-    maintainer_email: str | None,
+    submitter_email: str | None,
     url: str,
     failure_reason: str,
     title: str | None = None,
     enabled: bool = True,
 ) -> bool:
-    """Mail a maintainer that their catalog went stale. Returns True if sent.
+    """Mail the submitter that their catalog went stale. Returns True if sent.
 
     Never raises: a notification failure must not abort a re-validation run.
     """
@@ -56,8 +57,10 @@ def send_stale_notification(
         log(f"  Skipping notification for {catalog_id}: RESEND_API_KEY not set")
         return False
 
-    if not maintainer_email:
-        log(f"  Skipping notification for {catalog_id}: no maintainer email known")
+    # Entries added before the address became required carry none. Those
+    # catalogs still re-validate and still go stale; they just go unreported.
+    if not submitter_email:
+        log(f"  Skipping notification for {catalog_id}: no submitter address on file")
         return False
 
     try:
@@ -69,7 +72,7 @@ def send_stale_notification(
             },
             json={
                 "from": FROM_ADDRESS,
-                "to": [maintainer_email],
+                "to": [submitter_email],
                 "subject": (
                     "[Portolan Registry] Catalog validation failed: "
                     f"{title or catalog_id}"
@@ -83,7 +86,7 @@ def send_stale_notification(
         return False
 
     if resp.status_code == 200:
-        log(f"  Notification sent to {maintainer_email}")
+        log(f"  Notification sent to {submitter_email}")
         return True
     log(f"  Failed to send notification: {resp.status_code} {resp.text}")
     return False
