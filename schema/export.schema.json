@@ -73,6 +73,33 @@
                 "type": "boolean"
               },
               "portolan_registry:stac_version": {"type": ["string", "null"]},
+              "portolan_registry:logo": {
+                "description": "The catalog's logo, read from its own `rel: \"icon\"` link and confirmed to resolve to an image. The href is absolute, resolved against the catalog. Null when the catalog publishes no usable logo.",
+                "type": ["object", "null"],
+                "required": ["href", "type"],
+                "additionalProperties": false,
+                "properties": {
+                  "href": {"type": "string", "minLength": 1},
+                  "type": {
+                    "description": "Media type as the catalog declares it, restricted to what a browser renders in an <img>.",
+                    "type": "string",
+                    "enum": [
+                      "image/apng",
+                      "image/avif",
+                      "image/gif",
+                      "image/jpeg",
+                      "image/png",
+                      "image/svg+xml",
+                      "image/webp"
+                    ]
+                  },
+                  "title": {
+                    "description": "The catalog author's own label for the image, suitable as alt text. Absent when the catalog gives none.",
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
               "portolan_registry:updated": {
                 "description": "The catalog's own top-level `updated`, RFC 3339. Null when it sets none.",
                 "type": ["string", "null"]

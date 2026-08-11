@@ -9,6 +9,7 @@
   "links": [
     {"rel": "child", "href": "./coastal/collection.json", "type": "application/json", "title": "Coastal"},
     {"rel": "child", "href": "./sub/catalog.json", "type": "application/json", "title": "Sub"},
-    {"rel": "llms", "href": "./llms.txt", "type": "text/plain"}
+    {"rel": "llms", "href": "./llms.txt", "type": "text/plain"},
+    {"rel": "icon", "href": "./_assets/logo.png", "type": "image/png", "title": "Example"}
   ]
 }

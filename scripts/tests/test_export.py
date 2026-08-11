@@ -71,6 +71,16 @@ class TestChildLink:
         assert link["portolan_registry:updated"] == "2026-08-02T18:02:50Z"
         assert link["portolan_registry:first_registered"] == "2026-06-09T14:38:00+00:00"
 
+    def test_carries_the_logo(self):
+        logo = {"href": "https://ex.org/logo.png", "type": "image/png"}
+        link = child_link({"id": "x", "url": ROOT, "logo": logo})
+        assert link["portolan_registry:logo"] == logo
+
+    def test_a_catalog_without_a_logo_reports_null(self):
+        """Null rather than omitted, unlike bbox: a consumer reads the whole
+        object or nothing, so there is no index to fail on."""
+        assert child_link({"id": "x", "url": ROOT})["portolan_registry:logo"] is None
+
     def test_an_undeclared_catalog_reports_nulls(self):
         link = child_link({"id": "x", "url": ROOT})
         assert link["portolan_registry:spec_version"] is None

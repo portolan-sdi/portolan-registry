@@ -125,6 +125,10 @@ def child_link(catalog: Mapping) -> dict:
                 "spec_version_mixed", False
             ),
             "portolan_registry:stac_version": catalog.get("stac_version"),
+            # {href, type, title} read off the catalog's own icon link, with
+            # the href resolved and the image confirmed to exist. Null when
+            # the catalog publishes none, which is the common case.
+            "portolan_registry:logo": catalog.get("logo"),
             "portolan_registry:updated": catalog.get("updated"),
             "portolan_registry:first_registered": catalog.get("first_registered"),
             # SPDX id -> how many collections declare it. The registry
