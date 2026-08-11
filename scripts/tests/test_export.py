@@ -31,7 +31,7 @@ class TestChildLink:
             {"id": "x", "url": ROOT, "bbox": [-1.0, -2.0, 3.0, 4.0]}
         )
         assert link["bbox"] == [-1.0, -2.0, 3.0, 4.0]
-        assert "portolan:bbox" not in link
+        assert "portolan_registry:bbox" not in link
 
     def test_omits_bbox_when_unknown(self):
         assert "bbox" not in child_link({"id": "x", "url": ROOT})
@@ -44,8 +44,14 @@ class TestChildLink:
 
     def test_registry_metadata_is_prefixed(self):
         link = child_link({"id": "x", "url": ROOT, "collection_count": 7})
-        assert link["portolan:id"] == "x"
-        assert link["portolan:collection_count"] == 7
+        assert link["portolan_registry:id"] == "x"
+        assert link["portolan_registry:collection_count"] == 7
+
+    def test_no_field_claims_the_specification_prefix(self):
+        """Only the specification may name a field `portolan:`. Everything the
+        registry adds on its own says so."""
+        link = child_link({"id": "x", "url": ROOT})
+        assert not [k for k in link if k.startswith("portolan:")]
 
     def test_carries_the_version_and_dates(self):
         link = child_link(
@@ -59,18 +65,18 @@ class TestChildLink:
                 "first_registered": "2026-06-09T14:38:00+00:00",
             }
         )
-        assert link["portolan:spec_version"] == "0.1.0"
-        assert link["portolan:spec_version_mixed"] is True
-        assert link["portolan:stac_version"] == "1.1.0"
-        assert link["portolan:updated"] == "2026-08-02T18:02:50Z"
-        assert link["portolan:first_registered"] == "2026-06-09T14:38:00+00:00"
+        assert link["portolan_registry:spec_version"] == "0.1.0"
+        assert link["portolan_registry:spec_version_mixed"] is True
+        assert link["portolan_registry:stac_version"] == "1.1.0"
+        assert link["portolan_registry:updated"] == "2026-08-02T18:02:50Z"
+        assert link["portolan_registry:first_registered"] == "2026-06-09T14:38:00+00:00"
 
     def test_an_undeclared_catalog_reports_nulls(self):
         link = child_link({"id": "x", "url": ROOT})
-        assert link["portolan:spec_version"] is None
-        assert link["portolan:spec_version_mixed"] is False
-        assert link["portolan:updated"] is None
-        assert link["portolan:first_registered"] is None
+        assert link["portolan_registry:spec_version"] is None
+        assert link["portolan_registry:spec_version_mixed"] is False
+        assert link["portolan_registry:updated"] is None
+        assert link["portolan_registry:first_registered"] is None
 
 
 class TestBuildExport:
@@ -88,16 +94,24 @@ class TestBuildExport:
         e = build_export(
             [{"id": "z", "url": ROOT}, {"id": "a", "url": ROOT}], now=FROZEN
         )
-        ids = [link["portolan:id"] for link in e["links"] if link["rel"] == "child"]
+        ids = [
+            link["portolan_registry:id"]
+            for link in e["links"]
+            if link["rel"] == "child"
+        ]
         assert ids == ["a", "z"]
 
     def test_carried_links_are_counted_and_sorted_in(self):
         e = build_export(
             [{"id": "b", "url": ROOT}],
             now=FROZEN,
-            extra_links=[{"rel": "child", "portolan:id": "a", "href": ROOT}],
+            extra_links=[{"rel": "child", "portolan_registry:id": "a", "href": ROOT}],
         )
-        ids = [link["portolan:id"] for link in e["links"] if link["rel"] == "child"]
+        ids = [
+            link["portolan_registry:id"]
+            for link in e["links"]
+            if link["rel"] == "child"
+        ]
         assert ids == ["a", "b"]
         assert e["count"] == 2
 
@@ -124,6 +138,51 @@ class TestGolden:
         export = build_export([result], now=FROZEN)
         golden = json.loads((FIXTURES / "golden_export.json").read_text())
         assert export == golden
+
+
+class TestLegacyPrefix:
+    """An export written before the rename still holds the only copy of its
+    validation state, so it has to be readable across the cutover."""
+
+    @staticmethod
+    def written(tmp_path, link):
+        path = tmp_path / "catalogs.json"
+        path.write_text(json.dumps({"links": [{"rel": "child", **link}]}))
+        return path
+
+    def test_reads_state_written_under_the_old_prefix(self, tmp_path):
+        path = self.written(
+            tmp_path,
+            {
+                "portolan:id": "a",
+                "portolan:status": "stale",
+                "portolan:stale_since": "2026-01-01T00:00:00+00:00",
+                "portolan:failure_reason": "timeout",
+            },
+        )
+        assert load_state(path)["a"] == {
+            "status": "stale",
+            "last_validated": None,
+            "stale_since": "2026-01-01T00:00:00+00:00",
+            "failure_reason": "timeout",
+        }
+
+    def test_republishes_a_carried_link_under_the_new_prefix(self, tmp_path):
+        """A catalog too briefly offline to crawl is copied forward verbatim.
+        Read it renamed, or the old spelling returns to the next export."""
+        path = self.written(
+            tmp_path, {"portolan:id": "a", "portolan:collection_count": 3}
+        )
+        link = load_links(path)["a"]
+        assert link["portolan_registry:collection_count"] == 3
+        assert not [k for k in link if k.startswith("portolan:")]
+
+    def test_leaves_unprefixed_link_fields_alone(self, tmp_path):
+        path = self.written(
+            tmp_path, {"portolan:id": "a", "href": ROOT, "bbox": [0, 0, 1, 1]}
+        )
+        link = load_links(path)["a"]
+        assert link["href"] == ROOT and link["bbox"] == [0, 0, 1, 1]
 
 
 class TestExportSafety:
@@ -283,7 +342,7 @@ class TestCommittedExport:
     def test_every_child_has_an_id_and_href(self):
         for link in load_links(EXPORT).values():
             assert link.get("href")
-            assert link.get("portolan:id")
+            assert link.get("portolan_registry:id")
 
     def test_every_bbox_is_valid_wgs84(self):
         for cid, link in load_links(EXPORT).items():
@@ -301,4 +360,9 @@ class TestCommittedExport:
             assert south <= north, f"{cid}: south above north"
 
     def test_no_portolan_prefixed_bbox(self):
-        assert "portolan:bbox" not in EXPORT.read_text()
+        assert "portolan_registry:bbox" not in EXPORT.read_text()
+
+    def test_carries_no_bare_portolan_prefix(self):
+        """`portolan:` belongs to the specification. Registry-only fields
+        answer to `portolan_registry:` so a reader can tell which is which."""
+        assert '"portolan:' not in EXPORT.read_text()

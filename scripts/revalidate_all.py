@@ -103,7 +103,7 @@ def main(argv: list[str] | None = None) -> int:
         # published rather than moving the catalog's registration to today.
         result["first_registered"] = first_registered(path) or previous_links.get(
             catalog_id, {}
-        ).get("portolan:first_registered")
+        ).get("portolan_registry:first_registered")
         crawled[catalog_id] = result
         log(f"  OK: {result['title']} ({result['collection_count']} collections)")
         state[catalog_id] = update_status(current_state, passed=True, now=now)
@@ -147,14 +147,14 @@ def main(argv: list[str] | None = None) -> int:
                 "href": entry.get("url"),
                 "type": "application/json",
                 "title": catalog_id,
-                "portolan:id": catalog_id,
-                "portolan:collection_count": 0,
-                "portolan:feature_count": 0,
+                "portolan_registry:id": catalog_id,
+                "portolan_registry:collection_count": 0,
+                "portolan_registry:feature_count": 0,
             }
-        link["portolan:status"] = catalog_state.get("status", "removed")
-        link["portolan:last_validated"] = catalog_state.get("last_validated")
-        link["portolan:stale_since"] = catalog_state.get("stale_since")
-        link["portolan:failure_reason"] = catalog_state.get("failure_reason")
+        link["portolan_registry:status"] = catalog_state.get("status", "removed")
+        link["portolan_registry:last_validated"] = catalog_state.get("last_validated")
+        link["portolan_registry:stale_since"] = catalog_state.get("stale_since")
+        link["portolan_registry:failure_reason"] = catalog_state.get("failure_reason")
         carried.append(link)
 
     export = build_export(catalogs, now=now, extra_links=carried)

@@ -60,7 +60,7 @@ def process_entry(
     # published rather than moving the catalog's registration to today.
     result["first_registered"] = first_registered(path) or previous_links.get(
         path.stem, {}
-    ).get("portolan:first_registered")
+    ).get("portolan_registry:first_registered")
     log(f"  OK: {result['title']} ({result['collection_count']} collections)")
     return result
 
@@ -117,7 +117,7 @@ def main(argv: list[str] | None = None) -> int:
         if cid not in crawled and cid in {p.stem for p in paths}
     ]
     for link in carried:
-        log(f"  Carrying forward {link['portolan:id']}: not crawled this run")
+        log(f"  Carrying forward {link['portolan_registry:id']}: not crawled this run")
 
     export = build_export(catalogs, now=now, extra_links=carried)
 

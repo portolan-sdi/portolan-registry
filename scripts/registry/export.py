@@ -27,6 +27,27 @@ DESCRIPTION = (
 )
 
 
+PREFIX = "portolan_registry:"
+
+# The registry once published these fields as bare "portolan:", which reads as
+# a claim on the specification's namespace. An export written before the rename
+# is still the only copy of its validation state, so accept the old spelling on
+# the way in and republish it under the current one.
+LEGACY_PREFIX = "portolan:"
+
+
+def _child_links(export: Mapping) -> list[dict]:
+    """Child links from a loaded export, every registry field current."""
+    return [
+        {
+            (PREFIX + k[len(LEGACY_PREFIX) :] if k.startswith(LEGACY_PREFIX) else k): v
+            for k, v in link.items()
+        }
+        for link in export.get("links", [])
+        if link.get("rel") == "child"
+    ]
+
+
 def load_state(export_path: Path = EXPORT_PATH) -> dict[str, dict]:
     """Read per-catalog validation state back out of a previous export.
 
@@ -39,14 +60,14 @@ def load_state(export_path: Path = EXPORT_PATH) -> dict[str, dict]:
         existing = json.load(f)
 
     state: dict[str, dict] = {}
-    for link in existing.get("links", []):
-        if link.get("rel") != "child" or not link.get("portolan:id"):
+    for link in _child_links(existing):
+        if not link.get("portolan_registry:id"):
             continue
-        state[link["portolan:id"]] = {
-            "status": link.get("portolan:status", "valid"),
-            "last_validated": link.get("portolan:last_validated"),
-            "stale_since": link.get("portolan:stale_since"),
-            "failure_reason": link.get("portolan:failure_reason"),
+        state[link["portolan_registry:id"]] = {
+            "status": link.get("portolan_registry:status", "valid"),
+            "last_validated": link.get("portolan_registry:last_validated"),
+            "stale_since": link.get("portolan_registry:stale_since"),
+            "failure_reason": link.get("portolan_registry:failure_reason"),
         }
     return state
 
@@ -56,16 +77,17 @@ def load_links(export_path: Path = EXPORT_PATH) -> dict[str, dict]:
 
     Used to carry a catalog forward unchanged when this run could not crawl
     it. Dropping it instead would erase its counts and extent, taking it off
-    the registry map for a transient network failure.
+    the registry map for a transient network failure. A carried link is
+    republished as it is read, so it arrives here already renamed.
     """
     if not export_path.exists():
         return {}
     with open(export_path) as f:
         existing = json.load(f)
     return {
-        link["portolan:id"]: link
-        for link in existing.get("links", [])
-        if link.get("rel") == "child" and link.get("portolan:id")
+        link["portolan_registry:id"]: link
+        for link in _child_links(existing)
+        if link.get("portolan_registry:id")
     }
 
 
@@ -73,12 +95,14 @@ def child_link(catalog: Mapping) -> dict:
     """One rel="child" link.
 
     Everything the registry knows about a catalog rides inline under the
-    "portolan:" prefix, including the few values copied from the catalog
-    itself, such as `stac_version` and `updated`. STAC defines none of them on
-    a link, so an unprefixed name would read as a property of the link rather
-    than of the catalog it points at. Spatial extent is the exception: STAC
-    Browser reads `bbox` off a child link to draw the map, so it stays
-    unprefixed.
+    "portolan_registry:" prefix, including the few values copied from the
+    catalog itself, such as `stac_version` and `updated`. STAC defines none of
+    them on a link, so an unprefixed name would read as a property of the link
+    rather than of the catalog it points at. The prefix names the registry, not
+    the standard: none of these fields comes from the Portolan specification,
+    and a bare "portolan:" would invite a reader to look for them there.
+    Spatial extent is the exception: STAC Browser reads `bbox` off a child link
+    to draw the map, so it stays unprefixed.
     """
     validation = catalog.get("validation") or {}
     link = {
@@ -93,33 +117,39 @@ def child_link(catalog: Mapping) -> dict:
         link["bbox"] = catalog["bbox"]
     link.update(
         {
-            "portolan:id": catalog["id"],
-            "portolan:status": catalog.get("status", "valid"),
-            "portolan:api_type": catalog.get("api_type"),
-            "portolan:spec_version": catalog.get("spec_version"),
-            "portolan:spec_version_mixed": catalog.get("spec_version_mixed", False),
-            "portolan:stac_version": catalog.get("stac_version"),
-            "portolan:updated": catalog.get("updated"),
-            "portolan:first_registered": catalog.get("first_registered"),
+            "portolan_registry:id": catalog["id"],
+            "portolan_registry:status": catalog.get("status", "valid"),
+            "portolan_registry:api_type": catalog.get("api_type"),
+            "portolan_registry:spec_version": catalog.get("spec_version"),
+            "portolan_registry:spec_version_mixed": catalog.get(
+                "spec_version_mixed", False
+            ),
+            "portolan_registry:stac_version": catalog.get("stac_version"),
+            "portolan_registry:updated": catalog.get("updated"),
+            "portolan_registry:first_registered": catalog.get("first_registered"),
             # SPDX id -> how many collections declare it. The registry
             # publishes the mix rather than a single label, so a consumer can
             # see a catalog is mostly ODbL-1.0 with two CC-BY-4.0 collections
             # in it. Collections declaring nothing are the difference against
-            # portolan:collection_count.
-            "portolan:licenses": catalog.get("licenses") or {},
-            "portolan:collection_count": catalog.get("collection_count", 0),
-            "portolan:feature_count": catalog.get("feature_count", 0),
-            "portolan:item_count": catalog.get("item_count", 0),
-            "portolan:asset_count": catalog.get("asset_count", 0),
-            "portolan:total_size_bytes": catalog.get("total_size_bytes", 0),
-            "portolan:last_crawled": catalog.get("last_crawled"),
-            "portolan:last_validated": catalog.get("last_validated"),
-            "portolan:stale_since": catalog.get("stale_since"),
-            "portolan:failure_reason": catalog.get("failure_reason"),
-            "portolan:stac_valid": validation.get("stac_valid", True),
-            "portolan:has_versions_json": validation.get("has_versions_json", False),
-            "portolan:has_portolan_dir": validation.get("has_portolan_dir", False),
-            "portolan:has_llms_txt": validation.get("has_llms_txt", False),
+            # portolan_registry:collection_count.
+            "portolan_registry:licenses": catalog.get("licenses") or {},
+            "portolan_registry:collection_count": catalog.get("collection_count", 0),
+            "portolan_registry:feature_count": catalog.get("feature_count", 0),
+            "portolan_registry:item_count": catalog.get("item_count", 0),
+            "portolan_registry:asset_count": catalog.get("asset_count", 0),
+            "portolan_registry:total_size_bytes": catalog.get("total_size_bytes", 0),
+            "portolan_registry:last_crawled": catalog.get("last_crawled"),
+            "portolan_registry:last_validated": catalog.get("last_validated"),
+            "portolan_registry:stale_since": catalog.get("stale_since"),
+            "portolan_registry:failure_reason": catalog.get("failure_reason"),
+            "portolan_registry:stac_valid": validation.get("stac_valid", True),
+            "portolan_registry:has_versions_json": validation.get(
+                "has_versions_json", False
+            ),
+            "portolan_registry:has_portolan_dir": validation.get(
+                "has_portolan_dir", False
+            ),
+            "portolan_registry:has_llms_txt": validation.get("has_llms_txt", False),
         }
     )
     return link
@@ -150,7 +180,7 @@ def build_export(
     ]
     children = [child_link(c) for c in catalogs]
     children.extend(extra_links)
-    children.sort(key=lambda link: link["portolan:id"])
+    children.sort(key=lambda link: link["portolan_registry:id"])
     links.extend(children)
 
     return {
@@ -183,9 +213,9 @@ def check_export_safe(
     fail the job loudly rather than commit it.
     """
     got = {
-        link["portolan:id"]
+        link["portolan_registry:id"]
         for link in export.get("links", [])
-        if link.get("rel") == "child" and link.get("portolan:id")
+        if link.get("rel") == "child" and link.get("portolan_registry:id")
     }
 
     missing = expected_ids - got
@@ -216,7 +246,7 @@ def check_export_safe(
 # The nightly ignores them, so a quiet night writes nothing instead of
 # committing fresh timestamps and pinging the site cache.
 VOLATILE_FIELDS = frozenset(
-    {"generated", "portolan:last_crawled", "portolan:last_validated"}
+    {"generated", "portolan_registry:last_crawled", "portolan_registry:last_validated"}
 )
 
 # The timestamps are still a freshness signal, so they must not freeze. A
