@@ -37,12 +37,10 @@ class TestAggregation:
             "2024-12-31T00:00:00Z",
         ]
 
-    def test_flags_propagate_from_grandchildren(self, tree):
+    def test_the_root_reports_its_agents_and_readme_links(self, tree):
         r = crawl_catalog(ROOT, tree, now=FROZEN)
-        # version-history sits on a collection two levels down.
-        assert r["validation"]["has_versions_json"] is True
-        # llms link sits on the root.
-        assert r["validation"]["has_llms_txt"] is True
+        assert r["validation"]["has_agents_md"] is True
+        assert r["validation"]["has_readme"] is True
 
     def test_the_root_logo_is_read_and_resolved(self, tree):
         assert crawl_catalog(ROOT, tree, now=FROZEN)["logo"] == {
@@ -398,6 +396,48 @@ class TestUpdated:
         assert crawl_catalog(ROOT, f, now=FROZEN)["updated"] is None
 
 
+class TestRequiredDocuments:
+    """PORTO-CORE-061 and PORTO-CORE-062, the two MUST-level Markdown links."""
+
+    def test_a_catalog_without_the_links_reports_neither(self):
+        f = FakeFetcher(docs={ROOT: catalog()})
+        r = crawl_catalog(ROOT, f, now=FROZEN)
+        assert r["validation"]["has_agents_md"] is False
+        assert r["validation"]["has_readme"] is False
+
+    def test_a_link_without_the_markdown_type_does_not_count(self):
+        """The specification names the relation and the media type together.
+
+        A `describedby` link to an HTML page is a valid STAC link, and it is
+        not the README.md the specification asks for.
+        """
+        doc = {
+            "type": "Catalog",
+            "links": [
+                {"rel": "agents", "href": "./AGENTS.md"},
+                {"rel": "describedby", "href": "./about.html", "type": "text/html"},
+            ],
+        }
+        r = crawl_catalog(ROOT, FakeFetcher(docs={ROOT: doc}), now=FROZEN)
+        assert r["validation"]["has_agents_md"] is False
+        assert r["validation"]["has_readme"] is False
+
+    def test_a_sub_catalogs_links_do_not_answer_for_the_root(self):
+        """The registry reports the root it was given, not the tree."""
+        sub = "https://ex.org/sub/catalog.json"
+        docs = {
+            ROOT: catalog("./sub/catalog.json"),
+            sub: {
+                "type": "Catalog",
+                "links": [
+                    {"rel": "agents", "href": "./AGENTS.md", "type": "text/markdown"},
+                ],
+            },
+        }
+        r = crawl_catalog(ROOT, FakeFetcher(docs=docs), now=FROZEN)
+        assert r["validation"]["has_agents_md"] is False
+
+
 class TestProbes:
     def test_search_endpoint_marks_catalog_as_api(self):
         f = FakeFetcher(docs={ROOT: catalog()}, ok={"https://ex.org/search"})
@@ -407,9 +447,3 @@ class TestProbes:
         f = FakeFetcher(docs={ROOT: catalog()})
         assert crawl_catalog(ROOT, f, now=FROZEN)["api_type"] == "static"
 
-    def test_portolan_config_sets_the_flag(self):
-        f = FakeFetcher(
-            docs={ROOT: catalog()}, ok={"https://ex.org/.portolan/config.yaml"}
-        )
-        r = crawl_catalog(ROOT, f, now=FROZEN)
-        assert r["validation"]["has_portolan_dir"] is True

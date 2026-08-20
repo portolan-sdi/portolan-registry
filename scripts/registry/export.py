@@ -155,13 +155,12 @@ def child_link(catalog: Mapping) -> dict:
             "portolan_registry:stale_since": catalog.get("stale_since"),
             "portolan_registry:failure_reason": catalog.get("failure_reason"),
             "portolan_registry:stac_valid": validation.get("stac_valid", True),
-            "portolan_registry:has_versions_json": validation.get(
-                "has_versions_json", False
+            # Whether the root catalog links the two Markdown documents the
+            # specification requires of it, AGENTS.md and README.md.
+            "portolan_registry:has_agents_md": validation.get(
+                "has_agents_md", False
             ),
-            "portolan_registry:has_portolan_dir": validation.get(
-                "has_portolan_dir", False
-            ),
-            "portolan_registry:has_llms_txt": validation.get("has_llms_txt", False),
+            "portolan_registry:has_readme": validation.get("has_readme", False),
         }
     )
     return link

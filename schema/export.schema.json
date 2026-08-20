@@ -130,9 +130,8 @@
               "portolan_registry:stale_since": {"type": ["string", "null"]},
               "portolan_registry:failure_reason": {"type": ["string", "null"]},
               "portolan_registry:stac_valid": {"type": "boolean"},
-              "portolan_registry:has_versions_json": {"type": "boolean"},
-              "portolan_registry:has_portolan_dir": {"type": "boolean"},
-              "portolan_registry:has_llms_txt": {"type": "boolean"}
+              "portolan_registry:has_agents_md": {"type": "boolean"},
+              "portolan_registry:has_readme": {"type": "boolean"}
             }
           }
         }

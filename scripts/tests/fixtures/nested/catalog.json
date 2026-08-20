@@ -9,7 +9,8 @@
   "links": [
     {"rel": "child", "href": "./coastal/collection.json", "type": "application/json", "title": "Coastal"},
     {"rel": "child", "href": "./sub/catalog.json", "type": "application/json", "title": "Sub"},
-    {"rel": "llms", "href": "./llms.txt", "type": "text/plain"},
+    {"rel": "agents", "href": "./AGENTS.md", "type": "text/markdown"},
+    {"rel": "describedby", "href": "./README.md", "type": "text/markdown"},
     {"rel": "icon", "href": "./_assets/logo.png", "type": "image/png", "title": "Example"}
   ]
 }
