@@ -141,15 +141,6 @@
     "failure_reason": {
       "type": ["string", "null"],
       "description": "Reason for validation failure (null if valid)"
-    },
-    "validation": {
-      "type": ["object", "null"],
-      "properties": {
-        "stac_valid": { "type": ["boolean", "null"] },
-        "has_agents_md": { "type": ["boolean", "null"] },
-        "has_readme": { "type": ["boolean", "null"] }
-      },
-      "description": "Auto-populated validation results"
     }
   }
 }

@@ -35,17 +35,49 @@ PREFIX = "portolan_registry:"
 # the way in and republish it under the current one.
 LEGACY_PREFIX = "portolan:"
 
+# Fields the registry no longer publishes. A carried-forward link is read from
+# the previous export and republished as it stands, so a field the crawler
+# stopped writing survives in the export until this set drops it. A `removed`
+# catalog makes that permanent: revalidate skips it before the crawl, so its
+# link is only ever carried, and nothing else can refresh it.
+RETIRED_FIELDS = frozenset(
+    {
+        PREFIX + "has_versions_json",
+        PREFIX + "has_portolan_dir",
+        PREFIX + "has_llms_txt",
+    }
+)
+
+# Fields every child link must carry, and what to write when a link predates
+# one. A carried link keeps the value it was published with; only a link older
+# than the field takes the default. False is the same answer child_link gives
+# for a catalog whose crawl recorded no validation.
+CARRIED_DEFAULTS: dict[str, object] = {
+    PREFIX + "has_agents_md": False,
+    PREFIX + "has_readme": False,
+}
+
 
 def _child_links(export: Mapping) -> list[dict]:
-    """Child links from a loaded export, every registry field current."""
-    return [
-        {
+    """Child links from a loaded export, every registry field current.
+
+    Renames, drops, and backfills so a link read here has the field set this
+    version of the registry publishes, whichever version wrote it.
+    """
+    links = []
+    for link in export.get("links", []):
+        if link.get("rel") != "child":
+            continue
+        current = {
             (PREFIX + k[len(LEGACY_PREFIX) :] if k.startswith(LEGACY_PREFIX) else k): v
             for k, v in link.items()
         }
-        for link in export.get("links", [])
-        if link.get("rel") == "child"
-    ]
+        for retired in RETIRED_FIELDS:
+            current.pop(retired, None)
+        for name, default in CARRIED_DEFAULTS.items():
+            current.setdefault(name, default)
+        links.append(current)
+    return links
 
 
 def load_state(export_path: Path = EXPORT_PATH) -> dict[str, dict]:
@@ -157,9 +189,7 @@ def child_link(catalog: Mapping) -> dict:
             "portolan_registry:stac_valid": validation.get("stac_valid", True),
             # Whether the root catalog links the two Markdown documents the
             # specification requires of it, AGENTS.md and README.md.
-            "portolan_registry:has_agents_md": validation.get(
-                "has_agents_md", False
-            ),
+            "portolan_registry:has_agents_md": validation.get("has_agents_md", False),
             "portolan_registry:has_readme": validation.get("has_readme", False),
         }
     )

@@ -47,8 +47,8 @@ class FakeFetcher:
             raise doc
         return doc
 
-    def probe(self, url: str, *, method: str = "GET", timeout: float = 5) -> bool:
-        self.calls.append(f"{method} {url}")
+    def probe(self, url: str, timeout: float = 5) -> bool:
+        self.calls.append(f"GET {url}")
         return url in self.ok
 
     def head(self, url: str, timeout: float = 5) -> dict[str, str] | None:

@@ -17,6 +17,7 @@ from registry.export import (
     check_export_safe,
     child_link,
     export_changed,
+    RETIRED_FIELDS,
     load_links,
     load_state,
 )
@@ -215,6 +216,46 @@ class TestLegacyPrefix:
         assert link["href"] == ROOT and link["bbox"] == [0, 0, 1, 1]
 
 
+class TestRetiredFields:
+    """A carried link is republished as it is read, so reading it has to
+    bring its field set up to date."""
+
+    @staticmethod
+    def written(tmp_path, link):
+        path = tmp_path / "catalogs.json"
+        path.write_text(json.dumps({"links": [{"rel": "child", **link}]}))
+        return path
+
+    def test_drops_a_field_the_registry_stopped_publishing(self, tmp_path):
+        path = self.written(
+            tmp_path,
+            {
+                "portolan_registry:id": "a",
+                "portolan_registry:has_llms_txt": True,
+                "portolan_registry:has_versions_json": False,
+                "portolan_registry:has_portolan_dir": True,
+            },
+        )
+        link = load_links(path)["a"]
+        assert not [k for k in link if k in RETIRED_FIELDS]
+
+    def test_backfills_a_field_the_link_predates(self, tmp_path):
+        """A `removed` catalog is never crawled again, so carrying its link is
+        the only way it reaches the export. Without a default it would arrive
+        missing the fields every other child carries."""
+        path = self.written(tmp_path, {"portolan_registry:id": "a"})
+        link = load_links(path)["a"]
+        assert link["portolan_registry:has_agents_md"] is False
+        assert link["portolan_registry:has_readme"] is False
+
+    def test_keeps_a_value_the_link_already_carries(self, tmp_path):
+        path = self.written(
+            tmp_path,
+            {"portolan_registry:id": "a", "portolan_registry:has_readme": True},
+        )
+        assert load_links(path)["a"]["portolan_registry:has_readme"] is True
+
+
 class TestExportSafety:
     def test_accepts_a_complete_export(self):
         e = build_export([{"id": "a", "url": ROOT}], now=FROZEN)
@@ -391,6 +432,30 @@ class TestCommittedExport:
 
     def test_no_portolan_prefixed_bbox(self):
         assert "portolan_registry:bbox" not in EXPORT.read_text()
+
+    def test_every_child_carries_the_fields_the_registry_publishes(self):
+        """The committed export must not lag a rename of a registry field.
+
+        Reads the file, not load_links. load_links applies the normalizer, so
+        it reports what the next run will publish rather than what the commit
+        holds. This test asks the second question.
+
+        Asymmetric on purpose. A field the export carries and child_link no
+        longer writes is drift, and the nightly cannot always clear it. A
+        field child_link writes and the export lacks is a pending publish,
+        which the next run fixes on its own.
+        """
+        current = {
+            k for k in child_link({"id": "x", "url": ROOT}) if k.startswith("portolan_")
+        }
+        with open(EXPORT) as f:
+            raw = json.load(f)
+        for link in raw["links"]:
+            if link.get("rel") != "child":
+                continue
+            cid = link.get("portolan_registry:id")
+            unknown = {k for k in link if k.startswith("portolan")} - current
+            assert not unknown, f"{cid}: export carries retired field(s) {unknown}"
 
     def test_carries_no_bare_portolan_prefix(self):
         """`portolan:` belongs to the specification. Registry-only fields

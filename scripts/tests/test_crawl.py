@@ -437,6 +437,63 @@ class TestRequiredDocuments:
         r = crawl_catalog(ROOT, FakeFetcher(docs=docs), now=FROZEN)
         assert r["validation"]["has_agents_md"] is False
 
+    def test_a_describedby_link_to_another_document_is_not_a_readme(self):
+        """PORTO-CORE-062 names README.md, not any Markdown description.
+
+        `describedby` is a general STAC relation, and a catalog may point it
+        at a data dictionary or a summary for agents. rashid reads the href
+        for the same reason (PTL-FIL-003), so reading only the relation would
+        pass a catalog that rashid fails.
+        """
+        doc = {
+            "type": "Catalog",
+            "links": [
+                {"rel": "describedby", "href": "./llms.txt", "type": "text/markdown"},
+            ],
+        }
+        r = crawl_catalog(ROOT, FakeFetcher(docs={ROOT: doc}), now=FROZEN)
+        assert r["validation"]["has_readme"] is False
+
+    def test_the_readme_counts_among_other_describedby_links(self):
+        """One conforming link is enough. Live catalogs publish several."""
+        doc = {
+            "type": "Catalog",
+            "links": [
+                {"rel": "describedby", "href": "./llms.txt", "type": "text/markdown"},
+                {"rel": "describedby", "href": "./README.md", "type": "text/markdown"},
+            ],
+        }
+        r = crawl_catalog(ROOT, FakeFetcher(docs={ROOT: doc}), now=FROZEN)
+        assert r["validation"]["has_readme"] is True
+
+    def test_the_document_may_sit_anywhere_and_carry_a_query(self):
+        doc = {
+            "type": "Catalog",
+            "links": [
+                {
+                    "rel": "agents",
+                    "href": "https://cdn.example.org/d/AGENTS.md?v=2",
+                    "type": "text/markdown",
+                },
+                {"rel": "describedby", "href": "docs/README.md", "type": "text/markdown"},
+            ],
+        }
+        r = crawl_catalog(ROOT, FakeFetcher(docs={ROOT: doc}), now=FROZEN)
+        assert r["validation"]["has_agents_md"] is True
+        assert r["validation"]["has_readme"] is True
+
+    def test_each_flag_reads_its_own_relation(self):
+        """Guards the two calls against a swapped argument."""
+        doc = {
+            "type": "Catalog",
+            "links": [
+                {"rel": "agents", "href": "./AGENTS.md", "type": "text/markdown"},
+            ],
+        }
+        r = crawl_catalog(ROOT, FakeFetcher(docs={ROOT: doc}), now=FROZEN)
+        assert r["validation"]["has_agents_md"] is True
+        assert r["validation"]["has_readme"] is False
+
 
 class TestProbes:
     def test_search_endpoint_marks_catalog_as_api(self):

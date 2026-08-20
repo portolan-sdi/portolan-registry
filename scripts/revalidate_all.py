@@ -154,6 +154,11 @@ def main(argv: list[str] | None = None) -> int:
                 "portolan_registry:item_count": None,
                 "portolan_registry:total_size_bytes": None,
                 "portolan_registry:counts_partial": True,
+                # Never crawled, so nothing read its links either. False is
+                # what the export publishes for an unmeasured catalog.
+                "portolan_registry:stac_valid": True,
+                "portolan_registry:has_agents_md": False,
+                "portolan_registry:has_readme": False,
             }
         link["portolan_registry:status"] = catalog_state.get("status", "removed")
         link["portolan_registry:last_validated"] = catalog_state.get("last_validated")
