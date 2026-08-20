@@ -146,9 +146,8 @@
       "type": ["object", "null"],
       "properties": {
         "stac_valid": { "type": ["boolean", "null"] },
-        "has_versions_json": { "type": ["boolean", "null"] },
-        "has_portolan_dir": { "type": ["boolean", "null"] },
-        "has_llms_txt": { "type": ["boolean", "null"] }
+        "has_agents_md": { "type": ["boolean", "null"] },
+        "has_readme": { "type": ["boolean", "null"] }
       },
       "description": "Auto-populated validation results"
     }

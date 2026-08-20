@@ -12,7 +12,6 @@
   },
   "assets": {"data": {"href": "./data.parquet", "file:size": 2048}},
   "links": [
-    {"rel": "version-history", "href": "./versions.json"},
     {"rel": "item", "href": "./items/inland-1.json", "type": "application/geo+json"},
     {"rel": "item", "href": "./items/inland-2.json", "type": "application/geo+json"},
     {"rel": "item", "href": "./items/inland-3.json", "type": "application/geo+json"}

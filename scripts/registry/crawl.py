@@ -40,6 +40,18 @@ def declared_version(obj: Mapping) -> str | None:
     return None
 
 
+def _has_markdown_link(obj: Mapping, rel: str) -> bool:
+    """True when `obj` links a Markdown document under `rel`.
+
+    PORTO-CORE-061 and PORTO-CORE-062 each name a relation and the media type
+    together, so a link that omits `type: text/markdown` satisfies neither.
+    """
+    return any(
+        link.get("rel") == rel and link.get("type") == "text/markdown"
+        for link in obj.get("links") or []
+    )
+
+
 @dataclass
 class CollectionSummary:
     """One collection's contribution to its catalog's totals.
@@ -68,7 +80,6 @@ class CollectionSummary:
     # them one by one. The crawler does not page, so this collection's items
     # cannot be counted without a request per page.
     items_unenumerable: bool = False
-    has_version_history: bool = False
 
 
 class CrawlResult(TypedDict, total=False):
@@ -139,11 +150,14 @@ def _empty_result(catalog_url: str, catalog: Mapping, now: datetime) -> CrawlRes
         "temporal_extent": None,
         "api_type": None,
         "last_crawled": now.isoformat(),
+        # PORTO-CORE-061 and PORTO-CORE-062 ask every catalog and collection
+        # for these two documents, and both are MUST. The registry reports the
+        # root of a registered catalog only. Whole-tree conformance is rashid's
+        # job, and the registry is not a validator.
         "validation": {
             "stac_valid": True,
-            "has_versions_json": False,
-            "has_portolan_dir": False,
-            "has_llms_txt": False,
+            "has_agents_md": _has_markdown_link(catalog, "agents"),
+            "has_readme": _has_markdown_link(catalog, "describedby"),
         },
         "collections": [],
     }
@@ -181,8 +195,6 @@ def _summarize_collection(url: str, collection: Mapping) -> CollectionSummary:
             summary.item_count += 1
         elif rel == "items":
             has_items_endpoint = True
-        elif rel == "version-history":
-            summary.has_version_history = True
     summary.items_unenumerable = has_items_endpoint and summary.item_count == 0
 
     return summary
@@ -222,11 +234,6 @@ def crawl_catalog(
 
     base = catalog_url.rsplit("/", 1)[0]
     result["api_type"] = "api" if fetcher.probe(f"{base}/search") else "static"
-
-    for link in catalog.get("links", []):
-        if link.get("rel") == "llms":
-            result["validation"]["has_llms_txt"] = True
-            break
 
     # Only the registered catalog has a logo. A sub-catalog's icon belongs to
     # that sub-catalog, and the registry lists neither it nor its branding.
@@ -280,9 +287,6 @@ def crawl_catalog(
                             f"{result['spec_version']}"
                         )
 
-                if summary.has_version_history:
-                    result["validation"]["has_versions_json"] = True
-
             elif child.get("type") == "Catalog":
                 sub = crawl_catalog(
                     child_url, fetcher, now=now, seen=seen, versions=versions
@@ -312,10 +316,6 @@ def crawl_catalog(
                         f"{sub['spec_version']}, catalog declares "
                         f"{result['spec_version']}"
                     )
-                if sub["validation"]["has_versions_json"]:
-                    result["validation"]["has_versions_json"] = True
-                if sub["validation"]["has_llms_txt"]:
-                    result["validation"]["has_llms_txt"] = True
 
         except Exception as e:
             # The crawl keeps going: one unreachable sub-tree should not cost
@@ -361,9 +361,5 @@ def crawl_catalog(
     # here; their count is `collection_count` minus the sum of these.
     counts = Counter(c.license for c in result["collections"] if c.license)
     result["licenses"] = dict(sorted(counts.items()))
-
-    result["validation"]["has_portolan_dir"] = fetcher.probe(
-        f"{base}/.portolan/config.yaml", method="HEAD", timeout=10
-    )
 
     return result

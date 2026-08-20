@@ -57,9 +57,8 @@
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
-      "portolan_registry:has_versions_json": true,
-      "portolan_registry:has_portolan_dir": false,
-      "portolan_registry:has_llms_txt": true
+      "portolan_registry:has_agents_md": true,
+      "portolan_registry:has_readme": true
     }
   ]
 }
