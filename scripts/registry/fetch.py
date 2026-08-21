@@ -26,7 +26,7 @@ class Fetcher(Protocol):
         """Fetch and parse JSON. Raises on any non-2xx or transport error."""
         ...
 
-    def probe(self, url: str, *, method: str = "GET", timeout: float = 5) -> bool:
+    def probe(self, url: str, timeout: float = 5) -> bool:
         """Report whether `url` answers 200. Never raises."""
         ...
 
@@ -62,9 +62,9 @@ class HttpFetcher:
         resp.raise_for_status()
         return resp.json()
 
-    def probe(self, url: str, *, method: str = "GET", timeout: float = 5) -> bool:
+    def probe(self, url: str, timeout: float = 5) -> bool:
         try:
-            resp = self._session.request(method, url, timeout=timeout)
+            resp = self._session.get(url, timeout=timeout)
         except requests.RequestException:
             return False
         return resp.status_code == 200

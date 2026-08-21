@@ -1,6 +1,6 @@
 """Walk a Portolan catalog and aggregate what the registry publishes.
 
-Structure the crawler assumes, per portolan-spec v0.1.0: the root of every
+Structure the crawler assumes, per portolan-spec v0.1.2: the root of every
 catalog is a STAC Catalog at `catalog.json`; catalogs nest arbitrarily deep
 via `child` links; collections never nest. Catalogs carry no extent of their
 own, so a catalog-level bbox exists only because the registry computes it by
@@ -15,6 +15,7 @@ from collections.abc import Mapping
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import Any, TypedDict
+from urllib.parse import urlsplit
 
 from registry.bbox import collection_bbox, union_bboxes
 from registry.fetch import Fetcher, resolve_url
@@ -40,16 +41,26 @@ def declared_version(obj: Mapping) -> str | None:
     return None
 
 
-def _has_markdown_link(obj: Mapping, rel: str) -> bool:
-    """True when `obj` links a Markdown document under `rel`.
+def _links_to_markdown_file(obj: Mapping, rel: str, filename: str) -> bool:
+    """True when `obj` links `filename` under `rel` as Markdown.
 
-    PORTO-CORE-061 and PORTO-CORE-062 each name a relation and the media type
-    together, so a link that omits `type: text/markdown` satisfies neither.
+    PORTO-CORE-061 and PORTO-CORE-062 each name a relation, a media type, and
+    a file. All three must agree. A link that omits `type: text/markdown`
+    satisfies neither requirement, and neither does a link that points the
+    relation at some other document.
+
+    The file is read from the last path segment, so a catalog may host the
+    document anywhere. Query and fragment are dropped first. The relation may
+    repeat: a catalog can point `describedby` at a data dictionary next to its
+    README, so one conforming link is enough.
     """
-    return any(
-        link.get("rel") == rel and link.get("type") == "text/markdown"
-        for link in obj.get("links") or []
-    )
+    for link in obj.get("links") or []:
+        if link.get("rel") != rel or link.get("type") != "text/markdown":
+            continue
+        href = link.get("href")
+        if isinstance(href, str) and urlsplit(href).path.rsplit("/", 1)[-1] == filename:
+            return True
+    return False
 
 
 @dataclass
@@ -150,15 +161,9 @@ def _empty_result(catalog_url: str, catalog: Mapping, now: datetime) -> CrawlRes
         "temporal_extent": None,
         "api_type": None,
         "last_crawled": now.isoformat(),
-        # PORTO-CORE-061 and PORTO-CORE-062 ask every catalog and collection
-        # for these two documents, and both are MUST. The registry reports the
-        # root of a registered catalog only. Whole-tree conformance is rashid's
-        # job, and the registry is not a validator.
-        "validation": {
-            "stac_valid": True,
-            "has_agents_md": _has_markdown_link(catalog, "agents"),
-            "has_readme": _has_markdown_link(catalog, "describedby"),
-        },
+        # crawl_catalog fills in the two document signals, which it reports
+        # for the root of a registered catalog only.
+        "validation": {"stac_valid": True},
         "collections": [],
     }
 
@@ -237,8 +242,22 @@ def crawl_catalog(
 
     # Only the registered catalog has a logo. A sub-catalog's icon belongs to
     # that sub-catalog, and the registry lists neither it nor its branding.
+    #
+    # The two document signals stop at the root for a different reason.
+    # PORTO-CORE-061 and PORTO-CORE-062 ask every catalog and collection for
+    # AGENTS.md and README.md, and both are MUST. The registry reports what the
+    # registered root links and goes no deeper. Whole-tree conformance is
+    # rashid's job, and the registry is not a validator. Computing these per
+    # sub-catalog and dropping the answer would read as an aggregate that the
+    # export never publishes.
     if is_root:
         result["logo"] = catalog_logo(catalog, catalog_url, fetcher)
+        result["validation"]["has_agents_md"] = _links_to_markdown_file(
+            catalog, "agents", "AGENTS.md"
+        )
+        result["validation"]["has_readme"] = _links_to_markdown_file(
+            catalog, "describedby", "README.md"
+        )
 
     bboxes: list[list[float]] = []
     temporal_extents: list[list[str | None]] = []

@@ -49,9 +49,18 @@
               "title",
               "portolan_registry:id",
               "portolan_registry:status",
-              "portolan_registry:collection_count"
+              "portolan_registry:collection_count",
+              "portolan_registry:has_agents_md",
+              "portolan_registry:has_readme"
             ],
+            "description": "Closed on purpose. The export is the registry's published contract and its sole store of validation state, so a field the crawler stopped writing, or one a carried-forward link never gained, has to fail this check rather than ride along unnoticed. An allOf branch reads its own properties only, so the STAC link fields are declared again here.",
+            "additionalProperties": false,
             "properties": {
+              "rel": {"const": "child"},
+              "href": {"type": "string", "minLength": 1},
+              "type": {"type": "string"},
+              "title": {"type": "string"},
+              "bbox": {"$ref": "#/$defs/bbox"},
               "portolan_registry:id": {"type": "string", "minLength": 1},
               "portolan_registry:status": {"enum": ["valid", "stale", "removed"]},
               "portolan_registry:api_type": {

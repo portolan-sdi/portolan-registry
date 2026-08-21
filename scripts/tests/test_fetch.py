@@ -65,16 +65,6 @@ class TestProbe:
         )
         assert HttpFetcher().probe("https://ex.org/search") is False
 
-    @responses.activate
-    def test_head_method_is_used_when_asked(self):
-        responses.add(responses.HEAD, "https://ex.org/.portolan/config.yaml", status=200)
-        assert (
-            HttpFetcher().probe(
-                "https://ex.org/.portolan/config.yaml", method="HEAD"
-            )
-            is True
-        )
-
 
 class TestResolveUrl:
     def test_absolute_href_is_returned_unchanged(self):
