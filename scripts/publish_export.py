@@ -89,6 +89,13 @@ def main(argv: list[str] | None = None) -> int:
     )
     args = parser.parse_args(argv)
 
+    output = Path(args.output)
+    if args.output != "-" and output.name == COVERAGE_PATH.name:
+        parser.error(
+            "--output names the catalog export; it cannot be named "
+            f"{COVERAGE_PATH.name}"
+        )
+
     catalog_dir = Path(args.catalog_dir)
     paths = entry_paths(catalog_dir)
     now = datetime.now(timezone.utc)
@@ -157,7 +164,6 @@ def main(argv: list[str] | None = None) -> int:
         log(f"\n=== REFUSING TO WRITE EXPORT: {e} ===")
         return 1
 
-    output = Path(args.output)
     if args.output == "-":
         json.dump(export, sys.stdout, indent=2)
         sys.stdout.write("\n")

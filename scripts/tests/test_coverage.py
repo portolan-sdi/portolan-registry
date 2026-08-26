@@ -5,7 +5,9 @@ from __future__ import annotations
 import json
 from datetime import timedelta
 
+import publish_export
 import pytest
+import revalidate_all
 
 from conftest import FROZEN
 from registry.coverage import (
@@ -121,6 +123,14 @@ def test_loads_previous_catalog_records(tmp_path):
     path = tmp_path / COVERAGE_PATH.name
     path.write_text(json.dumps({"catalogs": [{"id": "a", "collections": []}]}))
     assert load_coverage(path) == {"a": {"id": "a", "collections": []}}
+
+
+@pytest.mark.parametrize("command", [publish_export.main, revalidate_all.main])
+def test_rejects_coverage_path_as_the_catalog_export(command, tmp_path, capsys):
+    output = tmp_path / COVERAGE_PATH.name
+    with pytest.raises(SystemExit, match="2"):
+        command(["--output", str(output)])
+    assert "--output names the catalog export" in capsys.readouterr().err
 
 
 def test_committed_coverage_matches_the_catalog_export():
