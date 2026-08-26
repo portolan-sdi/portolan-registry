@@ -75,6 +75,7 @@ class CollectionSummary:
 
     id: str | None
     url: str
+    title: str | None = None
     bbox: list[float] | None = None
     temporal: list[str | None] | None = None
     license: str | None = None
@@ -172,6 +173,7 @@ def _summarize_collection(url: str, collection: Mapping) -> CollectionSummary:
     summary = CollectionSummary(
         id=collection.get("id"),
         url=url,
+        title=collection.get("title"),
         bbox=collection_bbox(collection),
         license=collection.get("license"),
         spec_version=declared_version(collection),

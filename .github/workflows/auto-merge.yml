@@ -47,6 +47,7 @@ jobs:
             const generatedOnly = files.length > 0 && files.every(
               f => /^catalogs\/[^/]+\.yaml$/.test(f.filename)
                 || f.filename === 'exports/catalogs.json'
+                || f.filename === 'exports/coverage-bboxes.json'
             );
             if (!generatedOnly) {
               console.log(`PR #${number} changes more than entries; leaving it`);

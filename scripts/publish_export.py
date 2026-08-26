@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Crawl every registered catalog and regenerate exports/catalogs.json.
+"""Crawl every registered catalog and regenerate registry exports.
 
 Run from the repository root:
 
@@ -17,6 +17,15 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from registry.crawl import crawl_catalog
+from registry.coverage import (
+    COVERAGE_PATH,
+    build_coverage_export,
+    check_coverage_safe,
+    coverage_changed,
+    coverage_path_for,
+    load_coverage,
+    write_coverage,
+)
 from registry.entries import CATALOG_DIR, entry_paths, load_entry
 from registry.export import (
     EXPORT_PATH,
@@ -80,9 +89,18 @@ def main(argv: list[str] | None = None) -> int:
     )
     args = parser.parse_args(argv)
 
+    output = Path(args.output)
+    if args.output != "-" and output.name == COVERAGE_PATH.name:
+        parser.error(
+            "--output names the catalog export; it cannot be named "
+            f"{COVERAGE_PATH.name}"
+        )
+
     catalog_dir = Path(args.catalog_dir)
     paths = entry_paths(catalog_dir)
     now = datetime.now(timezone.utc)
+    expected_ids = {p.stem for p in paths}
+    previous_coverage = load_coverage(COVERAGE_PATH)
     previous_links = load_links(EXPORT_PATH)
 
     catalogs: list[dict] = []
@@ -121,26 +139,49 @@ def main(argv: list[str] | None = None) -> int:
 
     export = build_export(catalogs, now=now, extra_links=carried)
 
+    crawled_coverage = {catalog["id"] for catalog in catalogs}
+    carried_coverage = [
+        previous_coverage[catalog_id]
+        for catalog_id in sorted(expected_ids - crawled_coverage)
+        if catalog_id in previous_coverage
+    ]
+    carried_coverage.extend(
+        {"id": catalog_id, "collection_count": 0, "collections": []}
+        for catalog_id in sorted(expected_ids - crawled_coverage - previous_coverage.keys())
+    )
+    coverage = build_coverage_export(
+        catalogs, now=now, extra_catalogs=carried_coverage
+    )
+
     try:
         check_export_safe(
             export,
-            expected_ids={p.stem for p in paths},
+            expected_ids=expected_ids,
             previous_state=previous_state,
         )
+        check_coverage_safe(coverage, expected_ids=expected_ids)
     except ExportRefused as e:
         log(f"\n=== REFUSING TO WRITE EXPORT: {e} ===")
         return 1
 
-    output = Path(args.output)
     if args.output == "-":
         json.dump(export, sys.stdout, indent=2)
         sys.stdout.write("\n")
-    elif not export_changed(export, output):
-        # A manual re-run of an unchanged registry should be a no-op too.
-        log(f"\n=== No change beyond timestamps; left {args.output} untouched ===")
     else:
+        coverage_output = coverage_path_for(output)
+        changed = export_changed(export, output) or coverage_changed(
+            coverage, coverage_output
+        )
+        if not changed:
+            # A manual re-run of an unchanged registry should be a no-op too.
+            log("\n=== No change beyond timestamps; left exports untouched ===")
+            return 0
         write_export(export, output)
-        log(f"\n=== Generated {args.output} with {len(catalogs)} catalog(s) ===")
+        write_coverage(coverage, coverage_output)
+        log(
+            f"\n=== Generated {output} and {coverage_output} "
+            f"with {len(catalogs)} crawled catalog(s) ==="
+        )
     return 0
 
 

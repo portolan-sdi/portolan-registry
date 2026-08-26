@@ -10,6 +10,7 @@ on:
     paths:
       - 'exports/catalogs.json'
 
+      - 'exports/coverage-bboxes.json'
 permissions:
   contents: read
 

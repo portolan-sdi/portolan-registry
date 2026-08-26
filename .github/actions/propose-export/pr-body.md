@@ -1,13 +1,13 @@
 ## What this changes
 
-Republishes `exports/catalogs.json` from the latest crawl.
+Republishes both registry exports from the latest crawl.
 
 ## Why
 
-The export carries every catalog's counts, extent, and validation state, and it is the only place that state is stored. A crawl that never lands leaves the registry and the site serving stale data.
+The exports provide current catalog and collection coverage data to the site.
 
 ## Verification
 
-`Validate Exports` checks this file against `schema/export.schema.json` on this pull request.
+`Validate Exports` checks the catalog export. JSON lint checks both files.
 
 - [x] This change does not alter behavior
