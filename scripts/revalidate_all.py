@@ -17,6 +17,15 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from registry.crawl import crawl_catalog
+from registry.coverage import (
+    COVERAGE_PATH,
+    build_coverage_export,
+    check_coverage_safe,
+    coverage_changed,
+    coverage_path_for,
+    load_coverage,
+    write_coverage,
+)
 from registry.entries import CATALOG_DIR, entry_paths, load_entry
 from registry.export import (
     EXPORT_PATH,
@@ -49,6 +58,8 @@ def main(argv: list[str] | None = None) -> int:
     now = datetime.now(timezone.utc)
     paths = entry_paths(Path(args.catalog_dir))
     state = load_state(EXPORT_PATH)
+    expected_ids = {p.stem for p in paths}
+    previous_coverage = load_coverage(COVERAGE_PATH)
     previous_links = load_links(EXPORT_PATH)
     fetcher = HttpFetcher()
 
@@ -168,12 +179,26 @@ def main(argv: list[str] | None = None) -> int:
 
     export = build_export(catalogs, now=now, extra_links=carried)
 
+    carried_coverage = [
+        previous_coverage[catalog_id]
+        for catalog_id in sorted(expected_ids - crawled.keys())
+        if catalog_id in previous_coverage
+    ]
+    carried_coverage.extend(
+        {"id": catalog_id, "collection_count": 0, "collections": []}
+        for catalog_id in sorted(expected_ids - crawled.keys() - previous_coverage.keys())
+    )
+    coverage = build_coverage_export(
+        list(crawled.values()), now=now, extra_catalogs=carried_coverage
+    )
+
     try:
         check_export_safe(
             export,
-            expected_ids={p.stem for p in paths},
+            expected_ids=expected_ids,
             previous_state=load_state(EXPORT_PATH),
         )
+        check_coverage_safe(coverage, expected_ids=expected_ids)
     except ExportRefused as e:
         log(f"\n=== REFUSING TO WRITE EXPORT: {e} ===")
         return 1
@@ -182,11 +207,20 @@ def main(argv: list[str] | None = None) -> int:
     if args.output == "-":
         json.dump(export, sys.stdout, indent=2)
         sys.stdout.write("\n")
-    elif not export_changed(export, output):
-        log(f"\n=== No change beyond timestamps; left {args.output} untouched ===")
     else:
+        coverage_output = coverage_path_for(output)
+        changed = export_changed(export, output) or coverage_changed(
+            coverage, coverage_output
+        )
+        if not changed:
+            log("\n=== No change beyond timestamps; left exports untouched ===")
+            return 0
         write_export(export, output)
-        log(f"\n=== Generated {args.output} with {export['count']} catalog(s) ===")
+        write_coverage(coverage, coverage_output)
+        log(
+            f"\n=== Generated {output} and {coverage_output} "
+            f"with {export['count']} catalog(s) ==="
+        )
 
     counts = {"valid": 0, "stale": 0, "removed": 0}
     for st in state.values():

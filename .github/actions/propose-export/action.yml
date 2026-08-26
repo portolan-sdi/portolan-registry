@@ -1,7 +1,7 @@
 name: Propose an export update
 description: >
   Open or update the pull request carrying a regenerated
-  exports/catalogs.json. A bot cannot push to main, which requires status
+  registry exports. A bot cannot push to main, which requires status
   checks a direct push can never satisfy, so the export reaches main the
   way every other change does.
 
@@ -46,7 +46,7 @@ runs:
         BODY_FILE: ${{ github.action_path }}/pr-body.md
         BRANCH: bot/export
       run: |
-        if git diff --quiet -- exports/catalogs.json; then
+        if [ -z "$(git status --porcelain -- exports/catalogs.json exports/coverage-bboxes.json)" ]; then
           echo "Export unchanged"
           echo "changed=false" >> "$GITHUB_OUTPUT"
           exit 0
@@ -65,7 +65,7 @@ runs:
         # One branch, force-pushed. The newest crawl supersedes any older
         # proposal, so only one export pull request is ever open.
         git checkout -B "$BRANCH"
-        git add exports/catalogs.json
+        git add exports/catalogs.json exports/coverage-bboxes.json
         git commit -m "$COMMIT_MESSAGE"
         git push --force origin "$BRANCH"
 

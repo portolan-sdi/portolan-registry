@@ -104,6 +104,7 @@ class TestAggregation:
         assert set(by_id) == {"coastal", "inland", "alpine"}
         assert by_id["coastal"].bbox == [2.0, 50.0, 7.0, 55.0]
         assert by_id["alpine"].bbox is None
+        assert by_id["coastal"].title == "Coastal"
         assert by_id["inland"].row_count == 300
 
 
