@@ -1,7 +1,7 @@
 {
-  "generated": "2026-08-26T12:32:10.770149+00:00",
+  "generated": "2026-08-27T17:10:48.057227+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-08-26T12:32:10.770149+00:00",
+  "registry_generated": "2026-08-27T17:10:48.057227+00:00",
   "catalogs": [
     {
       "id": "bot-open-data",
@@ -13098,6 +13098,162 @@
       ]
     },
     {
+      "id": "overture-portolan",
+      "collection_count": 15,
+      "collections": [
+        {
+          "id": "address",
+          "title": "Address",
+          "bbox": [
+            -176.8745,
+            -90.0,
+            -74.3468,
+            19.5518
+          ]
+        },
+        {
+          "id": "bathymetry",
+          "title": "Bathymetry",
+          "bbox": [
+            -179.9995,
+            -89.9961,
+            180.0,
+            89.9985
+          ]
+        },
+        {
+          "id": "infrastructure",
+          "title": "Infrastructure",
+          "bbox": [
+            -180.0,
+            -85.1983,
+            -32.212,
+            40.1919
+          ]
+        },
+        {
+          "id": "land",
+          "title": "Land",
+          "bbox": [
+            -180.0,
+            -90.0,
+            -74.1317,
+            31.858
+          ]
+        },
+        {
+          "id": "land_cover",
+          "title": "Land Cover",
+          "bbox": [
+            -180.0,
+            -80.4637,
+            -56.778,
+            20.3275
+          ]
+        },
+        {
+          "id": "land_use",
+          "title": "Land Use",
+          "bbox": [
+            -179.9997,
+            -44.3571,
+            -76.182,
+            33.5517
+          ]
+        },
+        {
+          "id": "water",
+          "title": "Water",
+          "bbox": [
+            -180.0,
+            -86.7767,
+            -62.3111,
+            32.2488
+          ]
+        },
+        {
+          "id": "building",
+          "title": "Building",
+          "bbox": [
+            -180.0,
+            -84.2946,
+            -86.847,
+            14.3458
+          ]
+        },
+        {
+          "id": "building_part",
+          "title": "Building Part",
+          "bbox": [
+            -179.1249,
+            -71.6734,
+            177.4528,
+            78.9434
+          ]
+        },
+        {
+          "id": "division",
+          "title": "Division",
+          "bbox": [
+            -179.9411,
+            -89.998,
+            179.9906,
+            82.8561
+          ]
+        },
+        {
+          "id": "division_area",
+          "title": "Division Area",
+          "bbox": [
+            -179.8625,
+            -67.5722,
+            -44.0,
+            83.3362
+          ]
+        },
+        {
+          "id": "division_boundary",
+          "title": "Division Boundary",
+          "bbox": [
+            -180.0,
+            -55.1833,
+            180.0,
+            82.2996
+          ]
+        },
+        {
+          "id": "place",
+          "title": "Place",
+          "bbox": [
+            -179.9981,
+            -84.9901,
+            -77.0268,
+            28.517
+          ]
+        },
+        {
+          "id": "connector",
+          "title": "Connector",
+          "bbox": [
+            -180.0,
+            -85.0511,
+            -70.9067,
+            22.902
+          ]
+        },
+        {
+          "id": "segment",
+          "title": "Segment",
+          "bbox": [
+            -180.0,
+            -85.0511,
+            -86.9135,
+            19.0484
+          ]
+        }
+      ]
+    },
+    {
       "id": "pergamino-ide",
       "collection_count": 183,
       "collections": [
@@ -14934,9 +15090,145 @@
       ]
     },
     {
-      "id": "planet-disasterdata",
-      "collection_count": 17,
+      "id": "phl-housing-demo",
+      "collection_count": 10,
       "collections": [
+        {
+          "id": "council_districts_2024",
+          "title": "City Council Districts (2024)",
+          "bbox": [
+            -75.2803,
+            39.8675,
+            -74.9557,
+            40.1379
+          ]
+        },
+        {
+          "id": "affordable_housing",
+          "title": "Affordable Housing Production",
+          "bbox": [
+            -75.2489,
+            39.9018,
+            -74.9829,
+            40.1217
+          ]
+        },
+        {
+          "id": "vacant_indicators_bldg",
+          "title": "Vacant Property Indicators \u2014 Buildings",
+          "bbox": [
+            -75.2739,
+            39.8912,
+            -74.9589,
+            40.1329
+          ]
+        },
+        {
+          "id": "vacant_indicators_land",
+          "title": "Vacant Property Indicators \u2014 Land",
+          "bbox": [
+            -75.2669,
+            39.8852,
+            -74.9693,
+            40.135
+          ]
+        },
+        {
+          "id": "zoning_basedistricts",
+          "title": "Zoning Base Districts",
+          "bbox": [
+            -75.2802,
+            39.8708,
+            -74.9558,
+            40.1379
+          ]
+        },
+        {
+          "id": "zoning_overlays",
+          "title": "Zoning Overlays",
+          "bbox": [
+            -75.2844,
+            39.8596,
+            -74.9555,
+            40.1379
+          ]
+        },
+        {
+          "id": "dor_parcel",
+          "title": "Property Parcels",
+          "bbox": [
+            -75.2778,
+            39.8706,
+            -74.9558,
+            40.1379
+          ]
+        },
+        {
+          "id": "land_use",
+          "title": "Land Use",
+          "bbox": [
+            -75.2803,
+            39.8675,
+            -74.9557,
+            40.1379
+          ]
+        },
+        {
+          "id": "li_building_footprints",
+          "title": "Building Footprints",
+          "bbox": [
+            -75.2794,
+            39.8724,
+            -74.9573,
+            40.1378
+          ]
+        },
+        {
+          "id": "zoning_descriptions",
+          "title": "Zoning Descriptions",
+          "bbox": [
+            -75.2844,
+            39.8596,
+            -74.9555,
+            40.1379
+          ]
+        }
+      ]
+    },
+    {
+      "id": "planet-disasterdata",
+      "collection_count": 20,
+      "collections": [
+        {
+          "id": "post-event-2026-08-26",
+          "title": "Flood corridor, same-day coverage \u2014 Post-event Imagery",
+          "bbox": [
+            84.8943,
+            27.8293,
+            85.648,
+            28.6595
+          ]
+        },
+        {
+          "id": "post-event-2026-08-27",
+          "title": "Rasuwagadhi and Syabrubesi (SkySat) \u2014 Post-event Imagery",
+          "bbox": [
+            85.2787,
+            28.0822,
+            85.4428,
+            28.3661
+          ]
+        },
+        {
+          "id": "pre-event-2026-05-27",
+          "title": "Trishuli\u2013Bhote Koshi corridor baseline \u2014 Pre-event Imagery",
+          "bbox": [
+            85.0066,
+            27.7948,
+            85.5024,
+            28.5911
+          ]
+        },
         {
           "id": "post-event-planetscope-2026-08-10",
           "title": "Choc\u00f3 \u2013 Valle del Cauca (PlanetScope, post-event) \u2014 10 August 2026",
