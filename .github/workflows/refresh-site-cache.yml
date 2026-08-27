@@ -26,3 +26,22 @@ jobs:
             https://www.portolan-sdi.org/api/revalidate
         env:
           REVALIDATE_SECRET: ${{ secrets.REVALIDATE_SECRET }}
+
+      - name: Create site token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        id: site-token
+        with:
+          client-id: ${{ secrets.REGISTRY_BOT_APP_CLIENT_ID }}
+          private-key: ${{ secrets.REGISTRY_BOT_APP_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: portolan-sdi.org
+          permission-contents: write
+
+      - name: Request site coverage bake
+        env:
+          GH_TOKEN: ${{ steps.site-token.outputs.token }}
+        run: |
+          gh api \
+            --method POST \
+            repos/portolan-sdi/portolan-sdi.org/dispatches \
+            --field event_type=registry-export-updated
