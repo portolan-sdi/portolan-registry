@@ -1,7 +1,7 @@
 {
-  "generated": "2026-08-26T12:32:10.770149+00:00",
+  "generated": "2026-08-27T06:09:28.372543+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-08-26T12:32:10.770149+00:00",
+  "registry_generated": "2026-08-27T06:09:28.372543+00:00",
   "catalogs": [
     {
       "id": "bot-open-data",
@@ -14929,6 +14929,112 @@
             -33.9032,
             -60.5675,
             -33.8806
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phl-housing-demo",
+      "collection_count": 10,
+      "collections": [
+        {
+          "id": "council_districts_2024",
+          "title": "City Council Districts (2024)",
+          "bbox": [
+            -75.2803,
+            39.8675,
+            -74.9557,
+            40.1379
+          ]
+        },
+        {
+          "id": "affordable_housing",
+          "title": "Affordable Housing Production",
+          "bbox": [
+            -75.2489,
+            39.9018,
+            -74.9829,
+            40.1217
+          ]
+        },
+        {
+          "id": "vacant_indicators_bldg",
+          "title": "Vacant Property Indicators \u2014 Buildings",
+          "bbox": [
+            -75.2739,
+            39.8912,
+            -74.9589,
+            40.1329
+          ]
+        },
+        {
+          "id": "vacant_indicators_land",
+          "title": "Vacant Property Indicators \u2014 Land",
+          "bbox": [
+            -75.2669,
+            39.8852,
+            -74.9693,
+            40.135
+          ]
+        },
+        {
+          "id": "zoning_basedistricts",
+          "title": "Zoning Base Districts",
+          "bbox": [
+            -75.2802,
+            39.8708,
+            -74.9558,
+            40.1379
+          ]
+        },
+        {
+          "id": "zoning_overlays",
+          "title": "Zoning Overlays",
+          "bbox": [
+            -75.2844,
+            39.8596,
+            -74.9555,
+            40.1379
+          ]
+        },
+        {
+          "id": "dor_parcel",
+          "title": "Property Parcels",
+          "bbox": [
+            -75.2778,
+            39.8706,
+            -74.9558,
+            40.1379
+          ]
+        },
+        {
+          "id": "land_use",
+          "title": "Land Use",
+          "bbox": [
+            -75.2803,
+            39.8675,
+            -74.9557,
+            40.1379
+          ]
+        },
+        {
+          "id": "li_building_footprints",
+          "title": "Building Footprints",
+          "bbox": [
+            -75.2794,
+            39.8724,
+            -74.9573,
+            40.1378
+          ]
+        },
+        {
+          "id": "zoning_descriptions",
+          "title": "Zoning Descriptions",
+          "bbox": [
+            -75.2844,
+            39.8596,
+            -74.9555,
+            40.1379
           ]
         }
       ]
