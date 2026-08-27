@@ -44,4 +44,5 @@ jobs:
           gh api \
             --method POST \
             repos/portolan-sdi/portolan-sdi.org/dispatches \
-            --field event_type=registry-export-updated
+            --field event_type=registry-export-updated \
+            --field "client_payload[registry_sha]=$GITHUB_SHA"
