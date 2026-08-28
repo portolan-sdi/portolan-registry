@@ -1,0 +1,46 @@
+name: Documentation
+description: Docs that are wrong, missing, or hard to follow
+labels: [documentation]
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Point at the page and say what a reader ends up believing that is not
+        true. "Unclear" on its own gives whoever fixes this nothing to work
+        from.
+  - type: input
+    id: where
+    attributes:
+      label: Where
+      description: >-
+        The URL, or the file and heading. If the docs are silent on the
+        subject, name the page a reader would have looked at.
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is wrong
+      description: >-
+        What the text says now, and what is actually true. Quote the line if
+        it is short.
+    validations:
+      required: true
+  - type: textarea
+    id: reader
+    attributes:
+      label: Who hits this
+      description: >-
+        The reader it costs, and what they were trying to do. This decides
+        whether the fix is a correction or a rewrite.
+    validations:
+      required: true
+  - type: textarea
+    id: done
+    attributes:
+      label: Done when
+      description: >-
+        What the page should say, and how a reviewer checks it. Naming the
+        replacement text is the fastest version of this.
+    validations:
+      required: true
