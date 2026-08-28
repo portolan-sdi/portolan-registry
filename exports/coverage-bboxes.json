@@ -1,7 +1,7 @@
 {
-  "generated": "2026-08-27T17:10:48.057227+00:00",
+  "generated": "2026-08-28T18:13:49.981527+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-08-27T17:10:48.057227+00:00",
+  "registry_generated": "2026-08-28T18:13:49.981527+00:00",
   "catalogs": [
     {
       "id": "bot-open-data",
@@ -15197,10 +15197,20 @@
     },
     {
       "id": "planet-disasterdata",
-      "collection_count": 20,
+      "collection_count": 21,
       "collections": [
         {
-          "id": "post-event-2026-08-26",
+          "id": "post-event-pelican-2026-08-27",
+          "title": "Syabrubesi to Rasuwagadhi (Pelican) \u2014 Post-event Imagery",
+          "bbox": [
+            85.2807,
+            28.0787,
+            85.4341,
+            28.3512
+          ]
+        },
+        {
+          "id": "post-event-planetscope-2026-08-26",
           "title": "Flood corridor, same-day coverage \u2014 Post-event Imagery",
           "bbox": [
             84.8943,
@@ -15210,7 +15220,7 @@
           ]
         },
         {
-          "id": "post-event-2026-08-27",
+          "id": "post-event-skysat-2026-08-27",
           "title": "Rasuwagadhi and Syabrubesi (SkySat) \u2014 Post-event Imagery",
           "bbox": [
             85.2787,
@@ -15220,7 +15230,7 @@
           ]
         },
         {
-          "id": "pre-event-2026-05-27",
+          "id": "pre-event-planetscope-2026-05-27",
           "title": "Trishuli\u2013Bhote Koshi corridor baseline \u2014 Pre-event Imagery",
           "bbox": [
             85.0066,
