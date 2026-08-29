@@ -1,7 +1,7 @@
 {
-  "generated": "2026-08-28T18:13:49.981527+00:00",
+  "generated": "2026-08-29T12:20:34.775940+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-08-28T18:13:49.981527+00:00",
+  "registry_generated": "2026-08-29T12:20:34.775940+00:00",
   "catalogs": [
     {
       "id": "bot-open-data",
@@ -15197,7 +15197,7 @@
     },
     {
       "id": "planet-disasterdata",
-      "collection_count": 21,
+      "collection_count": 23,
       "collections": [
         {
           "id": "post-event-pelican-2026-08-27",
@@ -15217,6 +15217,16 @@
             27.8293,
             85.648,
             28.6595
+          ]
+        },
+        {
+          "id": "post-event-planetscope-2026-08-28",
+          "title": "Corridor and lower Trishuli, two days after \u2014 Post-event Imagery",
+          "bbox": [
+            84.9106,
+            27.7107,
+            85.5768,
+            28.5115
           ]
         },
         {
@@ -15297,6 +15307,16 @@
             5.5836,
             -76.6108,
             5.7875
+          ]
+        },
+        {
+          "id": "post-event-skysat-2026-08-18",
+          "title": "Choc\u00f3, south of Quibd\u00f3 (SkySat, post-event) \u2014 18 August 2026",
+          "bbox": [
+            -76.8547,
+            5.4484,
+            -76.6528,
+            5.5204
           ]
         },
         {
