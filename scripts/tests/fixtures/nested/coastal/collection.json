@@ -5,6 +5,10 @@
   "title": "Coastal",
   "description": "Coastal zones. Publishes an items endpoint and inline item links, the shape a STAC API browser catalog uses.",
   "license": "CC-BY-4.0",
+  "providers": [
+    {"name": "Coastal Authority", "roles": ["producer", "licensor"], "url": "https://coastal.example/"},
+    {"name": "Example Host", "roles": ["host"], "url": "https://host.example/"}
+  ],
   "table:row_count": 1200,
   "extent": {
     "spatial": {"bbox": [[2.0, 50.0, 7.0, 55.0]]},
