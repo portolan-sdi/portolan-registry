@@ -22,6 +22,7 @@ from collections.abc import Iterable, Mapping, Sequence
 from urllib.parse import urlsplit
 
 PRODUCER = "producer"
+PROCESSOR = "processor"
 HOST = "host"
 
 
@@ -132,8 +133,14 @@ def _party(provider: Mapping) -> dict:
     return party
 
 
-def parties(provider_lists: Iterable[object]) -> tuple[list[dict], dict | None]:
-    """The producers behind a catalog, and the host that serves it.
+def parties(
+    provider_lists: Iterable[object],
+) -> tuple[list[dict], list[dict], dict | None]:
+    """The producers, the processors, and the host of a catalog.
+
+    Three roles, three answers. The producer made the data. The processor
+    derived this copy from it, which on a mirror is usually the party that
+    built the mirror. The host serves it.
 
     Takes the `providers` of the registered root first, when it declares any,
     then of every collection beneath. Producers keep that order and drop
@@ -150,7 +157,9 @@ def parties(provider_lists: Iterable[object]) -> tuple[list[dict], dict | None]:
     lesser fault, and the catalog chose to write both.
     """
     producers: list[dict] = []
-    seen: set[str] = set()
+    processors: list[dict] = []
+    seen_producer: set[str] = set()
+    seen_processor: set[str] = set()
     host: dict | None = None
 
     for providers in provider_lists:
@@ -159,10 +168,13 @@ def parties(provider_lists: Iterable[object]) -> tuple[list[dict], dict | None]:
             name = (provider.get("name") or "").strip().casefold()
             if not name:
                 continue
-            if PRODUCER in roles and name not in seen:
-                seen.add(name)
+            if PRODUCER in roles and name not in seen_producer:
+                seen_producer.add(name)
                 producers.append(_party(provider))
+            if PROCESSOR in roles and name not in seen_processor:
+                seen_processor.add(name)
+                processors.append(_party(provider))
             if HOST in roles and host is None:
                 host = _party(provider)
 
-    return producers, host
+    return producers, processors, host

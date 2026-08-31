@@ -141,6 +141,11 @@
                 "type": "array",
                 "items": {"$ref": "#/$defs/party"}
               },
+              "portolan_registry:processors": {
+                "description": "Who derived this copy from the source, in the order the catalog names them, matched and de-duplicated on the name. On a mirror this is usually the party that built the mirror. Empty when no collection names a processor.",
+                "type": "array",
+                "items": {"$ref": "#/$defs/party"}
+              },
               "portolan_registry:host": {
                 "description": "Who serves this copy, and the party a reader contacts about it. The first host the crawl reads, since the specification allows one host per collection. Null when no collection names one.",
                 "oneOf": [{"$ref": "#/$defs/party"}, {"type": "null"}]

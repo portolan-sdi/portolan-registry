@@ -60,6 +60,7 @@ CARRIED_DEFAULTS: dict[str, object] = {
     # the registry has not read the providers it would need.
     PREFIX + "kind": None,
     PREFIX + "producers": [],
+    PREFIX + "processors": [],
     PREFIX + "host": None,
 }
 
@@ -182,6 +183,11 @@ def child_link(catalog: Mapping) -> dict:
             # providers differently. Empty and null when the catalog names
             # none.
             "portolan_registry:producers": catalog.get("producers") or [],
+            # Who derived this copy from the source. On a mirror this is
+            # usually the party that built it, and it is the only place some
+            # catalogs name that party: seven of the fourteen mirrors put a
+            # storage vendor in the host field, which core.md forbids.
+            "portolan_registry:processors": catalog.get("processors") or [],
             "portolan_registry:host": catalog.get("host"),
             # SPDX id -> how many collections declare it. The registry
             # publishes the mix rather than a single label, so a consumer can

@@ -125,12 +125,27 @@ class TestChildLink:
         ]
         assert link["portolan_registry:host"] == {"name": "Chris Holmes"}
 
+    def test_carries_the_processor_apart_from_the_producer(self):
+        # catalog-1781203130384 names its converter under `processor` and a
+        # storage platform under `host`.
+        link = child_link(
+            {
+                "id": "x",
+                "url": ROOT,
+                "producers": [{"name": "Instituto Geográfico Nacional"}],
+                "processors": [{"name": "Nissim Lebovits"}],
+                "host": {"name": "Source Cooperative"},
+            }
+        )
+        assert link["portolan_registry:processors"] == [{"name": "Nissim Lebovits"}]
+
     def test_a_catalog_whose_providers_say_nothing_reports_no_kind(self):
         # jrc-glofas declares no providers. Null is the registry declining to
         # guess, and an empty list is not a claim that nobody made the data.
         link = child_link({"id": "x", "url": ROOT})
         assert link["portolan_registry:kind"] is None
         assert link["portolan_registry:producers"] == []
+        assert link["portolan_registry:processors"] == []
         assert link["portolan_registry:host"] is None
 
 
@@ -275,6 +290,7 @@ class TestRetiredFields:
         # link has no providers the registry has read.
         assert link["portolan_registry:kind"] is None
         assert link["portolan_registry:producers"] == []
+        assert link["portolan_registry:processors"] == []
         assert link["portolan_registry:host"] is None
 
     def test_keeps_a_provenance_a_carried_link_already_carries(self, tmp_path):
