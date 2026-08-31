@@ -21,6 +21,20 @@
     }
   },
   "$defs": {
+    "party": {
+      "description": "One organization a catalog names, trimmed to what identifies it. The provider's own description is left in the catalog.",
+      "type": "object",
+      "required": ["name"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "url": {
+          "description": "The party's own URL, as the catalog declares it. Absent when it declares none, which the specification permits for a producer.",
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
     "bbox": {
       "description": "WGS84 bounding box, [west, south, east, north] or [west, south, min_alt, east, north, max_alt]. Range and ordering rules beyond arity are checked in the test suite.",
       "type": "array",
@@ -116,6 +130,20 @@
               "portolan_registry:first_registered": {
                 "description": "When the entry file was added to this registry, RFC 3339.",
                 "type": ["string", "null"]
+              },
+              "portolan_registry:kind": {
+                "description": "Whether this catalog is the canonical home of its data or a cloud-native copy of a source maintained elsewhere. Derived, never declared: the specification defines the kind as a reading of a collection's providers and gives it no property of its own (portolan-spec core.md, Source Provenance). A catalog reads as official when the host of every collection beneath it also produces that collection, and as a mirror when any host does not. Null when no collection names both a producer and a host, so the registry cannot say. Absent on entries carried forward from an export published before this field existed.",
+                "type": ["string", "null"],
+                "enum": ["official", "mirror", null]
+              },
+              "portolan_registry:producers": {
+                "description": "Who made the data, in the order the catalog names them: the root catalog's own producers first where it declares any, then each collection's. Repeats are dropped, matching on name or on URL host, so one organization written two ways counts once. Empty when no collection names a producer.",
+                "type": "array",
+                "items": {"$ref": "#/$defs/party"}
+              },
+              "portolan_registry:host": {
+                "description": "Who serves this copy, and the party a reader contacts about it. The first host the crawl reads, since the specification allows one host per collection. Null when no collection names one.",
+                "oneOf": [{"$ref": "#/$defs/party"}, {"type": "null"}]
               },
               "portolan_registry:collection_count": {"type": "integer", "minimum": 0},
               "portolan_registry:feature_count": {"type": "integer", "minimum": 0},

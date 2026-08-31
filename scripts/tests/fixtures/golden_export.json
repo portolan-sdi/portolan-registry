@@ -42,6 +42,21 @@
       },
       "portolan_registry:updated": "2026-01-10T08:30:00Z",
       "portolan_registry:first_registered": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Coastal Authority",
+          "url": "https://coastal.example/"
+        },
+        {
+          "name": "Inland Agency",
+          "url": "https://inland.example/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "Example Host",
+        "url": "https://host.example/"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 2,
         "ODbL-1.0": 1

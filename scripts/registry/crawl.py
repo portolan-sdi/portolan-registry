@@ -20,6 +20,7 @@ from urllib.parse import urlsplit
 from registry.bbox import collection_bbox, union_bboxes
 from registry.fetch import Fetcher, resolve_url
 from registry.logo import catalog_logo
+from registry.provenance import catalog_kind, collection_kind, parties
 from registry.report import log
 
 # The Portolan profile defines no fields, so the versioned schema URI in
@@ -92,6 +93,10 @@ class CollectionSummary:
     # them one by one. The crawler does not page, so this collection's items
     # cannot be counted without a request per page.
     items_unenumerable: bool = False
+    # The collection's own `providers`, unmodified. The spec asks every
+    # Collection for them and asks nothing of a Catalog, so this is where
+    # official-vs-mirror is decided (registry/provenance.py).
+    providers: list | None = None
 
 
 class CrawlResult(TypedDict, total=False):
@@ -111,6 +116,12 @@ class CrawlResult(TypedDict, total=False):
     spec_version_mixed: bool
     updated: str | None
     providers: list | None
+    # Derived from the providers above and every collection's, per
+    # portolan-spec core.md (Source Provenance). Read them off the outermost
+    # result: a nested call sees only its own subtree.
+    kind: str | None
+    producers: list[dict]
+    host: dict | None
     keywords: list | None
     logo: dict[str, str] | None
     bbox: list[float] | None
@@ -147,6 +158,10 @@ def _empty_result(catalog_url: str, catalog: Mapping, now: datetime) -> CrawlRes
         # (core.md, Mirrors), and the registry has no reason to reformat it.
         "updated": catalog.get("updated"),
         "providers": catalog.get("providers"),
+        # Filled in by crawl_catalog, which has the collections to derive from.
+        "kind": None,
+        "producers": [],
+        "host": None,
         "keywords": catalog.get("keywords"),
         # Filled in by crawl_catalog, which has the fetcher needed to check the
         # image is really there.
@@ -178,6 +193,7 @@ def _summarize_collection(url: str, collection: Mapping) -> CollectionSummary:
         license=collection.get("license"),
         spec_version=declared_version(collection),
         row_count=collection.get("table:row_count") or 0,
+        providers=collection.get("providers"),
     )
 
     extent = collection.get("extent") or {}
@@ -382,5 +398,20 @@ def crawl_catalog(
     # here; their count is `collection_count` minus the sum of these.
     counts = Counter(c.license for c in result["collections"] if c.license)
     result["licenses"] = dict(sorted(counts.items()))
+
+    # Official or mirror, and the parties the answer rests on. Derived over
+    # the merged collection list for the same reason the license mix is, so a
+    # nested catalog is read whole rather than one level at a time.
+    #
+    # The registered root's own `providers` lead, where it declares any. A
+    # sub-catalog's are skipped, as its logo and document signals already are:
+    # the spec puts this requirement on collections, and the export publishes
+    # one answer per registered catalog rather than one per level.
+    provider_lists = [result["providers"]] if result["providers"] else []
+    provider_lists += [c.providers for c in result["collections"]]
+    result["kind"] = catalog_kind(
+        collection_kind(providers) for providers in provider_lists
+    )
+    result["producers"], result["host"] = parties(provider_lists)
 
     return result
