@@ -225,7 +225,7 @@ class TestCatalogKind:
 
 class TestParties:
     def test_names_the_producers_and_the_host(self):
-        producers, host = parties(
+        producers, _, host = parties(
             [
                 [
                     {
@@ -252,7 +252,7 @@ class TestParties:
     def test_drops_the_provider_description(self):
         # ghsl gives its providers two-sentence descriptions. The export
         # carries what names a party, not the catalog's prose.
-        producers, _ = parties(
+        producers, _, _ = parties(
             [
                 [
                     {
@@ -272,7 +272,7 @@ class TestParties:
         ]
 
     def test_keeps_the_order_the_catalog_names_them_in(self):
-        producers, _ = parties(
+        producers, _, _ = parties(
             [
                 [{"name": "First", "roles": ["producer"]}],
                 [{"name": "Second", "roles": ["producer"]}],
@@ -286,7 +286,7 @@ class TestParties:
         one = [
             {"name": "Het Kadaster", "roles": ["producer"], "url": "https://kadaster.nl"}
         ]
-        producers, _ = parties([one, one, one])
+        producers, _, _ = parties([one, one, one])
         assert producers == [{"name": "Het Kadaster", "url": "https://kadaster.nl"}]
 
     def test_credits_two_agencies_that_share_a_host(self):
@@ -295,7 +295,7 @@ class TestParties:
         Matching on the host would drop ANP from the list of who made the
         data, so repeats are judged on the name alone.
         """
-        producers, _ = parties(
+        producers, _, _ = parties(
             [
                 [
                     {
@@ -314,11 +314,11 @@ class TestParties:
         assert [p["name"] for p in producers] == ["MAPA", "ANP"]
 
     def test_omits_a_url_the_catalog_does_not_declare(self):
-        producers, _ = parties([[{"name": "CONAB", "roles": ["producer"]}]])
+        producers, _, _ = parties([[{"name": "CONAB", "roles": ["producer"]}]])
         assert producers == [{"name": "CONAB"}]
 
     def test_takes_the_first_host_it_reads(self):
-        producers, host = parties(
+        producers, _, host = parties(
             [
                 [{"name": "Root Host", "roles": ["host"]}],
                 [{"name": "Collection Host", "roles": ["host"]}],
@@ -327,6 +327,76 @@ class TestParties:
         assert producers == []
         assert host == {"name": "Root Host"}
 
+    def test_names_the_processor_apart_from_the_producer_and_the_host(self):
+        """catalog-1781203130384: three parties, three roles.
+
+        The processor is the only party the catalog names as the maker of
+        this copy. Its host field holds Source Cooperative, the storage
+        platform, which core.md excludes from that role.
+        """
+        producers, processors, host = parties(
+            [
+                [
+                    {
+                        "name": "Instituto Geográfico Nacional (Argentina)",
+                        "roles": ["producer"],
+                        "url": "https://www.ign.gob.ar/",
+                    },
+                    {
+                        "name": "Nissim Lebovits",
+                        "roles": ["processor"],
+                        "url": "https://radiant.earth/",
+                    },
+                    {
+                        "name": "Source Cooperative",
+                        "roles": ["host"],
+                        "url": "https://source.coop/",
+                    },
+                ]
+            ]
+        )
+        assert [p["name"] for p in producers] == [
+            "Instituto Geográfico Nacional (Argentina)"
+        ]
+        assert processors == [
+            {"name": "Nissim Lebovits", "url": "https://radiant.earth/"}
+        ]
+        assert host == {"name": "Source Cooperative", "url": "https://source.coop/"}
+
+    def test_one_party_can_hold_the_processor_and_the_host_role(self):
+        """ghsl: Nissim Lebovits converts the rasters and serves them."""
+        _, processors, host = parties(
+            [
+                [
+                    {"name": "European Commission", "roles": ["producer"]},
+                    {
+                        "name": "Nissim Lebovits",
+                        "roles": ["processor", "host"],
+                        "url": "https://github.com/nlebovits/ghsl",
+                    },
+                ]
+            ]
+        )
+        assert [p["name"] for p in processors] == ["Nissim Lebovits"]
+        assert host is not None and host["name"] == "Nissim Lebovits"
+
+    def test_names_one_processor_once_across_many_collections(self):
+        one = [{"name": "Nissim Lebovits", "roles": ["processor"]}]
+        _, processors, _ = parties([one, one, one])
+        assert processors == [{"name": "Nissim Lebovits"}]
+
+    def test_reports_no_processor_when_none_is_named(self):
+        """portolan-nl names a producer and a host, and nothing between."""
+        _, processors, _ = parties(
+            [
+                [
+                    {"name": "Rijkswaterstaat", "roles": ["producer", "licensor"]},
+                    {"name": "Source Cooperative", "roles": ["host"]},
+                ]
+            ]
+        )
+        assert processors == []
+
     def test_reports_nothing_when_no_provider_is_named(self):
-        assert parties([]) == ([], None)
-        assert parties([None, [], "nonsense"]) == ([], None)
+        assert parties([]) == ([], [], None)
+        assert parties([None, [], "nonsense"]) == ([], [], None)

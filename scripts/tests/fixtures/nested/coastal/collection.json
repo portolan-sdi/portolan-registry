@@ -7,6 +7,7 @@
   "license": "CC-BY-4.0",
   "providers": [
     {"name": "Coastal Authority", "roles": ["producer", "licensor"], "url": "https://coastal.example/"},
+    {"name": "Example Converter", "roles": ["processor"], "url": "https://converter.example/"},
     {"name": "Example Host", "roles": ["host"], "url": "https://host.example/"}
   ],
   "table:row_count": 1200,

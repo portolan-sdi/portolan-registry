@@ -121,6 +121,7 @@ class CrawlResult(TypedDict, total=False):
     # result: a nested call sees only its own subtree.
     kind: str | None
     producers: list[dict]
+    processors: list[dict]
     host: dict | None
     keywords: list[Any] | None
     logo: dict[str, str] | None
@@ -171,6 +172,7 @@ def _empty_result(catalog_url: str, catalog: Mapping[str, Any], now: datetime) -
         # Filled in by crawl_catalog, which has the collections to derive from.
         "kind": None,
         "producers": [],
+        "processors": [],
         "host": None,
         "keywords": catalog.get("keywords"),
         # Filled in by crawl_catalog, which has the fetcher needed to check the
@@ -464,6 +466,8 @@ def crawl_catalog(
     result["kind"] = catalog_kind(
         collection_kind(providers) for providers in provider_lists
     )
-    result["producers"], result["host"] = parties(provider_lists)
+    result["producers"], result["processors"], result["host"] = parties(
+        provider_lists
+    )
 
     return result
