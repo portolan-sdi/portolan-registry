@@ -1,7 +1,7 @@
 {
-  "generated": "2026-08-29T12:20:34.775940+00:00",
+  "generated": "2026-08-31T00:24:59.578288+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-08-29T12:20:34.775940+00:00",
+  "registry_generated": "2026-08-31T00:24:59.578288+00:00",
   "catalogs": [
     {
       "id": "bot-open-data",
@@ -71,6 +71,122 @@
             -35.0315,
             -53.1839,
             -30.0855
+          ]
+        }
+      ]
+    },
+    {
+      "id": "carto-do",
+      "collection_count": 9,
+      "collections": [
+        {
+          "id": "spatial-features/esp-h3res8",
+          "title": "Spatial Features v4 \u2014 Spain (H3 resolution 8)",
+          "bbox": [
+            -18.1707,
+            27.6306,
+            4.3343,
+            43.7951
+          ]
+        },
+        {
+          "id": "spatial-features/esp-quadgrid15",
+          "title": "Spatial Features v4 \u2014 Spain (Quadgrid level 15)",
+          "bbox": [
+            -18.1714,
+            27.6349,
+            4.3286,
+            43.7949
+          ]
+        },
+        {
+          "id": "spatial-features/gbr-h3res8",
+          "title": "Spatial Features v4 \u2014 United Kingdom (H3 resolution 8)",
+          "bbox": [
+            -13.6931,
+            49.8592,
+            1.775,
+            60.8486
+          ]
+        },
+        {
+          "id": "spatial-features/gbr-quadgrid15",
+          "title": "Spatial Features v4 \u2014 United Kingdom (Quadgrid level 15)",
+          "bbox": [
+            -13.7,
+            49.8592,
+            1.7688,
+            61.5279
+          ]
+        },
+        {
+          "id": "spatial-features/usa-h3res8",
+          "title": "Spatial Features v4 \u2014 United States (H3 resolution 8)",
+          "bbox": [
+            172.4245,
+            18.9029,
+            180.0,
+            72.6926
+          ]
+        },
+        {
+          "id": "spatial-features/usa-h3res8",
+          "title": "Spatial Features v4 \u2014 United States (H3 resolution 8)",
+          "bbox": [
+            -180.0,
+            18.9029,
+            -66.9418,
+            72.6926
+          ]
+        },
+        {
+          "id": "spatial-features/usa-quadgrid15",
+          "title": "Spatial Features v4 \u2014 United States (Quadgrid level 15)",
+          "bbox": [
+            172.4304,
+            18.9063,
+            180.0,
+            72.689
+          ]
+        },
+        {
+          "id": "spatial-features/usa-quadgrid15",
+          "title": "Spatial Features v4 \u2014 United States (Quadgrid level 15)",
+          "bbox": [
+            -180.0,
+            18.9063,
+            -66.9397,
+            72.689
+          ]
+        },
+        {
+          "id": "kontur/population-h3res8",
+          "title": "Kontur Population 2022 \u2014 Global (H3 resolution 8)",
+          "bbox": [
+            -179.9994,
+            -83.6529,
+            179.9998,
+            82.5318
+          ]
+        },
+        {
+          "id": "kontur/global-fires-h3res8",
+          "title": "Kontur Global Fires \u2014 Global (H3 resolution 8)",
+          "bbox": [
+            -179.9552,
+            -88.4805,
+            179.8973,
+            81.9304
+          ]
+        },
+        {
+          "id": "opencellid/cell-towers",
+          "title": "OpenCellID Cell Towers \u2014 Global",
+          "bbox": [
+            -174.4104,
+            -54.9363,
+            178.4976,
+            72.6944
           ]
         }
       ]
