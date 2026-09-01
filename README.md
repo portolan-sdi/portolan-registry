@@ -14,6 +14,8 @@ Submit a catalog URL → CI crawls & validates → metadata exported to [`export
 
 **Web**: [portolan-sdi.org](https://www.portolan-sdi.org) — enter your `catalog.json` URL and an email address
 
+Web submissions use the root catalog `id` as the registry ID and create `catalogs/<id>.yaml`. Each registry ID must be unique. CI also rejects a catalog URL that another entry uses.
+
 **GitHub**: Fork, add `catalogs/your-catalog.yaml`, open PR:
 
 ```yaml
