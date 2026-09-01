@@ -1,7 +1,7 @@
 {
-  "generated": "2026-08-31T01:13:23.357247+00:00",
+  "generated": "2026-09-01T11:09:37.612799+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-08-31T01:13:23.357247+00:00",
+  "registry_generated": "2026-09-01T11:09:37.612799+00:00",
   "catalogs": [
     {
       "id": "bot-open-data",
@@ -12442,6 +12442,792 @@
       ]
     },
     {
+      "id": "main",
+      "collection_count": 78,
+      "collections": [
+        {
+          "id": "urbanismo/distritos-municipales",
+          "title": "Distritos municipales de Madrid",
+          "bbox": [
+            -3.889,
+            40.3121,
+            -3.5181,
+            40.6433
+          ]
+        },
+        {
+          "id": "urbanismo/barrios-municipales",
+          "title": "Barrios municipales de Madrid",
+          "bbox": [
+            -3.889,
+            40.3121,
+            -3.5181,
+            40.6433
+          ]
+        },
+        {
+          "id": "urbanismo/alturas-edificios",
+          "title": "Cartograf\u00eda actualizada. Alturas de edificios.",
+          "bbox": [
+            -3.8839,
+            40.3175,
+            -3.5198,
+            40.6169
+          ]
+        },
+        {
+          "id": "urbanismo/accesibilidad-aceras-2024",
+          "title": "Accesibilidad y movilidad en aceras y calzadas. A\u00f1o 2024",
+          "bbox": [
+            -3.795,
+            40.3417,
+            -3.5814,
+            40.5222
+          ]
+        },
+        {
+          "id": "urbanismo/operacion-asfalto-2021",
+          "title": "Operaci\u00f3n Asfalto. Madrid 2021",
+          "bbox": [
+            -3.8374,
+            40.3312,
+            -3.5406,
+            40.5308
+          ]
+        },
+        {
+          "id": "urbanismo/licencias-urbanisticas-otorgadas",
+          "title": "Licencias urban\u00edsticas otorgadas",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "urbanismo/aparcamientos-municipales-plazas",
+          "title": "Aparcamientos municipales. N\u00famero de plazas",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "urbanismo/fuentes-agua-beber",
+          "title": "Fuentes de agua para beber",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "transporte/estaciones-bicimad",
+          "title": "Estaciones de Bicimad",
+          "bbox": [
+            -3.7846,
+            40.3325,
+            -3.5485,
+            40.5157
+          ]
+        },
+        {
+          "id": "transporte/estaciones-bicimad-tabla",
+          "title": "Estaciones de bicimad",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "transporte/infraestructura-ciclista",
+          "title": "Bici. Infraestructura ciclista",
+          "bbox": [
+            -3.7993,
+            40.3242,
+            -3.5441,
+            40.584
+          ]
+        },
+        {
+          "id": "transporte/aparcabicis",
+          "title": "Bici. Aparcabicis",
+          "bbox": [
+            -3.808,
+            40.3325,
+            -3.5769,
+            40.5426
+          ]
+        },
+        {
+          "id": "transporte/puntos-medida-trafico",
+          "title": "Tr\u00e1fico. Ubicaci\u00f3n de los puntos de medida del tr\u00e1fico",
+          "bbox": [
+            -3.837,
+            40.3324,
+            -3.5515,
+            40.5157
+          ]
+        },
+        {
+          "id": "transporte/cruces-semaforizados",
+          "title": "Tr\u00e1fico. Cruces semaforizados",
+          "bbox": [
+            -3.8362,
+            40.3311,
+            -3.5527,
+            40.5203
+          ]
+        },
+        {
+          "id": "transporte/galibos-tuneles",
+          "title": "G\u00e1libos f\u00edsicos de control de altura en la entrada de los t\u00faneles con sistema de vigilancia automatizada",
+          "bbox": [
+            -3.7203,
+            40.3928,
+            -3.674,
+            40.473
+          ]
+        },
+        {
+          "id": "transporte/ser-calles-plazas",
+          "title": "Servicio de Estacionamiento Regulado (SER). Calles y n\u00famero de plazas",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "transporte/paradas-taxi",
+          "title": "Taxi. Reservas de paradas en v\u00eda p\u00fablica",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "transporte/reservas-carga-descarga",
+          "title": "Carga y descarga. Reserva de estacionamiento para carga y descarga de mercanc\u00edas en v\u00eda p\u00fablica",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "transporte/accidentes-trafico",
+          "title": "Accidentes de tr\u00e1fico de la ciudad de Madrid",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "cultura-y-ocio/areas-actividades-mayores",
+          "title": "\u00c1reas de actividades para mayores",
+          "bbox": [
+            -3.7592,
+            40.3543,
+            -3.5937,
+            40.5051
+          ]
+        },
+        {
+          "id": "cultura-y-ocio/bibliotecas",
+          "title": "Bibliotecas de Madrid",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "cultura-y-ocio/centros-culturales",
+          "title": "Centros Culturales Municipales (incluyen Socioculturales y Juveniles)",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "cultura-y-ocio/museos",
+          "title": "Museos de la ciudad de Madrid",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "cultura-y-ocio/monumentos-ciudad",
+          "title": "Monumentos de la ciudad de Madrid",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "cultura-y-ocio/agenda-eventos-culturales-100",
+          "title": "Actividades culturales y de ocio municipal en los pr\u00f3ximos 100 d\u00edas",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "cultura-y-ocio/areas-infantiles",
+          "title": "\u00c1reas infantiles municipales",
+          "bbox": [
+            -3.8314,
+            40.3329,
+            -3.5492,
+            40.5349
+          ]
+        },
+        {
+          "id": "cultura-y-ocio/areas-deportivas",
+          "title": "\u00c1reas de actividades deportivas",
+          "bbox": [
+            -3.7884,
+            40.3421,
+            -3.5646,
+            40.4926
+          ]
+        },
+        {
+          "id": "sector-publico/conjuntos-publicados-julio-2026",
+          "title": "Conjuntos de datos publicados en datos.madrid.es",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "sector-publico/ejecucion-presupuestaria-gastos-2026-07",
+          "title": "Presupuestos. Ejecuci\u00f3n mensual ejercicio en curso",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "sector-publico/recursos-humanos-efectivos",
+          "title": "Recursos humanos efectivos",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "sector-publico/parque-movil-municipal",
+          "title": "Parque m\u00f3vil municipal",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "sector-publico/registro-lobbies",
+          "title": "Registro de Lobbies",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "sector-publico/oficinas-y-tramites",
+          "title": "Oficinas y tr\u00e1mites",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "sector-publico/agendas-institucionales",
+          "title": "Agendas de responsables p\u00fablicos del Ayuntamiento de Madrid",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "demografia/poblacion-distrito-barrio",
+          "title": "Poblaci\u00f3n por distrito y barrio a 1 de enero",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "demografia/defunciones-barrio-2025",
+          "title": "Defunciones clasificadas por nacionalidad y sexo seg\u00fan distrito y barrio",
+          "bbox": [
+            -3.889,
+            40.3121,
+            -3.5181,
+            40.6433
+          ]
+        },
+        {
+          "id": "demografia/nacimientos-barrio-2025",
+          "title": "Nacimientos clasificados por nacionalidad y sexo seg\u00fan distrito y barrio",
+          "bbox": [
+            -3.889,
+            40.3121,
+            -3.5181,
+            40.6433
+          ]
+        },
+        {
+          "id": "demografia/padron-municipal",
+          "title": "Padr\u00f3n municipal",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "energia/consumo-edificios-municipales",
+          "title": "Consumo de energ\u00eda en edificios municipales. Datos mensuales",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "energia/instalaciones-fotovoltaicas-2025",
+          "title": "Inventario de instalaciones fotovoltaicas",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "empleo/ofertas-empleo-publico",
+          "title": "Ofertas de Empleo P\u00fablico del Ayuntamiento de Madrid y sus organismos aut\u00f3nomos",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "empleo/perfiles-personas-inscritas",
+          "title": "Agencia para el Empleo. Perfiles de personas inscritas",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "empleo/oficinas-agencia-empleo",
+          "title": "Oficinas de la Agencia Municipal de Empleo",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "seguridad/actuaciones-bomberos-2025",
+          "title": "Actuaciones del Cuerpo de Bomberos",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "seguridad/activaciones-samur-2024",
+          "title": "Activaciones del SAMUR-Protecci\u00f3n Civil",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "seguridad/incidencias-emisora-policia-2026-06",
+          "title": "Incidencias recibidas en la Emisora Central de Polic\u00eda Municipal",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "seguridad/camaras-videovigilancia",
+          "title": "C\u00e1maras de videovigilancia en la v\u00eda p\u00fablica de Madrid",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "hacienda/empresas-iae-2025",
+          "title": "Empresas por ep\u00edgrafe de actividad econ\u00f3mica: IAE",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "hacienda/categorias-fiscales",
+          "title": "Categor\u00edas fiscales del municipio de Madrid",
+          "bbox": [
+            -3.889,
+            40.3121,
+            -3.5181,
+            40.6433
+          ]
+        },
+        {
+          "id": "hacienda/contratos-menores",
+          "title": "Contratos menores",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "hacienda/inventario-bienes-inmuebles",
+          "title": "Inventario de bienes muebles e inmuebles del Ayuntamiento de Madrid",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "vivienda/viviendas-uso-turistico",
+          "title": "Viviendas de uso tur\u00edstico con licencia",
+          "bbox": [
+            -3.7825,
+            40.3325,
+            -3.576,
+            40.4952
+          ]
+        },
+        {
+          "id": "medio-ambiente/anemometros-via-publica",
+          "title": "Anem\u00f3metros externos en v\u00eda p\u00fablica de fuentes y t\u00faneles",
+          "bbox": [
+            -3.7813,
+            40.3413,
+            -3.5779,
+            40.4981
+          ]
+        },
+        {
+          "id": "medio-ambiente/alertas-climatologicas-parques",
+          "title": "Estado de apertura y cierre de los parques m\u00e1s representativos seg\u00fan alertas climatol\u00f3gicas y otras incidencias",
+          "bbox": [
+            -3.7229,
+            40.3618,
+            -3.5938,
+            40.4677
+          ]
+        },
+        {
+          "id": "medio-ambiente/zonas-recogida-muebles-enseres",
+          "title": "Servicio de recogida programada de muebles, electrodom\u00e9sticos y enseres. Zonas y calendario anual",
+          "bbox": [
+            -3.8383,
+            40.3121,
+            -3.5181,
+            40.5392
+          ]
+        },
+        {
+          "id": "medio-ambiente/calidad-aire-diario-2024",
+          "title": "Calidad del aire. Datos diarios desde 2001",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "medio-ambiente/meteorologicos-diarios",
+          "title": "Datos meteorol\u00f3gicos. Datos diarios desde 2019",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "medio-ambiente/contaminacion-acustica-mensual",
+          "title": "Contaminaci\u00f3n ac\u00fastica. Datos hist\u00f3ricos mensuales",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "deporte/polideportivos",
+          "title": "Deportes. Centros deportivos municipales (polideportivos)",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "deporte/instalaciones-deportivas-basicas",
+          "title": "Deportes. Instalaciones deportivas b\u00e1sicas municipales",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "deporte/piscinas-municipales",
+          "title": "Deportes. Piscinas municipales en la ciudad de Madrid",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "turismo/oficinas-turismo",
+          "title": "Oficinas de turismo en Madrid",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "turismo/puntos-informacion-turistica",
+          "title": "Puntos de informaci\u00f3n tur\u00edstica",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "economia/empresas-alojadas-vivero",
+          "title": "Empresas alojadas en la red de viveros de empresa de Madrid Emprende",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "ciencia-y-tecnologia/fuentes-agua-mascotas",
+          "title": "Fuentes de agua para mascotas",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "salud/pozos-alcantarillado-barrios-2025",
+          "title": "Pozos de alcantarillado: desratizaci\u00f3n y desinsectaci\u00f3n",
+          "bbox": [
+            -3.8374,
+            40.3271,
+            -3.5249,
+            40.5601
+          ]
+        },
+        {
+          "id": "salud/plagas-vectores-ratas-barrios-2025",
+          "title": "Plagas y vectores",
+          "bbox": [
+            -3.8374,
+            40.3271,
+            -3.5249,
+            40.5601
+          ]
+        },
+        {
+          "id": "salud/farmacias-guardia",
+          "title": "Farmacias de guardia",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "sociedad-y-bienestar/centros-atencion-social",
+          "title": "Sedes. Centros de atenci\u00f3n social",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "sociedad-y-bienestar/instalaciones-accesibles-municipales",
+          "title": "Instalaciones accesibles municipales",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "sociedad-y-bienestar/perfil-voluntarios",
+          "title": "Voluntarios y voluntarias del Ayuntamiento de Madrid",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "sociedad-y-bienestar/problematicas-sociales-2025",
+          "title": "Problem\u00e1ticas sociales identificadas en Centros de Servicios Sociales Atenci\u00f3n Social Primaria",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "sociedad-y-bienestar/inmigrantes-informacion-2025",
+          "title": "Inmigrantes. Personas atendidas en el servicio de informaci\u00f3n y orientaci\u00f3n",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "comercio/terrazas-hosteleria",
+          "title": "Censo de locales, sus actividades y terrazas de hosteler\u00eda y restauraci\u00f3n",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "comercio/situados-aislados-2025",
+          "title": "Relaci\u00f3n de situados aislados en v\u00eda p\u00fablica",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "educacion/centros-educativos",
+          "title": "Centros educativos en Madrid",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "educacion/escuelas-infantiles-municipales",
+          "title": "Escuelas infantiles municipales",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "educacion/salas-estudio-lectura",
+          "title": "Salas de estudio y lectura",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        }
+      ]
+    },
+    {
       "id": "microsoft-ml-road-detections",
       "collection_count": 1,
       "collections": [
@@ -15313,7 +16099,7 @@
     },
     {
       "id": "planet-disasterdata",
-      "collection_count": 23,
+      "collection_count": 24,
       "collections": [
         {
           "id": "post-event-pelican-2026-08-27",
@@ -15353,6 +16139,16 @@
             28.0822,
             85.4428,
             28.3661
+          ]
+        },
+        {
+          "id": "post-event-skysat-2026-08-31",
+          "title": "Betrawati to Trishuli Bazaar (SkySat) \u2014 Post-event Imagery",
+          "bbox": [
+            85.0854,
+            27.792,
+            85.2315,
+            28.0297
           ]
         },
         {
