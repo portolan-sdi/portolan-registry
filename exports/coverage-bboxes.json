@@ -1,7 +1,7 @@
 {
-  "generated": "2026-09-01T11:09:37.612799+00:00",
+  "generated": "2026-09-01T11:59:15.007802+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-09-01T11:09:37.612799+00:00",
+  "registry_generated": "2026-09-01T11:59:15.007802+00:00",
   "catalogs": [
     {
       "id": "bot-open-data",
@@ -12442,7 +12442,7 @@
       ]
     },
     {
-      "id": "main",
+      "id": "madrid-datos-abiertos",
       "collection_count": 78,
       "collections": [
         {
