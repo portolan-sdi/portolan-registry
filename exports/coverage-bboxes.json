@@ -1,7 +1,7 @@
 {
-  "generated": "2026-09-01T11:59:15.007802+00:00",
+  "generated": "2026-09-03T10:43:34.810289+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-09-01T11:59:15.007802+00:00",
+  "registry_generated": "2026-09-03T10:43:34.810289+00:00",
   "catalogs": [
     {
       "id": "bot-open-data",
@@ -16099,7 +16099,7 @@
     },
     {
       "id": "planet-disasterdata",
-      "collection_count": 24,
+      "collection_count": 25,
       "collections": [
         {
           "id": "post-event-pelican-2026-08-27",
@@ -16109,6 +16109,16 @@
             28.0787,
             85.4341,
             28.3512
+          ]
+        },
+        {
+          "id": "post-event-pelican-2026-09-01",
+          "title": "Syabrubesi to Rasuwagadhi, five-day repeat (Pelican) \u2014 Post-event Imagery",
+          "bbox": [
+            85.2847,
+            28.1043,
+            85.4365,
+            28.351
           ]
         },
         {
