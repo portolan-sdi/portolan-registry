@@ -1,7 +1,7 @@
 {
-  "generated": "2026-09-04T10:39:36.641737+00:00",
+  "generated": "2026-09-05T09:59:55.490614+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-09-04T10:39:36.641737+00:00",
+  "registry_generated": "2026-09-05T09:59:55.490614+00:00",
   "catalogs": [
     {
       "id": "bot-open-data",
@@ -12443,21 +12443,61 @@
     },
     {
       "id": "madrid-datos-abiertos",
-      "collection_count": 10,
+      "collection_count": 78,
       "collections": [
         {
-          "id": "cultura-y-ocio/areas-actividades-mayores",
-          "title": "\u00c1reas de actividades para mayores",
+          "id": "urbanismo/distritos-municipales",
+          "title": "Distritos municipales de Madrid",
           "bbox": [
-            -3.7592,
-            40.3543,
-            -3.5937,
-            40.5051
+            -3.889,
+            40.3121,
+            -3.5181,
+            40.6433
           ]
         },
         {
-          "id": "demografia/poblacion-distrito-barrio",
-          "title": "Poblaci\u00f3n por distrito y barrio a 1 de enero",
+          "id": "urbanismo/barrios-municipales",
+          "title": "Barrios municipales de Madrid",
+          "bbox": [
+            -3.889,
+            40.3121,
+            -3.5181,
+            40.6433
+          ]
+        },
+        {
+          "id": "urbanismo/alturas-edificios",
+          "title": "Cartograf\u00eda actualizada. Alturas de edificios.",
+          "bbox": [
+            -3.8839,
+            40.3175,
+            -3.5198,
+            40.6169
+          ]
+        },
+        {
+          "id": "urbanismo/accesibilidad-aceras-2024",
+          "title": "Accesibilidad y movilidad en aceras y calzadas. A\u00f1o 2024",
+          "bbox": [
+            -3.795,
+            40.3417,
+            -3.5814,
+            40.5222
+          ]
+        },
+        {
+          "id": "urbanismo/operacion-asfalto-2021",
+          "title": "Operaci\u00f3n Asfalto. Madrid 2021",
+          "bbox": [
+            -3.8374,
+            40.3312,
+            -3.5406,
+            40.5308
+          ]
+        },
+        {
+          "id": "urbanismo/licencias-urbanisticas-otorgadas",
+          "title": "Licencias urban\u00edsticas otorgadas",
           "bbox": [
             -180.0,
             -90.0,
@@ -12466,8 +12506,8 @@
           ]
         },
         {
-          "id": "empleo/ofertas-empleo-publico",
-          "title": "Ofertas de Empleo P\u00fablico del Ayuntamiento de Madrid y sus organismos aut\u00f3nomos",
+          "id": "urbanismo/aparcamientos-municipales-plazas",
+          "title": "Aparcamientos municipales. N\u00famero de plazas",
           "bbox": [
             -180.0,
             -90.0,
@@ -12476,38 +12516,8 @@
           ]
         },
         {
-          "id": "energia/consumo-edificios-municipales",
-          "title": "Consumo de energ\u00eda en edificios municipales. Datos mensuales",
-          "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
-          ]
-        },
-        {
-          "id": "hacienda/empresas-iae-2025",
-          "title": "Empresas por ep\u00edgrafe de actividad econ\u00f3mica: IAE",
-          "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
-          ]
-        },
-        {
-          "id": "sector-publico/conjuntos-publicados-julio-2026",
-          "title": "Conjuntos de datos publicados en datos.madrid.es",
-          "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
-          ]
-        },
-        {
-          "id": "seguridad/actuaciones-bomberos-2025",
-          "title": "Actuaciones del Cuerpo de Bomberos",
+          "id": "urbanismo/fuentes-agua-beber",
+          "title": "Fuentes de agua para beber",
           "bbox": [
             -180.0,
             -90.0,
@@ -12536,13 +12546,683 @@
           ]
         },
         {
-          "id": "urbanismo/distritos-municipales",
-          "title": "Distritos municipales de Madrid",
+          "id": "transporte/infraestructura-ciclista",
+          "title": "Bici. Infraestructura ciclista",
+          "bbox": [
+            -3.7993,
+            40.3242,
+            -3.5441,
+            40.584
+          ]
+        },
+        {
+          "id": "transporte/aparcabicis",
+          "title": "Bici. Aparcabicis",
+          "bbox": [
+            -3.808,
+            40.3325,
+            -3.5769,
+            40.5426
+          ]
+        },
+        {
+          "id": "transporte/puntos-medida-trafico",
+          "title": "Tr\u00e1fico. Ubicaci\u00f3n de los puntos de medida del tr\u00e1fico",
+          "bbox": [
+            -3.837,
+            40.3324,
+            -3.5515,
+            40.5157
+          ]
+        },
+        {
+          "id": "transporte/cruces-semaforizados",
+          "title": "Tr\u00e1fico. Cruces semaforizados",
+          "bbox": [
+            -3.8362,
+            40.3311,
+            -3.5527,
+            40.5203
+          ]
+        },
+        {
+          "id": "transporte/galibos-tuneles",
+          "title": "G\u00e1libos f\u00edsicos de control de altura en la entrada de los t\u00faneles con sistema de vigilancia automatizada",
+          "bbox": [
+            -3.7203,
+            40.3928,
+            -3.674,
+            40.473
+          ]
+        },
+        {
+          "id": "transporte/ser-calles-plazas",
+          "title": "Servicio de Estacionamiento Regulado (SER). Calles y n\u00famero de plazas",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "transporte/paradas-taxi",
+          "title": "Taxi. Reservas de paradas en v\u00eda p\u00fablica",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "transporte/reservas-carga-descarga",
+          "title": "Carga y descarga. Reserva de estacionamiento para carga y descarga de mercanc\u00edas en v\u00eda p\u00fablica",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "transporte/accidentes-trafico",
+          "title": "Accidentes de tr\u00e1fico de la ciudad de Madrid",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "cultura-y-ocio/areas-actividades-mayores",
+          "title": "\u00c1reas de actividades para mayores",
+          "bbox": [
+            -3.7592,
+            40.3543,
+            -3.5937,
+            40.5051
+          ]
+        },
+        {
+          "id": "cultura-y-ocio/bibliotecas",
+          "title": "Bibliotecas de Madrid",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "cultura-y-ocio/centros-culturales",
+          "title": "Centros Culturales Municipales (incluyen Socioculturales y Juveniles)",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "cultura-y-ocio/museos",
+          "title": "Museos de la ciudad de Madrid",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "cultura-y-ocio/monumentos-ciudad",
+          "title": "Monumentos de la ciudad de Madrid",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "cultura-y-ocio/agenda-eventos-culturales-100",
+          "title": "Actividades culturales y de ocio municipal en los pr\u00f3ximos 100 d\u00edas",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "cultura-y-ocio/areas-infantiles",
+          "title": "\u00c1reas infantiles municipales",
+          "bbox": [
+            -3.8314,
+            40.3329,
+            -3.5492,
+            40.5349
+          ]
+        },
+        {
+          "id": "cultura-y-ocio/areas-deportivas",
+          "title": "\u00c1reas de actividades deportivas",
+          "bbox": [
+            -3.7884,
+            40.3421,
+            -3.5646,
+            40.4926
+          ]
+        },
+        {
+          "id": "sector-publico/conjuntos-publicados-julio-2026",
+          "title": "Conjuntos de datos publicados en datos.madrid.es",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "sector-publico/ejecucion-presupuestaria-gastos-2026-07",
+          "title": "Presupuestos. Ejecuci\u00f3n mensual ejercicio en curso",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "sector-publico/recursos-humanos-efectivos",
+          "title": "Recursos humanos efectivos",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "sector-publico/parque-movil-municipal",
+          "title": "Parque m\u00f3vil municipal",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "sector-publico/registro-lobbies",
+          "title": "Registro de Lobbies",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "sector-publico/oficinas-y-tramites",
+          "title": "Oficinas y tr\u00e1mites",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "sector-publico/agendas-institucionales",
+          "title": "Agendas de responsables p\u00fablicos del Ayuntamiento de Madrid",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "demografia/poblacion-distrito-barrio",
+          "title": "Poblaci\u00f3n por distrito y barrio a 1 de enero",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "demografia/defunciones-barrio-2025",
+          "title": "Defunciones clasificadas por nacionalidad y sexo seg\u00fan distrito y barrio",
           "bbox": [
             -3.889,
             40.3121,
             -3.5181,
             40.6433
+          ]
+        },
+        {
+          "id": "demografia/nacimientos-barrio-2025",
+          "title": "Nacimientos clasificados por nacionalidad y sexo seg\u00fan distrito y barrio",
+          "bbox": [
+            -3.889,
+            40.3121,
+            -3.5181,
+            40.6433
+          ]
+        },
+        {
+          "id": "demografia/padron-municipal",
+          "title": "Padr\u00f3n municipal",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "energia/consumo-edificios-municipales",
+          "title": "Consumo de energ\u00eda en edificios municipales. Datos mensuales",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "energia/instalaciones-fotovoltaicas-2025",
+          "title": "Inventario de instalaciones fotovoltaicas",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "empleo/ofertas-empleo-publico",
+          "title": "Ofertas de Empleo P\u00fablico del Ayuntamiento de Madrid y sus organismos aut\u00f3nomos",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "empleo/perfiles-personas-inscritas",
+          "title": "Agencia para el Empleo. Perfiles de personas inscritas",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "empleo/oficinas-agencia-empleo",
+          "title": "Oficinas de la Agencia Municipal de Empleo",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "seguridad/actuaciones-bomberos-2025",
+          "title": "Actuaciones del Cuerpo de Bomberos",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "seguridad/activaciones-samur-2024",
+          "title": "Activaciones del SAMUR-Protecci\u00f3n Civil",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "seguridad/incidencias-emisora-policia-2026-06",
+          "title": "Incidencias recibidas en la Emisora Central de Polic\u00eda Municipal",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "seguridad/camaras-videovigilancia",
+          "title": "C\u00e1maras de videovigilancia en la v\u00eda p\u00fablica de Madrid",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "hacienda/empresas-iae-2025",
+          "title": "Empresas por ep\u00edgrafe de actividad econ\u00f3mica: IAE",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "hacienda/categorias-fiscales",
+          "title": "Categor\u00edas fiscales del municipio de Madrid",
+          "bbox": [
+            -3.889,
+            40.3121,
+            -3.5181,
+            40.6433
+          ]
+        },
+        {
+          "id": "hacienda/contratos-menores",
+          "title": "Contratos menores",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "hacienda/inventario-bienes-inmuebles",
+          "title": "Inventario de bienes muebles e inmuebles del Ayuntamiento de Madrid",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "vivienda/viviendas-uso-turistico",
+          "title": "Viviendas de uso tur\u00edstico con licencia",
+          "bbox": [
+            -3.7825,
+            40.3325,
+            -3.576,
+            40.4952
+          ]
+        },
+        {
+          "id": "medio-ambiente/anemometros-via-publica",
+          "title": "Anem\u00f3metros externos en v\u00eda p\u00fablica de fuentes y t\u00faneles",
+          "bbox": [
+            -3.7813,
+            40.3413,
+            -3.5779,
+            40.4981
+          ]
+        },
+        {
+          "id": "medio-ambiente/alertas-climatologicas-parques",
+          "title": "Estado de apertura y cierre de los parques m\u00e1s representativos seg\u00fan alertas climatol\u00f3gicas y otras incidencias",
+          "bbox": [
+            -3.7229,
+            40.3618,
+            -3.5938,
+            40.4677
+          ]
+        },
+        {
+          "id": "medio-ambiente/zonas-recogida-muebles-enseres",
+          "title": "Servicio de recogida programada de muebles, electrodom\u00e9sticos y enseres. Zonas y calendario anual",
+          "bbox": [
+            -3.8383,
+            40.3121,
+            -3.5181,
+            40.5392
+          ]
+        },
+        {
+          "id": "medio-ambiente/calidad-aire-diario-2024",
+          "title": "Calidad del aire. Datos diarios desde 2001",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "medio-ambiente/meteorologicos-diarios",
+          "title": "Datos meteorol\u00f3gicos. Datos diarios desde 2019",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "medio-ambiente/contaminacion-acustica-mensual",
+          "title": "Contaminaci\u00f3n ac\u00fastica. Datos hist\u00f3ricos mensuales",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "deporte/polideportivos",
+          "title": "Deportes. Centros deportivos municipales (polideportivos)",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "deporte/instalaciones-deportivas-basicas",
+          "title": "Deportes. Instalaciones deportivas b\u00e1sicas municipales",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "deporte/piscinas-municipales",
+          "title": "Deportes. Piscinas municipales en la ciudad de Madrid",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "turismo/oficinas-turismo",
+          "title": "Oficinas de turismo en Madrid",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "turismo/puntos-informacion-turistica",
+          "title": "Puntos de informaci\u00f3n tur\u00edstica",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "economia/empresas-alojadas-vivero",
+          "title": "Empresas alojadas en la red de viveros de empresa de Madrid Emprende",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "ciencia-y-tecnologia/fuentes-agua-mascotas",
+          "title": "Fuentes de agua para mascotas",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "salud/pozos-alcantarillado-barrios-2025",
+          "title": "Pozos de alcantarillado: desratizaci\u00f3n y desinsectaci\u00f3n",
+          "bbox": [
+            -3.8374,
+            40.3271,
+            -3.5249,
+            40.5601
+          ]
+        },
+        {
+          "id": "salud/plagas-vectores-ratas-barrios-2025",
+          "title": "Plagas y vectores",
+          "bbox": [
+            -3.8374,
+            40.3271,
+            -3.5249,
+            40.5601
+          ]
+        },
+        {
+          "id": "salud/farmacias-guardia",
+          "title": "Farmacias de guardia",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "sociedad-y-bienestar/centros-atencion-social",
+          "title": "Sedes. Centros de atenci\u00f3n social",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "sociedad-y-bienestar/instalaciones-accesibles-municipales",
+          "title": "Instalaciones accesibles municipales",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "sociedad-y-bienestar/perfil-voluntarios",
+          "title": "Voluntarios y voluntarias del Ayuntamiento de Madrid",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "sociedad-y-bienestar/problematicas-sociales-2025",
+          "title": "Problem\u00e1ticas sociales identificadas en Centros de Servicios Sociales Atenci\u00f3n Social Primaria",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "sociedad-y-bienestar/inmigrantes-informacion-2025",
+          "title": "Inmigrantes. Personas atendidas en el servicio de informaci\u00f3n y orientaci\u00f3n",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "comercio/terrazas-hosteleria",
+          "title": "Censo de locales, sus actividades y terrazas de hosteler\u00eda y restauraci\u00f3n",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "comercio/situados-aislados-2025",
+          "title": "Relaci\u00f3n de situados aislados en v\u00eda p\u00fablica",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "educacion/centros-educativos",
+          "title": "Centros educativos en Madrid",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "educacion/escuelas-infantiles-municipales",
+          "title": "Escuelas infantiles municipales",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "educacion/salas-estudio-lectura",
+          "title": "Salas de estudio y lectura",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
           ]
         }
       ]
@@ -16067,6 +16747,702 @@
             -33.7508,
             -29.299,
             5.2718
+          ]
+        }
+      ]
+    },
+    {
+      "id": "south-tyrol-geodata-portolan-mirror",
+      "collection_count": 69,
+      "collections": [
+        {
+          "id": "administrative-units/boundaries",
+          "title": "Boundaries \u2014 mirror of \u00abLimiti amministrativi\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.3845,
+            46.2184,
+            12.478,
+            47.0921
+          ]
+        },
+        {
+          "id": "administrative-units/districts",
+          "title": "Districts \u2014 mirror of \u00abComunit\u00e0 comprensoriali\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.3845,
+            46.2184,
+            12.478,
+            47.0921
+          ]
+        },
+        {
+          "id": "administrative-units/municipalities",
+          "title": "Municipalities \u2014 mirror of \u00abComuni\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.3845,
+            46.2184,
+            12.478,
+            47.0921
+          ]
+        },
+        {
+          "id": "administrative-units/province",
+          "title": "Province \u2014 mirror of \u00abProvincia\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            -7.5084,
+            34.9221,
+            31.122,
+            56.372
+          ]
+        },
+        {
+          "id": "administrative-units/urban-centres",
+          "title": "Urban centres \u2014 mirror of \u00abCentri edificati (LP 10/91)\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.4588,
+            46.2372,
+            12.3713,
+            47.0509
+          ]
+        },
+        {
+          "id": "cultural-heritage/archaeological-sites-overview",
+          "title": "Archaeological sites overview \u2014 mirror of \u00abZone archeologiche (visione generale)\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.4376,
+            46.2231,
+            12.4319,
+            47.0921
+          ]
+        },
+        {
+          "id": "cultural-heritage/historical-monuments",
+          "title": "Historical monuments \u2014 mirror of \u00abMonumenti architettonici\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.4376,
+            46.2319,
+            12.3689,
+            47.054
+          ]
+        },
+        {
+          "id": "environment-and-infrastructure/air-quality-stations",
+          "title": "Air quality stations \u2014 mirror of \u00abStazioni di misura della qualit\u00e0 dell\u2019aria\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.8591,
+            46.2641,
+            11.944,
+            46.8903
+          ]
+        },
+        {
+          "id": "environment-and-infrastructure/district-heating-zones",
+          "title": "District heating zones \u2014 mirror of \u00abTeleriscaldamento zone servite\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.458,
+            46.3829,
+            12.4019,
+            47.0132
+          ]
+        },
+        {
+          "id": "environment-and-infrastructure/quarries-and-peat-bogs",
+          "title": "Quarries and peat bogs \u2014 mirror of \u00abCave e torbiere (aree)\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.5199,
+            46.2427,
+            12.0007,
+            46.9798
+          ]
+        },
+        {
+          "id": "environment-and-infrastructure/telecom-transmitters",
+          "title": "Telecom transmitters \u2014 mirror of \u00abImpianti trasmittenti\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.4585,
+            46.2353,
+            12.4198,
+            47.0291
+          ]
+        },
+        {
+          "id": "environment-and-infrastructure/wastewater-treatment-plants",
+          "title": "Wastewater treatment plants \u2014 mirror of \u00abImpianti di depurazione biologici\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.4955,
+            46.2382,
+            12.3667,
+            46.865
+          ]
+        },
+        {
+          "id": "geology/boreholes",
+          "title": "Boreholes \u2014 mirror of \u00abSondaggi\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.4635,
+            46.2346,
+            12.407,
+            47.0379
+          ]
+        },
+        {
+          "id": "geology/geological-units-overview",
+          "title": "Geological units overview \u2014 mirror of \u00abUnit\u00e0 geologiche principali\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.0389,
+            45.7465,
+            13.0449,
+            47.7798
+          ]
+        },
+        {
+          "id": "geology/landslide-events-areas",
+          "title": "Landslide events areas \u2014 mirror of \u00abTipologia di frana\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.3861,
+            46.2214,
+            12.4029,
+            47.0806
+          ]
+        },
+        {
+          "id": "geology/main-faults",
+          "title": "Main faults \u2014 mirror of \u00abPrincipali faglie\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.0389,
+            45.7465,
+            13.0449,
+            47.7798
+          ]
+        },
+        {
+          "id": "geology/rock-glaciers",
+          "title": "Rock glaciers \u2014 mirror of \u00abRock glacier\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.3932,
+            46.3558,
+            12.4258,
+            47.0911
+          ]
+        },
+        {
+          "id": "hazard-zones-and-civil-protection/civil-protection-plan-status",
+          "title": "Civil protection plan status \u2014 mirror of \u00abStato dei Piani di Protezione Civile comunali\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.3845,
+            46.2184,
+            12.478,
+            47.0921
+          ]
+        },
+        {
+          "id": "hazard-zones-and-civil-protection/civil-protection-points-of-interest",
+          "title": "Civil protection points of interest \u2014 mirror of \u00abPunti di interesse dei Piani di Protezione Civile comunali\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.4613,
+            46.2514,
+            12.3595,
+            47.0514
+          ]
+        },
+        {
+          "id": "hazard-zones-and-civil-protection/hazard-zone-plans-coverage",
+          "title": "Hazard zone plans coverage \u2014 mirror of \u00abPiano delle Zone di Pericolo: Copertura\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.3845,
+            46.2184,
+            12.478,
+            47.0921
+          ]
+        },
+        {
+          "id": "hazard-zones-and-civil-protection/hazard-zones-avalanches",
+          "title": "Hazard zones avalanches \u2014 mirror of \u00abPiano delle Zone di Pericolo: Valanghe\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.4038,
+            46.2241,
+            12.4351,
+            47.0807
+          ]
+        },
+        {
+          "id": "hazard-zones-and-civil-protection/hazard-zones-geological",
+          "title": "Hazard zones geological \u2014 mirror of \u00abPiano delle Zone di Pericolo: Zone rischio geologico D.L. 180, 11.6.1998\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.4531,
+            46.4092,
+            11.9147,
+            46.6829
+          ]
+        },
+        {
+          "id": "hazard-zones-and-civil-protection/hazard-zones-hydraulic",
+          "title": "Hazard zones hydraulic \u2014 mirror of \u00abPiano delle Zone di Pericolo: Pericoli idraulici\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.3943,
+            46.2241,
+            12.4351,
+            47.0807
+          ]
+        },
+        {
+          "id": "hazard-zones-and-civil-protection/hazard-zones-landslides",
+          "title": "Hazard zones landslides \u2014 mirror of \u00abPiano delle Zone di Pericolo: Frane\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.401,
+            46.2241,
+            12.4351,
+            47.0807
+          ]
+        },
+        {
+          "id": "health/ambulatory-health-care-centres",
+          "title": "Ambulatory health care centres \u2014 mirror of \u00abAmbulatori distrettuali\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.542,
+            46.3145,
+            12.2838,
+            46.9178
+          ]
+        },
+        {
+          "id": "health/family-counselling-centres",
+          "title": "Family counselling centres \u2014 mirror of \u00abConsultori familiari\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.7773,
+            46.2393,
+            12.2837,
+            46.9666
+          ]
+        },
+        {
+          "id": "health/functional-territorial-aggregations",
+          "title": "Functional territorial aggregations \u2014 mirror of \u00abAggregazione Funzionale Territoriale\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.5838,
+            46.3411,
+            12.2274,
+            46.92
+          ]
+        },
+        {
+          "id": "health/health-districts",
+          "title": "Health districts \u2014 mirror of \u00abDistretti sanitari\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.3845,
+            46.2184,
+            12.478,
+            47.0921
+          ]
+        },
+        {
+          "id": "health/health-regions",
+          "title": "Health regions \u2014 mirror of \u00abComprensori sanitari\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.3845,
+            46.2184,
+            12.478,
+            47.0921
+          ]
+        },
+        {
+          "id": "health/hospitals",
+          "title": "Hospitals \u2014 mirror of \u00abOspedali\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.7785,
+            46.4696,
+            12.2839,
+            46.8983
+          ]
+        },
+        {
+          "id": "health/pharmacies",
+          "title": "Pharmacies \u2014 mirror of \u00abFarmacie\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.5421,
+            46.2435,
+            12.3514,
+            46.9494
+          ]
+        },
+        {
+          "id": "health/rest-homes",
+          "title": "Rest homes \u2014 mirror of \u00abCase di riposo\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.545,
+            46.2397,
+            12.2838,
+            46.9806
+          ]
+        },
+        {
+          "id": "health/territorial-services",
+          "title": "Territorial services \u2014 mirror of \u00abServizi territoriali\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            11.0073,
+            46.314,
+            12.2837,
+            46.898
+          ]
+        },
+        {
+          "id": "hydrology-and-water/bathing-lakes-quality",
+          "title": "Bathing lakes quality \u2014 mirror of \u00abBalneabilit\u00e1 dei laghi\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            11.1645,
+            46.2748,
+            11.6351,
+            46.7664
+          ]
+        },
+        {
+          "id": "hydrology-and-water/drainage-basins",
+          "title": "Drainage basins \u2014 mirror of \u00abBacini imbriferi\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.3818,
+            46.2186,
+            12.4779,
+            47.0918
+          ]
+        },
+        {
+          "id": "hydrology-and-water/drinking-water-protection-areas",
+          "title": "Drinking water protection areas \u2014 mirror of \u00abAree di tutela dell'acqua potabile\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.3845,
+            46.2193,
+            12.4138,
+            47.0807
+          ]
+        },
+        {
+          "id": "hydrology-and-water/gauging-stations",
+          "title": "Gauging stations \u2014 mirror of \u00abStazioni idrometriche\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.5239,
+            46.2433,
+            12.3602,
+            46.9946
+          ]
+        },
+        {
+          "id": "hydrology-and-water/glacier-inventory",
+          "title": "Glacier inventory \u2014 mirror of \u00abCatasto dei ghiacciai\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.4169,
+            46.4442,
+            12.2408,
+            47.0785
+          ]
+        },
+        {
+          "id": "hydrology-and-water/lakes",
+          "title": "Lakes \u2014 mirror of \u00abLaghi\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.4129,
+            46.2604,
+            12.4168,
+            47.0607
+          ]
+        },
+        {
+          "id": "hydrology-and-water/water-quality-watercourses",
+          "title": "Water quality watercourses \u2014 mirror of \u00abQualit\u00e1 dei corsi d'acqua\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.3943,
+            46.2263,
+            12.4219,
+            47.0829
+          ]
+        },
+        {
+          "id": "hydrology-and-water/watercourses",
+          "title": "Watercourses \u2014 mirror of \u00abCorsi d'acqua\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.3943,
+            46.201,
+            12.4723,
+            47.0866
+          ]
+        },
+        {
+          "id": "land-use/corine-land-cover",
+          "title": "Corine land cover \u2014 mirror of \u00abCopertura del suolo CORINE\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.3845,
+            46.2184,
+            12.478,
+            47.0921
+          ]
+        },
+        {
+          "id": "nature-and-landscape/biotopes",
+          "title": "Biotopes \u2014 mirror of \u00abBiotopi\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.4181,
+            46.2433,
+            12.4342,
+            47.0617
+          ]
+        },
+        {
+          "id": "nature-and-landscape/landscape-protection-areas",
+          "title": "Landscape protection areas \u2014 mirror of \u00abZone di tutela paesaggistica\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.4353,
+            46.2322,
+            12.3779,
+            47.0563
+          ]
+        },
+        {
+          "id": "nature-and-landscape/landscape-units",
+          "title": "Landscape units \u2014 mirror of \u00abFasce paesaggistiche\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.3875,
+            46.2208,
+            12.4798,
+            47.0926
+          ]
+        },
+        {
+          "id": "nature-and-landscape/national-and-nature-parks",
+          "title": "National and nature parks \u2014 mirror of \u00abParchi naturali e parco nazionale\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.4524,
+            46.2184,
+            12.4173,
+            47.0921
+          ]
+        },
+        {
+          "id": "nature-and-landscape/natura-2000-sites",
+          "title": "Natura 2000 sites \u2014 mirror of \u00abSiti Natura 2000\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.4647,
+            46.2184,
+            12.4342,
+            47.0921
+          ]
+        },
+        {
+          "id": "nature-and-landscape/natural-monuments-areas",
+          "title": "Natural monuments areas \u2014 mirror of \u00abMonumenti naturali (aree)\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.4724,
+            46.2364,
+            12.3239,
+            47.0792
+          ]
+        },
+        {
+          "id": "nature-and-landscape/natural-monuments-points",
+          "title": "Natural monuments points \u2014 mirror of \u00abMonumenti naturali (punti)\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.4554,
+            46.2373,
+            12.4132,
+            47.0558
+          ]
+        },
+        {
+          "id": "nature-and-landscape/unesco-sites",
+          "title": "Unesco sites \u2014 mirror of \u00abSiti UNESCO\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            11.3557,
+            46.346,
+            12.4169,
+            46.7417
+          ]
+        },
+        {
+          "id": "nature-and-landscape/wetlands",
+          "title": "Wetlands \u2014 mirror of \u00abZone umide\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.4058,
+            46.2452,
+            12.4485,
+            47.0761
+          ]
+        },
+        {
+          "id": "population-and-statistics/census-sections-2021",
+          "title": "Census sections 2021 \u2014 mirror of \u00abSezioni di censimento 2021\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.3818,
+            46.2198,
+            12.4779,
+            47.0918
+          ]
+        },
+        {
+          "id": "population-and-statistics/language-groups-2024",
+          "title": "Language groups 2024 \u2014 mirror of \u00abAppartenenza linguistica Censimento 2024\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.3845,
+            46.2184,
+            12.478,
+            47.0921
+          ]
+        },
+        {
+          "id": "population-and-statistics/official-resident-population",
+          "title": "Official resident population \u2014 mirror of \u00abPopolazione ufficiale [numero]\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.3845,
+            46.2184,
+            12.478,
+            47.0921
+          ]
+        },
+        {
+          "id": "population-and-statistics/registered-vehicles",
+          "title": "Registered vehicles \u2014 mirror of \u00abVeicoli iscritti nel registro automobilistico (PRA)  [numero]\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.3845,
+            46.2184,
+            12.478,
+            47.0921
+          ]
+        },
+        {
+          "id": "population-and-statistics/resident-families-civil-registry",
+          "title": "Resident families civil registry \u2014 mirror of \u00abFamiglie residenti Anagrafe [numero]\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.3845,
+            46.2184,
+            12.478,
+            47.0921
+          ]
+        },
+        {
+          "id": "population-and-statistics/resident-population-civil-registry",
+          "title": "Resident population civil registry \u2014 mirror of \u00abPopolazione residente Anagrafe [numero]\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.3845,
+            46.2184,
+            12.478,
+            47.0921
+          ]
+        },
+        {
+          "id": "population-and-statistics/tourist-overnight-stays",
+          "title": "Tourist overnight stays \u2014 mirror of \u00abTurismo Pernottamenti [numero]\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.3845,
+            46.2184,
+            12.478,
+            47.0921
+          ]
+        },
+        {
+          "id": "transport-and-mobility/bicycle-counters",
+          "title": "Bicycle counters \u2014 mirror of \u00abPunti di conteggio biciclette\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.5072,
+            46.3157,
+            12.2199,
+            46.913
+          ]
+        },
+        {
+          "id": "transport-and-mobility/cycle-routes-tyrol",
+          "title": "Cycle routes tyrol \u2014 mirror of \u00abPercorsi ciclabili del Tirolo\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.1383,
+            46.6564,
+            12.9495,
+            47.7428
+          ]
+        },
+        {
+          "id": "transport-and-mobility/filling-stations",
+          "title": "Filling stations \u2014 mirror of \u00abDistributori di carburante\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.5395,
+            46.2399,
+            12.3267,
+            46.947
+          ]
+        },
+        {
+          "id": "transport-and-mobility/hiking-trails",
+          "title": "Hiking trails \u2014 mirror of \u00abPercorsi escursionistici\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.3922,
+            46.215,
+            12.4822,
+            47.0912
+          ]
+        },
+        {
+          "id": "transport-and-mobility/intermunicipal-cycleways",
+          "title": "Intermunicipal cycleways \u2014 mirror of \u00abRete ciclabile sovracomunale\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.4612,
+            46.2311,
+            12.369,
+            47.0071
+          ]
+        },
+        {
+          "id": "transport-and-mobility/mtb-routes",
+          "title": "Mtb routes \u2014 mirror of \u00abPercorsi MTB ufficiali\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.2264,
+            46.2684,
+            12.5339,
+            47.0708
+          ]
+        },
+        {
+          "id": "transport-and-mobility/public-transport-stops",
+          "title": "Public transport stops \u2014 mirror of \u00abFermate del trasporto pubblico\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            9.0884,
+            39.3595,
+            18.1657,
+            48.1416
+          ]
+        },
+        {
+          "id": "transport-and-mobility/road-bridges",
+          "title": "Road bridges \u2014 mirror of \u00abPonti stradario principale\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.4618,
+            46.2337,
+            12.4072,
+            47.0518
+          ]
+        },
+        {
+          "id": "transport-and-mobility/school-bus-stops",
+          "title": "School bus stops \u2014 mirror of \u00abTrasporto alunni: Nodi di partenza\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.4591,
+            46.2392,
+            12.3747,
+            47.05
+          ]
+        },
+        {
+          "id": "transport-and-mobility/traffic-counters",
+          "title": "Traffic counters \u2014 mirror of \u00abStazioni contatraffico\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.4771,
+            46.2368,
+            12.4157,
+            46.9978
+          ]
+        },
+        {
+          "id": "transport-and-mobility/tunnels",
+          "title": "Tunnels \u2014 mirror of \u00abGallerie (strade principali e ferrovie)\u00bb, Provincia Autonoma di Bolzano",
+          "bbox": [
+            10.4839,
+            46.3372,
+            12.3805,
+            47.0457
           ]
         }
       ]
