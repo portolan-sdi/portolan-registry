@@ -1,7 +1,7 @@
 {
-  "generated": "2026-09-05T09:59:55.490614+00:00",
+  "generated": "2026-09-06T10:19:16.206161+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-09-05T09:59:55.490614+00:00",
+  "registry_generated": "2026-09-06T10:19:16.206161+00:00",
   "catalogs": [
     {
       "id": "bot-open-data",
