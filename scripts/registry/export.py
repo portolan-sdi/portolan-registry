@@ -55,6 +55,13 @@ RETIRED_FIELDS = frozenset(
 CARRIED_DEFAULTS: dict[str, object] = {
     PREFIX + "has_agents_md": False,
     PREFIX + "has_readme": False,
+    # Null and empty are what child_link writes for a catalog whose providers
+    # say nothing, and a link older than these fields is in the same position:
+    # the registry has not read the providers it would need.
+    PREFIX + "kind": None,
+    PREFIX + "producers": [],
+    PREFIX + "processors": [],
+    PREFIX + "host": None,
 }
 
 
@@ -163,6 +170,25 @@ def child_link(catalog: Mapping) -> dict:
             "portolan_registry:logo": catalog.get("logo"),
             "portolan_registry:updated": catalog.get("updated"),
             "portolan_registry:first_registered": catalog.get("first_registered"),
+            # "official", "mirror", or null. Derived from the providers of
+            # every collection beneath the catalog, never declared: the
+            # specification defines the kind as a reading of the providers and
+            # gives it no field of its own (portolan-spec core.md, Source
+            # Provenance). Null when no collection names both a producer and a
+            # host, which is the registry declining to guess.
+            "portolan_registry:kind": catalog.get("kind"),
+            # The evidence for the field above, trimmed to {name, url}: who
+            # made the data, and who serves this copy. Published so a consumer
+            # can show the parties, and re-derive the kind if it reads the
+            # providers differently. Empty and null when the catalog names
+            # none.
+            "portolan_registry:producers": catalog.get("producers") or [],
+            # Who derived this copy from the source. On a mirror this is
+            # usually the party that built it, and it is the only place some
+            # catalogs name that party: seven of the fourteen mirrors put a
+            # storage vendor in the host field, which core.md forbids.
+            "portolan_registry:processors": catalog.get("processors") or [],
+            "portolan_registry:host": catalog.get("host"),
             # SPDX id -> how many collections declare it. The registry
             # publishes the mix rather than a single label, so a consumer can
             # see a catalog is mostly ODbL-1.0 with two CC-BY-4.0 collections
