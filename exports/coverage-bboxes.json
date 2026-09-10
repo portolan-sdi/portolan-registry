@@ -1,7 +1,7 @@
 {
-  "generated": "2026-09-09T10:48:29.617648+00:00",
+  "generated": "2026-09-10T06:20:49.665807+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-09-09T10:48:29.617648+00:00",
+  "registry_generated": "2026-09-10T06:20:49.665807+00:00",
   "catalogs": [
     {
       "id": "bot-open-data",
@@ -12084,6 +12084,112 @@
       ]
     },
     {
+      "id": "finland-nls-topographic-data",
+      "collection_count": 10,
+      "collections": [
+        {
+          "id": "aallonmurtaja",
+          "title": "aallonmurtaja",
+          "bbox": [
+            19.1312,
+            59.8067,
+            30.1443,
+            68.8308
+          ]
+        },
+        {
+          "id": "aita",
+          "title": "aita",
+          "bbox": [
+            19.5193,
+            59.7806,
+            31.253,
+            70.0902
+          ]
+        },
+        {
+          "id": "allas",
+          "title": "allas",
+          "bbox": [
+            19.5181,
+            59.8293,
+            31.4563,
+            70.0851
+          ]
+        },
+        {
+          "id": "aluemerenulkoraja",
+          "title": "aluemerenulkoraja",
+          "bbox": [
+            19.0832,
+            59.4542,
+            27.293,
+            65.5154
+          ]
+        },
+        {
+          "id": "ampumaalue",
+          "title": "ampumaalue",
+          "bbox": [
+            22.3211,
+            59.8358,
+            30.6668,
+            68.6356
+          ]
+        },
+        {
+          "id": "ankkuripaikka",
+          "title": "ankkuripaikka",
+          "bbox": [
+            19.5183,
+            59.7864,
+            29.8565,
+            65.6822
+          ]
+        },
+        {
+          "id": "autoliikennealue",
+          "title": "autoliikennealue",
+          "bbox": [
+            19.5381,
+            59.8191,
+            31.2799,
+            70.0818
+          ]
+        },
+        {
+          "id": "harvalouhikko",
+          "title": "harvalouhikko",
+          "bbox": [
+            19.3135,
+            59.7381,
+            31.3766,
+            70.0889
+          ]
+        },
+        {
+          "id": "hautausmaa",
+          "title": "hautausmaa",
+          "bbox": [
+            19.612,
+            59.7791,
+            31.3094,
+            69.8615
+          ]
+        },
+        {
+          "id": "hietikko",
+          "title": "hietikko",
+          "bbox": [
+            19.348,
+            59.7887,
+            31.3897,
+            70.0913
+          ]
+        }
+      ]
+    },
+    {
       "id": "ghsl",
       "collection_count": 12,
       "collections": [
@@ -12437,6 +12543,92 @@
             -59.9871,
             179.9696,
             80.0012
+          ]
+        }
+      ]
+    },
+    {
+      "id": "karstgrundwasser-v2",
+      "collection_count": 8,
+      "collections": [
+        {
+          "id": "ub",
+          "title": "Karst-Einzugsgebieteinheiten",
+          "bbox": [
+            6.0469,
+            46.3923,
+            9.5579,
+            47.3309
+          ]
+        },
+        {
+          "id": "ba",
+          "title": "Karst-Einzugsgebiete",
+          "bbox": [
+            6.0469,
+            46.3923,
+            9.5579,
+            47.3309
+          ]
+        },
+        {
+          "id": "ei",
+          "title": "Unterirdische Fliesswege",
+          "bbox": [
+            6.0469,
+            46.3923,
+            9.5579,
+            47.3309
+          ]
+        },
+        {
+          "id": "ip",
+          "title": "Karstquellen und Schwinden",
+          "bbox": [
+            6.0469,
+            46.3923,
+            9.5579,
+            47.3309
+          ]
+        },
+        {
+          "id": "nk",
+          "title": "Karstwasservorkommen",
+          "bbox": [
+            6.0469,
+            46.3923,
+            9.5579,
+            47.3309
+          ]
+        },
+        {
+          "id": "naqua_regions",
+          "title": "Geographische Regionen NAQUA",
+          "bbox": [
+            5.9559,
+            45.818,
+            10.4921,
+            47.8085
+          ]
+        },
+        {
+          "id": "nawa_trend_stations",
+          "title": "NAWA Trend Messstationen",
+          "bbox": [
+            5.9707,
+            45.9693,
+            9.9952,
+            47.7652
+          ]
+        },
+        {
+          "id": "hydro_stations",
+          "title": "Hydrologische Beobachtungsstationen",
+          "bbox": [
+            5.9708,
+            45.8456,
+            10.4649,
+            47.6824
           ]
         }
       ]
