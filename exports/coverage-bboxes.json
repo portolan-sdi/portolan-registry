@@ -1,7 +1,7 @@
 {
-  "generated": "2026-09-10T06:20:49.665807+00:00",
+  "generated": "2026-09-11T10:39:55.790857+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-09-10T06:20:49.665807+00:00",
+  "registry_generated": "2026-09-11T10:39:55.790857+00:00",
   "catalogs": [
     {
       "id": "bot-open-data",
@@ -12085,50 +12085,10 @@
     },
     {
       "id": "finland-nls-topographic-data",
-      "collection_count": 10,
+      "collection_count": 117,
       "collections": [
         {
-          "id": "aallonmurtaja",
-          "title": "aallonmurtaja",
-          "bbox": [
-            19.1312,
-            59.8067,
-            30.1443,
-            68.8308
-          ]
-        },
-        {
-          "id": "aita",
-          "title": "aita",
-          "bbox": [
-            19.5193,
-            59.7806,
-            31.253,
-            70.0902
-          ]
-        },
-        {
-          "id": "allas",
-          "title": "allas",
-          "bbox": [
-            19.5181,
-            59.8293,
-            31.4563,
-            70.0851
-          ]
-        },
-        {
-          "id": "aluemerenulkoraja",
-          "title": "aluemerenulkoraja",
-          "bbox": [
-            19.0832,
-            59.4542,
-            27.293,
-            65.5154
-          ]
-        },
-        {
-          "id": "ampumaalue",
+          "id": "erityiskayttoalueet/ampumaalue",
           "title": "ampumaalue",
           "bbox": [
             22.3211,
@@ -12138,17 +12098,207 @@
           ]
         },
         {
-          "id": "ankkuripaikka",
-          "title": "ankkuripaikka",
+          "id": "erityiskayttoalueet/suojaalue",
+          "title": "suojaalue",
           "bbox": [
-            19.5183,
-            59.7864,
-            29.8565,
-            65.6822
+            21.3309,
+            59.6398,
+            27.2404,
+            60.4529
           ]
         },
         {
-          "id": "autoliikennealue",
+          "id": "erityiskayttoalueet/suojaalueenreunaviiva",
+          "title": "suojaalueenreunaviiva",
+          "bbox": [
+            21.3309,
+            59.6398,
+            27.2404,
+            60.4529
+          ]
+        },
+        {
+          "id": "hallinnollinen-jaotus/aluemerenulkoraja",
+          "title": "aluemerenulkoraja",
+          "bbox": [
+            19.0832,
+            59.4542,
+            27.293,
+            65.5154
+          ]
+        },
+        {
+          "id": "hallinnollinen-jaotus/kunnanhallintoraja",
+          "title": "kunnanhallintoraja",
+          "bbox": [
+            19.0832,
+            59.4661,
+            31.5867,
+            70.0921
+          ]
+        },
+        {
+          "id": "hallinnollinen-jaotus/kunta",
+          "title": "kunta",
+          "bbox": [
+            19.0832,
+            59.4541,
+            31.5867,
+            70.0921
+          ]
+        },
+        {
+          "id": "hallinnollinen-jaotus/rajavyohykkeentakaraja",
+          "title": "rajavyohykkeentakaraja",
+          "bbox": [
+            27.2888,
+            60.2002,
+            31.5842,
+            69.0628
+          ]
+        },
+        {
+          "id": "hallinnollinen-jaotus/sisaistenaluevesienulkoraja",
+          "title": "sisaistenaluevesienulkoraja",
+          "bbox": [
+            19.132,
+            59.504,
+            27.617,
+            65.5841
+          ]
+        },
+        {
+          "id": "hallinnollinen-jaotus/ulkojasisasaaristonraja",
+          "title": "ulkojasisasaaristonraja",
+          "bbox": [
+            22.7834,
+            59.7509,
+            27.7683,
+            60.5231
+          ]
+        },
+        {
+          "id": "hallinnollinen-jaotus/valtakunnanrajapyykki",
+          "title": "valtakunnanrajapyykki",
+          "bbox": [
+            19.131,
+            60.2002,
+            31.5867,
+            70.0898
+          ]
+        },
+        {
+          "id": "johtoverkosto/muuntoasema",
+          "title": "muuntoasema",
+          "bbox": [
+            19.5895,
+            59.8366,
+            31.253,
+            69.9094
+          ]
+        },
+        {
+          "id": "johtoverkosto/sahkolinja",
+          "title": "sahkolinja",
+          "bbox": [
+            19.4738,
+            59.8374,
+            31.4101,
+            70.0899
+          ]
+        },
+        {
+          "id": "johtoverkosto/sahkolinjansymboli",
+          "title": "sahkolinjansymboli",
+          "bbox": [
+            19.4754,
+            59.8385,
+            31.4029,
+            70.0885
+          ]
+        },
+        {
+          "id": "johtoverkosto/suurjannitelinjanpylvas",
+          "title": "suurjannitelinjanpylvas",
+          "bbox": [
+            19.5917,
+            59.8379,
+            30.9462,
+            70.067
+          ]
+        },
+        {
+          "id": "karttasymbolit/karttasymboli",
+          "title": "karttasymboli",
+          "bbox": [
+            19.4743,
+            59.7791,
+            31.4015,
+            70.0938
+          ]
+        },
+        {
+          "id": "korkeussuhteet/korkeuskayra",
+          "title": "korkeuskayra",
+          "bbox": [
+            19.1314,
+            59.6904,
+            31.5967,
+            70.0951
+          ]
+        },
+        {
+          "id": "korkeussuhteet/korkeuskayrankorkeusarvo",
+          "title": "korkeuskayrankorkeusarvo",
+          "bbox": [
+            19.3096,
+            59.7595,
+            31.5811,
+            70.0945
+          ]
+        },
+        {
+          "id": "korkeussuhteet/syvyyskayra",
+          "title": "syvyyskayra",
+          "bbox": [
+            20.6098,
+            59.8615,
+            31.4829,
+            69.7492
+          ]
+        },
+        {
+          "id": "korkeussuhteet/syvyyskayransyvyysarvo",
+          "title": "syvyyskayransyvyysarvo",
+          "bbox": [
+            20.6132,
+            59.8732,
+            31.48,
+            69.7487
+          ]
+        },
+        {
+          "id": "korkeussuhteet/syvyyspiste",
+          "title": "syvyyspiste",
+          "bbox": [
+            20.4197,
+            59.873,
+            31.5726,
+            69.7476
+          ]
+        },
+        {
+          "id": "korkeussuhteet/viettoviiva",
+          "title": "viettoviiva",
+          "bbox": [
+            19.7003,
+            59.7728,
+            31.5296,
+            70.0799
+          ]
+        },
+        {
+          "id": "maasto-1-1/autoliikennealue",
           "title": "autoliikennealue",
           "bbox": [
             19.5381,
@@ -12158,7 +12308,7 @@
           ]
         },
         {
-          "id": "harvalouhikko",
+          "id": "maasto-1-1/harvalouhikko",
           "title": "harvalouhikko",
           "bbox": [
             19.3135,
@@ -12168,7 +12318,7 @@
           ]
         },
         {
-          "id": "hautausmaa",
+          "id": "maasto-1-1/hautausmaa",
           "title": "hautausmaa",
           "bbox": [
             19.612,
@@ -12178,13 +12328,933 @@
           ]
         },
         {
-          "id": "hietikko",
+          "id": "maasto-1-1/hietikko",
           "title": "hietikko",
           "bbox": [
             19.348,
             59.7887,
             31.3897,
             70.0913
+          ]
+        },
+        {
+          "id": "maasto-1-1/jarvi",
+          "title": "jarvi",
+          "bbox": [
+            19.3166,
+            59.7383,
+            31.596,
+            70.0793
+          ]
+        },
+        {
+          "id": "maasto-1-1/jyrkanne",
+          "title": "jyrkanne",
+          "bbox": [
+            19.3079,
+            59.7369,
+            31.5122,
+            70.0779
+          ]
+        },
+        {
+          "id": "maasto-1-1/kaatopaikka",
+          "title": "kaatopaikka",
+          "bbox": [
+            19.5559,
+            60.0573,
+            30.0961,
+            66.492
+          ]
+        },
+        {
+          "id": "maasto-1-1/kallioalue",
+          "title": "kallioalue",
+          "bbox": [
+            19.1137,
+            59.5039,
+            31.5457,
+            70.0832
+          ]
+        },
+        {
+          "id": "maasto-1-1/kalliohalkeama",
+          "title": "kalliohalkeama",
+          "bbox": [
+            19.755,
+            59.8337,
+            29.9856,
+            69.8463
+          ]
+        },
+        {
+          "id": "maasto-1-1/kalliosymboli",
+          "title": "kalliosymboli",
+          "bbox": [
+            19.326,
+            59.7747,
+            31.5645,
+            70.085
+          ]
+        },
+        {
+          "id": "maasto-1-1/kivi",
+          "title": "kivi",
+          "bbox": [
+            19.3166,
+            59.7574,
+            31.5753,
+            70.0789
+          ]
+        },
+        {
+          "id": "maasto-1-1/kivikko",
+          "title": "kivikko",
+          "bbox": [
+            19.2994,
+            59.6914,
+            31.4598,
+            70.0816
+          ]
+        },
+        {
+          "id": "maasto-1-1/lahde",
+          "title": "lahde",
+          "bbox": [
+            19.7349,
+            59.8598,
+            31.567,
+            70.0317
+          ]
+        },
+        {
+          "id": "maasto-1-1/lentokenttaalue",
+          "title": "lentokenttaalue",
+          "bbox": [
+            19.3172,
+            59.779,
+            30.5906,
+            69.0502
+          ]
+        },
+        {
+          "id": "maasto-1-1/louhos",
+          "title": "louhos",
+          "bbox": [
+            19.5988,
+            59.9669,
+            31.5134,
+            69.7671
+          ]
+        },
+        {
+          "id": "maasto-1-1/luiska",
+          "title": "luiska",
+          "bbox": [
+            19.5608,
+            59.7614,
+            31.478,
+            70.087
+          ]
+        },
+        {
+          "id": "maasto-1-1/maaaineksenottoalue",
+          "title": "maaaineksenottoalue",
+          "bbox": [
+            19.5606,
+            59.8095,
+            31.4226,
+            70.0738
+          ]
+        },
+        {
+          "id": "maasto-1-1/maastokuvionreuna",
+          "title": "maastokuvionreuna",
+          "bbox": [
+            19.7566,
+            58.8445,
+            30.564,
+            70.095
+          ]
+        },
+        {
+          "id": "maasto-1-1/maatalousmaa",
+          "title": "maatalousmaa",
+          "bbox": [
+            19.4745,
+            59.8281,
+            31.4146,
+            70.095
+          ]
+        },
+        {
+          "id": "maasto-1-2/meri",
+          "title": "meri",
+          "bbox": [
+            19.0714,
+            58.8445,
+            27.8035,
+            65.8162
+          ]
+        },
+        {
+          "id": "maasto-1-2/merkittavaluontokohde",
+          "title": "merkittavaluontokohde",
+          "bbox": [
+            19.9458,
+            59.7705,
+            30.4171,
+            68.8388
+          ]
+        },
+        {
+          "id": "maasto-1-2/metsamaankasvillisuus",
+          "title": "metsamaankasvillisuus",
+          "bbox": [
+            19.3198,
+            59.7604,
+            31.5934,
+            70.0944
+          ]
+        },
+        {
+          "id": "maasto-1-2/niitty",
+          "title": "niitty",
+          "bbox": [
+            19.4735,
+            59.7792,
+            31.4251,
+            70.0947
+          ]
+        },
+        {
+          "id": "maasto-1-2/pato",
+          "title": "pato",
+          "bbox": [
+            20.0866,
+            59.9982,
+            31.2889,
+            69.7339
+          ]
+        },
+        {
+          "id": "maasto-1-2/puisto",
+          "title": "puisto",
+          "bbox": [
+            19.9267,
+            59.8208,
+            31.2919,
+            68.6577
+          ]
+        },
+        {
+          "id": "maasto-1-2/puu",
+          "title": "puu",
+          "bbox": [
+            19.7231,
+            59.9007,
+            31.508,
+            69.7164
+          ]
+        },
+        {
+          "id": "maasto-1-2/satamaalue",
+          "title": "satamaalue",
+          "bbox": [
+            19.5347,
+            59.8085,
+            29.761,
+            65.8014
+          ]
+        },
+        {
+          "id": "maasto-1-2/soistuma",
+          "title": "soistuma",
+          "bbox": [
+            19.3089,
+            59.7803,
+            31.5646,
+            70.0813
+          ]
+        },
+        {
+          "id": "maasto-1-2/sulkuportti",
+          "title": "sulkuportti",
+          "bbox": [
+            21.2811,
+            59.9222,
+            31.2952,
+            65.8884
+          ]
+        },
+        {
+          "id": "maasto-1-2/suo",
+          "title": "suo",
+          "bbox": [
+            19.3074,
+            59.7595,
+            31.5974,
+            70.0891
+          ]
+        },
+        {
+          "id": "maasto-1-2/suojanne",
+          "title": "suojanne",
+          "bbox": [
+            21.4781,
+            62.3991,
+            31.2242,
+            69.8769
+          ]
+        },
+        {
+          "id": "maasto-1-2/taytemaa",
+          "title": "taytemaa",
+          "bbox": [
+            19.553,
+            59.8338,
+            31.2638,
+            68.7709
+          ]
+        },
+        {
+          "id": "maasto-1-2/urheilujavirkistysalue",
+          "title": "urheilujavirkistysalue",
+          "bbox": [
+            19.5378,
+            59.8238,
+            31.341,
+            70.0824
+          ]
+        },
+        {
+          "id": "maasto-1-2/vedenpinnankorkeusluku",
+          "title": "vedenpinnankorkeusluku",
+          "bbox": [
+            19.5441,
+            59.8663,
+            31.5821,
+            70.0723
+          ]
+        },
+        {
+          "id": "maasto-1-2/vesikuoppa",
+          "title": "vesikuoppa",
+          "bbox": [
+            19.2997,
+            59.7352,
+            31.5454,
+            70.0799
+          ]
+        },
+        {
+          "id": "maasto-1-2/virtausnuoli",
+          "title": "virtausnuoli",
+          "bbox": [
+            19.5445,
+            59.828,
+            31.5817,
+            70.0786
+          ]
+        },
+        {
+          "id": "maasto-1-2/virtavesialue",
+          "title": "virtavesialue",
+          "bbox": [
+            19.6613,
+            59.9194,
+            31.5764,
+            70.0938
+          ]
+        },
+        {
+          "id": "maasto-1-2/virtavesikapea",
+          "title": "virtavesikapea",
+          "bbox": [
+            19.3298,
+            59.8046,
+            31.5854,
+            70.095
+          ]
+        },
+        {
+          "id": "maasto-2/kaislikko",
+          "title": "kaislikko",
+          "bbox": [
+            19.4906,
+            59.8128,
+            31.4793,
+            69.8156
+          ]
+        },
+        {
+          "id": "maasto-2/koski",
+          "title": "koski",
+          "bbox": [
+            20.7039,
+            60.0575,
+            31.5091,
+            70.0775
+          ]
+        },
+        {
+          "id": "maasto-2/maasto2kuvionreuna",
+          "title": "maasto2kuvionreuna",
+          "bbox": [
+            19.2877,
+            59.7308,
+            31.5462,
+            70.0885
+          ]
+        },
+        {
+          "id": "maasto-2/maatuvavesialue",
+          "title": "maatuvavesialue",
+          "bbox": [
+            19.5845,
+            59.8125,
+            31.445,
+            69.9088
+          ]
+        },
+        {
+          "id": "maasto-2/matalikko",
+          "title": "matalikko",
+          "bbox": [
+            19.2877,
+            59.7308,
+            31.3852,
+            70.0873
+          ]
+        },
+        {
+          "id": "maasto-2/muuavoinalue",
+          "title": "muuavoinalue",
+          "bbox": [
+            19.3181,
+            59.8022,
+            31.5462,
+            70.0871
+          ]
+        },
+        {
+          "id": "maasto-2/tulvaalue",
+          "title": "tulvaalue",
+          "bbox": [
+            21.294,
+            59.8998,
+            30.9014,
+            68.8165
+          ]
+        },
+        {
+          "id": "maasto-2/uittolaite",
+          "title": "uittolaite",
+          "bbox": [
+            20.7517,
+            60.1864,
+            30.8366,
+            67.6688
+          ]
+        },
+        {
+          "id": "maasto-2/uittoranni",
+          "title": "uittoranni",
+          "bbox": [
+            22.1105,
+            60.4985,
+            29.2481,
+            68.8602
+          ]
+        },
+        {
+          "id": "maasto-2/varastoalue",
+          "title": "varastoalue",
+          "bbox": [
+            19.5775,
+            59.8218,
+            31.3251,
+            70.0885
+          ]
+        },
+        {
+          "id": "maasto-2/vesikivi",
+          "title": "vesikivi",
+          "bbox": [
+            19.1021,
+            59.504,
+            31.5665,
+            70.0767
+          ]
+        },
+        {
+          "id": "maasto-2/vesikivikko",
+          "title": "vesikivikko",
+          "bbox": [
+            19.4074,
+            59.7436,
+            31.4096,
+            69.9587
+          ]
+        },
+        {
+          "id": "osoitepisteet/osoitepiste",
+          "title": "osoitepiste",
+          "bbox": [
+            19.937,
+            59.8587,
+            31.3868,
+            69.1693
+          ]
+        },
+        {
+          "id": "paikannimet/paikannimi",
+          "title": "paikannimi",
+          "bbox": [
+            19.1023,
+            59.5045,
+            31.5815,
+            70.0904
+          ]
+        },
+        {
+          "id": "rakennukset-1/aallonmurtaja",
+          "title": "aallonmurtaja",
+          "bbox": [
+            19.1312,
+            59.8067,
+            30.1443,
+            68.8308
+          ]
+        },
+        {
+          "id": "rakennukset-1/aita",
+          "title": "aita",
+          "bbox": [
+            19.5193,
+            59.7806,
+            31.253,
+            70.0902
+          ]
+        },
+        {
+          "id": "rakennukset-1/allas",
+          "title": "allas",
+          "bbox": [
+            19.5181,
+            59.8293,
+            31.4563,
+            70.0851
+          ]
+        },
+        {
+          "id": "rakennukset-1/ilmaradankannatinpylvas",
+          "title": "ilmaradankannatinpylvas",
+          "bbox": [
+            20.0048,
+            60.0157,
+            30.2356,
+            68.4332
+          ]
+        },
+        {
+          "id": "rakennukset-1/ilmarata",
+          "title": "ilmarata",
+          "bbox": [
+            19.9094,
+            59.8449,
+            30.9895,
+            68.4332
+          ]
+        },
+        {
+          "id": "rakennukset-1/kellotapuli",
+          "title": "kellotapuli",
+          "bbox": [
+            21.5132,
+            60.0233,
+            31.0709,
+            67.8046
+          ]
+        },
+        {
+          "id": "rakennukset-1/lahestymisvalo",
+          "title": "lahestymisvalo",
+          "bbox": [
+            19.8857,
+            60.1078,
+            29.66,
+            68.6204
+          ]
+        },
+        {
+          "id": "rakennukset-1/masto",
+          "title": "masto",
+          "bbox": [
+            19.4999,
+            59.7808,
+            31.2998,
+            70.082
+          ]
+        },
+        {
+          "id": "rakennukset-1/mastonkorkeus",
+          "title": "mastonkorkeus",
+          "bbox": [
+            19.4999,
+            59.7826,
+            31.2916,
+            69.8974
+          ]
+        },
+        {
+          "id": "rakennukset-1/muistomerkki",
+          "title": "muistomerkki",
+          "bbox": [
+            19.5408,
+            59.7796,
+            31.3752,
+            70.0885
+          ]
+        },
+        {
+          "id": "rakennukset-1/nakotorni",
+          "title": "nakotorni",
+          "bbox": [
+            19.7575,
+            59.7761,
+            31.2875,
+            69.2226
+          ]
+        },
+        {
+          "id": "rakennukset-1/pistolaituriviiva",
+          "title": "pistolaituriviiva",
+          "bbox": [
+            19.3169,
+            59.7756,
+            31.0841,
+            69.5089
+          ]
+        },
+        {
+          "id": "rakennukset-1/portti",
+          "title": "portti",
+          "bbox": [
+            19.5202,
+            59.7821,
+            31.0937,
+            70.0876
+          ]
+        },
+        {
+          "id": "rakennukset-1/rakennelma",
+          "title": "rakennelma",
+          "bbox": [
+            19.3157,
+            59.7594,
+            31.5186,
+            70.0824
+          ]
+        },
+        {
+          "id": "rakennukset-1/rakennus",
+          "title": "rakennus",
+          "bbox": [
+            19.1313,
+            59.7234,
+            31.5812,
+            70.0951
+          ]
+        },
+        {
+          "id": "rakennukset-1/rakennusreunaviiva",
+          "title": "rakennusreunaviiva",
+          "bbox": [
+            19.1313,
+            59.7234,
+            31.5812,
+            70.0951
+          ]
+        },
+        {
+          "id": "rakennukset-1/savupiippu",
+          "title": "savupiippu",
+          "bbox": [
+            19.9157,
+            59.846,
+            30.9453,
+            68.7168
+          ]
+        },
+        {
+          "id": "rakennukset-1/savupiipunkorkeus",
+          "title": "savupiipunkorkeus",
+          "bbox": [
+            19.9248,
+            60.0179,
+            30.141,
+            68.7168
+          ]
+        },
+        {
+          "id": "rakennukset-1/tervahauta",
+          "title": "tervahauta",
+          "bbox": [
+            21.1752,
+            60.0087,
+            31.3883,
+            69.6647
+          ]
+        },
+        {
+          "id": "rakennukset-2/tulentekopaikka",
+          "title": "tulentekopaikka",
+          "bbox": [
+            21.0263,
+            59.8248,
+            31.4872,
+            69.7584
+          ]
+        },
+        {
+          "id": "rakennukset-2/tuulivoimala",
+          "title": "tuulivoimala",
+          "bbox": [
+            19.5488,
+            59.8726,
+            29.6189,
+            68.7854
+          ]
+        },
+        {
+          "id": "rautatiesto/rautatie",
+          "title": "rautatie",
+          "bbox": [
+            21.2174,
+            59.812,
+            30.9552,
+            68.1831
+          ]
+        },
+        {
+          "id": "rautatiesto/rautatieliikennepaikka",
+          "title": "rautatieliikennepaikka",
+          "bbox": [
+            21.23,
+            59.8268,
+            30.9429,
+            67.349
+          ]
+        },
+        {
+          "id": "rautatiesto/rautatiensymboli",
+          "title": "rautatiensymboli",
+          "bbox": [
+            21.3469,
+            59.8234,
+            30.1338,
+            67.4953
+          ]
+        },
+        {
+          "id": "selitteet/selite",
+          "title": "selite",
+          "bbox": [
+            19.0996,
+            59.5045,
+            31.5326,
+            70.0861
+          ]
+        },
+        {
+          "id": "suojelukohteet/kansallispuisto",
+          "title": "kansallispuisto",
+          "bbox": [
+            20.7877,
+            59.6685,
+            31.2056,
+            68.9395
+          ]
+        },
+        {
+          "id": "suojelukohteet/luonnonpuisto",
+          "title": "luonnonpuisto",
+          "bbox": [
+            20.5486,
+            60.2358,
+            31.4607,
+            69.774
+          ]
+        },
+        {
+          "id": "suojelukohteet/luonnonsuojelualue",
+          "title": "luonnonsuojelualue",
+          "bbox": [
+            19.1162,
+            59.6534,
+            31.5867,
+            69.9768
+          ]
+        },
+        {
+          "id": "suojelukohteet/rauhoitettukohde",
+          "title": "rauhoitettukohde",
+          "bbox": [
+            19.3225,
+            59.7676,
+            31.5091,
+            70.0735
+          ]
+        },
+        {
+          "id": "suojelukohteet/retkeilyalue",
+          "title": "retkeilyalue",
+          "bbox": [
+            25.0014,
+            61.1707,
+            30.5904,
+            65.6394
+          ]
+        },
+        {
+          "id": "suojelukohteet/suojametsanreunaviiva",
+          "title": "suojametsanreunaviiva",
+          "bbox": [
+            23.2895,
+            67.2373,
+            29.6457,
+            69.1692
+          ]
+        },
+        {
+          "id": "suojelukohteet/suojelualueenreunaviiva",
+          "title": "suojelualueenreunaviiva",
+          "bbox": [
+            19.1162,
+            59.6534,
+            31.5867,
+            70.0228
+          ]
+        },
+        {
+          "id": "taajaan-rakennetut-alueet/taajaanrakennettualue",
+          "title": "taajaanrakennettualue",
+          "bbox": [
+            19.539,
+            59.7797,
+            30.9626,
+            69.9102
+          ]
+        },
+        {
+          "id": "taajaan-rakennetut-alueet/taajaanrakennetunalueenreuna",
+          "title": "taajaanrakennetunalueenreuna",
+          "bbox": [
+            19.539,
+            59.7797,
+            30.9626,
+            69.9102
+          ]
+        },
+        {
+          "id": "tiesto/tienroteksti",
+          "title": "tienroteksti",
+          "bbox": [
+            19.5408,
+            59.8295,
+            31.4847,
+            70.0829
+          ]
+        },
+        {
+          "id": "tiesto/tiesymboli",
+          "title": "tiesymboli",
+          "bbox": [
+            19.5322,
+            59.7813,
+            31.4611,
+            70.0898
+          ]
+        },
+        {
+          "id": "tiesto/tieviiva",
+          "title": "tieviiva",
+          "bbox": [
+            19.3167,
+            59.7662,
+            31.5841,
+            70.0951
+          ]
+        },
+        {
+          "id": "vesikulkuvaylasto/ankkuripaikka",
+          "title": "ankkuripaikka",
+          "bbox": [
+            19.5183,
+            59.7864,
+            29.8565,
+            65.6822
+          ]
+        },
+        {
+          "id": "vesikulkuvaylasto/hylky",
+          "title": "hylky",
+          "bbox": [
+            19.3188,
+            59.7478,
+            30.1372,
+            65.1254
+          ]
+        },
+        {
+          "id": "vesikulkuvaylasto/hylynsyvyys",
+          "title": "hylynsyvyys",
+          "bbox": [
+            21.2586,
+            59.7541,
+            26.1366,
+            61.1763
+          ]
+        },
+        {
+          "id": "vesikulkuvaylasto/turvalaite",
+          "title": "turvalaite",
+          "bbox": [
+            19.1315,
+            59.5045,
+            31.1957,
+            69.3542
+          ]
+        },
+        {
+          "id": "vesikulkuvaylasto/vesikulkuvayla",
+          "title": "vesikulkuvayla",
+          "bbox": [
+            19.278,
+            59.6882,
+            31.2815,
+            69.3618
+          ]
+        },
+        {
+          "id": "vesikulkuvaylasto/vesikulkuvaylankulkusuunta",
+          "title": "vesikulkuvaylankulkusuunta",
+          "bbox": [
+            22.3632,
+            60.9228,
+            31.2744,
+            66.68
+          ]
+        },
+        {
+          "id": "vesikulkuvaylasto/vesikulkuvaylanteksti",
+          "title": "vesikulkuvaylanteksti",
+          "bbox": [
+            21.1346,
+            60.1676,
+            31.2793,
+            66.741
           ]
         }
       ]
@@ -12635,7 +13705,7 @@
     },
     {
       "id": "madrid-datos-abiertos",
-      "collection_count": 88,
+      "collection_count": 133,
       "collections": [
         {
           "id": "ciencia-y-tecnologia/fuentes-agua-mascotas",
@@ -12728,6 +13798,16 @@
           ]
         },
         {
+          "id": "cultura-y-ocio/banda-sinfonica-municipal",
+          "title": "Conciertos y plantilla de la Banda Sinf\u00f3nica Municipal de Madrid",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
           "id": "cultura-y-ocio/bibliotecas",
           "title": "Bibliotecas de Madrid",
           "bbox": [
@@ -12738,8 +13818,28 @@
           ]
         },
         {
+          "id": "cultura-y-ocio/bono-jobo",
+          "title": "JOBO (Joven Bono Cultural). Entradas emitidas y personas usuarias",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
           "id": "cultura-y-ocio/centros-culturales",
           "title": "Centros Culturales Municipales (incluyen Socioculturales y Juveniles)",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "cultura-y-ocio/estudio-hemeroteca-municipal",
+          "title": "Encuesta de satisfacci\u00f3n de las personas usuarias de la Hemeroteca Municipal",
           "bbox": [
             -180.0,
             -90.0,
@@ -12888,6 +13988,36 @@
           ]
         },
         {
+          "id": "empleo/calendario-laboral",
+          "title": "Calendario laboral",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "empleo/evaluacion-plan-formacion",
+          "title": "Evaluaci\u00f3n del Plan de Formaci\u00f3n del Ayuntamiento de Madrid",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "empleo/mentoring",
+          "title": "Mentoring",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
           "id": "empleo/ofertas-empleo-publico",
           "title": "Ofertas de Empleo P\u00fablico del Ayuntamiento de Madrid y sus organismos aut\u00f3nomos",
           "bbox": [
@@ -12978,6 +14108,26 @@
           ]
         },
         {
+          "id": "hacienda/icio-autoliquidaciones",
+          "title": "Impuesto sobre Construcciones, Instalaciones y Obras (ICIO). Autoliquidaciones",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "hacienda/iivtnu-2013",
+          "title": "Impuesto sobre el Incremento de Valor de los Terrenos de Naturaleza Urbana (IIVTNU): autoliquidaciones anuales desde 2013",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
           "id": "hacienda/inventario-bienes-inmuebles",
           "title": "Inventario de bienes muebles e inmuebles del Ayuntamiento de Madrid",
           "bbox": [
@@ -13008,6 +14158,16 @@
           ]
         },
         {
+          "id": "medio-ambiente/arbolado-parques-historico",
+          "title": "Arbolado en parques y zonas verdes de Madrid",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
           "id": "medio-ambiente/calidad-aire-diario-2024",
           "title": "Calidad del aire. Datos diarios desde 2001",
           "bbox": [
@@ -13015,6 +14175,16 @@
             -90.0,
             180.0,
             90.0
+          ]
+        },
+        {
+          "id": "medio-ambiente/cauces-arroyos",
+          "title": "Cauces y arroyos del t\u00e9rmino municipal de Madrid",
+          "bbox": [
+            -3.9074,
+            40.3026,
+            -3.4456,
+            40.6527
           ]
         },
         {
@@ -13028,8 +14198,98 @@
           ]
         },
         {
+          "id": "medio-ambiente/contenedor-aceitevegetal-usado",
+          "title": "Contenedores de aceite vegetal usado",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "medio-ambiente/cuencas-vertientes-erar",
+          "title": "Cuencas vertientes a cada estaci\u00f3n regeneradora de aguas residuales (ERAR)",
+          "bbox": [
+            -3.889,
+            40.2967,
+            -3.5022,
+            40.6433
+          ]
+        },
+        {
+          "id": "medio-ambiente/energia-valdemingomez",
+          "title": "Parque Tecnol\u00f3gico de Valdeming\u00f3mez (PTV): energ\u00eda el\u00e9ctrica generada a partir de los residuos",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "medio-ambiente/informes-evaluacion-ambiental",
+          "title": "Informes de evaluaci\u00f3n ambiental de actividades",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "medio-ambiente/inspecciones-ambientales",
+          "title": "Inspecciones ambientales de instalaciones y actividades",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "medio-ambiente/limpieza-espacios-publicos",
+          "title": "Limpieza espacios p\u00fablicos. Niveles de Limpieza y servicios b\u00e1sicos ejecutados en calzadas y aceras",
+          "bbox": [
+            -3.8382,
+            40.3176,
+            -3.5191,
+            40.5418
+          ]
+        },
+        {
           "id": "medio-ambiente/meteorologicos-diarios",
           "title": "Datos meteorol\u00f3gicos. Datos diarios desde 2019",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "medio-ambiente/puntos-limpios-proximidad",
+          "title": "Puntos limpios de proximidad",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "medio-ambiente/valdemingomez-biogas-biometano",
+          "title": "Parque Tecnol\u00f3gico de Valdeming\u00f3mez (PTV): biog\u00e1s y biometano generado a partir de los residuos",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "medio-ambiente/valdemingomez-recuperacion-materiales",
+          "title": "Parque Tecnol\u00f3gico de Valdeming\u00f3mez (PTV): recuperaci\u00f3n de materiales",
           "bbox": [
             -180.0,
             -90.0,
@@ -13058,6 +14318,26 @@
           ]
         },
         {
+          "id": "salud/inspecciones-centros-veterinarios",
+          "title": "Madrid Salud. Inspecciones de centros veterinarios y de venta de animales",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "salud/inspecciones-salud-publica",
+          "title": "Madrid Salud. Inspecciones en establecimientos con incidencia en la salud p\u00fablica",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
           "id": "salud/plagas-vectores-ratas-barrios-2025",
           "title": "Plagas y vectores",
           "bbox": [
@@ -13078,8 +14358,28 @@
           ]
         },
         {
+          "id": "salud/rutas-wap",
+          "title": "Rutas WAP (Walking People). Caminar por la ciudad, una opci\u00f3n muy saludable",
+          "bbox": [
+            -3.7654,
+            40.3461,
+            -3.581,
+            40.5596
+          ]
+        },
+        {
           "id": "sector-publico/agendas-institucionales",
           "title": "Agendas de responsables p\u00fablicos del Ayuntamiento de Madrid",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "sector-publico/codigo-buenas-practicas",
+          "title": "C\u00f3digo de buenas pr\u00e1cticas del Ayuntamiento de Madrid",
           "bbox": [
             -180.0,
             -90.0,
@@ -13098,8 +14398,58 @@
           ]
         },
         {
+          "id": "sector-publico/dir3-factura-electronica",
+          "title": "Relaci\u00f3n de unidades org\u00e1nicas con sus c\u00f3digos DIR3 para env\u00edo de facturas electr\u00f3nicas (FACe)",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
           "id": "sector-publico/ejecucion-presupuestaria-gastos-2026-07",
           "title": "Presupuestos. Ejecuci\u00f3n mensual ejercicio en curso",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "sector-publico/fondos-europeos-ayuntamiento-de-madrid",
+          "title": "Fondos Europeos Ayuntamiento de Madrid",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "sector-publico/gastos-parque-movil",
+          "title": "Gastos del parque m\u00f3vil municipal",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "sector-publico/oficinas-linea-madrid",
+          "title": "Oficinas de L\u00ednea Madrid",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "sector-publico/oficinas-registro",
+          "title": "Oficinas de registro",
           "bbox": [
             -180.0,
             -90.0,
@@ -13128,6 +14478,16 @@
           ]
         },
         {
+          "id": "sector-publico/periodo-pago-proveedores",
+          "title": "Periodo medio de pago a proveedores",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
           "id": "sector-publico/recursos-humanos-efectivos",
           "title": "Recursos humanos efectivos",
           "bbox": [
@@ -13140,6 +14500,46 @@
         {
           "id": "sector-publico/registro-lobbies",
           "title": "Registro de Lobbies",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "sector-publico/retribuciones-de-personal-directivo-del-ayuntamiento-de-madrid",
+          "title": "Retribuciones de personal directivo del Ayuntamiento de Madrid",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "sector-publico/retribuciones-de-personal-eventual-del-ayuntamiento-de-madrid",
+          "title": "Retribuciones de personal eventual del Ayuntamiento de Madrid",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "sector-publico/satisfaccion-almacen-villa",
+          "title": "Estudio de satisfacci\u00f3n de las personas usuarias del Almac\u00e9n de Villa",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "sector-publico/tratamiento-datos-personales",
+          "title": "Registro de actividades de tratamiento de datos personales",
           "bbox": [
             -180.0,
             -90.0,
@@ -13178,6 +14578,16 @@
           ]
         },
         {
+          "id": "seguridad/carteles-videovigilancia",
+          "title": "Carteles informativos de zonas de videovigilancia en la v\u00eda p\u00fablica",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
           "id": "seguridad/incidencias-emisora-policia-2026-06",
           "title": "Incidencias recibidas en la Emisora Central de Polic\u00eda Municipal",
           "bbox": [
@@ -13190,6 +14600,26 @@
         {
           "id": "sociedad-y-bienestar/centros-atencion-social",
           "title": "Sedes. Centros de atenci\u00f3n social",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "sociedad-y-bienestar/federaciones-asociaciones",
+          "title": "Entidades de participaci\u00f3n ciudadana. Federaciones, confederaciones y uniones de asociaciones (Secci\u00f3n 1\u00aa)",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "sociedad-y-bienestar/fundaciones",
+          "title": "Entidades de participaci\u00f3n ciudadana. Fundaciones (Secci\u00f3n 2\u00aa)",
           "bbox": [
             -180.0,
             -90.0,
@@ -13228,6 +14658,16 @@
           ]
         },
         {
+          "id": "sociedad-y-bienestar/presupuestos-participativos",
+          "title": "Participaci\u00f3n ciudadana. Presupuestos participativos",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
           "id": "sociedad-y-bienestar/problematicas-sociales-2025",
           "title": "Problem\u00e1ticas sociales identificadas en Centros de Servicios Sociales Atenci\u00f3n Social Primaria",
           "bbox": [
@@ -13255,6 +14695,26 @@
             40.3325,
             -3.5769,
             40.5426
+          ]
+        },
+        {
+          "id": "transporte/aparcamientos-ocupa-historico",
+          "title": "Aparcamientos p\u00fablicos municipales (rotacionales). Hist\u00f3rico de ocupaci\u00f3n",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "transporte/camaras-zona-bajas-emisiones",
+          "title": "Tr\u00e1fico: Madrid Zona de Bajas Emisiones. C\u00e1maras",
+          "bbox": [
+            -3.7941,
+            40.3307,
+            -3.5759,
+            40.5157
           ]
         },
         {
@@ -13391,15 +14851,25 @@
           "id": "urbanismo/alturas-edificios",
           "title": "Cartograf\u00eda actualizada. Alturas de edificios.",
           "bbox": [
-            -3.8839,
-            40.3175,
-            -3.5198,
-            40.6169
+            -3.8843,
+            40.3158,
+            -3.5191,
+            40.6177
           ]
         },
         {
           "id": "urbanismo/aparcamientos-municipales-plazas",
           "title": "Aparcamientos municipales. N\u00famero de plazas",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "urbanismo/autorizaciones-ocupacion-via-publica",
+          "title": "Relaci\u00f3n de autorizaciones administrativas que permitan la ocupaci\u00f3n de v\u00edas y espacios de dominio p\u00fablico municipal, promovidas por otras Administraciones P\u00fablicas",
           "bbox": [
             -180.0,
             -90.0,
@@ -13428,6 +14898,16 @@
           ]
         },
         {
+          "id": "urbanismo/colegios-electorales",
+          "title": "Colegios electorales",
+          "bbox": [
+            -3.8245,
+            40.3348,
+            -3.5606,
+            40.5172
+          ]
+        },
+        {
           "id": "urbanismo/distritos-municipales",
           "title": "Distritos municipales de Madrid",
           "bbox": [
@@ -13438,8 +14918,28 @@
           ]
         },
         {
+          "id": "urbanismo/elementos-singulares",
+          "title": "Planeamiento Urban\u00edstico. Cat\u00e1logo de Elementos Singulares",
+          "bbox": [
+            -3.7813,
+            40.3277,
+            -3.5944,
+            40.6431
+          ]
+        },
+        {
           "id": "urbanismo/fuentes-agua-beber",
           "title": "Fuentes de agua para beber",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "urbanismo/inspecciones-aparcamientos",
+          "title": "Inspecciones t\u00e9cnicas de aparcamientos municipales",
           "bbox": [
             -180.0,
             -90.0,
@@ -13468,6 +14968,16 @@
           ]
         },
         {
+          "id": "urbanismo/modelo-digital-superficies-2023-428-4480",
+          "title": "Modelo digital de superficies (MDS) 2023",
+          "bbox": [
+            -3.8394,
+            40.4661,
+            -3.8375,
+            40.4676
+          ]
+        },
+        {
           "id": "urbanismo/operacion-asfalto-2020",
           "title": "Operaci\u00f3n Asfalto. Madrid 2020",
           "bbox": [
@@ -13485,6 +14995,16 @@
             40.3312,
             -3.5406,
             40.5308
+          ]
+        },
+        {
+          "id": "urbanismo/sanciones-obras-via-publica",
+          "title": "Sanciones firmes y medidas de restablecimiento de la legalidad en relaci\u00f3n con obras en v\u00eda p\u00fablica",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
           ]
         },
         {
