@@ -5,6 +5,10 @@
   "title": "Inland",
   "description": "Inland waters.",
   "license": "ODbL-1.0",
+  "providers": [
+    {"name": "Inland Agency", "roles": ["producer", "licensor"], "url": "https://inland.example/"},
+    {"name": "Example Host", "roles": ["host"], "url": "https://host.example/"}
+  ],
   "table:row_count": 300,
   "extent": {
     "spatial": {"bbox": [[-1.0, 48.0, 4.0, 52.0]]},
