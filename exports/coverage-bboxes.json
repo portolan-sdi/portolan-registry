@@ -1,7 +1,7 @@
 {
-  "generated": "2026-09-14T11:53:48.927808+00:00",
+  "generated": "2026-09-14T17:30:39.318365+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-09-14T11:53:48.927808+00:00",
+  "registry_generated": "2026-09-14T17:30:39.318365+00:00",
   "catalogs": [
     {
       "id": "bot-open-data",
@@ -19921,6 +19921,82 @@
             38.532,
             -90.1667,
             38.7743
+          ]
+        }
+      ]
+    },
+    {
+      "id": "trazofields",
+      "collection_count": 7,
+      "collections": [
+        {
+          "id": "trazo1-fields",
+          "title": "Trazo1 Field Boundaries \u2014 Brazil (2023\u20132024)",
+          "bbox": [
+            -57.9457,
+            -27.2051,
+            -48.8828,
+            -18.0813
+          ]
+        },
+        {
+          "id": "trazo2-fields",
+          "title": "Trazo2 Field Boundaries \u2014 Brazil & Paraguay (2023\u20132024)",
+          "bbox": [
+            -62.9941,
+            -28.107,
+            -41.2824,
+            1.3486
+          ]
+        },
+        {
+          "id": "trazo3-fields",
+          "title": "Trazo3 Field Boundaries \u2014 South America (2023\u20132024)",
+          "bbox": [
+            -68.9942,
+            -35.3218,
+            -41.2646,
+            0.8789
+          ]
+        },
+        {
+          "id": "eap-release/eap-trazo1",
+          "title": "Trazo1 Field Boundaries \u2014 Early Adopters Program (2025)",
+          "bbox": [
+            -67.6849,
+            -35.3215,
+            -41.2822,
+            1.4457
+          ]
+        },
+        {
+          "id": "eap-release/eap-trazo2",
+          "title": "Trazo2 Field Boundaries \u2014 Early Adopters Program (2025)",
+          "bbox": [
+            -67.7001,
+            -35.3215,
+            -41.2824,
+            0.6928
+          ]
+        },
+        {
+          "id": "eap-release/eap-trazosa",
+          "title": "TrazoSA Field Boundaries \u2014 Early Adopters Program (2025)",
+          "bbox": [
+            -67.7002,
+            -35.3215,
+            -41.2819,
+            1.4259
+          ]
+        },
+        {
+          "id": "eap-release/eap-trazo3",
+          "title": "Trazo3-era Field Boundaries \u2014 Superseded Versions (2025)",
+          "bbox": [
+            -68.9944,
+            -22.8741,
+            -49.9928,
+            -7.2521
           ]
         }
       ]
