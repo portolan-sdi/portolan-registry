@@ -1,7 +1,7 @@
 {
-  "generated": "2026-09-13T11:08:26.904127+00:00",
+  "generated": "2026-09-14T11:53:48.927808+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-09-13T11:08:26.904127+00:00",
+  "registry_generated": "2026-09-14T11:53:48.927808+00:00",
   "catalogs": [
     {
       "id": "bot-open-data",
@@ -13705,7 +13705,7 @@
     },
     {
       "id": "madrid-datos-abiertos",
-      "collection_count": 133,
+      "collection_count": 132,
       "collections": [
         {
           "id": "ciencia-y-tecnologia/fuentes-agua-mascotas",
@@ -14610,16 +14610,6 @@
         {
           "id": "sociedad-y-bienestar/federaciones-asociaciones",
           "title": "Entidades de participaci\u00f3n ciudadana. Federaciones, confederaciones y uniones de asociaciones (Secci\u00f3n 1\u00aa)",
-          "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
-          ]
-        },
-        {
-          "id": "sociedad-y-bienestar/fundaciones",
-          "title": "Entidades de participaci\u00f3n ciudadana. Fundaciones (Secci\u00f3n 2\u00aa)",
           "bbox": [
             -180.0,
             -90.0,
