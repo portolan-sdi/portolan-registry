@@ -109,6 +109,45 @@ class TestChildLink:
         assert link["portolan_registry:updated"] is None
         assert link["portolan_registry:first_registered"] is None
 
+    def test_carries_the_provenance(self):
+        link = child_link(
+            {
+                "id": "x",
+                "url": ROOT,
+                "kind": "mirror",
+                "producers": [{"name": "TriMet", "url": "https://trimet.org"}],
+                "host": {"name": "Chris Holmes"},
+            }
+        )
+        assert link["portolan_registry:kind"] == "mirror"
+        assert link["portolan_registry:producers"] == [
+            {"name": "TriMet", "url": "https://trimet.org"}
+        ]
+        assert link["portolan_registry:host"] == {"name": "Chris Holmes"}
+
+    def test_carries_the_processor_apart_from_the_producer(self):
+        # catalog-1781203130384 names its converter under `processor` and a
+        # storage platform under `host`.
+        link = child_link(
+            {
+                "id": "x",
+                "url": ROOT,
+                "producers": [{"name": "Instituto Geográfico Nacional"}],
+                "processors": [{"name": "Nissim Lebovits"}],
+                "host": {"name": "Source Cooperative"},
+            }
+        )
+        assert link["portolan_registry:processors"] == [{"name": "Nissim Lebovits"}]
+
+    def test_a_catalog_whose_providers_say_nothing_reports_no_kind(self):
+        # jrc-glofas declares no providers. Null is the registry declining to
+        # guess, and an empty list is not a claim that nobody made the data.
+        link = child_link({"id": "x", "url": ROOT})
+        assert link["portolan_registry:kind"] is None
+        assert link["portolan_registry:producers"] == []
+        assert link["portolan_registry:processors"] == []
+        assert link["portolan_registry:host"] is None
+
 
 class TestBuildExport:
     def test_has_root_and_self_links_before_children(self):
@@ -247,6 +286,25 @@ class TestRetiredFields:
         link = load_links(path)["a"]
         assert link["portolan_registry:has_agents_md"] is False
         assert link["portolan_registry:has_readme"] is False
+        # The schema requires the kind on every child link, and a carried
+        # link has no providers the registry has read.
+        assert link["portolan_registry:kind"] is None
+        assert link["portolan_registry:producers"] == []
+        assert link["portolan_registry:processors"] == []
+        assert link["portolan_registry:host"] is None
+
+    def test_keeps_a_provenance_a_carried_link_already_carries(self, tmp_path):
+        path = self.written(
+            tmp_path,
+            {
+                "portolan_registry:id": "a",
+                "portolan_registry:kind": "official",
+                "portolan_registry:producers": [{"name": "TriMet"}],
+            },
+        )
+        link = load_links(path)["a"]
+        assert link["portolan_registry:kind"] == "official"
+        assert link["portolan_registry:producers"] == [{"name": "TriMet"}]
 
     def test_keeps_a_value_the_link_already_carries(self, tmp_path):
         path = self.written(
