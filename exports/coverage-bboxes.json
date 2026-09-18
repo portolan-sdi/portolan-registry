@@ -1,7 +1,7 @@
 {
-  "generated": "2026-09-14T17:30:39.318365+00:00",
+  "generated": "2026-09-18T10:37:47.249460+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-09-14T17:30:39.318365+00:00",
+  "registry_generated": "2026-09-18T10:37:47.249460+00:00",
   "catalogs": [
     {
       "id": "bot-open-data",
@@ -13705,7 +13705,7 @@
     },
     {
       "id": "madrid-datos-abiertos",
-      "collection_count": 132,
+      "collection_count": 133,
       "collections": [
         {
           "id": "ciencia-y-tecnologia/fuentes-agua-mascotas",
@@ -14618,6 +14618,16 @@
           ]
         },
         {
+          "id": "sociedad-y-bienestar/fundaciones",
+          "title": "Entidades de participaci\u00f3n ciudadana. Fundaciones (Secci\u00f3n 2\u00aa)",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
           "id": "sociedad-y-bienestar/inmigrantes-informacion-2025",
           "title": "Inmigrantes. Personas atendidas en el servicio de informaci\u00f3n y orientaci\u00f3n",
           "bbox": [
@@ -14958,13 +14968,13 @@
           ]
         },
         {
-          "id": "urbanismo/modelo-digital-superficies-2023-428-4480",
+          "id": "urbanismo/modelo-digital-superficies-2023",
           "title": "Modelo digital de superficies (MDS) 2023",
           "bbox": [
-            -3.8394,
-            40.4661,
-            -3.8375,
-            40.4676
+            -3.8396,
+            40.3112,
+            -3.5169,
+            40.5847
           ]
         },
         {
