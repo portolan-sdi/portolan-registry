@@ -1,7 +1,7 @@
 {
-  "generated": "2026-09-21T12:04:50.906755+00:00",
+  "generated": "2026-09-22T21:29:05.111540+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-09-21T12:04:50.906755+00:00",
+  "registry_generated": "2026-09-22T21:29:05.111540+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -35499,6 +35499,172 @@
             47.008,
             28.8563,
             47.0408
+          ]
+        }
+      ]
+    },
+    {
+      "id": "osm-geoparquet-north-america",
+      "collection_count": 16,
+      "collections": [
+        {
+          "id": "buildings",
+          "title": "Buildings",
+          "bbox": [
+            -178.2944,
+            14.534,
+            179.2717,
+            83.0941
+          ]
+        },
+        {
+          "id": "roads",
+          "title": "Roads and Paths",
+          "bbox": [
+            -178.2962,
+            14.5347,
+            179.3901,
+            82.5255
+          ]
+        },
+        {
+          "id": "railways",
+          "title": "Railways",
+          "bbox": [
+            -166.7347,
+            14.6722,
+            -52.7005,
+            65.2191
+          ]
+        },
+        {
+          "id": "waterways",
+          "title": "Waterways",
+          "bbox": [
+            -179.1402,
+            14.5311,
+            179.6725,
+            83.1262
+          ]
+        },
+        {
+          "id": "water",
+          "title": "Water Bodies",
+          "bbox": [
+            -179.1391,
+            14.5301,
+            179.6584,
+            83.1034
+          ]
+        },
+        {
+          "id": "landuse",
+          "title": "Land Use",
+          "bbox": [
+            -177.2015,
+            14.5344,
+            179.2925,
+            82.5287
+          ]
+        },
+        {
+          "id": "natural_areas",
+          "title": "Natural Areas",
+          "bbox": [
+            -179.1501,
+            14.5315,
+            179.7754,
+            83.1898
+          ]
+        },
+        {
+          "id": "natural_features",
+          "title": "Natural Point Features",
+          "bbox": [
+            -179.1413,
+            14.551,
+            179.7732,
+            83.1507
+          ]
+        },
+        {
+          "id": "places",
+          "title": "Place Names",
+          "bbox": [
+            -179.1387,
+            14.5358,
+            179.7732,
+            83.0996
+          ]
+        },
+        {
+          "id": "boundaries",
+          "title": "Administrative Boundaries",
+          "bbox": [
+            -179.2313,
+            14.5311,
+            179.8599,
+            83.3363
+          ]
+        },
+        {
+          "id": "pois",
+          "title": "Points of Interest",
+          "bbox": [
+            -177.3683,
+            14.6168,
+            172.429,
+            82.5246
+          ]
+        },
+        {
+          "id": "amenities_polygons",
+          "title": "Points of Interest (Areas)",
+          "bbox": [
+            -179.148,
+            14.5249,
+            179.7732,
+            82.4998
+          ]
+        },
+        {
+          "id": "power",
+          "title": "Power Infrastructure",
+          "bbox": [
+            -176.6604,
+            14.5543,
+            -52.6322,
+            82.5249
+          ]
+        },
+        {
+          "id": "aeroways",
+          "title": "Aeroways",
+          "bbox": [
+            -178.6642,
+            14.6357,
+            179.3154,
+            83.0925
+          ]
+        },
+        {
+          "id": "barriers",
+          "title": "Barriers",
+          "bbox": [
+            -177.2002,
+            14.5914,
+            -52.6204,
+            82.5042
+          ]
+        },
+        {
+          "id": "public_transport",
+          "title": "Public Transport Stops",
+          "bbox": [
+            -166.5275,
+            14.7383,
+            -52.6235,
+            71.2991
           ]
         }
       ]
