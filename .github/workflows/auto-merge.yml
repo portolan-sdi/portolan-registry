@@ -21,16 +21,39 @@ jobs:
         uses: actions/github-script@v9
         with:
           script: |
+            // GitHub leaves `pull_requests` empty on a workflow run that a
+            // fork pull request started. Most catalog submissions come from
+            // forks, so find the pull request from the head repository and
+            // branch instead. Require its head commit to match the run, so a
+            // result for an old commit never acts on a newer one.
+            async function findPr(run) {
+              if (run.pull_requests && run.pull_requests.length > 0) {
+                return run.pull_requests[0].number;
+              }
+              const owner = run.head_repository && run.head_repository.owner
+                ? run.head_repository.owner.login : null;
+              if (!owner || !run.head_branch) {
+                return null;
+              }
+              const open = await github.paginate(github.rest.pulls.list, {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                state: 'open',
+                head: `${owner}:${run.head_branch}`
+              });
+              const pr = open.find(p => p.head.sha === run.head_sha);
+              return pr ? pr.number : null;
+            }
             const run = await github.rest.actions.getWorkflowRun({
               owner: context.repo.owner,
               repo: context.repo.repo,
               run_id: context.payload.workflow_run.id
             });
-            const prs = run.data.pull_requests;
-            if (!prs || prs.length === 0) {
+            const number = await findPr(run.data);
+            if (number === null) {
+              console.log('No PR found');
               return null;
             }
-            const number = prs[0].number;
             // Validate Catalogs now runs on every pull request, so passing it
             // no longer means "a catalog submission is sound". Only a change
             // confined to generated files merges itself. Anything touching
@@ -60,9 +83,11 @@ jobs:
         if: steps.pr.outputs.result != 'null'
         run: |
           gh pr merge --auto --squash "$PR_NUMBER" \
+            --match-head-commit "$HEAD_SHA" \
             --repo "${{ github.repository }}"
         env:
           PR_NUMBER: ${{ steps.pr.outputs.result }}
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   trigger-publish:
@@ -78,18 +103,39 @@ jobs:
         uses: actions/github-script@v9
         with:
           script: |
+            // GitHub leaves `pull_requests` empty on a workflow run that a
+            // fork pull request started. Most catalog submissions come from
+            // forks, so find the pull request from the head repository and
+            // branch instead. Require its head commit to match the run, so a
+            // result for an old commit never acts on a newer one.
+            async function findPr(run) {
+              if (run.pull_requests && run.pull_requests.length > 0) {
+                return run.pull_requests[0].number;
+              }
+              const owner = run.head_repository && run.head_repository.owner
+                ? run.head_repository.owner.login : null;
+              if (!owner || !run.head_branch) {
+                return null;
+              }
+              const open = await github.paginate(github.rest.pulls.list, {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                state: 'open',
+                head: `${owner}:${run.head_branch}`
+              });
+              const pr = open.find(p => p.head.sha === run.head_sha);
+              return pr ? pr.number : null;
+            }
             const run = await github.rest.actions.getWorkflowRun({
               owner: context.repo.owner,
               repo: context.repo.repo,
               run_id: context.payload.workflow_run.id
             });
-            const prs = run.data.pull_requests;
-            if (!prs || prs.length === 0) {
+            const prNumber = await findPr(run.data);
+            if (prNumber === null) {
               console.log('No PR found');
               return;
             }
-
-            const prNumber = prs[0].number;
 
             // Same reason as the auto-merge job: a passing gate no longer
             // implies a catalog submission. Publishing is what a new entry
