@@ -1,7 +1,7 @@
 {
-  "generated": "2026-09-23T10:49:42.450682+00:00",
+  "generated": "2026-09-24T11:09:57.640974+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-09-23T10:49:42.450682+00:00",
+  "registry_generated": "2026-09-24T11:09:57.640974+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -33079,7 +33079,7 @@
     },
     {
       "id": "global-data",
-      "collection_count": 6,
+      "collection_count": 7,
       "collections": [
         {
           "id": "confidence",
@@ -33139,6 +33139,16 @@
             -57.8301,
             180.0,
             83.7483
+          ]
+        },
+        {
+          "id": "vectors-test",
+          "title": "Field boundary tiles 2025 (test)",
+          "bbox": [
+            -180.0,
+            -60.0,
+            180.0,
+            85.0
           ]
         }
       ]
