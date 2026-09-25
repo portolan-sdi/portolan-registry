@@ -1,7 +1,7 @@
 {
-  "generated": "2026-09-24T11:09:57.640974+00:00",
+  "generated": "2026-09-25T11:14:01.522386+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-09-24T11:09:57.640974+00:00",
+  "registry_generated": "2026-09-25T11:14:01.522386+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -12121,7 +12121,7 @@
     },
     {
       "id": "comunidad-madrid-datos-abiertos",
-      "collection_count": 1965,
+      "collection_count": 1964,
       "collections": [
         {
           "id": "ciencia-tecnologia/c-l/convocatoria-de-ayudas-para-la-realizacion-de-programas-de-actividades-de-id",
@@ -13066,16 +13066,6 @@
         {
           "id": "cultura-ocio/h-m/informacion_albergues_refugios_juveniles",
           "title": "Informaci\u00f3n sobre albergues y refugios juveniles de la Comunidad de Madrid",
-          "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
-          ]
-        },
-        {
-          "id": "cultura-ocio/h-m/informacion_escuelas_tiempo_libre_autorizadas",
-          "title": "Informaci\u00f3n sobre Escuelas de Tiempo Libre autorizadas",
           "bbox": [
             -180.0,
             -90.0,
