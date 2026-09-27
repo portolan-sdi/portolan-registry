@@ -1,7 +1,7 @@
 {
-  "generated": "2026-09-27T11:27:46.536095+00:00",
+  "generated": "2026-09-27T17:03:21.373118+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-09-27T11:27:46.536095+00:00",
+  "registry_generated": "2026-09-27T17:03:21.373118+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -39829,6 +39829,42 @@
             38.532,
             -90.1667,
             38.7743
+          ]
+        }
+      ]
+    },
+    {
+      "id": "staging",
+      "collection_count": 3,
+      "collections": [
+        {
+          "id": "hydroatlas/riveratlas",
+          "title": "Riveratlas",
+          "bbox": [
+            -179.9979,
+            -55.8771,
+            179.9979,
+            83.5896
+          ]
+        },
+        {
+          "id": "hydroatlas/lakeatlas",
+          "title": "Lakeatlas",
+          "bbox": [
+            -180.0,
+            -55.8651,
+            180.0,
+            83.576
+          ]
+        },
+        {
+          "id": "hydroatlas/basinatlas",
+          "title": "Basinatlas",
+          "bbox": [
+            -180.0,
+            -55.9875,
+            180.0,
+            83.6256
           ]
         }
       ]
