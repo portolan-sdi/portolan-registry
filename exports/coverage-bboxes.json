@@ -1,7 +1,7 @@
 {
-  "generated": "2026-09-26T10:52:07.250743+00:00",
+  "generated": "2026-09-27T11:27:46.536095+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-09-26T10:52:07.250743+00:00",
+  "registry_generated": "2026-09-27T11:27:46.536095+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -33069,7 +33069,7 @@
     },
     {
       "id": "global-data",
-      "collection_count": 7,
+      "collection_count": 11,
       "collections": [
         {
           "id": "confidence",
@@ -33132,8 +33132,48 @@
           ]
         },
         {
-          "id": "vectors-test",
-          "title": "Field boundary tiles 2025 (test)",
+          "id": "cells-r5",
+          "title": "Fields 2025 \u2014 A5 r5 cell aggregates (test)",
+          "bbox": [
+            -180.0,
+            -60.0,
+            180.0,
+            85.0
+          ]
+        },
+        {
+          "id": "cells-r7",
+          "title": "Fields 2025 \u2014 A5 r7 cell aggregates (test)",
+          "bbox": [
+            -180.0,
+            -60.0,
+            180.0,
+            85.0
+          ]
+        },
+        {
+          "id": "cells-r8",
+          "title": "Fields 2025 \u2014 A5 r8 cell aggregates (test)",
+          "bbox": [
+            -180.0,
+            -60.0,
+            180.0,
+            85.0
+          ]
+        },
+        {
+          "id": "fields-thinned",
+          "title": "Fields 2025 \u2014 thinned field polygons (test)",
+          "bbox": [
+            -180.0,
+            -60.0,
+            180.0,
+            85.0
+          ]
+        },
+        {
+          "id": "fields-yearly",
+          "title": "Fields 2024 & 2025 \u2014 cells-to-fields handover (test)",
           "bbox": [
             -180.0,
             -60.0,
