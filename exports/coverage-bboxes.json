@@ -1,7 +1,7 @@
 {
-  "generated": "2026-09-27T17:03:21.373118+00:00",
+  "generated": "2026-09-27T18:07:26.325563+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-09-27T17:03:21.373118+00:00",
+  "registry_generated": "2026-09-27T18:07:26.325563+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -33179,6 +33179,282 @@
             -60.0,
             180.0,
             85.0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gmwid",
+      "collection_count": 27,
+      "collections": [
+        {
+          "id": "power_line",
+          "title": "Power lines and cables",
+          "bbox": [
+            -179.1995,
+            -77.8477,
+            179.3809,
+            82.5249
+          ]
+        },
+        {
+          "id": "power_circuit",
+          "title": "Power circuits",
+          "bbox": [
+            -123.7139,
+            -46.3066,
+            176.8869,
+            66.88
+          ]
+        },
+        {
+          "id": "power_tower",
+          "title": "Power towers and poles",
+          "bbox": [
+            -179.1995,
+            -77.8477,
+            179.396,
+            78.9163
+          ]
+        },
+        {
+          "id": "power_substation",
+          "title": "Substations",
+          "bbox": [
+            -179.5,
+            -77.8495,
+            179.381,
+            77.9018
+          ]
+        },
+        {
+          "id": "power_plant",
+          "title": "Power plants",
+          "bbox": [
+            -179.1415,
+            -77.851,
+            179.8152,
+            78.6552
+          ]
+        },
+        {
+          "id": "power_generator",
+          "title": "Generators",
+          "bbox": [
+            -179.4549,
+            -77.8508,
+            179.8441,
+            78.6593
+          ]
+        },
+        {
+          "id": "power_switchgear",
+          "title": "Switchgear and transformers",
+          "bbox": [
+            -171.8852,
+            -68.5752,
+            178.0267,
+            78.9242
+          ]
+        },
+        {
+          "id": "power_other",
+          "title": "Other power features",
+          "bbox": [
+            -175.2317,
+            -75.1001,
+            177.1878,
+            70.6132
+          ]
+        },
+        {
+          "id": "telecom_cable",
+          "title": "Telecom cables",
+          "bbox": [
+            -177.0002,
+            -52.0512,
+            176.4981,
+            79.0213
+          ]
+        },
+        {
+          "id": "telecom_building",
+          "title": "Telecom buildings",
+          "bbox": [
+            -176.642,
+            -77.8472,
+            179.1951,
+            78.2222
+          ]
+        },
+        {
+          "id": "telecom_location",
+          "title": "Telecom locations",
+          "bbox": [
+            -156.2785,
+            -37.8007,
+            174.6937,
+            69.6577
+          ]
+        },
+        {
+          "id": "telecom_mast",
+          "title": "Masts and communication towers",
+          "bbox": [
+            -179.7496,
+            -82.1117,
+            179.4048,
+            82.5259
+          ]
+        },
+        {
+          "id": "telecom_antenna",
+          "title": "Antennas",
+          "bbox": [
+            -178.4632,
+            -75.0958,
+            179.6621,
+            80.8037
+          ]
+        },
+        {
+          "id": "utility_pole",
+          "title": "Utility poles",
+          "bbox": [
+            -162.6199,
+            -45.8931,
+            178.4723,
+            72.7871
+          ]
+        },
+        {
+          "id": "street_cabinet",
+          "title": "Street cabinets",
+          "bbox": [
+            -171.9908,
+            -54.9333,
+            178.2972,
+            74.6685
+          ]
+        },
+        {
+          "id": "pipeline",
+          "title": "Pipelines",
+          "bbox": [
+            -179.5648,
+            -77.8511,
+            179.3085,
+            80.8094
+          ]
+        },
+        {
+          "id": "petroleum_site",
+          "title": "Oil and gas sites",
+          "bbox": [
+            -172.2033,
+            -54.8032,
+            177.9893,
+            80.7767
+          ]
+        },
+        {
+          "id": "petroleum_well",
+          "title": "Oil and gas wells",
+          "bbox": [
+            -158.0211,
+            -54.0243,
+            177.9114,
+            76.4227
+          ]
+        },
+        {
+          "id": "offshore_platform",
+          "title": "Offshore platforms",
+          "bbox": [
+            -151.6738,
+            -53.2991,
+            174.2718,
+            71.3111
+          ]
+        },
+        {
+          "id": "pipeline_feature",
+          "title": "Pipeline features",
+          "bbox": [
+            -171.7595,
+            -53.3628,
+            177.903,
+            69.7965
+          ]
+        },
+        {
+          "id": "marker",
+          "title": "Markers",
+          "bbox": [
+            -172.3201,
+            -51.6093,
+            176.9021,
+            69.7891
+          ]
+        },
+        {
+          "id": "water_treatment_plant",
+          "title": "Water treatment plants",
+          "bbox": [
+            -175.2584,
+            -77.8474,
+            179.3348,
+            71.7391
+          ]
+        },
+        {
+          "id": "wastewater_plant",
+          "title": "Wastewater plants",
+          "bbox": [
+            -177.381,
+            -77.8474,
+            178.486,
+            78.9285
+          ]
+        },
+        {
+          "id": "pumping_station",
+          "title": "Pumping stations",
+          "bbox": [
+            -176.1978,
+            -77.8501,
+            178.0135,
+            78.6558
+          ]
+        },
+        {
+          "id": "water_tower",
+          "title": "Water towers",
+          "bbox": [
+            -179.9044,
+            -55.0847,
+            178.6029,
+            78.2162
+          ]
+        },
+        {
+          "id": "water_well",
+          "title": "Water wells",
+          "bbox": [
+            -175.249,
+            -55.4905,
+            178.2748,
+            77.1704
+          ]
+        },
+        {
+          "id": "pressurised_waterway",
+          "title": "Pressurised waterways",
+          "bbox": [
+            -156.6039,
+            -45.7562,
+            177.6692,
+            71.2615
           ]
         }
       ]
