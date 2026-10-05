@@ -56,9 +56,10 @@ runs:
         git config user.email \
           "portolan-registry-bot[bot]@users.noreply.github.com"
 
-        # Push as the app too. The checkout's credentials belong to
-        # GITHUB_TOKEN, whose pushes raise no `synchronize` event, which would
-        # leave an old green standing over a new diff.
+        # Push as the app too. A push as GITHUB_TOKEN gives a pull request
+        # whose checks wait for approval and never run. The caller must check
+        # out with `persist-credentials: false`, or git sends the checkout's
+        # GITHUB_TOKEN header and ignores the token in this URL.
         git remote set-url origin \
           "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
 
