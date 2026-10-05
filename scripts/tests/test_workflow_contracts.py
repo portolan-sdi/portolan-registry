@@ -3,19 +3,23 @@ from pathlib import Path
 import yaml
 
 
-def test_publish_dispatch_has_required_token_permissions():
+def test_auto_merge_runs_as_the_app():
+    # A merge attributed to GITHUB_TOKEN raises no push event, so Publish and
+    # Refresh Site Cache never run after it.
     path = Path(".github/workflows/auto-merge.yml")
     workflow = yaml.safe_load(path.read_text())
-    job = workflow["jobs"]["trigger-publish"]
-    permissions = job.get("permissions", workflow.get("permissions", {}))
+    steps = workflow["jobs"]["auto-merge"]["steps"]
 
-    assert permissions.get("actions") == "write"
-    assert permissions.get("pull-requests") in {"read", "write"}
-    assert permissions.get("contents", "none") in {"none", "read"}
+    token = next(step for step in steps if step.get("id") == "token")
+    assert token["uses"].startswith("actions/create-github-app-token@")
+    assert token["with"]["permission-contents"] == "write"
+    assert token["with"]["permission-pull-requests"] == "write"
 
-    merge_job = workflow["jobs"]["auto-merge"]
-    merge_permissions = merge_job.get("permissions", workflow.get("permissions", {}))
-    assert merge_permissions.get("actions", "none") != "write"
+    merge = next(step for step in steps if step.get("name") == "Enable auto-merge")
+    assert merge["env"]["GH_TOKEN"] == "${{ steps.token.outputs.token }}"
+
+    permissions = workflow.get("permissions", {})
+    assert all(level != "write" for level in permissions.values())
 
 
 def test_site_dispatch_names_the_registry_commit():

@@ -5,9 +5,10 @@ on:
     workflows: ["Validate Catalogs"]
     types: [completed]
 
+# Read only. The merge runs on the app token below, not on GITHUB_TOKEN.
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
+  pull-requests: read
 
 jobs:
   auto-merge:
@@ -56,6 +57,21 @@ jobs:
             return number;
           result-encoding: string
 
+      # An app token, not GITHUB_TOKEN. GitHub attributes the merge to whoever
+      # enabled auto-merge, and a push made as GITHUB_TOKEN starts no
+      # workflow. Publish and Refresh Site Cache listen for that push.
+      - name: Create merge token
+        if: steps.pr.outputs.result != 'null'
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        id: token
+        with:
+          client-id: ${{ secrets.REGISTRY_BOT_APP_CLIENT_ID }}
+          private-key: ${{ secrets.REGISTRY_BOT_APP_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: ${{ github.event.repository.name }}
+          permission-contents: write
+          permission-pull-requests: write
+
       - name: Enable auto-merge
         if: steps.pr.outputs.result != 'null'
         run: |
@@ -63,80 +79,4 @@ jobs:
             --repo "${{ github.repository }}"
         env:
           PR_NUMBER: ${{ steps.pr.outputs.result }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  trigger-publish:
-    permissions:
-      actions: write
-      pull-requests: read
-    if: >
-      github.event.workflow_run.event == 'pull_request' &&
-      github.event.workflow_run.conclusion == 'success'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Wait for merge and trigger publish
-        uses: actions/github-script@v9
-        with:
-          script: |
-            const run = await github.rest.actions.getWorkflowRun({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              run_id: context.payload.workflow_run.id
-            });
-            const prs = run.data.pull_requests;
-            if (!prs || prs.length === 0) {
-              console.log('No PR found');
-              return;
-            }
-
-            const prNumber = prs[0].number;
-
-            // Same reason as the auto-merge job: a passing gate no longer
-            // implies a catalog submission. Publishing is what a new entry
-            // needs, and a code merge does not need it here.
-            //
-            // Entries only, deliberately narrower than the auto-merge job
-            // above. Publishing produces an export pull request, so counting
-            // an export merge as a reason to publish would crawl forever.
-            const files = await github.paginate(github.rest.pulls.listFiles, {
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: prNumber
-            });
-            const entriesOnly = files.length > 0 && files.every(
-              f => /^catalogs\/[^/]+\.yaml$/.test(f.filename)
-            );
-            if (!entriesOnly) {
-              console.log(`PR #${prNumber} changes more than entries; no publish`);
-              return;
-            }
-
-            // Poll until PR is merged (max 5 minutes)
-            for (let i = 0; i < 30; i++) {
-              const pr = await github.rest.pulls.get({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: prNumber
-              });
-
-              if (pr.data.merged) {
-                console.log(`PR #${prNumber} merged, triggering publish`);
-                await github.rest.actions.createWorkflowDispatch({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  workflow_id: 'publish.yml',
-                  ref: 'main'
-                });
-                return;
-              }
-
-              if (pr.data.state === 'closed') {
-                console.log(`PR #${prNumber} closed without merge`);
-                return;
-              }
-
-              console.log(`Waiting for PR #${prNumber} to merge... (${i + 1}/30)`);
-              await new Promise(r => setTimeout(r, 10000));
-            }
-
-            console.log('Timeout waiting for merge');
+          GH_TOKEN: ${{ steps.token.outputs.token }}
