@@ -20,6 +20,7 @@ from urllib.parse import urlsplit
 from registry.bbox import collection_bbox, union_bboxes
 from registry.fetch import Fetcher, resolve_url
 from registry.logo import catalog_logo
+from registry.provenance import Kind, Party, catalog_provenance, collection_parties
 from registry.report import log
 
 # The Portolan profile defines no fields, so the versioned schema URI in
@@ -92,6 +93,12 @@ class CollectionSummary:
     # them one by one. The crawler does not page, so this collection's items
     # cannot be counted without a request per page.
     items_unenumerable: bool = False
+    # The parties this collection's `providers` name, by role. The spec makes
+    # the collection-level declaration authoritative, so these, not the
+    # root's `providers`, decide the catalog's provenance.
+    producers: list[Party] = field(default_factory=list)
+    processors: list[Party] = field(default_factory=list)
+    host: Party | None = None
 
 
 class CrawlResult(TypedDict, total=False):
@@ -112,6 +119,11 @@ class CrawlResult(TypedDict, total=False):
     updated: str | None
     providers: list | None
     keywords: list | None
+    # Derived from every collection's `providers`. See registry.provenance.
+    kind: Kind | None
+    producers: list[Party]
+    processors: list[Party]
+    host: Party | None
     logo: dict[str, str] | None
     bbox: list[float] | None
     licenses: dict[str, int]
@@ -148,6 +160,11 @@ def _empty_result(catalog_url: str, catalog: Mapping, now: datetime) -> CrawlRes
         "updated": catalog.get("updated"),
         "providers": catalog.get("providers"),
         "keywords": catalog.get("keywords"),
+        # Filled in by crawl_catalog once every collection is merged.
+        "kind": None,
+        "producers": [],
+        "processors": [],
+        "host": None,
         # Filled in by crawl_catalog, which has the fetcher needed to check the
         # image is really there.
         "logo": None,
@@ -178,6 +195,9 @@ def _summarize_collection(url: str, collection: Mapping) -> CollectionSummary:
         license=collection.get("license"),
         spec_version=declared_version(collection),
         row_count=collection.get("table:row_count") or 0,
+    )
+    summary.producers, summary.processors, summary.host = collection_parties(
+        collection.get("providers")
     )
 
     extent = collection.get("extent") or {}
@@ -382,5 +402,9 @@ def crawl_catalog(
     # here; their count is `collection_count` minus the sum of these.
     counts = Counter(c.license for c in result["collections"] if c.license)
     result["licenses"] = dict(sorted(counts.items()))
+
+    # Same pattern as the license mix: decided over every collection merged
+    # up from every sub-catalog, so each level recomputes from the full list.
+    result.update(catalog_provenance(result["collections"]))
 
     return result

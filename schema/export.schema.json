@@ -30,6 +30,20 @@
         {"minItems": 6, "maxItems": 6}
       ]
     },
+    "party": {
+      "description": "One organization a catalog names in its collections' STAC providers. The provider description and roles are dropped.",
+      "type": "object",
+      "required": ["name"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "url": {
+          "description": "The provider url. Absent when the provider gives none. A host may give an email in place of a url, and the export does not publish the email.",
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
     "link": {
       "type": "object",
       "required": ["rel", "href"],
@@ -108,6 +122,25 @@
                     "minLength": 1
                   }
                 }
+              },
+              "portolan_registry:kind": {
+                "description": "Derived from the STAC providers of every collection beneath the catalog, per portolan-spec core.md, Source Provenance. A collection is official when its host is one of its producers, and a mirror when it names a producer and a host and the host is none of them. Organizations compare by name, ignoring case and runs of whitespace. The catalog is a mirror when any collection is a mirror, official when at least one collection is official and none is a mirror, and null when no collection names both a producer and a host. Absent on entries carried forward from an export published before this field existed.",
+                "type": ["string", "null"],
+                "enum": ["official", "mirror", null]
+              },
+              "portolan_registry:producers": {
+                "description": "Who made the data: every distinct provider with the producer role across the catalog's collections, one per organization, in the order first named. Empty when no collection names a producer. Absent on entries carried forward from an export published before this field existed.",
+                "type": "array",
+                "items": {"$ref": "#/$defs/party"}
+              },
+              "portolan_registry:processors": {
+                "description": "Who derived this copy from the source: every distinct provider with the processor role, as for producers. Empty when no collection names a processor. Absent on entries carried forward from an export published before this field existed.",
+                "type": "array",
+                "items": {"$ref": "#/$defs/party"}
+              },
+              "portolan_registry:host": {
+                "description": "Who serves this copy: the host provider that the most collections name, the first named on a tie. Null when no collection names a host. Absent on entries carried forward from an export published before this field existed.",
+                "anyOf": [{"$ref": "#/$defs/party"}, {"type": "null"}]
               },
               "portolan_registry:updated": {
                 "description": "The catalog's own top-level `updated`, RFC 3339. Null when it sets none.",

@@ -161,6 +161,16 @@ def child_link(catalog: Mapping) -> dict:
             # the href resolved and the image confirmed to exist. Null when
             # the catalog publishes none, which is the common case.
             "portolan_registry:logo": catalog.get("logo"),
+            # Derived from every collection's STAC `providers`, per
+            # portolan-spec core.md, Source Provenance. "official" when the
+            # producer and the host are the same organization, "mirror" when
+            # they differ, null when no collection names both. The parties
+            # are {name, url}, one per organization, in the order the catalog
+            # names them. See registry.provenance for the aggregation.
+            "portolan_registry:kind": catalog.get("kind"),
+            "portolan_registry:producers": catalog.get("producers") or [],
+            "portolan_registry:processors": catalog.get("processors") or [],
+            "portolan_registry:host": catalog.get("host"),
             "portolan_registry:updated": catalog.get("updated"),
             "portolan_registry:first_registered": catalog.get("first_registered"),
             # SPDX id -> how many collections declare it. The registry

@@ -98,6 +98,33 @@ class TestAggregation:
         )
         assert crawl_catalog(ROOT, f, now=FROZEN)["licenses"] == {}
 
+    def test_provenance_is_read_from_collections_across_the_tree(self, tree):
+        # inland sits under the sub-catalog. The root declares no providers,
+        # and the spec makes the collection-level declaration authoritative.
+        r = crawl_catalog(ROOT, tree, now=FROZEN)
+        assert r["kind"] == "mirror"
+        assert r["producers"] == [
+            {"name": "Coastal Agency", "url": "https://coastal.example.org"},
+            {"name": "Inland Authority"},
+        ]
+        assert r["processors"] == [
+            {"name": "Example Host", "url": "https://host.example.org"}
+        ]
+        assert r["host"] == {"name": "Example Host", "url": "https://host.example.org"}
+
+    def test_a_catalog_without_providers_has_no_provenance(self):
+        f = FakeFetcher(
+            docs={
+                ROOT: catalog("./a/collection.json"),
+                "https://ex.org/a/collection.json": collection(),
+            }
+        )
+        r = crawl_catalog(ROOT, f, now=FROZEN)
+        assert r["kind"] is None
+        assert r["producers"] == []
+        assert r["processors"] == []
+        assert r["host"] is None
+
     def test_per_collection_summaries_are_retained(self, tree):
         r = crawl_catalog(ROOT, tree, now=FROZEN)
         by_id = {c.id: c for c in r["collections"]}

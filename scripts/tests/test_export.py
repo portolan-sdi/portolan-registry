@@ -102,6 +102,34 @@ class TestChildLink:
         object or nothing, so there is no index to fail on."""
         assert child_link({"id": "x", "url": ROOT})["portolan_registry:logo"] is None
 
+    def test_carries_kind_and_parties(self):
+        link = child_link(
+            {
+                "id": "x",
+                "url": ROOT,
+                "kind": "mirror",
+                "producers": [{"name": "Comune di Bologna"}],
+                "processors": [{"name": "CARTO", "url": "https://carto.com"}],
+                "host": {"name": "CARTO", "url": "https://carto.com"},
+            }
+        )
+        assert link["portolan_registry:kind"] == "mirror"
+        assert link["portolan_registry:producers"] == [{"name": "Comune di Bologna"}]
+        assert link["portolan_registry:processors"] == [
+            {"name": "CARTO", "url": "https://carto.com"}
+        ]
+        assert link["portolan_registry:host"] == {
+            "name": "CARTO",
+            "url": "https://carto.com",
+        }
+
+    def test_a_catalog_naming_no_party_reports_null_and_empty(self):
+        link = child_link({"id": "x", "url": ROOT})
+        assert link["portolan_registry:kind"] is None
+        assert link["portolan_registry:producers"] == []
+        assert link["portolan_registry:processors"] == []
+        assert link["portolan_registry:host"] is None
+
     def test_an_undeclared_catalog_reports_nulls(self):
         link = child_link({"id": "x", "url": ROOT})
         assert link["portolan_registry:spec_version"] is None
