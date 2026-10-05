@@ -25,6 +25,11 @@ jobs:
           # The export dates each catalog by the commit that added its entry
           # file. A shallow clone cannot see that commit.
           fetch-depth: 0
+          # Keep GITHUB_TOKEN out of the git config. checkout stores it as an
+          # Authorization header, which git sends ahead of the app token that
+          # propose-export puts in the remote URL. The export push then runs as
+          # github-actions[bot], and GitHub holds its pull request checks.
+          persist-credentials: false
 
       - name: Setup uv
         uses: astral-sh/setup-uv@v7
