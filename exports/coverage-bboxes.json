@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-05T09:15:11.085825+00:00",
+  "generated": "2026-10-05T13:41:55.647900+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-10-05T09:15:11.085825+00:00",
+  "registry_generated": "2026-10-05T13:41:55.647900+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -50623,8 +50623,58 @@
     },
     {
       "id": "planet-disasterdata",
-      "collection_count": 25,
+      "collection_count": 30,
       "collections": [
+        {
+          "id": "post-event-pelican-2026-09-29",
+          "title": "pelican-2026-09-29 \u2014 Post-event Imagery",
+          "bbox": [
+            85.4705,
+            28.253,
+            85.5881,
+            28.3573
+          ]
+        },
+        {
+          "id": "post-event-planetscope-2026-09-28",
+          "title": "planetscope-2026-09-28 \u2014 Post-event Imagery",
+          "bbox": [
+            85.4812,
+            28.1391,
+            85.8613,
+            28.3786
+          ]
+        },
+        {
+          "id": "post-event-planetscope-2026-09-29",
+          "title": "planetscope-2026-09-29 \u2014 Post-event Imagery",
+          "bbox": [
+            85.202,
+            28.1728,
+            85.7062,
+            28.4512
+          ]
+        },
+        {
+          "id": "post-event-skysat-2026-09-26",
+          "title": "skysat-2026-09-26 \u2014 Post-event Imagery",
+          "bbox": [
+            85.3824,
+            28.2401,
+            85.6207,
+            28.4126
+          ]
+        },
+        {
+          "id": "post-event-skysat-2026-09-28",
+          "title": "skysat-2026-09-28 \u2014 Post-event Imagery",
+          "bbox": [
+            85.5063,
+            28.2474,
+            85.5823,
+            28.4136
+          ]
+        },
         {
           "id": "post-event-pelican-2026-08-27",
           "title": "Syabrubesi to Rasuwagadhi (Pelican) \u2014 Post-event Imagery",
