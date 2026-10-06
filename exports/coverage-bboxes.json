@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-06T12:48:20.884585+00:00",
+  "generated": "2026-10-06T18:13:25.107262+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-10-06T12:48:20.884585+00:00",
+  "registry_generated": "2026-10-06T18:13:25.107262+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -41723,6 +41723,682 @@
             53.395,
             10.3253,
             53.9649
+          ]
+        }
+      ]
+    },
+    {
+      "id": "harmonized-field-data",
+      "collection_count": 67,
+      "collections": [
+        {
+          "id": "at",
+          "title": "Field boundaries for Austria",
+          "bbox": [
+            9.4053,
+            46.3459,
+            17.2322,
+            48.9656
+          ]
+        },
+        {
+          "id": "at_block",
+          "title": "Field blocks for Austria",
+          "bbox": [
+            9.4053,
+            46.3459,
+            17.2322,
+            48.9656
+          ]
+        },
+        {
+          "id": "be_vlg",
+          "title": "Field boundaries for Flanders, Belgium",
+          "bbox": [
+            2.531,
+            50.6742,
+            5.9327,
+            51.4955
+          ]
+        },
+        {
+          "id": "be_wal",
+          "title": "Belgium Wallonia: Parcellaire Agricole Anonyme",
+          "bbox": [
+            2.8326,
+            49.3731,
+            6.4677,
+            50.9655
+          ]
+        },
+        {
+          "id": "bg",
+          "title": "Field blocks for Bulgaria",
+          "bbox": [
+            22.2285,
+            41.1891,
+            28.6233,
+            44.2802
+          ]
+        },
+        {
+          "id": "ch",
+          "title": "Field boundaries for Switzerland",
+          "bbox": [
+            5.9243,
+            45.8621,
+            10.4874,
+            47.8072
+          ]
+        },
+        {
+          "id": "cz",
+          "title": "Field boundaries for Czech",
+          "bbox": [
+            12.1038,
+            48.5525,
+            18.8542,
+            51.0439
+          ]
+        },
+        {
+          "id": "de_bb",
+          "title": "Field boundaries for Berlin / Brandenburg, Germany",
+          "bbox": [
+            11.2351,
+            51.3107,
+            14.7655,
+            53.5645
+          ]
+        },
+        {
+          "id": "de_bb_block",
+          "title": "Field blocks for Berlin / Brandenburg, Germany",
+          "bbox": [
+            11.2351,
+            51.3107,
+            14.7655,
+            53.5645
+          ]
+        },
+        {
+          "id": "de_bw",
+          "title": "Field boundaries for Baden-W\u00fcrttemberg, Germany",
+          "bbox": [
+            7.5138,
+            47.5334,
+            10.4831,
+            49.7913
+          ]
+        },
+        {
+          "id": "de_by",
+          "title": "Field boundaries for Bavaria, Germany",
+          "bbox": [
+            8.9769,
+            47.18,
+            14.0142,
+            50.5613
+          ]
+        },
+        {
+          "id": "de_by_block",
+          "title": "Field blocks for Bavaria, Germany",
+          "bbox": [
+            8.9769,
+            47.18,
+            14.0142,
+            50.5613
+          ]
+        },
+        {
+          "id": "de_he",
+          "title": "Field blocks for Hesse, Germany",
+          "bbox": [
+            7.7366,
+            49.3914,
+            10.2398,
+            51.652
+          ]
+        },
+        {
+          "id": "de_mv",
+          "title": "Field blocks for Mecklenburg-Western Pomerania, Germany",
+          "bbox": [
+            10.461,
+            53.0845,
+            14.3972,
+            54.6906
+          ]
+        },
+        {
+          "id": "de_nds",
+          "title": "Crop Fields for Lower Saxony / Bremen / Hamburg, Germany",
+          "bbox": [
+            6.6071,
+            51.2798,
+            11.6519,
+            53.9089
+          ]
+        },
+        {
+          "id": "de_nds_block",
+          "title": "Field blocks for Lower Saxony / Bremen / Hamburg, Germany",
+          "bbox": [
+            6.6071,
+            51.2798,
+            11.6519,
+            53.9089
+          ]
+        },
+        {
+          "id": "de_nrw",
+          "title": "Field blocks for North Rhine-Westphalia (NRW), Germany",
+          "bbox": [
+            5.7654,
+            50.3105,
+            9.4681,
+            52.5309
+          ]
+        },
+        {
+          "id": "de_sax",
+          "title": "Field blocks for Saxony, Germany",
+          "bbox": [
+            11.8747,
+            50.172,
+            15.0417,
+            51.6846
+          ]
+        },
+        {
+          "id": "de_sh",
+          "title": "Field blocks for Schleswig-Holstein (SH), Germany",
+          "bbox": [
+            7.8481,
+            53.3502,
+            11.3482,
+            55.0419
+          ]
+        },
+        {
+          "id": "de_sl",
+          "title": "Field boundaries for Saarland, Germany",
+          "bbox": [
+            6.3592,
+            49.1123,
+            7.4016,
+            49.6347
+          ]
+        },
+        {
+          "id": "de_sl_block",
+          "title": "Field blocks for Saarland, Germany",
+          "bbox": [
+            6.3592,
+            49.1123,
+            7.4016,
+            49.6358
+          ]
+        },
+        {
+          "id": "de_st",
+          "title": "Field blocks for Saxony-Anhalt, Germany",
+          "bbox": [
+            10.5608,
+            50.9379,
+            13.1653,
+            53.0402
+          ]
+        },
+        {
+          "id": "de_th",
+          "title": "Field blocks for Thuringia, Germany",
+          "bbox": [
+            9.8703,
+            50.1658,
+            12.7081,
+            51.6525
+          ]
+        },
+        {
+          "id": "dk",
+          "title": "Denmark Crop Fields (Marker)",
+          "bbox": [
+            8.0265,
+            54.4442,
+            15.5732,
+            57.7516
+          ]
+        },
+        {
+          "id": "ec_ee",
+          "title": "Field boundaries for Estonia - Eurocrops 2021",
+          "bbox": [
+            21.777,
+            57.5165,
+            28.1582,
+            59.6452
+          ]
+        },
+        {
+          "id": "ec_fr",
+          "title": "Field boundaries for France - Eurocrops 2018",
+          "bbox": [
+            -5.2955,
+            41.3166,
+            10.6943,
+            50.8387
+          ]
+        },
+        {
+          "id": "ec_lt",
+          "title": "Field boundaries for Lithuania - Eurocrops 2021",
+          "bbox": [
+            21.0791,
+            53.9065,
+            26.8353,
+            56.442
+          ]
+        },
+        {
+          "id": "ec_lv",
+          "title": "Field boundaries for Latvia - Eurocrops 2021",
+          "bbox": [
+            20.8392,
+            55.6322,
+            28.4252,
+            58.0439
+          ]
+        },
+        {
+          "id": "ec_ro",
+          "title": "Field boundaries for Romania - Eurocrops",
+          "bbox": [
+            21.9836,
+            43.5324,
+            28.9233,
+            45.1767
+          ]
+        },
+        {
+          "id": "ec_si",
+          "title": "Field boundaries for Slovenia - Eurocrops 2021",
+          "bbox": [
+            13.3914,
+            45.4117,
+            16.608,
+            46.8698
+          ]
+        },
+        {
+          "id": "ee",
+          "title": "Field boundaries for Estonia",
+          "bbox": [
+            21.6917,
+            57.4811,
+            28.1814,
+            59.6369
+          ]
+        },
+        {
+          "id": "es",
+          "title": "Spain Declared Crops (Cultivos Declarados SIGPAC)",
+          "bbox": [
+            -18.1455,
+            27.6599,
+            4.307,
+            43.7866
+          ]
+        },
+        {
+          "id": "es_an",
+          "title": "Spain Andalusia Crop fields",
+          "bbox": [
+            -7.5904,
+            35.9583,
+            -1.6048,
+            38.7385
+          ]
+        },
+        {
+          "id": "es_ar",
+          "title": "Spain Aragon Crop fields",
+          "bbox": [
+            -2.1733,
+            39.8516,
+            0.7621,
+            42.9223
+          ]
+        },
+        {
+          "id": "es_cat",
+          "title": "Catalonia Crop Fields (Mapa de cultius)",
+          "bbox": [
+            0.1247,
+            40.5176,
+            3.3002,
+            42.8432
+          ]
+        },
+        {
+          "id": "es_cb",
+          "title": "Spain Cantabria Crop fields",
+          "bbox": [
+            -4.8504,
+            42.7585,
+            -3.1493,
+            43.5132
+          ]
+        },
+        {
+          "id": "es_cl",
+          "title": "Spain Castile and Le\u00f3n Crop fields",
+          "bbox": [
+            -7.0771,
+            40.0832,
+            -1.7747,
+            43.2328
+          ]
+        },
+        {
+          "id": "es_cm",
+          "title": "Spain Castilla-La Mancha Crop fields",
+          "bbox": [
+            -5.4061,
+            38.0221,
+            -0.9165,
+            41.3262
+          ]
+        },
+        {
+          "id": "es_cn",
+          "title": "Spain Crop fields of Canary Islands",
+          "bbox": [
+            -18.1956,
+            27.6495,
+            -13.4457,
+            29.2763
+          ]
+        },
+        {
+          "id": "es_ex",
+          "title": "Spain Extremadura Crop fields",
+          "bbox": [
+            -7.5382,
+            37.9414,
+            -4.6544,
+            40.4812
+          ]
+        },
+        {
+          "id": "es_ga",
+          "title": "Spain Galicia Crop fields",
+          "bbox": [
+            -9.2932,
+            41.8074,
+            -6.7364,
+            43.7866
+          ]
+        },
+        {
+          "id": "es_ib",
+          "title": "Spain Balearic Islands Crop fields",
+          "bbox": [
+            1.2133,
+            38.641,
+            4.3267,
+            40.0933
+          ]
+        },
+        {
+          "id": "es_md",
+          "title": "Spain Madrid Crop fields",
+          "bbox": [
+            -4.579,
+            39.8847,
+            -3.0533,
+            41.1658
+          ]
+        },
+        {
+          "id": "es_nc",
+          "title": "Spain Navarra Crop fields",
+          "bbox": [
+            -2.4991,
+            41.9097,
+            -0.7661,
+            43.3146
+          ]
+        },
+        {
+          "id": "es_pv",
+          "title": "Spain Basque Country Crop fields",
+          "bbox": [
+            -3.4505,
+            42.4667,
+            -1.7272,
+            43.4558
+          ]
+        },
+        {
+          "id": "es_vc",
+          "title": "Spain Valencia Crop Fields",
+          "bbox": [
+            -1.5583,
+            37.8163,
+            0.5275,
+            40.8097
+          ]
+        },
+        {
+          "id": "fi",
+          "title": "Finnish Crop Fields (Maatalousmaa)",
+          "bbox": [
+            15.9583,
+            59.6558,
+            32.8735,
+            69.9892
+          ]
+        },
+        {
+          "id": "fr",
+          "title": "Registre Parcellaire Graphique; Crop Fields France",
+          "bbox": [
+            -5.5062,
+            41.3046,
+            10.6943,
+            50.8388
+          ]
+        },
+        {
+          "id": "hr",
+          "title": "Croatian Field Boundaries",
+          "bbox": [
+            13.438,
+            42.3895,
+            19.5168,
+            46.4999
+          ]
+        },
+        {
+          "id": "ie",
+          "title": "Ireland INSPIRE Geospatial aid application (GSAA) dataset",
+          "bbox": [
+            -10.5923,
+            51.4221,
+            -5.9948,
+            55.3836
+          ]
+        },
+        {
+          "id": "ie_lpis",
+          "title": "LPIS parcels for Ireland",
+          "bbox": [
+            -10.5923,
+            51.4221,
+            -5.9946,
+            55.3836
+          ]
+        },
+        {
+          "id": "it_1",
+          "title": "Italy Tuscany (ITI1) Crop Fields \u2014 EuroCropsV2",
+          "bbox": [
+            9.717,
+            42.3009,
+            12.4013,
+            44.471
+          ]
+        },
+        {
+          "id": "it_bz",
+          "title": "Field boundaries for South Tyrol, Italy",
+          "bbox": [
+            10.3845,
+            46.2238,
+            12.478,
+            47.085
+          ]
+        },
+        {
+          "id": "jp",
+          "title": "Japan Fude Parcels",
+          "bbox": [
+            122.946,
+            24.0468,
+            145.8027,
+            45.52
+          ]
+        },
+        {
+          "id": "lt",
+          "title": "Lithuania crop fields",
+          "bbox": [
+            20.569,
+            53.6087,
+            27.2174,
+            56.8133
+          ]
+        },
+        {
+          "id": "lu",
+          "title": "Field blocks for Luxembourg",
+          "bbox": [
+            5.7361,
+            49.4487,
+            6.5333,
+            50.1823
+          ]
+        },
+        {
+          "id": "lv",
+          "title": "Latvia Lauki Parcels",
+          "bbox": [
+            20.8382,
+            55.6322,
+            28.4252,
+            58.0439
+          ]
+        },
+        {
+          "id": "nl",
+          "title": "BRP Crop Field Boundaries for The Netherlands (CAP-based)",
+          "bbox": [
+            3.2576,
+            50.7343,
+            7.2381,
+            53.4948
+          ]
+        },
+        {
+          "id": "nl_block",
+          "title": "Field blocks for The Netherlands",
+          "bbox": [
+            3.2579,
+            50.7343,
+            7.2378,
+            53.4878
+          ]
+        },
+        {
+          "id": "nz",
+          "title": "Irrigated land area",
+          "bbox": [
+            167.6265,
+            -46.3313,
+            178.8751,
+            -34.7804
+          ]
+        },
+        {
+          "id": "pl",
+          "title": "Field boundaries for Poland",
+          "bbox": [
+            14.1279,
+            49.0514,
+            24.1451,
+            54.833
+          ]
+        },
+        {
+          "id": "pl_block",
+          "title": "Field blocks for Poland",
+          "bbox": [
+            14.125,
+            49.0129,
+            24.1458,
+            54.8353
+          ]
+        },
+        {
+          "id": "pt",
+          "title": "Field boundaries for Portugal",
+          "bbox": [
+            -31.2665,
+            32.6348,
+            -6.1731,
+            42.1514
+          ]
+        },
+        {
+          "id": "se",
+          "title": "Swedish Crop Fields (Jordbruksskiften)",
+          "bbox": [
+            9.2413,
+            55.1742,
+            25.2814,
+            68.916
+          ]
+        },
+        {
+          "id": "si",
+          "title": "Slovenia Crop Fields",
+          "bbox": [
+            13.3914,
+            45.4117,
+            16.608,
+            46.8698
+          ]
+        },
+        {
+          "id": "sk",
+          "title": "Slovakia Agricultural Land Identification System",
+          "bbox": [
+            16.6656,
+            47.649,
+            22.5844,
+            49.6991
+          ]
+        },
+        {
+          "id": "us_usda_cropland",
+          "title": "U.S. Department of Agriculture Crop Sequence Boundaries",
+          "bbox": [
+            -127.8221,
+            23.2521,
+            -65.3956,
+            48.1831
           ]
         }
       ]
