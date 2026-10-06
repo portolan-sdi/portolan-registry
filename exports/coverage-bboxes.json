@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-06T22:11:29.192774+00:00",
+  "generated": "2026-10-06T22:54:43.003455+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-10-06T22:11:29.192774+00:00",
+  "registry_generated": "2026-10-06T22:54:43.003455+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -48677,6 +48677,42 @@
             50.3227,
             9.4616,
             52.5315
+          ]
+        }
+      ]
+    },
+    {
+      "id": "oam-portolan",
+      "collection_count": 3,
+      "collections": [
+        {
+          "id": "oam-cc-by-4-0",
+          "title": "OpenAerialMap imagery, CC BY 4.0",
+          "bbox": [
+            -175.5176,
+            -85.5618,
+            178.5786,
+            90.0
+          ]
+        },
+        {
+          "id": "oam-cc-by-nc-4-0",
+          "title": "OpenAerialMap imagery, CC BY-NC 4.0",
+          "bbox": [
+            -175.2685,
+            -70.6133,
+            174.7396,
+            62.0939
+          ]
+        },
+        {
+          "id": "oam-cc-by-sa-4-0",
+          "title": "OpenAerialMap imagery, CC BY-SA 4.0",
+          "bbox": [
+            -123.2372,
+            -35.7003,
+            147.4287,
+            57.8795
           ]
         }
       ]
