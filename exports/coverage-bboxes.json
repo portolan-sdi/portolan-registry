@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-06T22:54:43.003455+00:00",
+  "generated": "2026-10-07T12:42:36.730802+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-10-06T22:54:43.003455+00:00",
+  "registry_generated": "2026-10-07T12:42:36.730802+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -42976,6 +42976,16 @@
           ]
         },
         {
+          "id": "boundaries/civil-parishes",
+          "title": "Civil Parishes - National Statutory Boundaries - 2019 - Generalised 20m",
+          "bbox": [
+            -9.7416,
+            51.5378,
+            -6.0209,
+            55.1488
+          ]
+        },
+        {
           "id": "boundaries/constituencies",
           "title": "Constituency Boundaries - Generalised 20m - National Electoral Boundaries - 2017",
           "bbox": [
@@ -42996,6 +43006,16 @@
           ]
         },
         {
+          "id": "boundaries/electoral-divisions",
+          "title": "Electoral Divisions - National Statutory Boundaries - 2019 - Generalised 20m",
+          "bbox": [
+            -10.663,
+            51.4199,
+            -5.9963,
+            55.4464
+          ]
+        },
+        {
           "id": "boundaries/gaeltacht-areas",
           "title": "Gaeltacht Boundaries Generalised 20m - National Administrative Boundaries - 2015",
           "bbox": [
@@ -43003,6 +43023,16 @@
             51.4199,
             -6.7032,
             55.279
+          ]
+        },
+        {
+          "id": "boundaries/local-electoral-areas",
+          "title": "Local Electoral Areas - National Statutory Boundaries - 2019 - Generalised 20m",
+          "bbox": [
+            -10.6628,
+            51.4199,
+            -5.9963,
+            55.4464
           ]
         },
         {
@@ -43023,36 +43053,6 @@
             51.4199,
             -5.9963,
             55.4469
-          ]
-        },
-        {
-          "id": "boundaries/civil-parishes",
-          "title": "Civil Parishes - National Statutory Boundaries - 2019 - Generalised 20m",
-          "bbox": [
-            -9.7416,
-            51.5378,
-            -6.0209,
-            55.1488
-          ]
-        },
-        {
-          "id": "boundaries/electoral-divisions",
-          "title": "Electoral Divisions - National Statutory Boundaries - 2019 - Generalised 20m",
-          "bbox": [
-            -10.663,
-            51.4199,
-            -5.9963,
-            55.4464
-          ]
-        },
-        {
-          "id": "boundaries/local-electoral-areas",
-          "title": "Local Electoral Areas - National Statutory Boundaries - 2019 - Generalised 20m",
-          "bbox": [
-            -10.6628,
-            51.4199,
-            -5.9963,
-            55.4464
           ]
         },
         {
@@ -43086,16 +43086,6 @@
           ]
         },
         {
-          "id": "environment/radon-risk-map",
-          "title": "Radon Risk Map of Ireland",
-          "bbox": [
-            -10.6562,
-            51.4235,
-            -5.9989,
-            55.384
-          ]
-        },
-        {
           "id": "environment/licensed-facilities",
           "title": "IPPC, IPC and IEL Facilities",
           "bbox": [
@@ -43103,6 +43093,16 @@
             51.5588,
             -6.0364,
             55.1259
+          ]
+        },
+        {
+          "id": "environment/radon-risk-map",
+          "title": "Radon Risk Map of Ireland",
+          "bbox": [
+            -10.6562,
+            51.4235,
+            -5.9989,
+            55.384
           ]
         },
         {
@@ -43186,20 +43186,20 @@
           ]
         },
         {
-          "id": "statistical/cso-small-areas",
-          "title": "CSO Small Areas - National Statistical Boundaries - 2022 - Generalised 20m",
+          "id": "statistical/cso-local-electoral-areas",
+          "title": "CSO Local Electoral Areas - National Statistical Boundaries - 2022 - Generalised 20m",
           "bbox": [
-            -10.6628,
+            -10.663,
             51.4199,
             -5.9963,
             55.4466
           ]
         },
         {
-          "id": "statistical/cso-local-electoral-areas",
-          "title": "CSO Local Electoral Areas - National Statistical Boundaries - 2022 - Generalised 20m",
+          "id": "statistical/cso-small-areas",
+          "title": "CSO Small Areas - National Statistical Boundaries - 2022 - Generalised 20m",
           "bbox": [
-            -10.663,
+            -10.6628,
             51.4199,
             -5.9963,
             55.4466
@@ -43246,6 +43246,16 @@
           ]
         },
         {
+          "id": "water/bathing-water-areas",
+          "title": "Bathing Water Areas",
+          "bbox": [
+            -10.367,
+            51.4657,
+            -6.0114,
+            55.2968
+          ]
+        },
+        {
           "id": "water/coastal-waterbodies",
           "title": "Coastal Waterbodies - Cycle 3",
           "bbox": [
@@ -43283,16 +43293,6 @@
             51.4504,
             -6.0056,
             55.3801
-          ]
-        },
-        {
-          "id": "water/bathing-water-areas",
-          "title": "Bathing Water Areas",
-          "bbox": [
-            -10.367,
-            51.4657,
-            -6.0114,
-            55.2968
           ]
         }
       ]
