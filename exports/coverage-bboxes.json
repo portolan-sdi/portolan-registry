@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-07T12:42:36.730802+00:00",
+  "generated": "2026-10-08T12:52:05.452826+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-10-07T12:42:36.730802+00:00",
+  "registry_generated": "2026-10-08T12:52:05.452826+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -40153,29 +40153,29 @@
           "id": "ftw-s2-2017",
           "title": "FTW Global \u2014 Field Boundaries 2017 (GeoParquet)",
           "bbox": [
-            -175.9032,
-            -46.9455,
-            179.8107,
-            65.8204
+            -175.3499,
+            -46.9056,
+            179.7758,
+            65.8206
           ]
         },
         {
           "id": "ftw-s2-2018",
           "title": "FTW Global \u2014 Field Boundaries 2018 (GeoParquet)",
           "bbox": [
-            -175.8273,
-            -46.953,
-            179.8066,
-            65.8215
+            -175.3516,
+            -46.8366,
+            179.8118,
+            65.8206
           ]
         },
         {
           "id": "ftw-s2-2019",
           "title": "FTW Global \u2014 Field Boundaries 2019 (GeoParquet)",
           "bbox": [
-            -175.9522,
-            -46.9509,
-            179.8114,
+            -175.352,
+            -46.8353,
+            179.8118,
             65.8206
           ]
         },
@@ -40184,19 +40184,19 @@
           "title": "FTW Global \u2014 Field Boundaries 2020 (GeoParquet)",
           "bbox": [
             -175.352,
-            -46.9305,
-            179.8006,
-            65.8215
+            -46.9056,
+            179.8026,
+            65.8189
           ]
         },
         {
           "id": "ftw-s2-2021",
           "title": "FTW Global \u2014 Field Boundaries 2021 (GeoParquet)",
           "bbox": [
-            -176.0391,
-            -46.9539,
-            179.7849,
-            65.8182
+            -175.3508,
+            -46.9057,
+            179.7955,
+            65.8189
           ]
         },
         {
@@ -40204,9 +40204,9 @@
           "title": "FTW Global \u2014 Field Boundaries 2022 (GeoParquet)",
           "bbox": [
             -175.349,
-            -46.9536,
+            -46.8675,
             179.7939,
-            65.8215
+            65.8206
           ]
         },
         {
@@ -40214,8 +40214,8 @@
           "title": "FTW Global \u2014 Field Boundaries 2023 (GeoParquet)",
           "bbox": [
             -175.349,
-            -46.9433,
-            179.8023,
+            -46.9056,
+            179.7856,
             65.8206
           ]
         },
@@ -40223,10 +40223,10 @@
           "id": "ftw-s2-2024",
           "title": "FTW Global \u2014 Field Boundaries 2024 (GeoParquet)",
           "bbox": [
-            -176.0355,
-            -46.9517,
-            179.812,
-            65.8215
+            -175.3497,
+            -46.8373,
+            179.793,
+            65.8206
           ]
         },
         {
@@ -40234,9 +40234,9 @@
           "title": "FTW Global \u2014 Field Boundaries 2025 (GeoParquet)",
           "bbox": [
             -175.3499,
-            -46.9536,
-            179.8011,
-            65.8101
+            -46.745,
+            179.7927,
+            65.8206
           ]
         },
         {
@@ -41729,7 +41729,7 @@
     },
     {
       "id": "harmonized-field-data",
-      "collection_count": 67,
+      "collection_count": 68,
       "collections": [
         {
           "id": "at",
@@ -42389,6 +42389,16 @@
             47.649,
             22.5844,
             49.6991
+          ]
+        },
+        {
+          "id": "us_ca_scm",
+          "title": "California (US) Statewide Crop Mapping",
+          "bbox": [
+            -124.3753,
+            32.5447,
+            -114.4916,
+            42.0056
           ]
         },
         {
@@ -44286,26 +44296,6 @@
       "collection_count": 35,
       "collections": [
         {
-          "id": "ambiente/corredor-verde",
-          "title": "Corredor Verde",
-          "bbox": [
-            -9.2298,
-            38.6914,
-            -9.0896,
-            38.7968
-          ]
-        },
-        {
-          "id": "ambiente/grandes-parques-jardins",
-          "title": "Grandes parques e Jardins de Lisboa",
-          "bbox": [
-            -9.2267,
-            38.6917,
-            -9.0897,
-            38.7967
-          ]
-        },
-        {
           "id": "ambiente/arvoredo",
           "title": "Arvoredo",
           "bbox": [
@@ -44313,6 +44303,16 @@
             38.6919,
             -9.091,
             38.7962
+          ]
+        },
+        {
+          "id": "ambiente/corredor-verde",
+          "title": "Corredor Verde",
+          "bbox": [
+            -9.2298,
+            38.6914,
+            -9.0896,
+            38.7968
           ]
         },
         {
@@ -44326,6 +44326,16 @@
           ]
         },
         {
+          "id": "ambiente/grandes-parques-jardins",
+          "title": "Grandes parques e Jardins de Lisboa",
+          "bbox": [
+            -9.2267,
+            38.6917,
+            -9.0897,
+            38.7967
+          ]
+        },
+        {
           "id": "ambiente/hortas-urbanas",
           "title": "Hortas Urbanas",
           "bbox": [
@@ -44333,16 +44343,6 @@
             38.7052,
             -9.1028,
             38.794
-          ]
-        },
-        {
-          "id": "cartografia/toponimia",
-          "title": "Topon\u00edmia de Lisboa",
-          "bbox": [
-            -9.2316,
-            38.6924,
-            -9.0897,
-            38.7963
           ]
         },
         {
@@ -44376,13 +44376,13 @@
           ]
         },
         {
-          "id": "ciclavel/zonas-30",
-          "title": "Zonas 30",
+          "id": "cartografia/toponimia",
+          "title": "Topon\u00edmia de Lisboa",
           "bbox": [
-            -9.2003,
-            38.734,
-            -9.1311,
-            38.7575
+            -9.2316,
+            38.6924,
+            -9.0897,
+            38.7963
           ]
         },
         {
@@ -44406,6 +44406,16 @@
           ]
         },
         {
+          "id": "ciclavel/zonas-30",
+          "title": "Zonas 30",
+          "bbox": [
+            -9.2003,
+            38.734,
+            -9.1311,
+            38.7575
+          ]
+        },
+        {
           "id": "ciclavel/zonas-acesso-automovel-condicionado",
           "title": "Zonas de Acesso Autom\u00f3vel Condicionado (ZAAC)",
           "bbox": [
@@ -44413,16 +44423,6 @@
             38.7068,
             -9.125,
             38.7167
-          ]
-        },
-        {
-          "id": "equipamentos/instalacoes-desportivas",
-          "title": "Instala\u00e7\u00f5es Desportivas",
-          "bbox": [
-            -9.2243,
-            38.6931,
-            -9.0913,
-            38.7949
           ]
         },
         {
@@ -44436,6 +44436,16 @@
           ]
         },
         {
+          "id": "equipamentos/instalacoes-desportivas",
+          "title": "Instala\u00e7\u00f5es Desportivas",
+          "bbox": [
+            -9.2243,
+            38.6931,
+            -9.0913,
+            38.7949
+          ]
+        },
+        {
           "id": "equipamentos/museus",
           "title": "Museus",
           "bbox": [
@@ -44446,16 +44456,6 @@
           ]
         },
         {
-          "id": "mobilidade/rede-ferroviaria",
-          "title": "Rede Ferrovi\u00e1ria",
-          "bbox": [
-            -9.2293,
-            38.6935,
-            -9.0914,
-            38.8116
-          ]
-        },
-        {
           "id": "mobilidade/cruzamentos-semaforizados",
           "title": "Cruzamentos Semaforizados",
           "bbox": [
@@ -44463,6 +44463,16 @@
             38.6934,
             -9.0947,
             38.7846
+          ]
+        },
+        {
+          "id": "mobilidade/rede-ferroviaria",
+          "title": "Rede Ferrovi\u00e1ria",
+          "bbox": [
+            -9.2293,
+            38.6935,
+            -9.0914,
+            38.8116
           ]
         },
         {
@@ -44496,16 +44506,6 @@
           ]
         },
         {
-          "id": "patrimonio/monumentos-nacionais",
-          "title": "Monumentos Nacionais",
-          "bbox": [
-            -9.2159,
-            38.6916,
-            -9.1139,
-            38.7663
-          ]
-        },
-        {
           "id": "patrimonio/estatuaria",
           "title": "Estatu\u00e1ria",
           "bbox": [
@@ -44523,6 +44523,36 @@
             38.6936,
             -9.095,
             38.7863
+          ]
+        },
+        {
+          "id": "patrimonio/monumentos-nacionais",
+          "title": "Monumentos Nacionais",
+          "bbox": [
+            -9.2159,
+            38.6916,
+            -9.1139,
+            38.7663
+          ]
+        },
+        {
+          "id": "planeamento/planos-pormenor",
+          "title": "Limite de Planos de Pormenor",
+          "bbox": [
+            -9.2272,
+            38.6936,
+            -9.0897,
+            38.7969
+          ]
+        },
+        {
+          "id": "planeamento/planos-urbanizacao",
+          "title": "Limite de Planos de Urbaniza\u00e7\u00e3o",
+          "bbox": [
+            -9.1979,
+            38.6979,
+            -9.0879,
+            38.7971
           ]
         },
         {
@@ -44566,16 +44596,6 @@
           ]
         },
         {
-          "id": "transportes/estacoes-metro",
-          "title": "Esta\u00e7\u00f5es de Metro",
-          "bbox": [
-            -9.2239,
-            38.7061,
-            -9.0998,
-            38.7935
-          ]
-        },
-        {
           "id": "transportes/elevadores-ascensores",
           "title": "Elevadores e Ascensores",
           "bbox": [
@@ -44596,6 +44616,16 @@
           ]
         },
         {
+          "id": "transportes/estacoes-metro",
+          "title": "Esta\u00e7\u00f5es de Metro",
+          "bbox": [
+            -9.2239,
+            38.7061,
+            -9.0998,
+            38.7935
+          ]
+        },
+        {
           "id": "transportes/interface-fluvial",
           "title": "Interface Fluvial",
           "bbox": [
@@ -44613,26 +44643,6 @@
             38.6935,
             -9.0925,
             38.7861
-          ]
-        },
-        {
-          "id": "planeamento/planos-pormenor",
-          "title": "Limite de Planos de Pormenor",
-          "bbox": [
-            -9.2272,
-            38.6936,
-            -9.0897,
-            38.7969
-          ]
-        },
-        {
-          "id": "planeamento/planos-urbanizacao",
-          "title": "Limite de Planos de Urbaniza\u00e7\u00e3o",
-          "bbox": [
-            -9.1979,
-            38.6979,
-            -9.0879,
-            38.7971
           ]
         }
       ]
@@ -54023,7 +54033,7 @@
       "collections": [
         {
           "id": "hydroatlas/basinatlas",
-          "title": "Basinatlas",
+          "title": "BasinATLAS",
           "bbox": [
             -180.0,
             -55.9875,
@@ -54033,7 +54043,7 @@
         },
         {
           "id": "hydroatlas/lakeatlas",
-          "title": "Lakeatlas",
+          "title": "LakeATLAS",
           "bbox": [
             -180.0,
             -55.8651,
@@ -54043,7 +54053,7 @@
         },
         {
           "id": "hydroatlas/lakeatlas/lakeatlas-pour-points",
-          "title": "Lakeatlas Pour Points",
+          "title": "LakeATLAS Pour Points",
           "bbox": [
             -179.9925,
             -55.8609,
@@ -54053,7 +54063,7 @@
         },
         {
           "id": "hydroatlas/riveratlas",
-          "title": "Riveratlas",
+          "title": "RiverATLAS",
           "bbox": [
             -179.9979,
             -55.8771,
