@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-08T12:52:05.452826+00:00",
+  "generated": "2026-10-08T17:05:03.763077+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-10-08T12:52:05.452826+00:00",
+  "registry_generated": "2026-10-08T17:05:03.763077+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -40363,6 +40363,312 @@
             -89.9,
             180.0,
             83.6274
+          ]
+        }
+      ]
+    },
+    {
+      "id": "geoconnex-geoparquet",
+      "collection_count": 30,
+      "collections": [
+        {
+          "id": "mainstems",
+          "title": "Rivers: mainstems, head to outlet",
+          "bbox": [
+            -124.7244,
+            25.034,
+            -66.6286,
+            52.1174
+          ]
+        },
+        {
+          "id": "gages",
+          "title": "Stream gages",
+          "bbox": [
+            -176.715,
+            -14.3359,
+            179.9098,
+            71.3874
+          ]
+        },
+        {
+          "id": "dams",
+          "title": "Dams",
+          "bbox": [
+            -176.6873,
+            13.3605,
+            -65.672,
+            71.2667
+          ]
+        },
+        {
+          "id": "hu02",
+          "title": "Watersheds HU02 (regions)",
+          "bbox": [
+            -179.2295,
+            -14.4244,
+            179.8565,
+            71.4395
+          ]
+        },
+        {
+          "id": "hu04",
+          "title": "Watersheds HU04 (subregions)",
+          "bbox": [
+            -179.2295,
+            -14.4244,
+            179.8565,
+            71.4395
+          ]
+        },
+        {
+          "id": "hu06",
+          "title": "Watersheds HU06 (basins)",
+          "bbox": [
+            -179.2295,
+            -14.4244,
+            179.8565,
+            71.4395
+          ]
+        },
+        {
+          "id": "hu08",
+          "title": "Watersheds HU08 (subbasins)",
+          "bbox": [
+            -179.2295,
+            -14.4244,
+            179.8565,
+            71.4395
+          ]
+        },
+        {
+          "id": "hu10",
+          "title": "Watersheds HU10",
+          "bbox": [
+            -179.2295,
+            -14.4244,
+            179.8565,
+            71.4395
+          ]
+        },
+        {
+          "id": "hu12",
+          "title": "Watersheds HU12 (subwatersheds)",
+          "bbox": [
+            -179.2297,
+            -14.6102,
+            179.8567,
+            71.4396
+          ]
+        },
+        {
+          "id": "principal_aquifers",
+          "title": "Principal aquifers",
+          "bbox": [
+            -160.2349,
+            17.6866,
+            -64.7194,
+            49.3856
+          ]
+        },
+        {
+          "id": "national_aquifers",
+          "title": "National aquifers",
+          "bbox": [
+            -160.2349,
+            17.6866,
+            -64.7194,
+            49.3856
+          ]
+        },
+        {
+          "id": "hydrogeologic_regions",
+          "title": "Secondary hydrogeologic regions",
+          "bbox": [
+            -124.7311,
+            24.5963,
+            -66.9606,
+            49.3856
+          ]
+        },
+        {
+          "id": "water_systems",
+          "title": "Public water systems",
+          "bbox": [
+            -174.3233,
+            19.064,
+            173.033,
+            71.3402
+          ]
+        },
+        {
+          "id": "epa_wqp",
+          "title": "Water Quality Portal sites",
+          "bbox": [
+            -180.0,
+            -90.0,
+            179.9098,
+            90.0
+          ]
+        },
+        {
+          "id": "usgs_monitoring_locations",
+          "title": "USGS monitoring locations",
+          "bbox": [
+            -176.715,
+            -14.3478,
+            179.9098,
+            71.3874
+          ]
+        },
+        {
+          "id": "usgs_national_geologic_map",
+          "title": "National Geologic Map units",
+          "bbox": [
+            -125.3812,
+            24.3963,
+            -66.8854,
+            49.3845
+          ]
+        },
+        {
+          "id": "usgs_gnis",
+          "title": "GNIS names",
+          "bbox": [
+            -180.0,
+            -14.5475,
+            179.9833,
+            71.4175
+          ]
+        },
+        {
+          "id": "usgs_sciencebase",
+          "title": "ScienceBase items",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "ca_gage_assessment_gages",
+          "title": "California stream gage assessment",
+          "bbox": [
+            -124.2945,
+            32.5515,
+            -114.1395,
+            42.0061
+          ]
+        },
+        {
+          "id": "iow_state_gages_ndwr",
+          "title": "Nevada state gages",
+          "bbox": [
+            -120.0026,
+            36.1513,
+            -114.0221,
+            41.9969
+          ]
+        },
+        {
+          "id": "utah_water_systems",
+          "title": "Utah water systems",
+          "bbox": [
+            -114.0529,
+            36.9396,
+            -109.0699,
+            42.6815
+          ]
+        },
+        {
+          "id": "iow_state_gages_cdss",
+          "title": "Colorado state gages",
+          "bbox": [
+            -109.052,
+            31.0849,
+            -102.0592,
+            40.9936
+          ]
+        },
+        {
+          "id": "iow_state_gages_wyseo",
+          "title": "Wyoming state gages",
+          "bbox": [
+            -111.2533,
+            40.8351,
+            -104.0469,
+            45.3068
+          ]
+        },
+        {
+          "id": "wwdh_snotel",
+          "title": "SNOTEL stations",
+          "bbox": [
+            -164.9247,
+            32.9234,
+            -103.7876,
+            70.2806
+          ]
+        },
+        {
+          "id": "wwdh_usbr_rise",
+          "title": "Bureau of Reclamation locations",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "wwdh_usace_access_to_water",
+          "title": "USACE reservoirs",
+          "bbox": [
+            -147.1799,
+            26.7218,
+            -71.5181,
+            64.7925
+          ]
+        },
+        {
+          "id": "wwdh_awdb_forecasts",
+          "title": "NRCS water supply forecast points",
+          "bbox": [
+            -158.1138,
+            32.6463,
+            -103.4821,
+            62.5204
+          ]
+        },
+        {
+          "id": "wwdh_noaa_rfc",
+          "title": "NOAA River Forecast Center points",
+          "bbox": [
+            -123.4931,
+            32.6481,
+            -103.2014,
+            52.05
+          ]
+        },
+        {
+          "id": "iow_state_gages_mtdnrc",
+          "title": "Montana state gages",
+          "bbox": [
+            -114.5286,
+            44.5881,
+            112.6777,
+            48.9552
+          ]
+        },
+        {
+          "id": "iow_state_gages_nednr",
+          "title": "Nebraska state gages",
+          "bbox": [
+            -104.0576,
+            40.0141,
+            -96.4685,
+            42.9223
           ]
         }
       ]
