@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-08T17:05:03.763077+00:00",
+  "generated": "2026-10-09T12:37:34.667972+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-10-08T17:05:03.763077+00:00",
+  "registry_generated": "2026-10-09T12:37:34.667972+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -2388,16 +2388,6 @@
           ]
         },
         {
-          "id": "kauffaelle/ein-und-zweifamilienhaeuser-2024",
-          "title": "Kauff\u00e4lle 2024 \u2013 Ein- und Zweifamilienh\u00e4user",
-          "bbox": [
-            13.1142,
-            52.3741,
-            13.7236,
-            52.6487
-          ]
-        },
-        {
           "id": "kauffaelle/ein-und-zweifamilienhaeuser-2025",
           "title": "Kauff\u00e4lle 2025 \u2013 Ein- und Zweifamilienh\u00e4user",
           "bbox": [
@@ -2525,6 +2515,16 @@
             52.4193,
             13.4568,
             52.6227
+          ]
+        },
+        {
+          "id": "kauffaelle/ein-und-zweifamilienhaeuser-2024",
+          "title": "Kauff\u00e4lle 2024 \u2013 Ein- und Zweifamilienh\u00e4user",
+          "bbox": [
+            13.1142,
+            52.3741,
+            13.7236,
+            52.6487
           ]
         },
         {
@@ -42035,7 +42035,7 @@
     },
     {
       "id": "harmonized-field-data",
-      "collection_count": 68,
+      "collection_count": 69,
       "collections": [
         {
           "id": "at",
@@ -42085,6 +42085,16 @@
             41.1891,
             28.6233,
             44.2802
+          ]
+        },
+        {
+          "id": "br_conab",
+          "title": "Brazil Crop Fields (CONAB)",
+          "bbox": [
+            -57.573,
+            -33.6734,
+            -39.0188,
+            -6.3783
           ]
         },
         {
