@@ -184,6 +184,85 @@ class TestDeletedEntry:
         assert validate_entries.deleted_entries(changed) == []
 
 
+class TestCurrentEntryChange:
+    """Only a new entry passes without a maintainer approval."""
+
+    @pytest.fixture(autouse=True)
+    def no_crawl(self, monkeypatch):
+        monkeypatch.setattr(validate_entries, "check_entry", lambda *a, **k: [])
+
+    def run(self, tmp_path, changed, added, approved=False):
+        changed_file = tmp_path / "changed.txt"
+        changed_file.write_text("".join(f"{p}\n" for p in changed))
+        added_file = tmp_path / "added.txt"
+        added_file.write_text("".join(f"{p}\n" for p in added))
+        return validate_entries.collect_errors(
+            changed_file=changed_file,
+            catalog_dir=tmp_path,
+            added_file=added_file,
+            maintainer_approved=approved,
+        )
+
+    def test_a_new_entry_passes(self, tmp_path):
+        new = entry_file(tmp_path, "new.yaml", f"url: {ROOT}\n")
+        assert self.run(tmp_path, [new], [new]) == []
+
+    def test_an_edited_entry_fails(self, tmp_path):
+        current = entry_file(tmp_path, "cadastral.yaml", f"url: {ROOT}\n")
+        errors = self.run(tmp_path, [current], [])
+        assert len(errors) == 1
+        assert "cadastral.yaml" in errors[0]
+        assert "changes a current entry" in errors[0]
+        assert "maintainer" in errors[0]
+
+    def test_an_edit_fails_beside_a_new_entry(self, tmp_path):
+        new = entry_file(tmp_path, "new.yaml", f"url: {ROOT}\n")
+        current = entry_file(tmp_path, "cadastral.yaml", f"url: {ROOT}\n")
+        errors = self.run(tmp_path, [new, current], [new])
+        assert len(errors) == 1
+        assert "cadastral.yaml" in errors[0]
+
+    def test_a_relative_listing_matches_an_absolute_one(self, tmp_path, monkeypatch):
+        """git prints relative paths. The match must not depend on the form."""
+        monkeypatch.chdir(tmp_path)
+        entry_file(tmp_path, "new.yaml", f"url: {ROOT}\n")
+        assert self.run(tmp_path, ["new.yaml"], [tmp_path / "new.yaml"]) == []
+
+    def test_an_approval_lets_an_edit_pass(self, tmp_path):
+        current = entry_file(tmp_path, "cadastral.yaml", f"url: {ROOT}\n")
+        assert self.run(tmp_path, [current], [], approved=True) == []
+
+    def test_an_approval_lets_a_deletion_pass(self, tmp_path):
+        gone = tmp_path / "cadastral.yaml"
+        assert self.run(tmp_path, [gone], [], approved=True) == []
+
+    def test_an_approved_edit_is_still_validated(self, tmp_path, monkeypatch):
+        """The approval waives the review rule, not the entry checks."""
+        current = entry_file(tmp_path, "cadastral.yaml", f"url: {ROOT}\n")
+        monkeypatch.setattr(
+            validate_entries, "check_entry", lambda path, **k: [f"{path}: bad"]
+        )
+        errors = self.run(tmp_path, [current], [], approved=True)
+        assert errors == [f"{current}: bad"]
+
+    def test_main_passes_the_new_flags_through(self, tmp_path):
+        current = entry_file(tmp_path, "cadastral.yaml", f"url: {ROOT}\n")
+        changed = tmp_path / "changed.txt"
+        changed.write_text(f"{current}\n")
+        added = tmp_path / "added.txt"
+        added.write_text("")
+        args = [
+            "--changed-file",
+            str(changed),
+            "--added-file",
+            str(added),
+            "--catalog-dir",
+            str(tmp_path),
+        ]
+        assert validate_entries.main(args) == 1
+        assert validate_entries.main([*args, "--maintainer-approved"]) == 0
+
+
 class TestUnexpectedFailure:
     def test_a_crash_becomes_an_error_rather_than_a_traceback(
         self, tmp_path, monkeypatch

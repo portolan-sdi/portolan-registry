@@ -17,7 +17,11 @@ permissions:
 
 jobs:
   report:
-    if: github.event.workflow_run.event == 'pull_request'
+    # A review starts a new gate run too. Report that outcome, so the comment
+    # reflects the approval.
+    if: >
+      github.event.workflow_run.event == 'pull_request' ||
+      github.event.workflow_run.event == 'pull_request_review'
     runs-on: ubuntu-latest
     permissions:
       actions: read

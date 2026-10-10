@@ -29,11 +29,21 @@ from registry.fetch import HttpFetcher
 from registry.report import log
 
 
+APPROVAL_HINT = (
+    "A maintainer with the admin or maintain role must approve the head "
+    "commit of this pull request."
+)
+
+
+def read_paths(listing: Path) -> list[Path]:
+    """The paths in `listing`, one per line. Blank lines do not count."""
+    with open(listing) as f:
+        return [Path(line.strip()) for line in f if line.strip()]
+
+
 def changed_entries(changed_file: Path) -> list[Path]:
     """Existing paths listed in `changed_file`."""
-    with open(changed_file) as f:
-        paths = [Path(line.strip()) for line in f if line.strip()]
-    return [p for p in paths if p.exists()]
+    return [p for p in read_paths(changed_file) if p.exists()]
 
 
 def deleted_entries(changed_file: Path) -> list[str]:
@@ -43,14 +53,26 @@ def deleted_entries(changed_file: Path) -> list[str]:
     a deletion leaves nothing to validate, and an empty run reports success.
     A catalog leaves the registry through `status: removed` in the export.
     """
-    with open(changed_file) as f:
-        paths = [Path(line.strip()) for line in f if line.strip()]
     return [
         f"{p}: Deleting an entry is not allowed. Keep the file. A catalog "
         "leaves the registry through 'status: removed' in the export, which "
-        "nightly re-validation sets. A maintainer must review any other removal."
-        for p in paths
+        f"nightly re-validation sets. {APPROVAL_HINT}"
+        for p in read_paths(changed_file)
         if not p.exists()
+    ]
+
+
+def modified_entries(changed_file: Path, added_file: Path) -> list[str]:
+    """One error for each current entry that the pull request changes.
+
+    An edit can point another party's catalog at a new URL or address. So
+    only a new file passes without review. `added_file` lists the new files.
+    """
+    added = {p.resolve() for p in read_paths(added_file)}
+    return [
+        f"{p}: This pull request changes a current entry. {APPROVAL_HINT}"
+        for p in changed_entries(changed_file)
+        if p.resolve() not in added
     ]
 
 
@@ -123,12 +145,22 @@ def check_entry(
     return []
 
 
-def collect_errors(*, changed_file: Path, catalog_dir: Path) -> list[str]:
+def collect_errors(
+    *,
+    changed_file: Path,
+    catalog_dir: Path,
+    added_file: Path | None = None,
+    maintainer_approved: bool = False,
+) -> list[str]:
     """Validate every changed entry. Returns error strings, and never raises.
 
     A crash would leave the notifier with no report to read, and the submitter
     with a red check and no explanation. So an unexpected failure becomes an
     error string like any other. The traceback still reaches the run log.
+
+    With `added_file`, a deleted or edited entry fails unless
+    `maintainer_approved` is set. Without it, only a deletion fails. CI always
+    passes `added_file`.
     """
     try:
         state = load_state(EXPORT_PATH)
@@ -139,7 +171,15 @@ def collect_errors(*, changed_file: Path, catalog_dir: Path) -> list[str]:
         }
 
         fetcher = HttpFetcher()
-        errors: list[str] = deleted_entries(changed_file)
+        errors: list[str] = []
+        if maintainer_approved:
+            log(
+                "A maintainer approved the head commit. Changes to current entries pass."
+            )
+        else:
+            errors.extend(deleted_entries(changed_file))
+            if added_file is not None:
+                errors.extend(modified_entries(changed_file, added_file))
         for path in changed_entries(changed_file):
             errors.extend(
                 check_entry(
@@ -165,6 +205,16 @@ def main(argv: list[str] | None = None) -> int:
         default="changed.txt",
         help="File listing changed paths, one per line.",
     )
+    parser.add_argument(
+        "--added-file",
+        help="File listing the new paths, one per line. "
+        "Any other changed entry then needs a maintainer approval.",
+    )
+    parser.add_argument(
+        "--maintainer-approved",
+        action="store_true",
+        help="A maintainer approved the head commit. Deleted and edited entries pass.",
+    )
     parser.add_argument("--catalog-dir", default=str(CATALOG_DIR))
     parser.add_argument(
         "--report",
@@ -175,6 +225,8 @@ def main(argv: list[str] | None = None) -> int:
     errors = collect_errors(
         changed_file=Path(args.changed_file),
         catalog_dir=Path(args.catalog_dir),
+        added_file=Path(args.added_file) if args.added_file else None,
+        maintainer_approved=args.maintainer_approved,
     )
 
     if args.report:
