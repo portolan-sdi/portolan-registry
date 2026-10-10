@@ -8,6 +8,9 @@ on:
   workflow_dispatch:
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   validate:
     runs-on: ubuntu-latest
@@ -23,7 +26,9 @@ jobs:
       - name: Get changed catalogs
         id: changed
         run: |
-          git diff --name-only origin/${{ github.base_ref }}...HEAD -- 'catalogs/*.yaml' > changed.txt
+          # --no-renames lists a renamed entry under its old path too.
+          # The gate then sees the old path as a deletion and fails it.
+          git diff --name-only --no-renames origin/${{ github.base_ref }}...HEAD -- 'catalogs/*.yaml' > changed.txt
           echo "Changed catalog files:"
           cat changed.txt
           echo "count=$(wc -l < changed.txt | tr -d ' ')" >> "$GITHUB_OUTPUT"

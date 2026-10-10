@@ -45,13 +45,33 @@ jobs:
               repo: context.repo.repo,
               pull_number: number
             });
+            // Only a new entry merges itself. An edit can point another
+            // party's catalog at a new URL or address, and a deletion
+            // leaves Validate Catalogs nothing to check. A catalog leaves
+            // the registry through `status: removed` in the export, never
+            // through a file deletion. A rename removes the old name, so
+            // the check reads `previous_filename` too.
+            const isEntry = name => /^catalogs\/[^/]+\.yaml$/.test(name || '');
+            const isExport = name => name === 'exports/catalogs.json'
+              || name === 'exports/coverage-bboxes.json';
+            const heldEntries = files.filter(
+              f => (isEntry(f.filename) || isEntry(f.previous_filename))
+                && f.status !== 'added'
+            );
+            if (heldEntries.length > 0) {
+              for (const f of heldEntries) {
+                console.log(`PR #${number}: ${f.filename} is ${f.status}, not added`);
+              }
+              console.log(`PR #${number} changes a current entry; leaving it for a human`);
+              return null;
+            }
             const generatedOnly = files.length > 0 && files.every(
-              f => /^catalogs\/[^/]+\.yaml$/.test(f.filename)
-                || f.filename === 'exports/catalogs.json'
-                || f.filename === 'exports/coverage-bboxes.json'
+              f => (isEntry(f.filename) && f.status === 'added')
+                || (isExport(f.filename)
+                  && ['added', 'modified'].includes(f.status))
             );
             if (!generatedOnly) {
-              console.log(`PR #${number} changes more than entries; leaving it`);
+              console.log(`PR #${number} changes more than entries; leaving it for a human`);
               return null;
             }
             return number;

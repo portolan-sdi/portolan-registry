@@ -76,7 +76,9 @@ class TestSubmitterAddress:
 
     def test_a_valid_address_reaches_the_crawl(self, tmp_path, tree):
         path = entry_file(
-            tmp_path, "cat.yaml", f"url: {ROOT}\nsubmitter_email: submitter@example.com\n"
+            tmp_path,
+            "cat.yaml",
+            f"url: {ROOT}\nsubmitter_email: submitter@example.com\n",
         )
         assert check(path, tree) == []
         assert ROOT in tree.calls
@@ -131,6 +133,55 @@ class TestReport:
         )
         assert code == 1
         assert json.loads(report.read_text())["ok"] is False
+
+
+class TestDeletedEntry:
+    """A deletion must fail the gate, not leave it nothing to check."""
+
+    def run(self, tmp_path, listed):
+        changed = tmp_path / "changed.txt"
+        changed.write_text("".join(f"{p}\n" for p in listed))
+        report = tmp_path / "report.json"
+        code = validate_entries.main(
+            [
+                "--changed-file",
+                str(changed),
+                "--catalog-dir",
+                str(tmp_path),
+                "--report",
+                str(report),
+            ]
+        )
+        return code, json.loads(report.read_text())
+
+    def test_a_deleted_entry_fails_the_gate(self, tmp_path):
+        code, report = self.run(tmp_path, [tmp_path / "cadastral.yaml"])
+        assert code == 1
+        assert report["ok"] is False
+        assert len(report["errors"]) == 1
+        assert "cadastral.yaml" in report["errors"][0]
+        assert "Deleting an entry is not allowed" in report["errors"][0]
+
+    def test_the_message_names_the_removal_path(self, tmp_path):
+        _, report = self.run(tmp_path, [tmp_path / "cadastral.yaml"])
+        assert "status: removed" in report["errors"][0]
+
+    def test_a_deletion_fails_beside_a_valid_entry(self, tmp_path, monkeypatch):
+        """A rename lists the old path as deleted and the new path as added."""
+        monkeypatch.setattr(validate_entries, "check_entry", lambda *a, **k: [])
+        entry_file(tmp_path, "new.yaml", f"url: {ROOT}\n")
+        code, report = self.run(
+            tmp_path, [tmp_path / "old.yaml", tmp_path / "new.yaml"]
+        )
+        assert code == 1
+        assert len(report["errors"]) == 1
+        assert "old.yaml" in report["errors"][0]
+
+    def test_deleted_entries_ignores_existing_paths(self, tmp_path):
+        present = entry_file(tmp_path, "cat.yaml", f"url: {ROOT}\n")
+        changed = tmp_path / "changed.txt"
+        changed.write_text(f"{present}\n\n")
+        assert validate_entries.deleted_entries(changed) == []
 
 
 class TestUnexpectedFailure:

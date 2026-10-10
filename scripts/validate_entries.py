@@ -36,6 +36,24 @@ def changed_entries(changed_file: Path) -> list[Path]:
     return [p for p in paths if p.exists()]
 
 
+def deleted_entries(changed_file: Path) -> list[str]:
+    """One error for each path in `changed_file` that no longer exists.
+
+    The gate lists every changed entry, deleted ones too. Without this check
+    a deletion leaves nothing to validate, and an empty run reports success.
+    A catalog leaves the registry through `status: removed` in the export.
+    """
+    with open(changed_file) as f:
+        paths = [Path(line.strip()) for line in f if line.strip()]
+    return [
+        f"{p}: Deleting an entry is not allowed. Keep the file. A catalog "
+        "leaves the registry through 'status: removed' in the export, which "
+        "nightly re-validation sets. A maintainer must review any other removal."
+        for p in paths
+        if not p.exists()
+    ]
+
+
 def check_entry(
     path: Path,
     *,
@@ -121,7 +139,7 @@ def collect_errors(*, changed_file: Path, catalog_dir: Path) -> list[str]:
         }
 
         fetcher = HttpFetcher()
-        errors: list[str] = []
+        errors: list[str] = deleted_entries(changed_file)
         for path in changed_entries(changed_file):
             errors.extend(
                 check_entry(
