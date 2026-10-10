@@ -17,7 +17,7 @@ jobs:
       github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
-      - name: Get PR number
+      - name: Decide whether the pull request merges itself
         id: pr
         uses: actions/github-script@v9
         with:
@@ -29,9 +29,33 @@ jobs:
             });
             const prs = run.data.pull_requests;
             if (!prs || prs.length === 0) {
-              return null;
+              core.setOutput('decision', 'none');
+              return;
             }
             const number = prs[0].number;
+            core.setOutput('number', String(number));
+            const { data: pr } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: number
+            });
+            // A hold also clears any auto-merge that an earlier run turned
+            // on. Otherwise a commit pushed after that run merges with it.
+            const hold = reason => {
+              console.log(`PR #${number} ${reason}; leaving it for a human`);
+              core.setOutput('decision', 'hold');
+              core.setOutput('auto_on', pr.auto_merge ? 'true' : 'false');
+            };
+            // The run checked one commit. Judge only that commit. A newer
+            // commit starts its own run, and that run decides. So this run
+            // changes nothing, and an old run cannot undo a newer decision.
+            const checked = context.payload.workflow_run.head_sha;
+            if (pr.head.sha !== checked) {
+              console.log(`PR #${number} moved from ${checked} to ${pr.head.sha}; the newer run decides`);
+              core.setOutput('decision', 'none');
+              return;
+            }
+            core.setOutput('sha', checked);
             // Validate Catalogs now runs on every pull request, so passing it
             // no longer means "a catalog submission is sound". Only a change
             // confined to generated files merges itself. Anything touching
@@ -45,23 +69,50 @@ jobs:
               repo: context.repo.repo,
               pull_number: number
             });
+            // The API lists at most 3,000 files. A file past that limit is
+            // a file this check cannot see.
+            if (files.length !== pr.changed_files) {
+              hold(`lists ${files.length} of ${pr.changed_files} files`);
+              return;
+            }
+            // Only a new entry merges itself. An edit can point another
+            // party's catalog at a new URL or address, and a deletion
+            // leaves Validate Catalogs nothing to check. A catalog leaves
+            // the registry through `status: removed` in the export, never
+            // through a file deletion. A rename removes the old name, so
+            // the check reads `previous_filename` too.
+            const isEntry = name => /^catalogs\/[^/]+\.yaml$/.test(name || '');
+            const isExport = name => name === 'exports/catalogs.json'
+              || name === 'exports/coverage-bboxes.json';
+            const heldEntries = files.filter(
+              f => (isEntry(f.filename) || isEntry(f.previous_filename))
+                && f.status !== 'added'
+            );
+            if (heldEntries.length > 0) {
+              for (const f of heldEntries) {
+                console.log(`PR #${number}: ${f.filename} is ${f.status}, not added`);
+              }
+              hold('changes a current entry');
+              return;
+            }
             const generatedOnly = files.length > 0 && files.every(
-              f => /^catalogs\/[^/]+\.yaml$/.test(f.filename)
-                || f.filename === 'exports/catalogs.json'
-                || f.filename === 'exports/coverage-bboxes.json'
+              f => (isEntry(f.filename) && f.status === 'added')
+                || (isExport(f.filename)
+                  && ['added', 'modified'].includes(f.status))
             );
             if (!generatedOnly) {
-              console.log(`PR #${number} changes more than entries; leaving it`);
-              return null;
+              hold('changes more than entries');
+              return;
             }
-            return number;
-          result-encoding: string
+            core.setOutput('decision', 'merge');
 
       # An app token, not GITHUB_TOKEN. GitHub attributes the merge to whoever
       # enabled auto-merge, and a push made as GITHUB_TOKEN starts no
       # workflow. Publish and Refresh Site Cache listen for that push.
       - name: Create merge token
-        if: steps.pr.outputs.result != 'null'
+        if: >
+          steps.pr.outputs.decision == 'merge' ||
+          steps.pr.outputs.auto_on == 'true'
         uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
         id: token
         with:
@@ -72,11 +123,25 @@ jobs:
           permission-contents: write
           permission-pull-requests: write
 
-      - name: Enable auto-merge
-        if: steps.pr.outputs.result != 'null'
+      - name: Disable auto-merge on a held pull request
+        if: >
+          steps.pr.outputs.decision == 'hold' &&
+          steps.pr.outputs.auto_on == 'true'
         run: |
-          gh pr merge --auto --squash "$PR_NUMBER" \
+          gh pr merge --disable-auto "$PR_NUMBER" \
             --repo "${{ github.repository }}"
         env:
-          PR_NUMBER: ${{ steps.pr.outputs.result }}
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+          GH_TOKEN: ${{ steps.token.outputs.token }}
+
+      # --match-head-commit binds the merge to the commit this run checked.
+      - name: Enable auto-merge
+        if: steps.pr.outputs.decision == 'merge'
+        run: |
+          gh pr merge --auto --squash "$PR_NUMBER" \
+            --match-head-commit "$HEAD_SHA" \
+            --repo "${{ github.repository }}"
+        env:
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+          HEAD_SHA: ${{ steps.pr.outputs.sha }}
           GH_TOKEN: ${{ steps.token.outputs.token }}
