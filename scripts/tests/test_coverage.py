@@ -8,8 +8,8 @@ from datetime import timedelta
 import publish_export
 import pytest
 import revalidate_all
-
 from conftest import FROZEN
+
 from registry.coverage import (
     COVERAGE_PATH,
     build_coverage_export,
@@ -20,7 +20,7 @@ from registry.coverage import (
     write_coverage,
 )
 from registry.crawl import CollectionSummary
-from registry.export import EXPORT_PATH, ExportRefused, ROOT_URL, TIMESTAMP_REFRESH_DAYS
+from registry.export import EXPORT_PATH, ROOT_URL, TIMESTAMP_REFRESH_DAYS, ExportRefused
 
 
 def summary(*, collection_id="collection", title="Collection", bbox=None):
@@ -97,9 +97,7 @@ def test_projects_3d_and_splits_antimeridian_extents():
 
 def test_carries_catalogs_and_validates_complete_coverage(tmp_path):
     carried = {"id": "a", "collection_count": 4, "collections": []}
-    coverage = build_coverage_export(
-        [catalog("b")], now=FROZEN, extra_catalogs=[carried]
-    )
+    coverage = build_coverage_export([catalog("b")], now=FROZEN, extra_catalogs=[carried])
     assert load_coverage(tmp_path / "missing.json") == {}
     check_coverage_safe(coverage, expected_ids={"a", "b"})
     with pytest.raises(ExportRefused, match="missing 1 registered catalog"):
@@ -111,9 +109,7 @@ def test_change_detection_ignores_fresh_timestamps(tmp_path):
     coverage = build_coverage_export([catalog()], now=FROZEN)
     write_coverage(coverage, path)
     later = FROZEN + timedelta(days=TIMESTAMP_REFRESH_DAYS - 1)
-    assert not coverage_changed(
-        build_coverage_export([catalog()], now=later), path, now=later
-    )
+    assert not coverage_changed(build_coverage_export([catalog()], now=later), path, now=later)
     changed = build_coverage_export([catalog(collection_count=2)], now=later)
     assert coverage_changed(changed, path, now=later)
     assert coverage_path_for(tmp_path / "catalogs.json") == path
@@ -141,7 +137,11 @@ def test_committed_coverage_matches_the_catalog_export():
 
     assert coverage["generated"] == catalog_export["generated"]
     assert coverage["registry_generated"] == catalog_export["generated"]
-    catalog_ids = {link["portolan_registry:id"] for link in catalog_export["links"] if link.get("rel") == "child"}
+    catalog_ids = {
+        link["portolan_registry:id"]
+        for link in catalog_export["links"]
+        if link.get("rel") == "child"
+    }
     assert {catalog["id"] for catalog in coverage["catalogs"]} == catalog_ids
     for catalog_record in coverage["catalogs"]:
         assert isinstance(catalog_record["collection_count"], int)

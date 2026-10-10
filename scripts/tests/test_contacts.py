@@ -24,18 +24,14 @@ class TestValidateSubmitterEmail:
         with pytest.raises(ValueError, match="Missing submitter_email"):
             validate_submitter_email(None, "my-cat")
 
-    @pytest.mark.parametrize(
-        "bad", ["not-an-email", "@example.com", "user@", "user @example.com"]
-    )
+    @pytest.mark.parametrize("bad", ["not-an-email", "@example.com", "user@", "user @example.com"])
     def test_syntax_errors_raise_without_dns(self, bad):
         with pytest.raises(ValueError, match="Invalid submitter_email"):
             validate_submitter_email(bad, "my-cat", check_deliverability=False)
 
     def test_valid_syntax_returns_normalized(self):
         assert (
-            validate_submitter_email(
-                "User@Example.com", "my-cat", check_deliverability=False
-            )
+            validate_submitter_email("User@Example.com", "my-cat", check_deliverability=False)
             == "User@example.com"
         )
 

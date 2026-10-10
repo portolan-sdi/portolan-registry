@@ -7,17 +7,17 @@ import math
 from datetime import timedelta
 
 import pytest
-
 from conftest import FIXTURES, FROZEN
+
 from registry.crawl import crawl_catalog
 from registry.export import (
+    RETIRED_FIELDS,
     TIMESTAMP_REFRESH_DAYS,
     ExportRefused,
     build_export,
     check_export_safe,
     child_link,
     export_changed,
-    RETIRED_FIELDS,
     load_links,
     load_state,
 )
@@ -28,9 +28,7 @@ EXPORT = FIXTURES.parent.parent.parent / "exports" / "catalogs.json"
 
 class TestChildLink:
     def test_carries_plain_bbox(self):
-        link = child_link(
-            {"id": "x", "url": ROOT, "bbox": [-1.0, -2.0, 3.0, 4.0]}
-        )
+        link = child_link({"id": "x", "url": ROOT, "bbox": [-1.0, -2.0, 3.0, 4.0]})
         assert link["bbox"] == [-1.0, -2.0, 3.0, 4.0]
         assert "portolan_registry:bbox" not in link
 
@@ -50,9 +48,7 @@ class TestChildLink:
 
     def test_carries_a_measured_zero_through(self):
         # A fully enumerable catalog that really holds no items keeps its zero.
-        link = child_link(
-            {"id": "x", "url": ROOT, "item_count": 0, "total_size_bytes": 0}
-        )
+        link = child_link({"id": "x", "url": ROOT, "item_count": 0, "total_size_bytes": 0})
         assert link["portolan_registry:item_count"] == 0
         assert link["portolan_registry:total_size_bytes"] == 0
 
@@ -126,20 +122,12 @@ class TestBuildExport:
         assert [link["rel"] for link in e["links"]] == ["root", "self", "child"]
 
     def test_count_matches_child_links(self):
-        e = build_export(
-            [{"id": "a", "url": ROOT}, {"id": "b", "url": ROOT}], now=FROZEN
-        )
+        e = build_export([{"id": "a", "url": ROOT}, {"id": "b", "url": ROOT}], now=FROZEN)
         assert e["count"] == 2
 
     def test_children_are_sorted_by_id(self):
-        e = build_export(
-            [{"id": "z", "url": ROOT}, {"id": "a", "url": ROOT}], now=FROZEN
-        )
-        ids = [
-            link["portolan_registry:id"]
-            for link in e["links"]
-            if link["rel"] == "child"
-        ]
+        e = build_export([{"id": "z", "url": ROOT}, {"id": "a", "url": ROOT}], now=FROZEN)
+        ids = [link["portolan_registry:id"] for link in e["links"] if link["rel"] == "child"]
         assert ids == ["a", "z"]
 
     def test_carried_links_are_counted_and_sorted_in(self):
@@ -148,11 +136,7 @@ class TestBuildExport:
             now=FROZEN,
             extra_links=[{"rel": "child", "portolan_registry:id": "a", "href": ROOT}],
         )
-        ids = [
-            link["portolan_registry:id"]
-            for link in e["links"]
-            if link["rel"] == "child"
-        ]
+        ids = [link["portolan_registry:id"] for link in e["links"] if link["rel"] == "child"]
         assert ids == ["a", "b"]
         assert e["count"] == 2
 
@@ -211,17 +195,13 @@ class TestLegacyPrefix:
     def test_republishes_a_carried_link_under_the_new_prefix(self, tmp_path):
         """A catalog too briefly offline to crawl is copied forward verbatim.
         Read it renamed, or the old spelling returns to the next export."""
-        path = self.written(
-            tmp_path, {"portolan:id": "a", "portolan:collection_count": 3}
-        )
+        path = self.written(tmp_path, {"portolan:id": "a", "portolan:collection_count": 3})
         link = load_links(path)["a"]
         assert link["portolan_registry:collection_count"] == 3
         assert not [k for k in link if k.startswith("portolan:")]
 
     def test_leaves_unprefixed_link_fields_alone(self, tmp_path):
-        path = self.written(
-            tmp_path, {"portolan:id": "a", "href": ROOT, "bbox": [0, 0, 1, 1]}
-        )
+        path = self.written(tmp_path, {"portolan:id": "a", "href": ROOT, "bbox": [0, 0, 1, 1]})
         link = load_links(path)["a"]
         assert link["href"] == ROOT and link["bbox"] == [0, 0, 1, 1]
 
@@ -303,9 +283,7 @@ class TestExportSafety:
         check_export_safe(
             e,
             expected_ids={"a"},
-            previous_state={
-                "gone": {"status": None, "stale_since": None, "failure_reason": None}
-            },
+            previous_state={"gone": {"status": None, "stale_since": None, "failure_reason": None}},
         )
 
 
@@ -376,9 +354,7 @@ class TestExportChanged:
 
     def test_notices_a_catalog_joining_the_registry(self, tmp_path):
         path = self.written(tmp_path, [self.catalog()])
-        tonight = build_export(
-            [self.catalog(), self.catalog(id="b")], now=self.LATER
-        )
+        tonight = build_export([self.catalog(), self.catalog(id="b")], now=self.LATER)
         assert export_changed(tonight, path, now=self.LATER)
 
     def test_notices_a_catalog_leaving_the_registry(self, tmp_path):
@@ -431,9 +407,9 @@ class TestCommittedExport:
             if b is None:
                 continue
             assert len(b) in (4, 6), f"{cid}: bbox has {len(b)} elements"
-            assert all(
-                not math.isnan(v) and not math.isinf(v) and abs(v) < 1e300 for v in b
-            ), f"{cid}: bbox has an error value"
+            assert all(not math.isnan(v) and not math.isinf(v) and abs(v) < 1e300 for v in b), (
+                f"{cid}: bbox has an error value"
+            )
             half = len(b) // 2
             west, south, east, north = b[0], b[1], b[half], b[half + 1]
             assert -180 <= west <= 180 and -180 <= east <= 180, f"{cid}: longitude"
@@ -455,9 +431,7 @@ class TestCommittedExport:
         field child_link writes and the export lacks is a pending publish,
         which the next run fixes on its own.
         """
-        current = {
-            k for k in child_link({"id": "x", "url": ROOT}) if k.startswith("portolan_")
-        }
+        current = {k for k in child_link({"id": "x", "url": ROOT}) if k.startswith("portolan_")}
         with open(EXPORT) as f:
             raw = json.load(f)
         for link in raw["links"]:

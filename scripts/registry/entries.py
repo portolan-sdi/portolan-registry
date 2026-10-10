@@ -8,6 +8,7 @@ schema/entry.schema.json. Every other field is crawled from the catalog.
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Any
 from urllib.parse import urlparse, urlunparse
 
 import yaml
@@ -20,13 +21,13 @@ def entry_paths(catalog_dir: Path = CATALOG_DIR) -> list[Path]:
     return sorted(catalog_dir.glob("*.yaml"))
 
 
-def load_entry(path: Path) -> dict:
+def load_entry(path: Path) -> dict[str, Any]:
     """Parse one entry file. Returns {} for an empty file."""
     with open(path) as f:
         return yaml.safe_load(f) or {}
 
 
-def load_entries(catalog_dir: Path = CATALOG_DIR) -> dict[str, dict]:
+def load_entries(catalog_dir: Path = CATALOG_DIR) -> dict[str, dict[str, Any]]:
     """Map registry id -> entry dict for every file in `catalog_dir`."""
     return {p.stem: load_entry(p) for p in entry_paths(catalog_dir)}
 

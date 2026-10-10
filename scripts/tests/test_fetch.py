@@ -142,9 +142,7 @@ class TestProbe:
 
     @responses.activate
     def test_false_on_transport_error(self):
-        responses.add(
-            responses.GET, "https://ex.org/search", body=requests.ConnectTimeout()
-        )
+        responses.add(responses.GET, "https://ex.org/search", body=requests.ConnectTimeout())
         assert HttpFetcher().probe("https://ex.org/search") is False
 
 
@@ -153,19 +151,16 @@ class TestResolveUrl:
         assert resolve_url(URL, "https://other.org/x.json") == "https://other.org/x.json"
 
     def test_relative_href_resolves_against_the_parent(self):
-        assert resolve_url(URL, "./sub/collection.json") == (
-            "https://ex.org/sub/collection.json"
-        )
+        assert resolve_url(URL, "./sub/collection.json") == ("https://ex.org/sub/collection.json")
 
     def test_parent_relative_href(self):
-        assert resolve_url(
-            "https://ex.org/a/b/catalog.json", "../c/collection.json"
-        ) == "https://ex.org/a/c/collection.json"
+        assert (
+            resolve_url("https://ex.org/a/b/catalog.json", "../c/collection.json")
+            == "https://ex.org/a/c/collection.json"
+        )
 
     def test_bare_relative_href(self):
-        assert resolve_url(URL, "sub/collection.json") == (
-            "https://ex.org/sub/collection.json"
-        )
+        assert resolve_url(URL, "sub/collection.json") == ("https://ex.org/sub/collection.json")
 
 
 class TestHead:

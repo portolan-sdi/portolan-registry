@@ -13,8 +13,9 @@ import argparse
 import json
 import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
+from typing import Any
 
 from registry.coverage import (
     COVERAGE_PATH,
@@ -25,6 +26,7 @@ from registry.coverage import (
     load_coverage,
     write_coverage,
 )
+from registry.crawl import CrawlResult
 from registry.entries import CATALOG_DIR, entry_paths, load_entry
 from registry.export import (
     EXPORT_PATH,
@@ -45,8 +47,8 @@ MAX_WORKERS = 4
 
 
 def process_entry(
-    path: Path, now: datetime, previous_links: dict[str, dict]
-) -> dict | None:
+    path: Path, now: datetime, previous_links: dict[str, dict[str, Any]]
+) -> CrawlResult | None:
     """Crawl one registry entry. Returns None if it could not be crawled."""
     log(f"\n=== Processing {path} ===")
     entry = load_entry(path)
@@ -69,9 +71,9 @@ def process_entry(
     result["id"] = path.stem
     # A shallow clone cannot see the add commit. Keep the date already
     # published rather than moving the catalog's registration to today.
-    result["first_registered"] = first_registered(path) or previous_links.get(
-        path.stem, {}
-    ).get("portolan_registry:first_registered")
+    result["first_registered"] = first_registered(path) or previous_links.get(path.stem, {}).get(
+        "portolan_registry:first_registered"
+    )
     log(f"  OK: {result['title']} ({result['collection_count']} collections)")
     return result
 
@@ -81,8 +83,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--output",
         default=str(EXPORT_PATH),
-        help="Where to write the export. '-' writes to stdout without "
-        "touching the committed file.",
+        help="Where to write the export. '-' writes to stdout without touching the committed file.",
     )
     parser.add_argument(
         "--catalog-dir",
@@ -93,23 +94,18 @@ def main(argv: list[str] | None = None) -> int:
 
     output = Path(args.output)
     if args.output != "-" and output.name == COVERAGE_PATH.name:
-        parser.error(
-            "--output names the catalog export; it cannot be named "
-            f"{COVERAGE_PATH.name}"
-        )
+        parser.error(f"--output names the catalog export; it cannot be named {COVERAGE_PATH.name}")
 
     catalog_dir = Path(args.catalog_dir)
     paths = entry_paths(catalog_dir)
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     expected_ids = {p.stem for p in paths}
     previous_coverage = load_coverage(COVERAGE_PATH)
     previous_links = load_links(EXPORT_PATH)
 
-    catalogs: list[dict] = []
+    catalogs: list[CrawlResult] = []
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
-        futures = {
-            executor.submit(process_entry, p, now, previous_links): p for p in paths
-        }
+        futures = {executor.submit(process_entry, p, now, previous_links): p for p in paths}
         for future in as_completed(futures):
             result = future.result()
             if result:
@@ -133,7 +129,8 @@ def main(argv: list[str] | None = None) -> int:
     # falling out of the export and off the registry map.
     crawled = {c["id"] for c in catalogs}
     carried = [
-        link for cid, link in previous_links.items()
+        link
+        for cid, link in previous_links.items()
         if cid not in crawled and cid in {p.stem for p in paths}
     ]
     for link in carried:
@@ -151,9 +148,7 @@ def main(argv: list[str] | None = None) -> int:
         {"id": catalog_id, "collection_count": 0, "collections": []}
         for catalog_id in sorted(expected_ids - crawled_coverage - previous_coverage.keys())
     )
-    coverage = build_coverage_export(
-        catalogs, now=now, extra_catalogs=carried_coverage
-    )
+    coverage = build_coverage_export(catalogs, now=now, extra_catalogs=carried_coverage)
 
     try:
         check_export_safe(
@@ -171,9 +166,7 @@ def main(argv: list[str] | None = None) -> int:
         sys.stdout.write("\n")
     else:
         coverage_output = coverage_path_for(output)
-        changed = export_changed(export, output) or coverage_changed(
-            coverage, coverage_output
-        )
+        changed = export_changed(export, output) or coverage_changed(coverage, coverage_output)
         if not changed:
             # A manual re-run of an unchanged registry should be a no-op too.
             log("\n=== No change beyond timestamps; left exports untouched ===")

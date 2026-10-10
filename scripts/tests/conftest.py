@@ -11,7 +11,7 @@ from __future__ import annotations
 import json
 import mimetypes
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -22,7 +22,7 @@ from registry.fetch import NotFound
 FIXTURES = Path(__file__).parent / "fixtures"
 
 # Every timestamp in a golden comparison must be deterministic.
-FROZEN = datetime(2026, 1, 15, 12, 0, 0, tzinfo=timezone.utc)
+FROZEN = datetime(2026, 1, 15, 12, 0, 0, tzinfo=UTC)
 
 
 @dataclass

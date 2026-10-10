@@ -27,6 +27,7 @@ import json
 import traceback
 from collections.abc import Callable, Mapping
 from pathlib import Path
+from typing import Any
 
 import requests
 
@@ -37,7 +38,6 @@ from registry.fetch import HttpFetcher
 from registry.mirror import MirrorSource
 from registry.report import log
 from registry.validators import crawl_and_validate
-
 
 APPROVAL_HINT = (
     "A maintainer with the admin or maintain role must approve the head "
@@ -86,7 +86,7 @@ def modified_entries(changed_file: Path, added_file: Path) -> list[str]:
     ]
 
 
-def is_new_entry(catalog_id: str, url: str, published: Mapping[str, Mapping]) -> bool:
+def is_new_entry(catalog_id: str, url: str, published: Mapping[str, Mapping[str, Any]]) -> bool:
     """True when the validators gate this entry. See the module docstring."""
     link = published.get(catalog_id)
     if not link:
@@ -101,9 +101,9 @@ def check_entry(
     path: Path,
     *,
     existing_urls: dict[str, str],
-    state: dict[str, dict],
+    state: dict[str, dict[str, Any]],
     source_factory: Callable[[], MirrorSource],
-    published: Mapping[str, Mapping] | None = None,
+    published: Mapping[str, Mapping[str, Any]] | None = None,
 ) -> list[str]:
     """Validate one entry. Returns a list of error strings.
 
@@ -225,9 +225,7 @@ def collect_errors(
 
         errors: list[str] = []
         if maintainer_approved:
-            log(
-                "A maintainer approved the head commit. Changes to current entries pass."
-            )
+            log("A maintainer approved the head commit. Changes to current entries pass.")
         else:
             errors.extend(deleted_entries(changed_file))
             if added_file is not None:

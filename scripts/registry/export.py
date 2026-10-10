@@ -9,8 +9,9 @@ from __future__ import annotations
 
 import json
 from collections.abc import Mapping, Sequence
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
+from typing import Any
 
 from registry.status import parse_timestamp
 
@@ -58,7 +59,7 @@ CARRIED_DEFAULTS: dict[str, object] = {
 }
 
 
-def _child_links(export: Mapping) -> list[dict]:
+def _child_links(export: Mapping[str, Any]) -> list[dict[str, Any]]:
     """Child links from a loaded export, every registry field current.
 
     Renames, drops, and backfills so a link read here has the field set this
@@ -80,7 +81,7 @@ def _child_links(export: Mapping) -> list[dict]:
     return links
 
 
-def load_state(export_path: Path = EXPORT_PATH) -> dict[str, dict]:
+def load_state(export_path: Path = EXPORT_PATH) -> dict[str, dict[str, Any]]:
     """Read per-catalog validation state back out of a previous export.
 
     The export is the only place this state is stored. Nothing else records
@@ -91,7 +92,7 @@ def load_state(export_path: Path = EXPORT_PATH) -> dict[str, dict]:
     with open(export_path) as f:
         existing = json.load(f)
 
-    state: dict[str, dict] = {}
+    state: dict[str, dict[str, Any]] = {}
     for link in _child_links(existing):
         if not link.get("portolan_registry:id"):
             continue
@@ -104,7 +105,7 @@ def load_state(export_path: Path = EXPORT_PATH) -> dict[str, dict]:
     return state
 
 
-def load_links(export_path: Path = EXPORT_PATH) -> dict[str, dict]:
+def load_links(export_path: Path = EXPORT_PATH) -> dict[str, dict[str, Any]]:
     """Read the previous child links, keyed by registry id.
 
     Used to carry a catalog forward unchanged when this run could not crawl
@@ -123,7 +124,7 @@ def load_links(export_path: Path = EXPORT_PATH) -> dict[str, dict]:
     }
 
 
-def child_link(catalog: Mapping) -> dict:
+def child_link(catalog: Mapping[str, Any]) -> dict[str, Any]:
     """One rel="child" link.
 
     Everything the registry knows about a catalog rides inline under the
@@ -153,9 +154,7 @@ def child_link(catalog: Mapping) -> dict:
             "portolan_registry:status": catalog.get("status", "valid"),
             "portolan_registry:api_type": catalog.get("api_type"),
             "portolan_registry:spec_version": catalog.get("spec_version"),
-            "portolan_registry:spec_version_mixed": catalog.get(
-                "spec_version_mixed", False
-            ),
+            "portolan_registry:spec_version_mixed": catalog.get("spec_version_mixed", False),
             "portolan_registry:stac_version": catalog.get("stac_version"),
             # {href, type, title} read off the catalog's own icon link, with
             # the href resolved and the image confirmed to exist. Null when
@@ -200,11 +199,11 @@ def child_link(catalog: Mapping) -> dict:
 
 
 def build_export(
-    catalogs: Sequence[Mapping],
+    catalogs: Sequence[Mapping[str, Any]],
     *,
     now: datetime | None = None,
-    extra_links: Sequence[Mapping] = (),
-) -> dict:
+    extra_links: Sequence[Mapping[str, Any]] = (),
+) -> dict[str, Any]:
     """Assemble the full export document.
 
     `now` is explicit because publish stamps `generated` with the same
@@ -212,8 +211,8 @@ def build_export(
     fresh one. `extra_links` carries forward already-built child links for
     catalogs this run could not crawl.
     """
-    now = now or datetime.now(timezone.utc)
-    links = [
+    now = now or datetime.now(UTC)
+    links: list[Mapping[str, Any]] = [
         {
             "rel": "root",
             "href": ROOT_URL,
@@ -222,7 +221,7 @@ def build_export(
         },
         {"rel": "self", "href": ROOT_URL, "type": "application/json"},
     ]
-    children = [child_link(c) for c in catalogs]
+    children: list[Mapping[str, Any]] = [child_link(c) for c in catalogs]
     children.extend(extra_links)
     children.sort(key=lambda link: link["portolan_registry:id"])
     links.extend(children)
@@ -244,10 +243,10 @@ class ExportRefused(Exception):
 
 
 def check_export_safe(
-    export: Mapping,
+    export: Mapping[str, Any],
     *,
     expected_ids: set[str],
-    previous_state: Mapping[str, Mapping],
+    previous_state: Mapping[str, Mapping[str, Any]],
 ) -> None:
     """Refuse an export that drops registered catalogs or their state.
 
@@ -265,8 +264,7 @@ def check_export_safe(
     missing = expected_ids - got
     if missing:
         raise ExportRefused(
-            f"export is missing {len(missing)} registered catalog(s): "
-            f"{', '.join(sorted(missing))}"
+            f"export is missing {len(missing)} registered catalog(s): {', '.join(sorted(missing))}"
         )
 
     # Only still-registered catalogs. Deleting an entry file is a deliberate
@@ -275,14 +273,11 @@ def check_export_safe(
     dropped_state = {
         cid
         for cid, st in previous_state.items()
-        if cid in expected_ids
-        and cid not in got
-        and any(v is not None for v in st.values())
+        if cid in expected_ids and cid not in got and any(v is not None for v in st.values())
     }
     if dropped_state:
         raise ExportRefused(
-            f"export would discard validation state for: "
-            f"{', '.join(sorted(dropped_state))}"
+            f"export would discard validation state for: {', '.join(sorted(dropped_state))}"
         )
 
 
@@ -299,7 +294,7 @@ VOLATILE_FIELDS = frozenset(
 TIMESTAMP_REFRESH_DAYS = 7
 
 
-def _without_volatile(export: Mapping) -> dict:
+def _without_volatile(export: Mapping[str, Any]) -> dict[str, Any]:
     stripped = {k: v for k, v in export.items() if k not in VOLATILE_FIELDS}
     stripped["links"] = [
         {k: v for k, v in link.items() if k not in VOLATILE_FIELDS}
@@ -309,7 +304,7 @@ def _without_volatile(export: Mapping) -> dict:
 
 
 def export_changed(
-    export: Mapping,
+    export: Mapping[str, Any],
     export_path: Path = EXPORT_PATH,
     *,
     now: datetime | None = None,
@@ -334,14 +329,14 @@ def export_changed(
     if _without_volatile(export) != _without_volatile(previous):
         return True
 
-    now = now or datetime.now(timezone.utc)
+    now = now or datetime.now(UTC)
     written = parse_timestamp(previous.get("generated"))
     # An export with no readable `generated` has no age to check, so refresh
     # it and give the next run something to measure.
     return written is None or now - written >= refresh_after
 
 
-def write_export(export: Mapping, export_path: Path = EXPORT_PATH) -> None:
+def write_export(export: Mapping[str, Any], export_path: Path = EXPORT_PATH) -> None:
     """Write the export as pretty-printed JSON."""
     export_path.parent.mkdir(parents=True, exist_ok=True)
     with open(export_path, "w") as f:

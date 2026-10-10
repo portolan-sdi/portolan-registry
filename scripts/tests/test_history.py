@@ -45,9 +45,7 @@ def repo(tmp_path):
 
 
 def test_reads_the_add_commit(repo):
-    assert first_registered(repo / "catalogs" / "example.yaml") == (
-        "2026-03-04T09:00:00+00:00"
-    )
+    assert first_registered(repo / "catalogs" / "example.yaml") == ("2026-03-04T09:00:00+00:00")
 
 
 def test_spells_a_utc_offset_the_way_the_export_does():

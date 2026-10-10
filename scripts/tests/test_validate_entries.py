@@ -15,9 +15,10 @@ import json
 import pytest
 import validate_entries
 from conftest import FakeFetcher
+from test_validators import TOOLS
+
 from registry import contacts, validators
 from registry.validators import Finding, ValidatorError
-from test_validators import TOOLS
 
 ROOT = "https://ex.org/catalog.json"
 
@@ -29,9 +30,7 @@ def no_dns(monkeypatch):
     monkeypatch.setattr(
         contacts,
         "validate_email",
-        lambda email, check_deliverability=True: real(
-            email, check_deliverability=False
-        ),
+        lambda email, check_deliverability=True: real(email, check_deliverability=False),
     )
 
 
@@ -102,9 +101,7 @@ class TestSubmitterAddress:
         assert fetcher.calls == []
 
     def test_a_malformed_address_is_an_error(self, tmp_path):
-        path = entry_file(
-            tmp_path, "cat.yaml", f"url: {ROOT}\nsubmitter_email: not-an-email\n"
-        )
+        path = entry_file(tmp_path, "cat.yaml", f"url: {ROOT}\nsubmitter_email: not-an-email\n")
         errors = check(path, FakeFetcher())
         assert len(errors) == 1
         assert "Invalid submitter_email" in errors[0]
@@ -204,8 +201,11 @@ def test_a_root_that_returns_empty_json_exits_nonzero(tmp_path, monkeypatch):
     """Issue #200, done-when 3, with the real rashid and stac-node-validator."""
     monkeypatch.setattr(validators, "validate_mirror", REAL_VALIDATE)
     monkeypatch.setattr(validate_entries, "HttpFetcher", EmptyFetcher)
-    entry_file(tmp_path, "cat.yaml", "url: https://x.invalid/catalog.json\n"
-               "submitter_email: submitter@example.com\n")
+    entry_file(
+        tmp_path,
+        "cat.yaml",
+        "url: https://x.invalid/catalog.json\nsubmitter_email: submitter@example.com\n",
+    )
     changed = tmp_path / "changed.txt"
     changed.write_text(f"{tmp_path / 'cat.yaml'}\n")
     report = tmp_path / "report.json"
@@ -303,9 +303,7 @@ class TestDeletedEntry:
         """A rename lists the old path as deleted and the new path as added."""
         monkeypatch.setattr(validate_entries, "check_entry", lambda *a, **k: [])
         entry_file(tmp_path, "new.yaml", f"url: {ROOT}\n")
-        code, report = self.run(
-            tmp_path, [tmp_path / "old.yaml", tmp_path / "new.yaml"]
-        )
+        code, report = self.run(tmp_path, [tmp_path / "old.yaml", tmp_path / "new.yaml"])
         assert code == 1
         assert len(report["errors"]) == 1
         assert "old.yaml" in report["errors"][0]
@@ -372,9 +370,7 @@ class TestCurrentEntryChange:
     def test_an_approved_edit_is_still_validated(self, tmp_path, monkeypatch):
         """The approval waives the review rule, not the entry checks."""
         current = entry_file(tmp_path, "cadastral.yaml", f"url: {ROOT}\n")
-        monkeypatch.setattr(
-            validate_entries, "check_entry", lambda path, **k: [f"{path}: bad"]
-        )
+        monkeypatch.setattr(validate_entries, "check_entry", lambda path, **k: [f"{path}: bad"])
         errors = self.run(tmp_path, [current], [], approved=True)
         assert errors == [f"{current}: bad"]
 
@@ -418,8 +414,12 @@ class TestPublishedExport:
         """A fork can add its own entry to exports/catalogs.json. The gate
         reads the base copy, which does not hold it, so it stays new."""
         monkeypatch.setattr(validate_entries, "HttpFetcher", lambda: tree)
-        listed = {"rel": "child", "href": ROOT, "portolan_registry:id": "evil",
-                  "portolan_registry:status": "valid"}
+        listed = {
+            "rel": "child",
+            "href": ROOT,
+            "portolan_registry:id": "evil",
+            "portolan_registry:status": "valid",
+        }
         # The pull request's own copy, where the default path points.
         monkeypatch.chdir(tmp_path)
         (tmp_path / "exports").mkdir()
@@ -429,12 +429,14 @@ class TestPublishedExport:
         assert len(errors) == 1
         assert "PTL-CNF-001" in errors[0]
 
-    def test_an_entry_in_the_base_export_is_not_gated(
-        self, tmp_path, tree, findings, monkeypatch
-    ):
+    def test_an_entry_in_the_base_export_is_not_gated(self, tmp_path, tree, findings, monkeypatch):
         monkeypatch.setattr(validate_entries, "HttpFetcher", lambda: tree)
-        listed = {"rel": "child", "href": ROOT, "portolan_registry:id": "evil",
-                  "portolan_registry:status": "valid"}
+        listed = {
+            "rel": "child",
+            "href": ROOT,
+            "portolan_registry:id": "evil",
+            "portolan_registry:status": "valid",
+        }
         base = self.export(tmp_path / "base-export.json", [listed])
         assert self.run(tmp_path, base, findings) == []
 
@@ -445,16 +447,20 @@ class TestPublishedExport:
         changed = tmp_path / "changed.txt"
         changed.write_text("")
         validate_entries.main(
-            ["--changed-file", str(changed), "--catalog-dir", str(tmp_path),
-             "--export", str(tmp_path / "base-export.json")]
+            [
+                "--changed-file",
+                str(changed),
+                "--catalog-dir",
+                str(tmp_path),
+                "--export",
+                str(tmp_path / "base-export.json"),
+            ]
         )
         assert seen == [tmp_path / "base-export.json"]
 
 
 class TestUnexpectedFailure:
-    def test_a_crash_becomes_an_error_rather_than_a_traceback(
-        self, tmp_path, monkeypatch
-    ):
+    def test_a_crash_becomes_an_error_rather_than_a_traceback(self, tmp_path, monkeypatch):
         """The submitter gets a reason, not a red check and silence."""
 
         def boom(_path):

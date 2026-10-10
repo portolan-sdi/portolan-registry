@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-import pytest
-
 from registry.entries import entry_paths, load_entries, load_entry, normalize_url
 
 
@@ -37,9 +35,7 @@ class TestNormalizeUrl:
 class TestLoadEntries:
     def test_reads_url_from_a_file(self, tmp_path):
         (tmp_path / "one.yaml").write_text("url: https://ex.org/catalog.json\n")
-        assert load_entry(tmp_path / "one.yaml") == {
-            "url": "https://ex.org/catalog.json"
-        }
+        assert load_entry(tmp_path / "one.yaml") == {"url": "https://ex.org/catalog.json"}
 
     def test_empty_file_is_an_empty_dict(self, tmp_path):
         (tmp_path / "empty.yaml").write_text("")

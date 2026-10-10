@@ -7,6 +7,7 @@ href beside its catalog, `portolan-nl` an absolute one on another host.
 from __future__ import annotations
 
 from conftest import FakeFetcher
+
 from registry.logo import catalog_logo, find_logo_link
 
 ROOT = "https://ex.org/catalog.json"

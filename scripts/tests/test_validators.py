@@ -15,6 +15,7 @@ import subprocess
 
 import pytest
 from conftest import FROZEN, FakeFetcher
+
 from registry import validators
 from registry.fetch import NotFound
 from registry.mirror import Mirror
@@ -101,7 +102,10 @@ class TestRender:
     def test_a_schema_url_rule_id_is_quoted(self):
         rule = "https://e.org/v1.0.0/schema.json\n\n@octocat"
         header = RuleGroup("stac-node-validator", rule, "d", 1, []).render().splitlines()[0]
-        assert header == "stac-node-validator `https://e.org/v1.0.0/schema.json @octocat` (1 finding): d"
+        assert (
+            header
+            == "stac-node-validator `https://e.org/v1.0.0/schema.json @octocat` (1 finding): d"
+        )
 
 
 class TestRashid:
@@ -144,9 +148,7 @@ class TestStacNodeValidator:
         out = json.dumps(
             {
                 "files_checked": 1,
-                "findings": [
-                    {"path": "c.json", "schema": "core", "message": "/id must be string"}
-                ],
+                "findings": [{"path": "c.json", "schema": "core", "message": "/id must be string"}],
             }
         )
         found = run_stac_node_validator(tmp_path, run=stub(stdout=out))
@@ -163,6 +165,42 @@ class TestStacNodeValidator:
     def test_a_crash_is_not_a_verdict(self, tmp_path):
         with pytest.raises(ValidatorError, match="exited 1"):
             run_stac_node_validator(tmp_path, run=stub(returncode=1, stderr="boom"))
+
+    def test_each_kind_of_schema_has_its_own_description(self, tmp_path):
+        extension = "https://stac-extensions.github.io/file/v2.1.0/schema.json"
+        out = json.dumps(
+            {
+                "files_checked": 1,
+                "findings": [
+                    {"path": "c.json", "schema": schema, "message": "m"}
+                    for schema in ("core", "skipped", extension)
+                ],
+            }
+        )
+        found = run_stac_node_validator(tmp_path, run=stub(stdout=out))
+        assert [f.description for f in found] == [
+            "the STAC core schema rejects the object",
+            "the object declares no STAC version that can be validated",
+            "the extension schema rejects the object",
+        ]
+
+
+class TestValidateMirror:
+    def test_runs_both_validators_on_the_mirror(self, tmp_path, monkeypatch):
+        seen = []
+
+        def fake(name):
+            def run(mirror_dir):
+                seen.append((name, mirror_dir))
+                return [finding(name)]
+
+            return run
+
+        monkeypatch.setattr(validators, "run_rashid", fake("R"))
+        monkeypatch.setattr(validators, "run_stac_node_validator", fake("S"))
+        found = validators.validate_mirror(tmp_path)
+        assert [f.rule_id for f in found] == ["R", "S"]
+        assert seen == [("R", tmp_path), ("S", tmp_path)]
 
 
 def catalog_tree():
@@ -220,9 +258,7 @@ class TestCrawlAndValidate:
     def test_a_finding_beside_a_fetch_failure_is_invalid(self):
         f = catalog_tree()
         f.docs["https://ex.org/a/collection.json"] = TimeoutError("timed out")
-        _, report = crawl_and_validate(
-            ROOT, lambda: f, now=FROZEN, validate=lambda d: [finding()]
-        )
+        _, report = crawl_and_validate(ROOT, lambda: f, now=FROZEN, validate=lambda d: [finding()])
         assert report.passed is False
 
     def test_a_mirror_that_cannot_be_written_leaves_no_answer(self):
@@ -349,7 +385,9 @@ class TestRealTools:
                     "stac_version": "1.1.0",
                     "id": "plain",
                     "description": "Plain STAC.",
-                    "links": [{"rel": "root", "href": "./catalog.json", "type": "application/json"}],
+                    "links": [
+                        {"rel": "root", "href": "./catalog.json", "type": "application/json"}
+                    ],
                 }
             }
         )

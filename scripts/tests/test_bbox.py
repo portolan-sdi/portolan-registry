@@ -38,14 +38,10 @@ class TestCleanBbox:
 
     def test_latitude_overshoot_is_clamped_not_dropped(self):
         # Real data: four IGN Argentina collections sit at -90.00000001.
-        assert clean_bbox([-74.0, -90.00000001, -25.0, -21.78]) == [
-            -74.0, -90.0, -25.0, -21.78
-        ]
+        assert clean_bbox([-74.0, -90.00000001, -25.0, -21.78]) == [-74.0, -90.0, -25.0, -21.78]
 
     def test_longitude_overshoot_is_clamped(self):
-        assert clean_bbox([-180.0000001, 0.0, 180.0000001, 1.0]) == [
-            -180.0, 0.0, 180.0, 1.0
-        ]
+        assert clean_bbox([-180.0000001, 0.0, 180.0000001, 1.0]) == [-180.0, 0.0, 180.0, 1.0]
 
     def test_south_greater_than_north_rejected(self):
         assert clean_bbox([0.0, 10.0, 1.0, 5.0]) is None

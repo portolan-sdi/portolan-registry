@@ -17,6 +17,7 @@ links to be relative, so a reader has to resolve either.
 from __future__ import annotations
 
 from collections.abc import Mapping
+from typing import Any
 
 from registry.fetch import Fetcher, resolve_url
 
@@ -42,7 +43,7 @@ DISPLAYABLE_TYPES = frozenset(
 )
 
 
-def find_logo_link(catalog: Mapping) -> Mapping | None:
+def find_logo_link(catalog: Mapping[str, Any]) -> Mapping[str, Any] | None:
     """The catalog's logo link, or None if it publishes no usable one.
 
     A link must declare a displayable image type to qualify. stac-js drops an
@@ -67,7 +68,7 @@ def find_logo_link(catalog: Mapping) -> Mapping | None:
 
 
 def catalog_logo(
-    catalog: Mapping, base_url: str, fetcher: Fetcher
+    catalog: Mapping[str, Any], base_url: str, fetcher: Fetcher
 ) -> dict[str, str] | None:
     """The logo to publish for a catalog, or None.
 

@@ -1,0 +1,11 @@
+# pip-audit ignore list, read by scripts/pip_audit_ignores.py.
+#
+# One entry per line, whitespace-separated:
+#
+#   VULN-ID  EXPIRES(YYYY-MM-DD)  REASON...
+#
+# Example:
+#   GHSA-xxxx-yyyy-zzzz  2026-09-01  no fixed release yet; tracking upstream #123
+#
+# Entries expire: past the date, the vulnerability fails CI again.
+# Never ignore without an expiry and a reason.

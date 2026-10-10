@@ -134,9 +134,7 @@ def send_stale_notification(
     return _send(
         catalog_id,
         submitter_email=submitter_email,
-        subject=(
-            f"[Portolan Registry] Catalog validation failed: {title or catalog_id}"
-        ),
+        subject=(f"[Portolan Registry] Catalog validation failed: {title or catalog_id}"),
         body=_stale_body(title or catalog_id, url, failure_reason),
         enabled=enabled,
     )

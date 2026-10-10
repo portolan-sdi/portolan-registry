@@ -1,0 +1,118 @@
+# Synced skeleton for Python repos; extend per repo.
+# Run with prek (https://github.com/j178/prek), the Rust pre-commit
+# runner CI uses: `uvx prek install --hook-type pre-commit
+# --hook-type commit-msg --hook-type pre-push`, then
+# `uvx prek run --all-files`.
+#
+# The pre-push hooks assume these dev dependencies in pyproject.toml:
+# mypy, vulture, xenon, deptry, and import-linter where the repo
+# declares contracts. CI runs the commit and pre-push stages, so an
+# unhooked clone cannot merge past them. commit-msg runs locally only,
+# and squash-merge means the pull request title is the commit message
+# that lands.
+
+# exports/ holds generated output. registry/export.py writes it without a
+# final newline, and its catalog text carries place names in many
+# languages. A hook that rewrote it or read it as English would fail
+# every export pull request the bot opens.
+exclude: ^exports/
+
+repos:
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v4.17.0
+    hooks:
+      - id: commitizen
+        stages: [commit-msg]
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-toml
+      - id: check-added-large-files
+        args: ["--maxkb=500"]
+      - id: check-merge-conflict
+      - id: mixed-line-ending
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.3
+    hooks:
+      - id: ruff-check
+        args: [--fix]
+      - id: ruff-format
+
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.4.3
+    hooks:
+      - id: codespell
+        additional_dependencies:
+          - tomli
+        # npm writes the lockfile. Its integrity hashes read as misspellings.
+        exclude: ^scripts/stac-node-validator/package-lock\.json$
+
+  # Lint GitHub Actions workflow syntax and semantics.
+  - repo: https://github.com/rhysd/actionlint
+    rev: v1.7.12
+    hooks:
+      - id: actionlint
+
+  # Audit workflows for security issues (unpinned actions, missing
+  # permissions, template injection). Offline mode keeps it
+  # deterministic and token-free.
+  - repo: https://github.com/zizmorcore/zizmor-pre-commit
+    rev: v1.29.0
+    hooks:
+      - id: zizmor
+        args: [--no-online-audits]
+
+  # Pre-push stage: the slower quality gates. CI runs these too
+  # (reusable-python-ci.yml, "pre-push stage" step).
+  - repo: local
+    hooks:
+      - id: mypy
+        name: mypy
+        description: Static type check (same gate as CI)
+        # Targets come from [tool.mypy] files in pyproject.toml.
+        entry: uv run mypy
+        language: system
+        pass_filenames: false
+        stages: [pre-push]
+
+      - id: vulture
+        name: vulture
+        description: Find unused code (paths/confidence from [tool.vulture])
+        entry: uv run vulture
+        language: system
+        pass_filenames: false
+        stages: [pre-push]
+
+      - id: xenon
+        name: xenon
+        description: Complexity gate (same thresholds as CI)
+        # This repo has a flat layout. The code and its tests live in scripts/.
+        entry: uv run xenon --max-absolute=E --max-modules=D --max-average=C scripts
+        language: system
+        pass_filenames: false
+        stages: [pre-push]
+
+      - id: deptry
+        name: deptry
+        description: Unused, missing, and transitive dependencies
+        entry: uv run deptry .
+        language: system
+        pass_filenames: false
+        stages: [pre-push]
+
+      - id: import-linter
+        name: import-linter
+        description: Layer contracts, in repos that declare any
+        # lint-imports exits non-zero when no contracts exist, so the
+        # guard keeps the hook quiet until a repo writes its first
+        # [tool.importlinter] block. Adding contracts turns the gate on
+        # with no edit here.
+        entry: bash -c 'grep -q "^\[tool\.importlinter\]" pyproject.toml && uv run lint-imports || true'
+        language: system
+        pass_filenames: false
+        stages: [pre-push]
