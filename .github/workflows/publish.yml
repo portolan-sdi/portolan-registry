@@ -23,6 +23,9 @@ jobs:
   publish:
     if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
+    # The run crawls and mirrors every catalog with 4 workers. It took
+    # about 10 minutes before the mirror in October 2026.
+    timeout-minutes: 120
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
@@ -40,8 +43,18 @@ jobs:
       - name: Setup uv
         uses: astral-sh/setup-uv@v7
 
+      # The export publishes what rashid and stac-node-validator find as
+      # portolan_registry:stac_valid. Without them it publishes null.
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+
+      - name: Install stac-node-validator
+        run: npm ci --prefix scripts/stac-node-validator --no-audit --no-fund
+
       - name: Crawl catalogs and generate export
-        run: uv run --frozen scripts/publish_export.py
+        run: uv run --frozen --group validators scripts/publish_export.py
 
       - name: Propose the export
         uses: ./.github/actions/propose-export

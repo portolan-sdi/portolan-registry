@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-06T22:11:29.192774+00:00",
+  "generated": "2026-10-09T12:37:34.667972+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-10-06T22:11:29.192774+00:00",
+  "registry_generated": "2026-10-09T12:37:34.667972+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -2388,16 +2388,6 @@
           ]
         },
         {
-          "id": "kauffaelle/ein-und-zweifamilienhaeuser-2024",
-          "title": "Kauff\u00e4lle 2024 \u2013 Ein- und Zweifamilienh\u00e4user",
-          "bbox": [
-            13.1142,
-            52.3741,
-            13.7236,
-            52.6487
-          ]
-        },
-        {
           "id": "kauffaelle/ein-und-zweifamilienhaeuser-2025",
           "title": "Kauff\u00e4lle 2025 \u2013 Ein- und Zweifamilienh\u00e4user",
           "bbox": [
@@ -2525,6 +2515,16 @@
             52.4193,
             13.4568,
             52.6227
+          ]
+        },
+        {
+          "id": "kauffaelle/ein-und-zweifamilienhaeuser-2024",
+          "title": "Kauff\u00e4lle 2024 \u2013 Ein- und Zweifamilienh\u00e4user",
+          "bbox": [
+            13.1142,
+            52.3741,
+            13.7236,
+            52.6487
           ]
         },
         {
@@ -40153,29 +40153,29 @@
           "id": "ftw-s2-2017",
           "title": "FTW Global \u2014 Field Boundaries 2017 (GeoParquet)",
           "bbox": [
-            -175.9032,
-            -46.9455,
-            179.8107,
-            65.8204
+            -175.3499,
+            -46.9056,
+            179.7758,
+            65.8206
           ]
         },
         {
           "id": "ftw-s2-2018",
           "title": "FTW Global \u2014 Field Boundaries 2018 (GeoParquet)",
           "bbox": [
-            -175.8273,
-            -46.953,
-            179.8066,
-            65.8215
+            -175.3516,
+            -46.8366,
+            179.8118,
+            65.8206
           ]
         },
         {
           "id": "ftw-s2-2019",
           "title": "FTW Global \u2014 Field Boundaries 2019 (GeoParquet)",
           "bbox": [
-            -175.9522,
-            -46.9509,
-            179.8114,
+            -175.352,
+            -46.8353,
+            179.8118,
             65.8206
           ]
         },
@@ -40184,19 +40184,19 @@
           "title": "FTW Global \u2014 Field Boundaries 2020 (GeoParquet)",
           "bbox": [
             -175.352,
-            -46.9305,
-            179.8006,
-            65.8215
+            -46.9056,
+            179.8026,
+            65.8189
           ]
         },
         {
           "id": "ftw-s2-2021",
           "title": "FTW Global \u2014 Field Boundaries 2021 (GeoParquet)",
           "bbox": [
-            -176.0391,
-            -46.9539,
-            179.7849,
-            65.8182
+            -175.3508,
+            -46.9057,
+            179.7955,
+            65.8189
           ]
         },
         {
@@ -40204,9 +40204,9 @@
           "title": "FTW Global \u2014 Field Boundaries 2022 (GeoParquet)",
           "bbox": [
             -175.349,
-            -46.9536,
+            -46.8675,
             179.7939,
-            65.8215
+            65.8206
           ]
         },
         {
@@ -40214,8 +40214,8 @@
           "title": "FTW Global \u2014 Field Boundaries 2023 (GeoParquet)",
           "bbox": [
             -175.349,
-            -46.9433,
-            179.8023,
+            -46.9056,
+            179.7856,
             65.8206
           ]
         },
@@ -40223,10 +40223,10 @@
           "id": "ftw-s2-2024",
           "title": "FTW Global \u2014 Field Boundaries 2024 (GeoParquet)",
           "bbox": [
-            -176.0355,
-            -46.9517,
-            179.812,
-            65.8215
+            -175.3497,
+            -46.8373,
+            179.793,
+            65.8206
           ]
         },
         {
@@ -40234,9 +40234,9 @@
           "title": "FTW Global \u2014 Field Boundaries 2025 (GeoParquet)",
           "bbox": [
             -175.3499,
-            -46.9536,
-            179.8011,
-            65.8101
+            -46.745,
+            179.7927,
+            65.8206
           ]
         },
         {
@@ -40363,6 +40363,312 @@
             -89.9,
             180.0,
             83.6274
+          ]
+        }
+      ]
+    },
+    {
+      "id": "geoconnex-geoparquet",
+      "collection_count": 30,
+      "collections": [
+        {
+          "id": "mainstems",
+          "title": "Rivers: mainstems, head to outlet",
+          "bbox": [
+            -124.7244,
+            25.034,
+            -66.6286,
+            52.1174
+          ]
+        },
+        {
+          "id": "gages",
+          "title": "Stream gages",
+          "bbox": [
+            -176.715,
+            -14.3359,
+            179.9098,
+            71.3874
+          ]
+        },
+        {
+          "id": "dams",
+          "title": "Dams",
+          "bbox": [
+            -176.6873,
+            13.3605,
+            -65.672,
+            71.2667
+          ]
+        },
+        {
+          "id": "hu02",
+          "title": "Watersheds HU02 (regions)",
+          "bbox": [
+            -179.2295,
+            -14.4244,
+            179.8565,
+            71.4395
+          ]
+        },
+        {
+          "id": "hu04",
+          "title": "Watersheds HU04 (subregions)",
+          "bbox": [
+            -179.2295,
+            -14.4244,
+            179.8565,
+            71.4395
+          ]
+        },
+        {
+          "id": "hu06",
+          "title": "Watersheds HU06 (basins)",
+          "bbox": [
+            -179.2295,
+            -14.4244,
+            179.8565,
+            71.4395
+          ]
+        },
+        {
+          "id": "hu08",
+          "title": "Watersheds HU08 (subbasins)",
+          "bbox": [
+            -179.2295,
+            -14.4244,
+            179.8565,
+            71.4395
+          ]
+        },
+        {
+          "id": "hu10",
+          "title": "Watersheds HU10",
+          "bbox": [
+            -179.2295,
+            -14.4244,
+            179.8565,
+            71.4395
+          ]
+        },
+        {
+          "id": "hu12",
+          "title": "Watersheds HU12 (subwatersheds)",
+          "bbox": [
+            -179.2297,
+            -14.6102,
+            179.8567,
+            71.4396
+          ]
+        },
+        {
+          "id": "principal_aquifers",
+          "title": "Principal aquifers",
+          "bbox": [
+            -160.2349,
+            17.6866,
+            -64.7194,
+            49.3856
+          ]
+        },
+        {
+          "id": "national_aquifers",
+          "title": "National aquifers",
+          "bbox": [
+            -160.2349,
+            17.6866,
+            -64.7194,
+            49.3856
+          ]
+        },
+        {
+          "id": "hydrogeologic_regions",
+          "title": "Secondary hydrogeologic regions",
+          "bbox": [
+            -124.7311,
+            24.5963,
+            -66.9606,
+            49.3856
+          ]
+        },
+        {
+          "id": "water_systems",
+          "title": "Public water systems",
+          "bbox": [
+            -174.3233,
+            19.064,
+            173.033,
+            71.3402
+          ]
+        },
+        {
+          "id": "epa_wqp",
+          "title": "Water Quality Portal sites",
+          "bbox": [
+            -180.0,
+            -90.0,
+            179.9098,
+            90.0
+          ]
+        },
+        {
+          "id": "usgs_monitoring_locations",
+          "title": "USGS monitoring locations",
+          "bbox": [
+            -176.715,
+            -14.3478,
+            179.9098,
+            71.3874
+          ]
+        },
+        {
+          "id": "usgs_national_geologic_map",
+          "title": "National Geologic Map units",
+          "bbox": [
+            -125.3812,
+            24.3963,
+            -66.8854,
+            49.3845
+          ]
+        },
+        {
+          "id": "usgs_gnis",
+          "title": "GNIS names",
+          "bbox": [
+            -180.0,
+            -14.5475,
+            179.9833,
+            71.4175
+          ]
+        },
+        {
+          "id": "usgs_sciencebase",
+          "title": "ScienceBase items",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "ca_gage_assessment_gages",
+          "title": "California stream gage assessment",
+          "bbox": [
+            -124.2945,
+            32.5515,
+            -114.1395,
+            42.0061
+          ]
+        },
+        {
+          "id": "iow_state_gages_ndwr",
+          "title": "Nevada state gages",
+          "bbox": [
+            -120.0026,
+            36.1513,
+            -114.0221,
+            41.9969
+          ]
+        },
+        {
+          "id": "utah_water_systems",
+          "title": "Utah water systems",
+          "bbox": [
+            -114.0529,
+            36.9396,
+            -109.0699,
+            42.6815
+          ]
+        },
+        {
+          "id": "iow_state_gages_cdss",
+          "title": "Colorado state gages",
+          "bbox": [
+            -109.052,
+            31.0849,
+            -102.0592,
+            40.9936
+          ]
+        },
+        {
+          "id": "iow_state_gages_wyseo",
+          "title": "Wyoming state gages",
+          "bbox": [
+            -111.2533,
+            40.8351,
+            -104.0469,
+            45.3068
+          ]
+        },
+        {
+          "id": "wwdh_snotel",
+          "title": "SNOTEL stations",
+          "bbox": [
+            -164.9247,
+            32.9234,
+            -103.7876,
+            70.2806
+          ]
+        },
+        {
+          "id": "wwdh_usbr_rise",
+          "title": "Bureau of Reclamation locations",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "wwdh_usace_access_to_water",
+          "title": "USACE reservoirs",
+          "bbox": [
+            -147.1799,
+            26.7218,
+            -71.5181,
+            64.7925
+          ]
+        },
+        {
+          "id": "wwdh_awdb_forecasts",
+          "title": "NRCS water supply forecast points",
+          "bbox": [
+            -158.1138,
+            32.6463,
+            -103.4821,
+            62.5204
+          ]
+        },
+        {
+          "id": "wwdh_noaa_rfc",
+          "title": "NOAA River Forecast Center points",
+          "bbox": [
+            -123.4931,
+            32.6481,
+            -103.2014,
+            52.05
+          ]
+        },
+        {
+          "id": "iow_state_gages_mtdnrc",
+          "title": "Montana state gages",
+          "bbox": [
+            -114.5286,
+            44.5881,
+            112.6777,
+            48.9552
+          ]
+        },
+        {
+          "id": "iow_state_gages_nednr",
+          "title": "Nebraska state gages",
+          "bbox": [
+            -104.0576,
+            40.0141,
+            -96.4685,
+            42.9223
           ]
         }
       ]
@@ -41729,7 +42035,7 @@
     },
     {
       "id": "harmonized-field-data",
-      "collection_count": 67,
+      "collection_count": 69,
       "collections": [
         {
           "id": "at",
@@ -41779,6 +42085,16 @@
             41.1891,
             28.6233,
             44.2802
+          ]
+        },
+        {
+          "id": "br_conab",
+          "title": "Brazil Crop Fields (CONAB)",
+          "bbox": [
+            -57.573,
+            -33.6734,
+            -39.0188,
+            -6.3783
           ]
         },
         {
@@ -42392,6 +42708,16 @@
           ]
         },
         {
+          "id": "us_ca_scm",
+          "title": "California (US) Statewide Crop Mapping",
+          "bbox": [
+            -124.3753,
+            32.5447,
+            -114.4916,
+            42.0056
+          ]
+        },
+        {
           "id": "us_usda_cropland",
           "title": "U.S. Department of Agriculture Crop Sequence Boundaries",
           "bbox": [
@@ -42976,6 +43302,16 @@
           ]
         },
         {
+          "id": "boundaries/civil-parishes",
+          "title": "Civil Parishes - National Statutory Boundaries - 2019 - Generalised 20m",
+          "bbox": [
+            -9.7416,
+            51.5378,
+            -6.0209,
+            55.1488
+          ]
+        },
+        {
           "id": "boundaries/constituencies",
           "title": "Constituency Boundaries - Generalised 20m - National Electoral Boundaries - 2017",
           "bbox": [
@@ -42996,6 +43332,16 @@
           ]
         },
         {
+          "id": "boundaries/electoral-divisions",
+          "title": "Electoral Divisions - National Statutory Boundaries - 2019 - Generalised 20m",
+          "bbox": [
+            -10.663,
+            51.4199,
+            -5.9963,
+            55.4464
+          ]
+        },
+        {
           "id": "boundaries/gaeltacht-areas",
           "title": "Gaeltacht Boundaries Generalised 20m - National Administrative Boundaries - 2015",
           "bbox": [
@@ -43003,6 +43349,16 @@
             51.4199,
             -6.7032,
             55.279
+          ]
+        },
+        {
+          "id": "boundaries/local-electoral-areas",
+          "title": "Local Electoral Areas - National Statutory Boundaries - 2019 - Generalised 20m",
+          "bbox": [
+            -10.6628,
+            51.4199,
+            -5.9963,
+            55.4464
           ]
         },
         {
@@ -43023,36 +43379,6 @@
             51.4199,
             -5.9963,
             55.4469
-          ]
-        },
-        {
-          "id": "boundaries/civil-parishes",
-          "title": "Civil Parishes - National Statutory Boundaries - 2019 - Generalised 20m",
-          "bbox": [
-            -9.7416,
-            51.5378,
-            -6.0209,
-            55.1488
-          ]
-        },
-        {
-          "id": "boundaries/electoral-divisions",
-          "title": "Electoral Divisions - National Statutory Boundaries - 2019 - Generalised 20m",
-          "bbox": [
-            -10.663,
-            51.4199,
-            -5.9963,
-            55.4464
-          ]
-        },
-        {
-          "id": "boundaries/local-electoral-areas",
-          "title": "Local Electoral Areas - National Statutory Boundaries - 2019 - Generalised 20m",
-          "bbox": [
-            -10.6628,
-            51.4199,
-            -5.9963,
-            55.4464
           ]
         },
         {
@@ -43086,16 +43412,6 @@
           ]
         },
         {
-          "id": "environment/radon-risk-map",
-          "title": "Radon Risk Map of Ireland",
-          "bbox": [
-            -10.6562,
-            51.4235,
-            -5.9989,
-            55.384
-          ]
-        },
-        {
           "id": "environment/licensed-facilities",
           "title": "IPPC, IPC and IEL Facilities",
           "bbox": [
@@ -43103,6 +43419,16 @@
             51.5588,
             -6.0364,
             55.1259
+          ]
+        },
+        {
+          "id": "environment/radon-risk-map",
+          "title": "Radon Risk Map of Ireland",
+          "bbox": [
+            -10.6562,
+            51.4235,
+            -5.9989,
+            55.384
           ]
         },
         {
@@ -43186,20 +43512,20 @@
           ]
         },
         {
-          "id": "statistical/cso-small-areas",
-          "title": "CSO Small Areas - National Statistical Boundaries - 2022 - Generalised 20m",
+          "id": "statistical/cso-local-electoral-areas",
+          "title": "CSO Local Electoral Areas - National Statistical Boundaries - 2022 - Generalised 20m",
           "bbox": [
-            -10.6628,
+            -10.663,
             51.4199,
             -5.9963,
             55.4466
           ]
         },
         {
-          "id": "statistical/cso-local-electoral-areas",
-          "title": "CSO Local Electoral Areas - National Statistical Boundaries - 2022 - Generalised 20m",
+          "id": "statistical/cso-small-areas",
+          "title": "CSO Small Areas - National Statistical Boundaries - 2022 - Generalised 20m",
           "bbox": [
-            -10.663,
+            -10.6628,
             51.4199,
             -5.9963,
             55.4466
@@ -43246,6 +43572,16 @@
           ]
         },
         {
+          "id": "water/bathing-water-areas",
+          "title": "Bathing Water Areas",
+          "bbox": [
+            -10.367,
+            51.4657,
+            -6.0114,
+            55.2968
+          ]
+        },
+        {
           "id": "water/coastal-waterbodies",
           "title": "Coastal Waterbodies - Cycle 3",
           "bbox": [
@@ -43283,16 +43619,6 @@
             51.4504,
             -6.0056,
             55.3801
-          ]
-        },
-        {
-          "id": "water/bathing-water-areas",
-          "title": "Bathing Water Areas",
-          "bbox": [
-            -10.367,
-            51.4657,
-            -6.0114,
-            55.2968
           ]
         }
       ]
@@ -44286,26 +44612,6 @@
       "collection_count": 35,
       "collections": [
         {
-          "id": "ambiente/corredor-verde",
-          "title": "Corredor Verde",
-          "bbox": [
-            -9.2298,
-            38.6914,
-            -9.0896,
-            38.7968
-          ]
-        },
-        {
-          "id": "ambiente/grandes-parques-jardins",
-          "title": "Grandes parques e Jardins de Lisboa",
-          "bbox": [
-            -9.2267,
-            38.6917,
-            -9.0897,
-            38.7967
-          ]
-        },
-        {
           "id": "ambiente/arvoredo",
           "title": "Arvoredo",
           "bbox": [
@@ -44313,6 +44619,16 @@
             38.6919,
             -9.091,
             38.7962
+          ]
+        },
+        {
+          "id": "ambiente/corredor-verde",
+          "title": "Corredor Verde",
+          "bbox": [
+            -9.2298,
+            38.6914,
+            -9.0896,
+            38.7968
           ]
         },
         {
@@ -44326,6 +44642,16 @@
           ]
         },
         {
+          "id": "ambiente/grandes-parques-jardins",
+          "title": "Grandes parques e Jardins de Lisboa",
+          "bbox": [
+            -9.2267,
+            38.6917,
+            -9.0897,
+            38.7967
+          ]
+        },
+        {
           "id": "ambiente/hortas-urbanas",
           "title": "Hortas Urbanas",
           "bbox": [
@@ -44333,16 +44659,6 @@
             38.7052,
             -9.1028,
             38.794
-          ]
-        },
-        {
-          "id": "cartografia/toponimia",
-          "title": "Topon\u00edmia de Lisboa",
-          "bbox": [
-            -9.2316,
-            38.6924,
-            -9.0897,
-            38.7963
           ]
         },
         {
@@ -44376,13 +44692,13 @@
           ]
         },
         {
-          "id": "ciclavel/zonas-30",
-          "title": "Zonas 30",
+          "id": "cartografia/toponimia",
+          "title": "Topon\u00edmia de Lisboa",
           "bbox": [
-            -9.2003,
-            38.734,
-            -9.1311,
-            38.7575
+            -9.2316,
+            38.6924,
+            -9.0897,
+            38.7963
           ]
         },
         {
@@ -44406,6 +44722,16 @@
           ]
         },
         {
+          "id": "ciclavel/zonas-30",
+          "title": "Zonas 30",
+          "bbox": [
+            -9.2003,
+            38.734,
+            -9.1311,
+            38.7575
+          ]
+        },
+        {
           "id": "ciclavel/zonas-acesso-automovel-condicionado",
           "title": "Zonas de Acesso Autom\u00f3vel Condicionado (ZAAC)",
           "bbox": [
@@ -44413,16 +44739,6 @@
             38.7068,
             -9.125,
             38.7167
-          ]
-        },
-        {
-          "id": "equipamentos/instalacoes-desportivas",
-          "title": "Instala\u00e7\u00f5es Desportivas",
-          "bbox": [
-            -9.2243,
-            38.6931,
-            -9.0913,
-            38.7949
           ]
         },
         {
@@ -44436,6 +44752,16 @@
           ]
         },
         {
+          "id": "equipamentos/instalacoes-desportivas",
+          "title": "Instala\u00e7\u00f5es Desportivas",
+          "bbox": [
+            -9.2243,
+            38.6931,
+            -9.0913,
+            38.7949
+          ]
+        },
+        {
           "id": "equipamentos/museus",
           "title": "Museus",
           "bbox": [
@@ -44446,16 +44772,6 @@
           ]
         },
         {
-          "id": "mobilidade/rede-ferroviaria",
-          "title": "Rede Ferrovi\u00e1ria",
-          "bbox": [
-            -9.2293,
-            38.6935,
-            -9.0914,
-            38.8116
-          ]
-        },
-        {
           "id": "mobilidade/cruzamentos-semaforizados",
           "title": "Cruzamentos Semaforizados",
           "bbox": [
@@ -44463,6 +44779,16 @@
             38.6934,
             -9.0947,
             38.7846
+          ]
+        },
+        {
+          "id": "mobilidade/rede-ferroviaria",
+          "title": "Rede Ferrovi\u00e1ria",
+          "bbox": [
+            -9.2293,
+            38.6935,
+            -9.0914,
+            38.8116
           ]
         },
         {
@@ -44496,16 +44822,6 @@
           ]
         },
         {
-          "id": "patrimonio/monumentos-nacionais",
-          "title": "Monumentos Nacionais",
-          "bbox": [
-            -9.2159,
-            38.6916,
-            -9.1139,
-            38.7663
-          ]
-        },
-        {
           "id": "patrimonio/estatuaria",
           "title": "Estatu\u00e1ria",
           "bbox": [
@@ -44523,6 +44839,36 @@
             38.6936,
             -9.095,
             38.7863
+          ]
+        },
+        {
+          "id": "patrimonio/monumentos-nacionais",
+          "title": "Monumentos Nacionais",
+          "bbox": [
+            -9.2159,
+            38.6916,
+            -9.1139,
+            38.7663
+          ]
+        },
+        {
+          "id": "planeamento/planos-pormenor",
+          "title": "Limite de Planos de Pormenor",
+          "bbox": [
+            -9.2272,
+            38.6936,
+            -9.0897,
+            38.7969
+          ]
+        },
+        {
+          "id": "planeamento/planos-urbanizacao",
+          "title": "Limite de Planos de Urbaniza\u00e7\u00e3o",
+          "bbox": [
+            -9.1979,
+            38.6979,
+            -9.0879,
+            38.7971
           ]
         },
         {
@@ -44566,16 +44912,6 @@
           ]
         },
         {
-          "id": "transportes/estacoes-metro",
-          "title": "Esta\u00e7\u00f5es de Metro",
-          "bbox": [
-            -9.2239,
-            38.7061,
-            -9.0998,
-            38.7935
-          ]
-        },
-        {
           "id": "transportes/elevadores-ascensores",
           "title": "Elevadores e Ascensores",
           "bbox": [
@@ -44596,6 +44932,16 @@
           ]
         },
         {
+          "id": "transportes/estacoes-metro",
+          "title": "Esta\u00e7\u00f5es de Metro",
+          "bbox": [
+            -9.2239,
+            38.7061,
+            -9.0998,
+            38.7935
+          ]
+        },
+        {
           "id": "transportes/interface-fluvial",
           "title": "Interface Fluvial",
           "bbox": [
@@ -44613,26 +44959,6 @@
             38.6935,
             -9.0925,
             38.7861
-          ]
-        },
-        {
-          "id": "planeamento/planos-pormenor",
-          "title": "Limite de Planos de Pormenor",
-          "bbox": [
-            -9.2272,
-            38.6936,
-            -9.0897,
-            38.7969
-          ]
-        },
-        {
-          "id": "planeamento/planos-urbanizacao",
-          "title": "Limite de Planos de Urbaniza\u00e7\u00e3o",
-          "bbox": [
-            -9.1979,
-            38.6979,
-            -9.0879,
-            38.7971
           ]
         }
       ]
@@ -48677,6 +49003,42 @@
             50.3227,
             9.4616,
             52.5315
+          ]
+        }
+      ]
+    },
+    {
+      "id": "oam-portolan",
+      "collection_count": 3,
+      "collections": [
+        {
+          "id": "oam-cc-by-4-0",
+          "title": "OpenAerialMap imagery, CC BY 4.0",
+          "bbox": [
+            -175.5176,
+            -85.5618,
+            178.5786,
+            90.0
+          ]
+        },
+        {
+          "id": "oam-cc-by-nc-4-0",
+          "title": "OpenAerialMap imagery, CC BY-NC 4.0",
+          "bbox": [
+            -175.2685,
+            -70.6133,
+            174.7396,
+            62.0939
+          ]
+        },
+        {
+          "id": "oam-cc-by-sa-4-0",
+          "title": "OpenAerialMap imagery, CC BY-SA 4.0",
+          "bbox": [
+            -123.2372,
+            -35.7003,
+            147.4287,
+            57.8795
           ]
         }
       ]
@@ -53987,7 +54349,7 @@
       "collections": [
         {
           "id": "hydroatlas/basinatlas",
-          "title": "Basinatlas",
+          "title": "BasinATLAS",
           "bbox": [
             -180.0,
             -55.9875,
@@ -53997,7 +54359,7 @@
         },
         {
           "id": "hydroatlas/lakeatlas",
-          "title": "Lakeatlas",
+          "title": "LakeATLAS",
           "bbox": [
             -180.0,
             -55.8651,
@@ -54007,7 +54369,7 @@
         },
         {
           "id": "hydroatlas/lakeatlas/lakeatlas-pour-points",
-          "title": "Lakeatlas Pour Points",
+          "title": "LakeATLAS Pour Points",
           "bbox": [
             -179.9925,
             -55.8609,
@@ -54017,7 +54379,7 @@
         },
         {
           "id": "hydroatlas/riveratlas",
-          "title": "Riveratlas",
+          "title": "RiverATLAS",
           "bbox": [
             -179.9979,
             -55.8771,

@@ -4,13 +4,27 @@ name: Validate Catalogs
 # path filter skips is never reported at all, which leaves every pull request
 # waiting on a run that will not happen. A pull request that changes no entry
 # costs one diff and no crawl.
+#
+# A change to a current entry fails this check unless a maintainer approves
+# the head commit. A review starts a new run, so the approval clears the
+# check. Auto-merge listens for `pull_request` runs only. So a person still
+# merges an approved change.
 on:
   workflow_dispatch:
   pull_request:
+  pull_request_review:
+    types: [submitted, dismissed]
+
+permissions:
+  contents: read
+  pull-requests: read
 
 jobs:
   validate:
     runs-on: ubuntu-latest
+    # A submission mirrors one catalog. ghsl, with 3,997
+    # documents, takes about a minute. The limit stops a host that stalls.
+    timeout-minutes: 45
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
@@ -20,13 +34,38 @@ jobs:
       - name: Setup uv
         uses: astral-sh/setup-uv@v7
 
+      # The gate runs rashid and stac-node-validator over a mirror of each
+      # new catalog's metadata. rashid is pinned in the `validators` group of
+      # uv.lock. stac-node-validator is pinned in
+      # scripts/stac-node-validator/package-lock.json and needs Node 22.12+.
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+
+      - name: Install stac-node-validator
+        run: npm ci --prefix scripts/stac-node-validator --no-audit --no-fund
+
       - name: Get changed catalogs
         id: changed
+        # `github.base_ref` is empty on `pull_request_review`, so read the
+        # base from the pull request itself.
+        env:
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
         run: |
-          git diff --name-only origin/${{ github.base_ref }}...HEAD -- 'catalogs/*.yaml' > changed.txt
+          # --no-renames lists a renamed entry under its old path too.
+          # The gate then sees the old path as a deletion and fails it.
+          git diff --name-only --no-renames "origin/$BASE_REF...HEAD" -- 'catalogs/*.yaml' > changed.txt
+          git diff --name-only --no-renames --diff-filter=A "origin/$BASE_REF...HEAD" -- 'catalogs/*.yaml' > added.txt
           echo "Changed catalog files:"
           cat changed.txt
+          echo "New catalog files:"
+          cat added.txt
           echo "count=$(wc -l < changed.txt | tr -d ' ')" >> "$GITHUB_OUTPUT"
+          # The export decides which entries are new. Read it from the base
+          # branch. A pull request that lists its own entry in its copy of
+          # the export would otherwise skip the validators.
+          git show "origin/$BASE_REF:exports/catalogs.json" > base-export.json
 
       # Written before the validation step, so the notifier can still find
       # the pull request when validation fails. The `workflow_run` payload
@@ -36,10 +75,61 @@ jobs:
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: echo "$PR_NUMBER" > pr-number.txt
 
+      # The approval must name the head commit. A push after the review
+      # leaves the approval on an old commit, so the check fails again.
+      # Only a human with the admin or maintain role counts. The author
+      # cannot approve their own pull request, and a bot is not a human.
+      - name: Find a maintainer approval of the head commit
+        id: approval
+        if: github.event.pull_request
+        uses: actions/github-script@v9
+        with:
+          result-encoding: string
+          script: |
+            const pr = context.payload.pull_request;
+            const reviews = await github.paginate(github.rest.pulls.listReviews, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr.number
+            });
+            for (const r of reviews) {
+              if (r.state !== 'APPROVED' || r.commit_id !== pr.head.sha) continue;
+              if (!r.user || r.user.type !== 'User') continue;
+              // Anyone can approve a public pull request. The lookup can
+              // fail for a user outside the repository, and that user
+              // does not count.
+              let data;
+              try {
+                ({ data } = await github.rest.repos.getCollaboratorPermissionLevel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  username: r.user.login
+                }));
+              } catch (e) {
+                console.log(`Cannot read the role of ${r.user.login}: ${e.message}`);
+                continue;
+              }
+              if (['admin', 'maintain'].includes(data.role_name)) {
+                console.log(`${r.user.login} (${data.role_name}) approved ${pr.head.sha}`);
+                return 'true';
+              }
+            }
+            console.log(`No maintainer approval of ${pr.head.sha}`);
+            return 'false';
+
       - name: Validate changed catalogs
+        env:
+          APPROVED: ${{ steps.approval.outputs.result }}
         run: |
-          uv run --frozen scripts/validate_entries.py \
+          approval=()
+          if [ "$APPROVED" = "true" ]; then
+            approval=(--maintainer-approved)
+          fi
+          uv run --frozen --group validators scripts/validate_entries.py \
             --changed-file changed.txt \
+            --added-file added.txt \
+            --export base-export.json \
+            "${approval[@]}" \
             --report report.json
 
       - name: Upload the outcome

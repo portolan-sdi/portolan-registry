@@ -56,7 +56,7 @@
       "portolan_registry:last_validated": "2026-01-15T12:00:00+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
-      "portolan_registry:stac_valid": true,
+      "portolan_registry:stac_valid": null,
       "portolan_registry:has_agents_md": true,
       "portolan_registry:has_readme": true
     }

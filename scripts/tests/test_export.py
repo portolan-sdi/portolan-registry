@@ -109,6 +109,16 @@ class TestChildLink:
         assert link["portolan_registry:updated"] is None
         assert link["portolan_registry:first_registered"] is None
 
+    @pytest.mark.parametrize("verdict", [True, False])
+    def test_publishes_the_validators_verdict(self, verdict):
+        link = child_link({"id": "x", "url": ROOT, "validation": {"stac_valid": verdict}})
+        assert link["portolan_registry:stac_valid"] is verdict
+
+    def test_an_unvalidated_catalog_claims_nothing(self):
+        """Issue #200: the export once said true for every catalog."""
+        link = child_link({"id": "x", "url": ROOT, "validation": {"has_readme": True}})
+        assert link["portolan_registry:stac_valid"] is None
+
 
 class TestBuildExport:
     def test_has_root_and_self_links_before_children(self):

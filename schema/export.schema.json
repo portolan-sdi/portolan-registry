@@ -138,7 +138,10 @@
               "portolan_registry:last_validated": {"type": ["string", "null"]},
               "portolan_registry:stale_since": {"type": ["string", "null"]},
               "portolan_registry:failure_reason": {"type": ["string", "null"]},
-              "portolan_registry:stac_valid": {"type": "boolean"},
+              "portolan_registry:stac_valid": {
+                "description": "True when rashid (Portolan profile and STAC structure, no data checks) and stac-node-validator (STAC core and extension schemas) report no error on the catalog's metadata tree, and every linked catalog, collection, and item fetched. False when either validator reports an error or a document did not fetch. Null when the validators did not run or could not finish. The value does not change portolan_registry:status.",
+                "type": ["boolean", "null"]
+              },
               "portolan_registry:has_agents_md": {"type": "boolean"},
               "portolan_registry:has_readme": {"type": "boolean"}
             }

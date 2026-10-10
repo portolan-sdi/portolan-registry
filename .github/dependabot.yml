@@ -20,3 +20,15 @@ updates:
       - "dependencies"
       - "python"
     open-pull-requests-limit: 5
+
+  # stac-node-validator, which the gate and the nightly run over each
+  # catalog's metadata. Pinned exactly in package.json, so each release
+  # arrives as its own pull request.
+  - package-ecosystem: "npm"
+    directory: "/scripts/stac-node-validator"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+      - "javascript"
+    open-pull-requests-limit: 5
