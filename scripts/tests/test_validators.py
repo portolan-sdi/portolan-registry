@@ -166,6 +166,42 @@ class TestStacNodeValidator:
         with pytest.raises(ValidatorError, match="exited 1"):
             run_stac_node_validator(tmp_path, run=stub(returncode=1, stderr="boom"))
 
+    def test_each_kind_of_schema_has_its_own_description(self, tmp_path):
+        extension = "https://stac-extensions.github.io/file/v2.1.0/schema.json"
+        out = json.dumps(
+            {
+                "files_checked": 1,
+                "findings": [
+                    {"path": "c.json", "schema": schema, "message": "m"}
+                    for schema in ("core", "skipped", extension)
+                ],
+            }
+        )
+        found = run_stac_node_validator(tmp_path, run=stub(stdout=out))
+        assert [f.description for f in found] == [
+            "the STAC core schema rejects the object",
+            "the object declares no STAC version that can be validated",
+            "the extension schema rejects the object",
+        ]
+
+
+class TestValidateMirror:
+    def test_runs_both_validators_on_the_mirror(self, tmp_path, monkeypatch):
+        seen = []
+
+        def fake(name):
+            def run(mirror_dir):
+                seen.append((name, mirror_dir))
+                return [finding(name)]
+
+            return run
+
+        monkeypatch.setattr(validators, "run_rashid", fake("R"))
+        monkeypatch.setattr(validators, "run_stac_node_validator", fake("S"))
+        found = validators.validate_mirror(tmp_path)
+        assert [f.rule_id for f in found] == ["R", "S"]
+        assert seen == [("R", tmp_path), ("S", tmp_path)]
+
 
 def catalog_tree():
     return FakeFetcher(

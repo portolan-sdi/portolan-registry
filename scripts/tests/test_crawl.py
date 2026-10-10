@@ -5,7 +5,7 @@ from __future__ import annotations
 import pytest
 from conftest import FROZEN, FakeFetcher
 
-from registry.crawl import crawl_catalog
+from registry.crawl import _running, crawl_catalog
 from registry.fetch import NotFound
 
 ROOT = "https://ex.org/catalog.json"
@@ -183,6 +183,17 @@ class TestUnmeasuredSize:
         # assets is still a measurement, so it stays a number.
         r = crawl_catalog(ROOT, tree, now=FROZEN)
         assert r["total_size_bytes"] == 6144
+
+
+class TestRunningTotal:
+    def test_an_int_passes_through(self):
+        assert _running(0) == 0
+        assert _running(7) == 7
+
+    def test_none_before_the_settle_step_raises(self):
+        # A None restarted at 0 would publish a count that is too small.
+        with pytest.raises(TypeError, match="running total"):
+            _running(None)
 
 
 class TestPartialCrawls:

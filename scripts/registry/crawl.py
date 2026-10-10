@@ -220,9 +220,18 @@ def _summarize_collection(url: str, collection: Mapping[str, Any]) -> Collection
     return summary
 
 
-# The running totals below hold an int for the whole crawl. Only
-# _settle_totals turns item_count or total_size_bytes into None, after the
-# last child. The `or 0` satisfies the type, which allows None.
+def _running(total: int | None) -> int:
+    """A running total, which stays an int until _settle_totals.
+
+    Only _settle_totals turns item_count or total_size_bytes into None, after
+    the last child. A None before then is a bug. It raises here, as the plain
+    `+=` did, and does not restart the count at 0.
+    """
+    if total is None:
+        raise TypeError("a running total is None before _settle_totals")
+    return total
+
+
 def _add_collection(
     result: CrawlResult,
     child_url: str,
@@ -235,9 +244,9 @@ def _add_collection(
     result["collections"].append(summary)
     result["collection_count"] += 1
     result["feature_count"] += summary.row_count
-    result["item_count"] = (result["item_count"] or 0) + summary.item_count
+    result["item_count"] = _running(result["item_count"]) + summary.item_count
     result["asset_count"] += summary.asset_count
-    result["total_size_bytes"] = (result["total_size_bytes"] or 0) + summary.size_bytes
+    result["total_size_bytes"] = _running(result["total_size_bytes"]) + summary.size_bytes
     if summary.items_unenumerable:
         result["counts_partial"] = True
 
@@ -272,9 +281,11 @@ def _add_subcatalog(
     # A sub-catalog has already resolved its own unmeasurable
     # counts to None. Add what it did measure and let this level
     # decide again, over the whole merged collection list.
-    result["item_count"] = (result["item_count"] or 0) + (sub["item_count"] or 0)
+    result["item_count"] = _running(result["item_count"]) + (sub["item_count"] or 0)
     result["asset_count"] += sub["asset_count"]
-    result["total_size_bytes"] = (result["total_size_bytes"] or 0) + (sub["total_size_bytes"] or 0)
+    result["total_size_bytes"] = _running(result["total_size_bytes"]) + (
+        sub["total_size_bytes"] or 0
+    )
     if sub["counts_partial"]:
         result["counts_partial"] = True
     result["fetch_failures"].extend(sub["fetch_failures"])
