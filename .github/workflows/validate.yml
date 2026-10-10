@@ -22,6 +22,9 @@ permissions:
 jobs:
   validate:
     runs-on: ubuntu-latest
+    # A submission mirrors one catalog. ghsl, with 3,997
+    # documents, takes about a minute. The limit stops a host that stalls.
+    timeout-minutes: 45
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
@@ -30,6 +33,18 @@ jobs:
 
       - name: Setup uv
         uses: astral-sh/setup-uv@v7
+
+      # The gate runs rashid and stac-node-validator over a mirror of each
+      # new catalog's metadata. rashid is pinned in the `validators` group of
+      # uv.lock. stac-node-validator is pinned in
+      # scripts/stac-node-validator/package-lock.json and needs Node 22.12+.
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+
+      - name: Install stac-node-validator
+        run: npm ci --prefix scripts/stac-node-validator --no-audit --no-fund
 
       - name: Get changed catalogs
         id: changed
@@ -47,6 +62,10 @@ jobs:
           echo "New catalog files:"
           cat added.txt
           echo "count=$(wc -l < changed.txt | tr -d ' ')" >> "$GITHUB_OUTPUT"
+          # The export decides which entries are new. Read it from the base
+          # branch. A pull request that lists its own entry in its copy of
+          # the export would otherwise skip the validators.
+          git show "origin/$BASE_REF:exports/catalogs.json" > base-export.json
 
       # Written before the validation step, so the notifier can still find
       # the pull request when validation fails. The `workflow_run` payload
@@ -106,9 +125,10 @@ jobs:
           if [ "$APPROVED" = "true" ]; then
             approval=(--maintainer-approved)
           fi
-          uv run --frozen scripts/validate_entries.py \
+          uv run --frozen --group validators scripts/validate_entries.py \
             --changed-file changed.txt \
             --added-file added.txt \
+            --export base-export.json \
             "${approval[@]}" \
             --report report.json
 

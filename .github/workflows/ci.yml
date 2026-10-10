@@ -71,10 +71,20 @@ jobs:
       - name: Setup uv
         uses: astral-sh/setup-uv@v7
 
+      # The validator tests run the pinned rashid and stac-node-validator,
+      # and skip without them. Install both so CI exercises the real tools.
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+
+      - name: Install stac-node-validator
+        run: npm ci --prefix scripts/stac-node-validator --no-audit --no-fund
+
       # Discovery and import paths come from pyproject.toml, so this runs
       # from the repository root. Tests marked `network` are deselected.
       - name: Run tests
-        run: uv run --frozen --group dev pytest -v
+        run: uv run --frozen --group dev --group validators pytest -v
 
   exports-valid:
     name: Validate Exports

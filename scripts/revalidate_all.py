@@ -16,7 +16,6 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-from registry.crawl import crawl_catalog
 from registry.coverage import (
     COVERAGE_PATH,
     build_coverage_export,
@@ -42,6 +41,7 @@ from registry.history import first_registered
 from registry.report import log
 from registry.notify import send_stale_notification
 from registry.status import update_status
+from registry.validators import crawl_and_validate, log_validation, settle_stac_valid
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -68,7 +68,6 @@ def main(argv: list[str] | None = None) -> int:
     expected_ids = {p.stem for p in paths}
     previous_coverage = load_coverage(COVERAGE_PATH)
     previous_links = load_links(EXPORT_PATH)
-    fetcher = HttpFetcher()
 
     newly_stale: list[tuple[str, dict, str]] = []
     crawled: dict[str, dict] = {}
@@ -101,8 +100,12 @@ def main(argv: list[str] | None = None) -> int:
 
         previous_status = current_state.get("status", "valid")
 
+        # The validators publish `stac_valid` and leave the status alone. The
+        # status follows whether the catalog answers. Most registered
+        # catalogs predate the validators, and the gate holds new entries to
+        # them first.
         try:
-            result = crawl_catalog(url, fetcher, now=now)
+            result, report = crawl_and_validate(url, HttpFetcher, now=now)
         except Exception as e:
             failure_reason = str(e)
             log(f"  FAILED: {failure_reason}")
@@ -116,6 +119,8 @@ def main(argv: list[str] | None = None) -> int:
                 newly_stale.append((catalog_id, entry, failure_reason))
             continue
 
+        log_validation(report)
+        settle_stac_valid(result, url, previous_links.get(catalog_id))
         result["id"] = catalog_id
         # A shallow clone cannot see the add commit. Keep the date already
         # published rather than moving the catalog's registration to today.
@@ -173,8 +178,10 @@ def main(argv: list[str] | None = None) -> int:
                 "portolan_registry:total_size_bytes": None,
                 "portolan_registry:counts_partial": True,
                 # Never crawled, so nothing read its links either. False is
-                # what the export publishes for an unmeasured catalog.
-                "portolan_registry:stac_valid": True,
+                # what the export publishes for an unmeasured document
+                # signal. Null is what it publishes for a validation that
+                # never ran.
+                "portolan_registry:stac_valid": None,
                 "portolan_registry:has_agents_md": False,
                 "portolan_registry:has_readme": False,
             }
