@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-10T05:27:01.989865+00:00",
+  "generated": "2026-10-10T11:57:41.629294+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-10-10T05:27:01.989865+00:00",
+  "registry_generated": "2026-10-10T11:57:41.629294+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -2388,6 +2388,16 @@
           ]
         },
         {
+          "id": "kauffaelle/ein-und-zweifamilienhaeuser-2024",
+          "title": "Kauff\u00e4lle 2024 \u2013 Ein- und Zweifamilienh\u00e4user",
+          "bbox": [
+            13.1142,
+            52.3741,
+            13.7236,
+            52.6487
+          ]
+        },
+        {
           "id": "kauffaelle/ein-und-zweifamilienhaeuser-2025",
           "title": "Kauff\u00e4lle 2025 \u2013 Ein- und Zweifamilienh\u00e4user",
           "bbox": [
@@ -2515,16 +2525,6 @@
             52.4193,
             13.4568,
             52.6227
-          ]
-        },
-        {
-          "id": "kauffaelle/ein-und-zweifamilienhaeuser-2024",
-          "title": "Kauff\u00e4lle 2024 \u2013 Ein- und Zweifamilienh\u00e4user",
-          "bbox": [
-            13.1142,
-            52.3741,
-            13.7236,
-            52.6487
           ]
         },
         {
