@@ -23,9 +23,12 @@ on:
 permissions:
   contents: read
 
+# The event is part of the group, so the nightly run and a push to main
+# cannot cancel each other. Only a pull request cancels its older run. A
+# run on main finishes, so each commit on main keeps its result.
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   ci:
