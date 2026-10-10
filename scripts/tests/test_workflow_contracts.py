@@ -32,3 +32,28 @@ def test_site_dispatch_names_the_registry_commit():
     assert "event_type=registry-export-updated" in command
     assert "client_payload[registry_sha]=$GITHUB_SHA" in command
     assert "repos/portolan-sdi/portolan-sdi.org/dispatches" in command
+
+
+def _steps(name, job):
+    workflow = yaml.safe_load(Path(f".github/workflows/{name}").read_text())
+    return workflow["jobs"][job]["steps"]
+
+
+def test_every_validating_workflow_installs_both_validators():
+    # Without rashid the gate fails every new entry, and the nightly
+    # publishes null for every catalog. Both must ship with the step that
+    # runs them.
+    for name, job, script in [
+        ("validate.yml", "validate", "scripts/validate_entries.py"),
+        ("revalidate.yml", "revalidate", "scripts/revalidate_all.py"),
+        ("publish.yml", "publish", "scripts/publish_export.py"),
+    ]:
+        steps = _steps(name, job)
+        runs = [step.get("run", "") for step in steps]
+        assert any(
+            "npm ci --prefix scripts/stac-node-validator" in run for run in runs
+        ), name
+        node = next(s for s in steps if s.get("uses", "").startswith("actions/setup-node@"))
+        assert int(str(node["with"]["node-version"]).split(".")[0]) >= 22, name
+        crawl = next(run for run in runs if script in run)
+        assert "--group validators" in crawl, name

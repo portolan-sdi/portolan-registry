@@ -10,7 +10,13 @@ import pytest
 import requests
 import responses
 
-from registry.fetch import USER_AGENT, HttpFetcher, resolve_url
+from registry.fetch import (
+    USER_AGENT,
+    HttpFetcher,
+    NotFound,
+    default_retry,
+    resolve_url,
+)
 
 URL = "https://ex.org/catalog.json"
 
@@ -28,10 +34,40 @@ class TestGetJson:
             HttpFetcher().get_json(URL)
 
     @responses.activate
+    def test_raises_not_found_on_404(self):
+        responses.add(responses.GET, URL, status=404)
+        with pytest.raises(NotFound):
+            HttpFetcher().get_json(URL)
+
+    @responses.activate
+    def test_does_not_retry_a_404(self):
+        responses.add(responses.GET, URL, status=404)
+        with pytest.raises(NotFound):
+            HttpFetcher(retry=default_retry(0)).get_json(URL)
+        assert len(responses.calls) == 1
+
+    @responses.activate
     def test_raises_on_server_error(self):
         responses.add(responses.GET, URL, status=520)
+        with pytest.raises(requests.HTTPError) as caught:
+            HttpFetcher(retry=default_retry(0)).get_json(URL)
+        # A server error says nothing about whether the file exists.
+        assert not isinstance(caught.value, NotFound)
+
+    @responses.activate
+    def test_retries_a_transient_server_error(self):
+        """source.coop answered 520 in August 2026, then 200 on a retry."""
+        responses.add(responses.GET, URL, status=520)
+        responses.add(responses.GET, URL, json={"type": "Catalog"}, status=200)
+        assert HttpFetcher(retry=default_retry(0)).get_json(URL) == {"type": "Catalog"}
+        assert len(responses.calls) == 2
+
+    @responses.activate
+    def test_gives_up_after_three_retries(self):
+        responses.add(responses.GET, URL, status=503)
         with pytest.raises(requests.HTTPError):
-            HttpFetcher().get_json(URL)
+            HttpFetcher(retry=default_retry(0)).get_json(URL)
+        assert len(responses.calls) == 4
 
     @responses.activate
     def test_sends_an_identifying_user_agent(self):
@@ -45,6 +81,21 @@ class TestGetJson:
         responses.add(responses.GET, URL, json={}, status=200)
         HttpFetcher(user_agent="custom/1.0").get_json(URL)
         assert responses.calls[0].request.headers["User-Agent"] == "custom/1.0"
+
+
+class TestGetBytes:
+    @responses.activate
+    def test_returns_the_body_unchanged(self):
+        url = "https://ex.org/README.md"
+        responses.add(responses.GET, url, body="# T\u00edtulo\n".encode(), status=200)
+        assert HttpFetcher().get_bytes(url) == "# T\u00edtulo\n".encode()
+
+    @responses.activate
+    def test_raises_not_found_on_410(self):
+        url = "https://ex.org/README.md"
+        responses.add(responses.GET, url, status=410)
+        with pytest.raises(NotFound):
+            HttpFetcher().get_bytes(url)
 
 
 class TestProbe:

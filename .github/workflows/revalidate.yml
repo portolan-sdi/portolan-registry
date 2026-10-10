@@ -34,11 +34,21 @@ jobs:
       - name: Setup uv
         uses: astral-sh/setup-uv@v7
 
+      # The export publishes what rashid and stac-node-validator find as
+      # portolan_registry:stac_valid. Without them it publishes null.
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+
+      - name: Install stac-node-validator
+        run: npm ci --prefix scripts/stac-node-validator --no-audit --no-fund
+
       - name: Re-validate all catalogs
         id: revalidate
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
-        run: uv run --frozen scripts/revalidate_all.py
+        run: uv run --frozen --group validators scripts/revalidate_all.py
 
       - name: Propose the export
         uses: ./.github/actions/propose-export

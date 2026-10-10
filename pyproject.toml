@@ -14,6 +14,14 @@ dev = [
     "pytest>=8",
     "responses>=0.25",
 ]
+# The Portolan validator the pull request gate and the nightly run over each
+# catalog's metadata (scripts/registry/validators.py). Pinned exactly: a new
+# release can add rules, and a rule change must arrive as its own pull request
+# rather than turn existing entries red overnight. Kept out of `dev` because it
+# pulls in rasterio and pyarrow. Install with `--group validators`.
+validators = [
+    "rashid==0.1.8",
+]
 
 # Dependencies only. There is nothing to build or install, so uv skips the
 # build backend entirely and just resolves the environment.

@@ -1,9 +1,11 @@
 """The pull request gate: entry checks and the report it leaves behind.
 
 Address validation resolves MX records, so these tests replace the library
-call with a double rather than reaching the network. What is under test is
-the gate's own behavior: which checks run, in what order, and what the
-notifier can read afterwards.
+call with a double rather than reaching the network. The validators run as
+subprocesses, so they are replaced too, with a double that reports whatever
+a test asks. What is under test is the gate's own behavior: which checks run,
+in what order, which entries they gate, and what the notifier can read
+afterwards.
 """
 
 from __future__ import annotations
@@ -13,7 +15,9 @@ import json
 import pytest
 import validate_entries
 from conftest import FakeFetcher
-from registry import contacts
+from registry import contacts, validators
+from registry.validators import Finding, ValidatorError
+from test_validators import TOOLS
 
 ROOT = "https://ex.org/catalog.json"
 
@@ -31,6 +35,41 @@ def no_dns(monkeypatch):
     )
 
 
+REAL_VALIDATE = validators.validate_mirror
+
+
+class Reported(list):
+    """Findings the validator double returns. Set `error` to make it fail."""
+
+    error: str | None = None
+
+
+@pytest.fixture(autouse=True)
+def findings(monkeypatch):
+    reported = Reported()
+
+    def validate(mirror_dir):
+        if reported.error:
+            raise ValidatorError(reported.error)
+        return list(reported)
+
+    monkeypatch.setattr(validators, "validate_mirror", validate)
+    return reported
+
+
+ENTRY = f"url: {ROOT}\nsubmitter_email: submitter@example.com\n"
+
+
+def published(catalog_id="cat", href=ROOT, status="valid"):
+    return {
+        catalog_id: {
+            "href": href,
+            "portolan_registry:id": catalog_id,
+            "portolan_registry:status": status,
+        }
+    }
+
+
 def entry_file(tmp_path, name, body):
     path = tmp_path / name
     path.write_text(body)
@@ -42,7 +81,8 @@ def check(path, fetcher, **kw):
         path,
         existing_urls=kw.get("existing_urls", {}),
         state=kw.get("state", {}),
-        fetcher=fetcher,
+        source_factory=lambda: fetcher,
+        published=kw.get("published"),
     )
 
 
@@ -82,6 +122,99 @@ class TestSubmitterAddress:
         )
         assert check(path, tree) == []
         assert ROOT in tree.calls
+
+
+class TestValidatorGate:
+    def test_a_new_entry_with_a_rashid_error_fails_and_names_the_rule(
+        self, tmp_path, tree, findings
+    ):
+        findings.append(
+            Finding("rashid", "PTL-CNF-001", "declare the schema", "catalog.json", "none")
+        )
+        errors = check(entry_file(tmp_path, "cat.yaml", ENTRY), tree)
+        assert len(errors) == 1
+        assert "rashid PTL-CNF-001 (1 finding): declare the schema" in errors[0]
+        assert "`catalog.json: none`" in errors[0]
+
+    def test_one_error_per_rule(self, tmp_path, tree, findings):
+        findings.extend(
+            [Finding("rashid", "A", "a", f"{i}.json", "m") for i in range(5)]
+            + [Finding("stac-node-validator", "core", "c", "x.json", "m")]
+        )
+        errors = check(entry_file(tmp_path, "cat.yaml", ENTRY), tree)
+        assert len(errors) == 2
+        assert "and 2 more" in errors[0]
+
+    def test_a_clean_new_entry_passes(self, tmp_path, tree):
+        assert check(entry_file(tmp_path, "cat.yaml", ENTRY), tree) == []
+
+    def test_a_new_entry_with_a_broken_child_fails(self, tmp_path, tree):
+        tree.docs["https://ex.org/sub/catalog.json"] = TimeoutError("read timed out")
+        errors = check(entry_file(tmp_path, "cat.yaml", ENTRY), tree)
+        assert len(errors) == 1
+        assert "fetch FETCH" in errors[0]
+        assert "https://ex.org/sub/catalog.json" in errors[0]
+
+    def test_a_validator_that_cannot_run_fails_a_new_entry(self, tmp_path, tree, findings):
+        findings.error = "rashid is not installed"
+        errors = check(entry_file(tmp_path, "cat.yaml", ENTRY), tree)
+        assert errors == [
+            f"{tmp_path / 'cat.yaml'}: The validators could not run: rashid is not installed"
+        ]
+
+    def test_a_registered_entry_reports_and_does_not_fail(self, tmp_path, tree, findings):
+        """8 of 13 registered catalogs failed rashid in August 2026."""
+        findings.append(Finding("rashid", "PTL-CNF-001", "d", "catalog.json", "m"))
+        path = entry_file(tmp_path, "cat.yaml", ENTRY)
+        assert check(path, tree, published=published()) == []
+
+    def test_a_registered_entry_at_a_new_url_is_gated(self, tmp_path, tree, findings):
+        findings.append(Finding("rashid", "PTL-CNF-001", "d", "catalog.json", "m"))
+        path = entry_file(tmp_path, "cat.yaml", ENTRY)
+        links = published(href="https://elsewhere.org/catalog.json")
+        assert len(check(path, tree, published=links)) == 1
+
+    def test_a_removed_entry_is_gated_again(self, tmp_path, tree, findings):
+        findings.append(Finding("rashid", "PTL-CNF-001", "d", "catalog.json", "m"))
+        path = entry_file(tmp_path, "cat.yaml", ENTRY)
+        assert len(check(path, tree, published=published(status="removed"))) == 1
+
+    def test_another_catalog_being_registered_does_not_exempt_this_one(
+        self, tmp_path, tree, findings
+    ):
+        findings.append(Finding("rashid", "PTL-CNF-001", "d", "catalog.json", "m"))
+        path = entry_file(tmp_path, "cat.yaml", ENTRY)
+        assert len(check(path, tree, published=published(catalog_id="dog"))) == 1
+
+
+class EmptyFetcher(FakeFetcher):
+    """Answers `{}` for every URL. The old gate passed this."""
+
+    def get_json(self, url, timeout=30):
+        self.calls.append(url)
+        return {}
+
+    def get_bytes(self, url, timeout=30):
+        self.calls.append(f"BYTES {url}")
+        return b"{}"
+
+
+@pytest.mark.skipif(not TOOLS, reason="rashid and stac-node-validator are not installed")
+def test_a_root_that_returns_empty_json_exits_nonzero(tmp_path, monkeypatch):
+    """Issue #200, done-when 3, with the real rashid and stac-node-validator."""
+    monkeypatch.setattr(validators, "validate_mirror", REAL_VALIDATE)
+    monkeypatch.setattr(validate_entries, "HttpFetcher", EmptyFetcher)
+    entry_file(tmp_path, "cat.yaml", "url: https://x.invalid/catalog.json\n"
+               "submitter_email: submitter@example.com\n")
+    changed = tmp_path / "changed.txt"
+    changed.write_text(f"{tmp_path / 'cat.yaml'}\n")
+    report = tmp_path / "report.json"
+    code = validate_entries.main(
+        ["--changed-file", str(changed), "--catalog-dir", str(tmp_path), "--report", str(report)]
+    )
+    assert code == 1
+    errors = json.loads(report.read_text())["errors"]
+    assert any(" rashid PTL-" in e for e in errors)
 
 
 class TestReport:

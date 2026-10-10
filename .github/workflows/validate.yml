@@ -31,6 +31,18 @@ jobs:
       - name: Setup uv
         uses: astral-sh/setup-uv@v7
 
+      # The gate runs rashid and stac-node-validator over a mirror of each
+      # new catalog's metadata. rashid is pinned in the `validators` group of
+      # uv.lock. stac-node-validator is pinned in
+      # scripts/stac-node-validator/package-lock.json and needs Node 22.12+.
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+
+      - name: Install stac-node-validator
+        run: npm ci --prefix scripts/stac-node-validator --no-audit --no-fund
+
       - name: Get changed catalogs
         id: changed
         # `github.base_ref` is empty on `pull_request_review`, so read the
@@ -106,7 +118,7 @@ jobs:
           if [ "$APPROVED" = "true" ]; then
             approval=(--maintainer-approved)
           fi
-          uv run --frozen scripts/validate_entries.py \
+          uv run --frozen --group validators scripts/validate_entries.py \
             --changed-file changed.txt \
             --added-file added.txt \
             "${approval[@]}" \

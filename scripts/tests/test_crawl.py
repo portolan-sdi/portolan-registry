@@ -6,6 +6,7 @@ import pytest
 
 from conftest import FROZEN, FakeFetcher
 from registry.crawl import crawl_catalog
+from registry.fetch import NotFound
 
 ROOT = "https://ex.org/catalog.json"
 
@@ -195,6 +196,27 @@ class TestPartialCrawls:
         assert r["collection_count"] == 1
         assert r["item_count"] == 2
 
+    def test_a_failed_child_is_named(self, tree):
+        """The gate refuses a tree with a hole in it, so it needs the URL."""
+        tree.docs["https://ex.org/sub/catalog.json"] = TimeoutError("read timed out")
+        r = crawl_catalog(ROOT, tree, now=FROZEN)
+        assert r["fetch_failures"] == [
+            "https://ex.org/sub/catalog.json: read timed out"
+        ]
+
+    def test_a_failure_deep_in_the_tree_reaches_the_root(self, tree):
+        tree.docs["https://ex.org/sub/alpine/collection.json"] = TimeoutError("boom")
+        r = crawl_catalog(ROOT, tree, now=FROZEN)
+        assert r["fetch_failures"] == ["https://ex.org/sub/alpine/collection.json: boom"]
+
+    def test_a_complete_crawl_names_no_failure(self, tree):
+        assert crawl_catalog(ROOT, tree, now=FROZEN)["fetch_failures"] == []
+
+    def test_the_crawl_does_not_claim_validity(self, tree):
+        """Only the validators may set stac_valid. The crawl leaves it out."""
+        r = crawl_catalog(ROOT, tree, now=FROZEN)
+        assert "stac_valid" not in r["validation"]
+
     def test_a_complete_crawl_is_not_partial(self, tree):
         assert crawl_catalog(ROOT, tree, now=FROZEN)["counts_partial"] is False
 
@@ -265,7 +287,7 @@ class TestDegenerateCollections:
         assert r["collection_count"] == 1
 
     def test_unfetchable_root_raises(self):
-        with pytest.raises(LookupError):
+        with pytest.raises(NotFound):
             crawl_catalog(ROOT, FakeFetcher(), now=FROZEN)
 
 

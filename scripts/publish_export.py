@@ -16,7 +16,6 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
 
-from registry.crawl import crawl_catalog
 from registry.coverage import (
     COVERAGE_PATH,
     build_coverage_export,
@@ -40,6 +39,7 @@ from registry.export import (
 from registry.fetch import HttpFetcher
 from registry.history import first_registered
 from registry.report import log
+from registry.validators import crawl_and_validate, log_validation
 
 MAX_WORKERS = 4
 
@@ -57,12 +57,13 @@ def process_entry(
         return None
 
     try:
-        # One fetcher per worker: requests makes no thread-safety promise
-        # about sharing a Session.
-        result = crawl_catalog(url, HttpFetcher(), now=now)
+        # A fetcher per thread, built from the class: requests makes no
+        # thread-safety promise about sharing a Session.
+        result, report = crawl_and_validate(url, HttpFetcher, now=now)
     except Exception as e:
         log(f"  Error: {e}")
         return None
+    log_validation(report)
 
     result["id"] = path.stem
     # A shallow clone cannot see the add commit. Keep the date already

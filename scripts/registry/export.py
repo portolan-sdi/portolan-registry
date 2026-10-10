@@ -186,7 +186,10 @@ def child_link(catalog: Mapping) -> dict:
             "portolan_registry:last_validated": catalog.get("last_validated"),
             "portolan_registry:stale_since": catalog.get("stale_since"),
             "portolan_registry:failure_reason": catalog.get("failure_reason"),
-            "portolan_registry:stac_valid": validation.get("stac_valid", True),
+            # Whether rashid and stac-node-validator passed the catalog's
+            # metadata tree (registry.validators). Null when the validators
+            # did not run or could not finish.
+            "portolan_registry:stac_valid": validation.get("stac_valid"),
             # Whether the root catalog links the two Markdown documents the
             # specification requires of it, AGENTS.md and README.md.
             "portolan_registry:has_agents_md": validation.get("has_agents_md", False),

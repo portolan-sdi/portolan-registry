@@ -3,7 +3,15 @@
 
 Reads the list of changed files (one path per line) and, for each one that is
 a catalog entry, checks the URL shape, validates the submitter address, rejects
-duplicates, and crawls the catalog.
+duplicates, crawls the catalog, and validates a mirror of its metadata with
+rashid and stac-node-validator (registry.validators).
+
+The validators gate a new entry only. An entry is new when the registry has
+not published it, has removed it, or published it at another URL. 8 of 13
+registered catalogs failed rashid in an August 2026 run, so a change to an
+existing entry reports what the validators find and does not fail on it. The
+nightly re-validation publishes the same result as
+`portolan_registry:stac_valid`.
 
     uv run --frozen scripts/validate_entries.py --changed-file changed.txt
 
@@ -17,16 +25,18 @@ from __future__ import annotations
 import argparse
 import json
 import traceback
+from collections.abc import Callable, Mapping
 from pathlib import Path
 
 import requests
 
 from registry.contacts import validate_submitter_email
-from registry.crawl import crawl_catalog
 from registry.entries import CATALOG_DIR, load_entries, load_entry, normalize_url
-from registry.export import EXPORT_PATH, load_state
+from registry.export import EXPORT_PATH, load_links, load_state
 from registry.fetch import HttpFetcher
+from registry.mirror import MirrorSource
 from registry.report import log
+from registry.validators import crawl_and_validate
 
 
 APPROVAL_HINT = (
@@ -76,14 +86,30 @@ def modified_entries(changed_file: Path, added_file: Path) -> list[str]:
     ]
 
 
+def is_new_entry(catalog_id: str, url: str, published: Mapping[str, Mapping]) -> bool:
+    """True when the validators gate this entry. See the module docstring."""
+    link = published.get(catalog_id)
+    if not link:
+        return True
+    if link.get("portolan_registry:status") == "removed":
+        return True
+    href = link.get("href")
+    return not href or normalize_url(href) != normalize_url(url)
+
+
 def check_entry(
     path: Path,
     *,
     existing_urls: dict[str, str],
     state: dict[str, dict],
-    fetcher: HttpFetcher,
+    source_factory: Callable[[], MirrorSource],
+    published: Mapping[str, Mapping] | None = None,
 ) -> list[str]:
-    """Validate one entry. Returns a list of error strings."""
+    """Validate one entry. Returns a list of error strings.
+
+    `published` holds the previous export's child links by id. Left out, it
+    treats every entry as new, so the validators gate it.
+    """
     log(f"\n=== Processing {path} ===")
     entry = load_entry(path)
 
@@ -115,8 +141,10 @@ def check_entry(
                 f"This catalog already exists in '{existing_file}'"
             ]
 
+    gated = is_new_entry(path.stem, url, published or {})
+
     try:
-        result = crawl_catalog(url, fetcher)
+        result, report = crawl_and_validate(url, source_factory)
     except requests.exceptions.RequestException as e:
         return [f"{path}: Failed to fetch catalog: {e}"]
     except Exception as e:
@@ -142,7 +170,26 @@ def check_entry(
         log("  Warning: this catalog declares more than one Portolan version")
     log(f"  Validation: {result['validation']}")
 
-    return []
+    if report.error:
+        log(f"  Validators could not run: {report.error}")
+    for group in report.groups:
+        log("  " + group.render().replace("\n", "\n  "))
+    if report.passed:
+        log("  rashid and stac-node-validator found no errors")
+
+    if not gated:
+        if not report.passed:
+            log(
+                "  Note: this catalog is already registered, so these findings "
+                "do not fail the check"
+            )
+        return []
+
+    errors = []
+    if report.error:
+        errors.append(f"{path}: The validators could not run: {report.error}")
+    errors.extend(f"{path}: {group.render()}" for group in report.groups)
+    return errors
 
 
 def collect_errors(
@@ -164,13 +211,13 @@ def collect_errors(
     """
     try:
         state = load_state(EXPORT_PATH)
+        published = load_links(EXPORT_PATH)
         existing_urls = {
             normalize_url(entry["url"]): f"{cid}.yaml"
             for cid, entry in load_entries(catalog_dir).items()
             if entry.get("url")
         }
 
-        fetcher = HttpFetcher()
         errors: list[str] = []
         if maintainer_approved:
             log(
@@ -183,7 +230,11 @@ def collect_errors(
         for path in changed_entries(changed_file):
             errors.extend(
                 check_entry(
-                    path, existing_urls=existing_urls, state=state, fetcher=fetcher
+                    path,
+                    existing_urls=existing_urls,
+                    state=state,
+                    source_factory=HttpFetcher,
+                    published=published,
                 )
             )
         return errors
@@ -235,7 +286,8 @@ def main(argv: list[str] | None = None) -> int:
     if errors:
         log("\n=== ERRORS ===")
         for err in errors:
-            log(f"  - {err}")
+            nested = err.replace("\n", "\n  ")
+            log(f"  - {nested}")
         return 1
 
     log("\n=== All changed catalogs validated successfully ===")

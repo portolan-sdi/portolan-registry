@@ -128,6 +128,10 @@ class CrawlResult(TypedDict, total=False):
     # True when a count below is a floor rather than a total: a child failed to
     # fetch, or a collection's items could not be enumerated.
     counts_partial: bool
+    # "<url>: <error>" for every child the crawl could not fetch, from every
+    # level of the tree. The crawl keeps going past them, so the gate reads
+    # this list to refuse a submission whose tree is broken.
+    fetch_failures: list[str]
     temporal_extent: list[str | None] | None
     api_type: str | None
     last_crawled: str | None
@@ -159,12 +163,15 @@ def _empty_result(catalog_url: str, catalog: Mapping, now: datetime) -> CrawlRes
         "asset_count": 0,
         "total_size_bytes": 0,
         "counts_partial": False,
+        "fetch_failures": [],
         "temporal_extent": None,
         "api_type": None,
         "last_crawled": now.isoformat(),
         # crawl_catalog fills in the two document signals, which it reports
-        # for the root of a registered catalog only.
-        "validation": {"stac_valid": True},
+        # for the root of a registered catalog only. `stac_valid` is not the
+        # crawl's to decide: registry.validators sets it from what rashid and
+        # stac-node-validator report.
+        "validation": {},
         "collections": [],
     }
 
@@ -249,7 +256,8 @@ def crawl_catalog(
     # PORTO-CORE-061 and PORTO-CORE-062 ask every catalog and collection for
     # AGENTS.md and README.md, and both are MUST. The registry reports what the
     # registered root links and goes no deeper. Whole-tree conformance is
-    # rashid's job, and the registry is not a validator. Computing these per
+    # rashid's job, which registry.validators runs over a mirror of the
+    # tree after the crawl. Computing these per
     # sub-catalog and dropping the answer would read as an aggregate that the
     # export never publishes.
     if is_root:
@@ -323,6 +331,7 @@ def crawl_catalog(
                 result["total_size_bytes"] += sub["total_size_bytes"] or 0
                 if sub["counts_partial"]:
                     result["counts_partial"] = True
+                result["fetch_failures"].extend(sub["fetch_failures"])
                 if sub["bbox"]:
                     bboxes.append(sub["bbox"])
                 if sub["temporal_extent"]:
@@ -344,6 +353,7 @@ def crawl_catalog(
             # floor, and publishing them as totals is what made a failed fetch
             # indistinguishable from a small catalog.
             result["counts_partial"] = True
+            result["fetch_failures"].append(f"{child_url}: {e}")
             log(f"  Warning: Failed to fetch {child_url}: {e}")
 
     # Decided here, over `result["collections"]`, which already holds every

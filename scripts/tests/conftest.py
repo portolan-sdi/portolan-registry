@@ -17,6 +17,8 @@ from typing import Any
 
 import pytest
 
+from registry.fetch import NotFound
+
 FIXTURES = Path(__file__).parent / "fixtures"
 
 # Every timestamp in a golden comparison must be deterministic.
@@ -29,7 +31,9 @@ class FakeFetcher:
 
     `docs` maps URL -> parsed JSON. Store an Exception instance to simulate a
     timeout or malformed response; committed fixtures must stay valid JSON
-    because CI runs json.tool over every .json file in the repo.
+    because CI runs json.tool over every .json file in the repo. Store `str`
+    or `bytes` for a document that is not JSON, such as a README.md. A URL
+    absent from `docs` raises NotFound, as a 404 does from HttpFetcher.
     """
 
     docs: dict[str, Any] = field(default_factory=dict)
@@ -41,11 +45,24 @@ class FakeFetcher:
     def get_json(self, url: str, timeout: float = 30) -> Any:
         self.calls.append(url)
         if url not in self.docs:
-            raise LookupError(f"404 Not Found: {url}")
+            raise NotFound(f"404 Not Found: {url}")
         doc = self.docs[url]
         if isinstance(doc, Exception):
             raise doc
         return doc
+
+    def get_bytes(self, url: str, timeout: float = 30) -> bytes:
+        self.calls.append(f"BYTES {url}")
+        if url not in self.docs:
+            raise NotFound(f"404 Not Found: {url}")
+        doc = self.docs[url]
+        if isinstance(doc, Exception):
+            raise doc
+        if isinstance(doc, bytes):
+            return doc
+        if isinstance(doc, str):
+            return doc.encode("utf-8")
+        return json.dumps(doc).encode("utf-8")
 
     def probe(self, url: str, timeout: float = 5) -> bool:
         self.calls.append(f"GET {url}")
