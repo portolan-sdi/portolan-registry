@@ -17,6 +17,9 @@ concurrency:
 jobs:
   revalidate:
     runs-on: ubuntu-latest
+    # The run crawls and mirrors every catalog, one after
+    # another. It took about 25 minutes before the mirror in October 2026.
+    timeout-minutes: 120
     steps:
       - name: Checkout code
         uses: actions/checkout@v7

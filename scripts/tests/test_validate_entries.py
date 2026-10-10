@@ -396,6 +396,61 @@ class TestCurrentEntryChange:
         assert validate_entries.main([*args, "--maintainer-approved"]) == 0
 
 
+class TestPublishedExport:
+    """The export decides which entries are new. CI reads the base copy."""
+
+    def run(self, tmp_path, export, findings):
+        findings.append(Finding("rashid", "PTL-CNF-001", "d", "catalog.json", "m"))
+        new = entry_file(tmp_path, "evil.yaml", ENTRY)
+        changed = tmp_path / "changed.txt"
+        changed.write_text(f"{new}\n")
+        return validate_entries.collect_errors(
+            changed_file=changed, catalog_dir=tmp_path, added_file=changed, export_path=export
+        )
+
+    def export(self, path, links):
+        path.write_text(json.dumps({"type": "Catalog", "links": links}))
+        return path
+
+    def test_an_entry_listed_only_in_the_pull_request_export_is_gated(
+        self, tmp_path, tree, findings, monkeypatch
+    ):
+        """A fork can add its own entry to exports/catalogs.json. The gate
+        reads the base copy, which does not hold it, so it stays new."""
+        monkeypatch.setattr(validate_entries, "HttpFetcher", lambda: tree)
+        listed = {"rel": "child", "href": ROOT, "portolan_registry:id": "evil",
+                  "portolan_registry:status": "valid"}
+        # The pull request's own copy, where the default path points.
+        monkeypatch.chdir(tmp_path)
+        (tmp_path / "exports").mkdir()
+        self.export(tmp_path / "exports" / "catalogs.json", [listed])
+        base = self.export(tmp_path / "base-export.json", [])
+        errors = self.run(tmp_path, base, findings)
+        assert len(errors) == 1
+        assert "PTL-CNF-001" in errors[0]
+
+    def test_an_entry_in_the_base_export_is_not_gated(
+        self, tmp_path, tree, findings, monkeypatch
+    ):
+        monkeypatch.setattr(validate_entries, "HttpFetcher", lambda: tree)
+        listed = {"rel": "child", "href": ROOT, "portolan_registry:id": "evil",
+                  "portolan_registry:status": "valid"}
+        base = self.export(tmp_path / "base-export.json", [listed])
+        assert self.run(tmp_path, base, findings) == []
+
+    def test_main_reads_the_export_it_is_given(self, tmp_path, monkeypatch):
+        seen = []
+        monkeypatch.setattr(validate_entries, "load_links", lambda p: seen.append(p) or {})
+        monkeypatch.setattr(validate_entries, "load_state", lambda p: {})
+        changed = tmp_path / "changed.txt"
+        changed.write_text("")
+        validate_entries.main(
+            ["--changed-file", str(changed), "--catalog-dir", str(tmp_path),
+             "--export", str(tmp_path / "base-export.json")]
+        )
+        assert seen == [tmp_path / "base-export.json"]
+
+
 class TestUnexpectedFailure:
     def test_a_crash_becomes_an_error_rather_than_a_traceback(
         self, tmp_path, monkeypatch

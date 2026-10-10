@@ -22,14 +22,16 @@ The flags were confirmed against rashid 0.1.8 in October 2026:
 from __future__ import annotations
 
 import json
+import re
 import subprocess
 import tempfile
-from collections.abc import Callable, Iterable
+from collections.abc import Callable, Iterable, Mapping
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
 
 from registry.crawl import CrawlResult, crawl_catalog
+from registry.entries import normalize_url
 from registry.fetch import HttpFetcher
 from registry.mirror import Mirror, MirroringFetcher, MirrorSource, complete_mirror
 from registry.report import log
@@ -38,6 +40,9 @@ RASHID = ("rashid", "check", "--json", "--no-data", "--schema", "--schema-allow-
 
 SNV_RUNNER = Path(__file__).resolve().parent.parent / "stac-node-validator" / "report.cjs"
 SNV = ("node", str(SNV_RUNNER))
+
+# The tool name of a finding that the mirror, not a validator, reports.
+FETCH_TOOL = "fetch"
 
 # Enough to show the shape of a failure. A flat list for ign-argentina held
 # 1,547 lines in August 2026, which no pull request comment can carry.
@@ -63,6 +68,15 @@ class Finding:
     message: str
 
 
+# A rule id that renders as itself in Markdown, such as PTL-AST-001.
+PLAIN_RULE_ID = re.compile(r"[A-Za-z0-9_.-]+")
+
+
+def _code(text: str) -> str:
+    """`text` as one Markdown code span on one line."""
+    return "`" + " ".join(text.replace("`", "'").split()) + "`"
+
+
 @dataclass
 class RuleGroup:
     """Every finding of one rule, as a count and a few examples."""
@@ -78,12 +92,15 @@ class RuleGroup:
 
         The examples quote the catalog's own content into a pull request
         comment, so each goes in a code span. That keeps a mention or an
-        image in a title from rendering.
+        image in a title from rendering. A blank line ends a code span, so
+        each example becomes one line first. A stac-node-validator rule id
+        is a schema URL from the catalog, so it goes in a code span too.
         """
         noun = "finding" if self.count == 1 else "findings"
-        lines = [f"{self.tool} {self.rule_id} ({self.count} {noun}): {self.description}"]
+        rule = self.rule_id if PLAIN_RULE_ID.fullmatch(self.rule_id) else _code(self.rule_id)
+        lines = [f"{self.tool} {rule} ({self.count} {noun}): {self.description}"]
         for example in self.examples:
-            lines.append(f"  - `{example.replace('`', chr(39))}`")
+            lines.append(f"  - {_code(example)}")
         if self.count > len(self.examples):
             lines.append(f"  - and {self.count - len(self.examples)} more")
         return "\n".join(lines)
@@ -93,8 +110,14 @@ class RuleGroup:
 class ValidationReport:
     """The validators' verdict on one catalog.
 
-    `error` is set when a validator could not run. `passed` is then None:
-    the registry has no answer, which is a different claim from a pass.
+    `error` is set when a validator could not run, or when the mirror is not
+    a complete copy. `passed` is then None: the registry has no answer,
+    which is a different claim from a pass.
+
+    A FETCH group alone also gives None. A document that did not fetch after
+    the retries says nothing about the catalog. A nightly run that counted it
+    as a failure would flip `stac_valid` with each slow night. The gate still
+    fails a new entry on a FETCH group, because it fails on every group.
     """
 
     groups: list[RuleGroup] = field(default_factory=list)
@@ -104,7 +127,9 @@ class ValidationReport:
     def passed(self) -> bool | None:
         if self.error is not None:
             return None
-        return not self.groups
+        if any(g.tool != FETCH_TOOL for g in self.groups):
+            return False
+        return None if self.groups else True
 
 
 def group_findings(
@@ -171,7 +196,8 @@ def _snv_description(schema: str) -> str:
         return "the STAC core schema rejects the object"
     if schema == "skipped":
         return "the object declares no STAC version that can be validated"
-    return f"the extension schema {schema} rejects the object"
+    # The rule id names the schema. The description stays free of catalog text.
+    return "the extension schema rejects the object"
 
 
 def run_stac_node_validator(
@@ -203,7 +229,7 @@ def validate_mirror(mirror_dir: Path) -> list[Finding]:
 def _fetch_findings(failures: Iterable[str]) -> list[Finding]:
     return [
         Finding(
-            tool="fetch",
+            tool=FETCH_TOOL,
             rule_id="FETCH",
             description="a linked document did not fetch, so nothing could check it",
             path="",
@@ -211,6 +237,26 @@ def _fetch_findings(failures: Iterable[str]) -> list[Finding]:
         )
         for failure in failures
     ]
+
+
+def settle_stac_valid(result: CrawlResult, url: str, previous_link: Mapping | None) -> None:
+    """Keep the last published `stac_valid` when this run has no answer.
+
+    A run with no answer is a slow host or a broken tool, not news about the
+    catalog. Without this, each such night would write and commit the export.
+    A catalog with no published answer keeps None. So does a catalog whose
+    entry now names another URL, because the old answer is about another
+    catalog.
+    """
+    if result["validation"]["stac_valid"] is not None or not previous_link:
+        return
+    href = previous_link.get("href")
+    if not href or normalize_url(href) != normalize_url(url):
+        return
+    previous = previous_link.get("portolan_registry:stac_valid")
+    if isinstance(previous, bool):
+        log(f"  Note: no validator answer this run, so stac_valid stays {previous}")
+        result["validation"]["stac_valid"] = previous
 
 
 def log_validation(report) -> None:
@@ -234,9 +280,11 @@ def crawl_and_validate(
     """Crawl `url`, mirror its metadata, and validate the mirror.
 
     Raises as crawl_catalog does when the root cannot be fetched. A validator
-    that cannot run does not raise. It sets `report.error`, and
-    `stac_valid` becomes None. The caller decides what an unanswered check
-    means: the gate refuses the entry, and the nightly publishes null.
+    that cannot run does not raise. It sets `report.error`, and `stac_valid`
+    becomes None. A mirror that is not a complete copy does the same, and the
+    validators do not run. The caller decides what an unanswered check means.
+    The gate refuses the entry. The nightly keeps the last published answer
+    (`settle_stac_valid`).
 
     Every child that did not fetch is a FETCH finding. The crawl skips past
     it, and a tree with a hole in it has not been validated.
@@ -252,10 +300,15 @@ def crawl_and_validate(
 
         findings = _fetch_findings([*result["fetch_failures"], *mirror.failures])
         report = ValidationReport()
-        try:
-            findings.extend(validate(mirror_dir))
-        except ValidatorError as e:
-            report.error = str(e)
+        problem = mirror.problem()
+        if problem is not None:
+            # A verdict on an incomplete copy says nothing about the catalog.
+            report.error = f"the mirror is incomplete: {problem}"
+        else:
+            try:
+                findings.extend(validate(mirror_dir))
+            except ValidatorError as e:
+                report.error = str(e)
         report.groups = group_findings(findings)
 
     result["validation"]["stac_valid"] = report.passed

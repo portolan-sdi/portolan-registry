@@ -11,7 +11,7 @@ import json
 import pytest
 from conftest import FROZEN, FakeFetcher
 from registry.crawl import crawl_catalog
-from registry.mirror import Mirror, MirroringFetcher, complete_mirror
+from registry.mirror import Mirror, MirrorFull, MirroringFetcher, complete_mirror
 
 ROOT = "https://ex.org/catalog.json"
 
@@ -178,3 +178,42 @@ class TestCompleteMirror:
         mirror = mirrored(tree, tmp_path)
         complete_mirror(mirror, factory, workers=2)
         assert 1 <= len(built) <= 2
+
+
+class TestLimits:
+    def test_a_write_that_fails_is_recorded_and_does_not_raise(self, tmp_path):
+        mirror = Mirror(ROOT, tmp_path)
+        mirror.write("https://ex.org/a", b"{}")
+        mirror.write("https://ex.org/a/item.json", b"{}")
+        assert len(mirror.unwritable) == 1
+        assert mirror.unwritable[0].startswith("https://ex.org/a/item.json: ")
+        assert "could not be written" in mirror.problem()
+
+    def test_a_name_too_long_for_the_file_system_is_recorded(self, tmp_path):
+        mirror = Mirror(ROOT, tmp_path)
+        mirror.write("https://ex.org/" + "x" * 300 + ".json", b"{}")
+        assert len(mirror.unwritable) == 1
+
+    def test_the_crawl_stops_at_the_limit(self, tree, tmp_path):
+        mirror = Mirror(ROOT, tmp_path, max_documents=2)
+        result = crawl_catalog(ROOT, MirroringFetcher(tree, mirror), now=FROZEN)
+        assert len(mirror.attempted) == 2
+        assert mirror.truncated
+        assert any("mirror is full" in f for f in result["fetch_failures"])
+
+    def test_the_completion_stops_at_the_limit(self, tree, tmp_path):
+        mirror = mirrored(tree, tmp_path)
+        mirror.max_documents = len(mirror.attempted) + 3
+        complete_mirror(mirror, lambda: tree)
+        assert len(mirror.attempted) == mirror.max_documents
+        assert "more than" in mirror.problem()
+
+    def test_a_complete_mirror_has_no_problem(self, tree, tmp_path):
+        mirror = mirrored(tree, tmp_path)
+        complete_mirror(mirror, lambda: tree)
+        assert mirror.problem() is None
+
+    def test_mirror_full_is_a_request_error(self):
+        import requests
+
+        assert issubclass(MirrorFull, requests.RequestException)

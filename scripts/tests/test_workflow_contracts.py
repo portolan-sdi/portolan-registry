@@ -57,3 +57,26 @@ def test_every_validating_workflow_installs_both_validators():
         assert int(str(node["with"]["node-version"]).split(".")[0]) >= 22, name
         crawl = next(run for run in runs if script in run)
         assert "--group validators" in crawl, name
+
+
+def test_the_gate_reads_the_export_from_the_base_branch():
+    # The export decides which entries skip the validators. A pull request
+    # can edit its own copy, so the gate must not read it.
+    runs = [step.get("run", "") for step in _steps("validate.yml", "validate")]
+    assert any(
+        'git show "origin/$BASE_REF:exports/catalogs.json" > base-export.json' in run
+        for run in runs
+    )
+    gate = next(run for run in runs if "scripts/validate_entries.py" in run)
+    assert "--export base-export.json" in gate
+
+
+def test_every_crawling_job_has_a_timeout():
+    # One host that stalls must not hold a runner for the 6 hour default.
+    for name, job in [
+        ("validate.yml", "validate"),
+        ("revalidate.yml", "revalidate"),
+        ("publish.yml", "publish"),
+    ]:
+        workflow = yaml.safe_load(Path(f".github/workflows/{name}").read_text())
+        assert 0 < workflow["jobs"][job]["timeout-minutes"] <= 180, name

@@ -8,6 +8,7 @@ pinned rashid and stac-node-validator, and skip when they are not installed
 
 from __future__ import annotations
 
+import functools
 import json
 import shutil
 import subprocess
@@ -16,6 +17,7 @@ import pytest
 from conftest import FROZEN, FakeFetcher
 from registry import validators
 from registry.fetch import NotFound
+from registry.mirror import Mirror
 from registry.validators import (
     Finding,
     RuleGroup,
@@ -24,6 +26,7 @@ from registry.validators import (
     group_findings,
     run_rashid,
     run_stac_node_validator,
+    settle_stac_valid,
 )
 
 ROOT = "https://ex.org/catalog.json"
@@ -85,6 +88,20 @@ class TestRender:
     def test_quotes_each_example_as_code(self):
         text = RuleGroup("rashid", "R", "d", 1, ["a.json: title `@someone`"]).render()
         assert text.splitlines()[1] == "  - `a.json: title '@someone'`"
+
+    def test_a_blank_line_cannot_end_the_code_span(self):
+        """A blank line closes a code span, and the mention after it renders."""
+        example = "a.json: /assets/a\n\n@octocat ![x](https://e.org/x.png)"
+        text = RuleGroup("stac-node-validator", "core", "d", 1, [example]).render()
+        assert len(text.splitlines()) == 2
+        assert text.splitlines()[1] == (
+            "  - `a.json: /assets/a @octocat ![x](https://e.org/x.png)`"
+        )
+
+    def test_a_schema_url_rule_id_is_quoted(self):
+        rule = "https://e.org/v1.0.0/schema.json\n\n@octocat"
+        header = RuleGroup("stac-node-validator", rule, "d", 1, []).render().splitlines()[0]
+        assert header == "stac-node-validator `https://e.org/v1.0.0/schema.json @octocat` (1 finding): d"
 
 
 class TestRashid:
@@ -189,13 +206,60 @@ class TestCrawlAndValidate:
         crawl_and_validate(ROOT, lambda: f, now=FROZEN, validate=validate)
         assert seen["files"] == ["a/collection.json", "catalog.json"]
 
-    def test_a_child_that_did_not_fetch_is_invalid(self):
+    def test_a_child_that_did_not_fetch_leaves_no_answer(self):
+        """A slow host says nothing about the catalog. The gate still fails
+        a new entry on the FETCH group, see test_validate_entries."""
         f = catalog_tree()
         f.docs["https://ex.org/a/collection.json"] = TimeoutError("timed out")
         result, report = crawl_and_validate(ROOT, lambda: f, now=FROZEN, validate=lambda d: [])
-        assert report.passed is False
+        assert report.passed is None
+        assert result["validation"]["stac_valid"] is None
         assert [(g.tool, g.rule_id) for g in report.groups] == [("fetch", "FETCH")]
         assert "https://ex.org/a/collection.json" in report.groups[0].examples[0]
+
+    def test_a_finding_beside_a_fetch_failure_is_invalid(self):
+        f = catalog_tree()
+        f.docs["https://ex.org/a/collection.json"] = TimeoutError("timed out")
+        _, report = crawl_and_validate(
+            ROOT, lambda: f, now=FROZEN, validate=lambda d: [finding()]
+        )
+        assert report.passed is False
+
+    def test_a_mirror_that_cannot_be_written_leaves_no_answer(self):
+        """An item at ./a and another at ./a/item.json need `a` as a file and
+        as a directory. The old code raised, and the nightly marked the
+        catalog stale."""
+        called = []
+        f = FakeFetcher(
+            docs={
+                ROOT: {
+                    "type": "Catalog",
+                    "links": [
+                        {"rel": "item", "href": "./a"},
+                        {"rel": "item", "href": "./a/item.json"},
+                    ],
+                },
+                "https://ex.org/a": {"type": "Feature", "id": "a"},
+                "https://ex.org/a/item.json": {"type": "Feature", "id": "b"},
+            }
+        )
+        result, report = crawl_and_validate(
+            ROOT, lambda: f, now=FROZEN, validate=lambda d: called.append(d) or []
+        )
+        assert called == []
+        assert report.passed is None
+        assert "the mirror is incomplete" in report.error
+        assert result["validation"]["stac_valid"] is None
+
+    def test_a_mirror_at_its_limit_leaves_no_answer(self, monkeypatch):
+        monkeypatch.setattr(validators, "Mirror", functools.partial(Mirror, max_documents=2))
+        f = catalog_tree()
+        f.docs["https://ex.org/a/collection.json"]["links"] = [
+            {"rel": "item", "href": f"./i{n}.json"} for n in range(5)
+        ]
+        _, report = crawl_and_validate(ROOT, lambda: f, now=FROZEN, validate=lambda d: [])
+        assert report.passed is None
+        assert "more than 2 documents" in report.error
 
     def test_a_validator_that_cannot_run_leaves_no_answer(self):
         def validate(mirror_dir):
@@ -216,6 +280,36 @@ class TestCrawlAndValidate:
         f = catalog_tree()
         _, report = crawl_and_validate(ROOT, lambda: f, now=FROZEN)
         assert report.groups[0].rule_id == "PATCHED"
+
+
+def answered(value):
+    return {"validation": {"stac_valid": value}}
+
+
+class TestSettleStacValid:
+    LINK = {"href": ROOT, "portolan_registry:stac_valid": True}
+
+    def test_no_answer_keeps_the_published_one(self):
+        result = answered(None)
+        settle_stac_valid(result, ROOT, self.LINK)
+        assert result["validation"]["stac_valid"] is True
+
+    def test_an_answer_replaces_the_published_one(self):
+        result = answered(False)
+        settle_stac_valid(result, ROOT, self.LINK)
+        assert result["validation"]["stac_valid"] is False
+
+    def test_a_new_url_does_not_inherit_the_old_answer(self):
+        result = answered(None)
+        settle_stac_valid(result, "https://other.org/catalog.json", self.LINK)
+        assert result["validation"]["stac_valid"] is None
+
+    def test_no_published_answer_stays_none(self):
+        result = answered(None)
+        settle_stac_valid(result, ROOT, {"href": ROOT, "portolan_registry:stac_valid": None})
+        assert result["validation"]["stac_valid"] is None
+        settle_stac_valid(result, ROOT, None)
+        assert result["validation"]["stac_valid"] is None
 
 
 TOOLS = (

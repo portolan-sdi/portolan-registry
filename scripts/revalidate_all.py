@@ -41,7 +41,7 @@ from registry.history import first_registered
 from registry.report import log
 from registry.notify import send_stale_notification
 from registry.status import update_status
-from registry.validators import crawl_and_validate, log_validation
+from registry.validators import crawl_and_validate, log_validation, settle_stac_valid
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -120,6 +120,7 @@ def main(argv: list[str] | None = None) -> int:
             continue
 
         log_validation(report)
+        settle_stac_valid(result, url, previous_links.get(catalog_id))
         result["id"] = catalog_id
         # A shallow clone cannot see the add commit. Keep the date already
         # published rather than moving the catalog's registration to today.

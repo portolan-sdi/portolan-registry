@@ -39,7 +39,7 @@ from registry.export import (
 from registry.fetch import HttpFetcher
 from registry.history import first_registered
 from registry.report import log
-from registry.validators import crawl_and_validate, log_validation
+from registry.validators import crawl_and_validate, log_validation, settle_stac_valid
 
 MAX_WORKERS = 4
 
@@ -64,6 +64,7 @@ def process_entry(
         log(f"  Error: {e}")
         return None
     log_validation(report)
+    settle_stac_valid(result, url, previous_links.get(path.stem))
 
     result["id"] = path.stem
     # A shallow clone cannot see the add commit. Keep the date already

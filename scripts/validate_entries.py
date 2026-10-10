@@ -198,6 +198,7 @@ def collect_errors(
     catalog_dir: Path,
     added_file: Path | None = None,
     maintainer_approved: bool = False,
+    export_path: Path = EXPORT_PATH,
 ) -> list[str]:
     """Validate every changed entry. Returns error strings, and never raises.
 
@@ -208,10 +209,14 @@ def collect_errors(
     With `added_file`, a deleted or edited entry fails unless
     `maintainer_approved` is set. Without it, only a deletion fails. CI always
     passes `added_file`.
+
+    `export_path` decides which entries are new. CI passes the export from
+    the base branch. The pull request can change its own copy, and an entry
+    it lists there would skip the validators.
     """
     try:
-        state = load_state(EXPORT_PATH)
-        published = load_links(EXPORT_PATH)
+        state = load_state(export_path)
+        published = load_links(export_path)
         existing_urls = {
             normalize_url(entry["url"]): f"{cid}.yaml"
             for cid, entry in load_entries(catalog_dir).items()
@@ -268,6 +273,12 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument("--catalog-dir", default=str(CATALOG_DIR))
     parser.add_argument(
+        "--export",
+        default=str(EXPORT_PATH),
+        help="The published export that decides which entries are new. "
+        "CI passes the copy from the base branch.",
+    )
+    parser.add_argument(
         "--report",
         help="Write the outcome to this path as JSON. See the module docstring.",
     )
@@ -278,6 +289,7 @@ def main(argv: list[str] | None = None) -> int:
         catalog_dir=Path(args.catalog_dir),
         added_file=Path(args.added_file) if args.added_file else None,
         maintainer_approved=args.maintainer_approved,
+        export_path=Path(args.export),
     )
 
     if args.report:

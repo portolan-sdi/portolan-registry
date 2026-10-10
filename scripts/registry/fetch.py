@@ -7,6 +7,7 @@ fake and assert on crawl decisions rather than on HTTP transactions.
 
 from __future__ import annotations
 
+import json
 from collections.abc import Mapping
 from typing import Any, Protocol
 from urllib.parse import urljoin
@@ -27,9 +28,22 @@ USER_AGENT = "portolan-registry/1.0 (+https://github.com/portolan-sdi/portolan-r
 # missing.
 RETRY_STATUSES = (429, 500, 502, 503, 504, 520, 521, 522, 523, 524)
 
+# The longest wait a `Retry-After` header can ask for. urllib3 allows 6 hours
+# by default. The nightly crawls one catalog after another, so one host could
+# then hold the whole job.
+RETRY_AFTER_MAX_SECONDS = 30
+
+# The largest document the registry reads. A STAC document is metadata. A
+# larger body is not read into memory, and the fetch raises TooLarge.
+MAX_DOCUMENT_BYTES = 32 * 1024 * 1024
+
 
 def default_retry(backoff_factor: float = 1.0) -> Retry:
-    """Three retries with exponential backoff, then the last response stands.
+    """Three retries, then the last response stands.
+
+    urllib3 sends the first retry with no delay. The second and third wait
+    `backoff_factor` times 2 and 4 seconds. A `Retry-After` header replaces
+    that wait, up to RETRY_AFTER_MAX_SECONDS.
 
     `raise_on_status=False` hands the final response back instead of raising
     a urllib3 error, so `raise_for_status` reports it as a normal HTTPError.
@@ -40,6 +54,7 @@ def default_retry(backoff_factor: float = 1.0) -> Retry:
         status_forcelist=RETRY_STATUSES,
         allowed_methods=frozenset({"GET", "HEAD"}),
         raise_on_status=False,
+        retry_after_max=RETRY_AFTER_MAX_SECONDS,
     )
 
 
@@ -49,6 +64,10 @@ class NotFound(requests.HTTPError):
     Kept apart from other HTTP errors because a missing file is a finding
     about the catalog, while a server error says nothing about it.
     """
+
+
+class TooLarge(requests.RequestException):
+    """The body is larger than MAX_DOCUMENT_BYTES, so it was not read."""
 
 
 class Fetcher(Protocol):
@@ -93,15 +112,25 @@ class HttpFetcher:
         self._session.mount("https://", adapter)
         self._session.mount("http://", adapter)
 
-    def _get(self, url: str, timeout: float) -> requests.Response:
-        resp = self._session.get(url, timeout=timeout)
-        if resp.status_code in (404, 410):
-            raise NotFound(f"{resp.status_code} Not Found: {url}", response=resp)
-        resp.raise_for_status()
-        return resp
+    def _get(self, url: str, timeout: float) -> bytes:
+        """The body of `url`. Stops at MAX_DOCUMENT_BYTES and raises TooLarge."""
+        with self._session.get(url, timeout=timeout, stream=True) as resp:
+            if resp.status_code in (404, 410):
+                raise NotFound(f"{resp.status_code} Not Found: {url}", response=resp)
+            resp.raise_for_status()
+            body = bytearray()
+            for chunk in resp.iter_content(chunk_size=1024 * 1024):
+                body.extend(chunk)
+                if len(body) > MAX_DOCUMENT_BYTES:
+                    raise TooLarge(
+                        f"{url} is larger than {MAX_DOCUMENT_BYTES} bytes",
+                        response=resp,
+                    )
+            return bytes(body)
 
     def get_json(self, url: str, timeout: float = 30) -> Any:
-        return self._get(url, timeout).json()
+        # json.loads detects UTF-8, UTF-16, and UTF-32 from the bytes.
+        return json.loads(self._get(url, timeout))
 
     def get_bytes(self, url: str, timeout: float = 30) -> bytes:
         """Fetch a document as bytes. Raises NotFound on 404 or 410.
@@ -109,7 +138,7 @@ class HttpFetcher:
         The mirror writes these bytes unchanged, so the validator reads the
         file the host serves, encoding and all.
         """
-        return self._get(url, timeout).content
+        return self._get(url, timeout)
 
     def probe(self, url: str, timeout: float = 5) -> bool:
         try:

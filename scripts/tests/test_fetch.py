@@ -10,10 +10,13 @@ import pytest
 import requests
 import responses
 
+from registry import fetch
 from registry.fetch import (
+    RETRY_AFTER_MAX_SECONDS,
     USER_AGENT,
     HttpFetcher,
     NotFound,
+    TooLarge,
     default_retry,
     resolve_url,
 )
@@ -81,6 +84,34 @@ class TestGetJson:
         responses.add(responses.GET, URL, json={}, status=200)
         HttpFetcher(user_agent="custom/1.0").get_json(URL)
         assert responses.calls[0].request.headers["User-Agent"] == "custom/1.0"
+
+
+class TestLimits:
+    def test_a_retry_after_header_cannot_hold_the_run(self):
+        """urllib3 waits up to 6 hours for a Retry-After by default."""
+        assert default_retry().retry_after_max == RETRY_AFTER_MAX_SECONDS
+        assert RETRY_AFTER_MAX_SECONDS <= 60
+
+    @responses.activate
+    def test_a_body_over_the_limit_is_not_read(self, monkeypatch):
+        monkeypatch.setattr(fetch, "MAX_DOCUMENT_BYTES", 10)
+        responses.add(responses.GET, URL, body=b"x" * 11, status=200)
+        with pytest.raises(TooLarge):
+            HttpFetcher().get_bytes(URL)
+
+    @responses.activate
+    def test_a_body_at_the_limit_is_read(self, monkeypatch):
+        monkeypatch.setattr(fetch, "MAX_DOCUMENT_BYTES", 10)
+        responses.add(responses.GET, URL, body=b"x" * 10, status=200)
+        assert HttpFetcher().get_bytes(URL) == b"x" * 10
+
+    @responses.activate
+    def test_too_large_is_a_request_error(self, monkeypatch):
+        """The crawl and the gate catch RequestException for a failed child."""
+        monkeypatch.setattr(fetch, "MAX_DOCUMENT_BYTES", 10)
+        responses.add(responses.GET, URL, json={"description": "x" * 20}, status=200)
+        with pytest.raises(requests.RequestException):
+            HttpFetcher().get_json(URL)
 
 
 class TestGetBytes:

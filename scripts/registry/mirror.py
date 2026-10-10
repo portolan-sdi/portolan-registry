@@ -30,6 +30,8 @@ from pathlib import Path
 from typing import Any, Protocol
 from urllib.parse import urlsplit
 
+import requests
+
 from registry.fetch import Fetcher, NotFound, resolve_url
 from registry.report import log
 
@@ -45,6 +47,15 @@ SIDECARS = ("AGENTS.md", "README.md")
 # Items outnumber collections by orders of magnitude. ghsl links 3,984 of
 # them, which takes about 40 seconds at this width.
 WORKERS = 8
+
+# The most documents one mirror fetches. The largest registered catalog,
+# jrc-glofas, linked 4,336 items in October 2026. A server that makes up a
+# new child URL on each request would otherwise hold the job until it times out.
+MAX_DOCUMENTS = 50_000
+
+
+class MirrorFull(requests.RequestException):
+    """The mirror reached its document limit, so the URL was not fetched."""
 
 
 class MirrorSource(Fetcher, Protocol):
@@ -62,11 +73,23 @@ def _is_container(doc: Any) -> bool:
 class Mirror:
     """Files written under `dest`, and what happened to each URL."""
 
-    def __init__(self, root_url: str, dest: Path) -> None:
+    def __init__(
+        self, root_url: str, dest: Path, *, max_documents: int = MAX_DOCUMENTS
+    ) -> None:
         parts = urlsplit(root_url)
         self._origin = (parts.scheme, parts.netloc)
         self._base = posixpath.dirname(parts.path).rstrip("/") + "/"
         self.dest = dest
+        self.max_documents = max_documents
+        # True when the mirror stopped at `max_documents`. The tree on disk
+        # then has holes, so no validator verdict on it means anything.
+        self.truncated = False
+        # "<url>: <error>" for each document that fetched and could not be
+        # written. Two hrefs can need the same path as a file and as a
+        # directory, or a name can be too long for the file system. The
+        # mirror then differs from the catalog, which is not the catalog's
+        # fault and is not a finding about it.
+        self.unwritable: list[str] = []
         # URL -> parsed document, for every catalog and collection mirrored.
         self.containers: dict[str, dict] = {}
         # Every URL a fetch was started for, whether or not it succeeded.
@@ -94,13 +117,39 @@ class Mirror:
         return self.dest / rel
 
     def write(self, url: str, data: bytes) -> bool:
-        """Write `data` at the mirror path for `url`. False if outside."""
+        """Write `data` at the mirror path for `url`. False if outside.
+
+        A write that fails goes to `unwritable` and does not raise.
+        """
         path = self.path_for(url)
         if path is None:
             return False
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_bytes(data)
+        try:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(data)
+        except OSError as e:
+            self.unwritable.append(f"{url}: {e}")
         return True
+
+    def full(self) -> bool:
+        """True when the mirror holds no room for another fetch."""
+        if len(self.attempted) >= self.max_documents:
+            self.truncated = True
+        return self.truncated
+
+    def problem(self) -> str | None:
+        """Why the mirror cannot stand in for the catalog, or None."""
+        if self.truncated:
+            return (
+                f"the catalog links more than {self.max_documents} documents, "
+                "which is more than the registry mirrors"
+            )
+        if self.unwritable:
+            return (
+                f"{len(self.unwritable)} document(s) could not be written to the "
+                f"mirror, first {self.unwritable[0]}"
+            )
+        return None
 
     def add_document(self, url: str, doc: Any) -> None:
         """Write a parsed document the crawl already holds."""
@@ -123,6 +172,8 @@ class MirroringFetcher:
         self.mirror = mirror
 
     def get_json(self, url: str, timeout: float = 30) -> Any:
+        if self.mirror.full():
+            raise MirrorFull(f"{url}: not fetched, the mirror is full")
         self.mirror.attempted.add(url)
         doc = self._inner.get_json(url, timeout)
         self.mirror.add_document(url, doc)
@@ -178,9 +229,13 @@ def complete_mirror(
         while pending:
             wave: list[str] = []
             for url, doc in pending.items():
+                if mirror.truncated:
+                    break
                 for target in _wanted(mirror, url, doc):
                     if target in mirror.attempted:
                         continue
+                    if mirror.full():
+                        break
                     mirror.attempted.add(target)
                     if mirror.path_for(target) is None:
                         mirror.outside.append(target)
