@@ -73,9 +73,7 @@ def _is_container(doc: Any) -> bool:
 class Mirror:
     """Files written under `dest`, and what happened to each URL."""
 
-    def __init__(
-        self, root_url: str, dest: Path, *, max_documents: int = MAX_DOCUMENTS
-    ) -> None:
+    def __init__(self, root_url: str, dest: Path, *, max_documents: int = MAX_DOCUMENTS) -> None:
         parts = urlsplit(root_url)
         self._origin = (parts.scheme, parts.netloc)
         self._base = posixpath.dirname(parts.path).rstrip("/") + "/"

@@ -200,9 +200,7 @@ def _snv_description(schema: str) -> str:
     return "the extension schema rejects the object"
 
 
-def run_stac_node_validator(
-    mirror_dir: Path, *, run: Runner = subprocess.run
-) -> list[Finding]:
+def run_stac_node_validator(mirror_dir: Path, *, run: Runner = subprocess.run) -> list[Finding]:
     """Every stac-node-validator error, keyed by the schema that raised it."""
     proc = _run([*SNV, str(mirror_dir)], run)
     if proc.returncode != 0:

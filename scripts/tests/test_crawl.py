@@ -3,8 +3,8 @@
 from __future__ import annotations
 
 import pytest
-
 from conftest import FROZEN, FakeFetcher
+
 from registry.crawl import crawl_catalog
 from registry.fetch import NotFound
 
@@ -58,9 +58,7 @@ class TestAggregation:
         """Only the catalog someone registered gets listed, so only its own
         branding belongs on the registry."""
         sub = catalog()
-        sub["links"].append(
-            {"rel": "icon", "href": "./sub.png", "type": "image/png"}
-        )
+        sub["links"].append({"rel": "icon", "href": "./sub.png", "type": "image/png"})
         f = FakeFetcher(
             docs={ROOT: catalog("./sub/catalog.json"), "https://ex.org/sub/catalog.json": sub},
             heads={"https://ex.org/sub/sub.png": {"Content-Type": "image/png"}},
@@ -200,9 +198,7 @@ class TestPartialCrawls:
         """The gate refuses a tree with a hole in it, so it needs the URL."""
         tree.docs["https://ex.org/sub/catalog.json"] = TimeoutError("read timed out")
         r = crawl_catalog(ROOT, tree, now=FROZEN)
-        assert r["fetch_failures"] == [
-            "https://ex.org/sub/catalog.json: read timed out"
-        ]
+        assert r["fetch_failures"] == ["https://ex.org/sub/catalog.json: read timed out"]
 
     def test_a_failure_deep_in_the_tree_reaches_the_root(self, tree):
         tree.docs["https://ex.org/sub/alpine/collection.json"] = TimeoutError("boom")
@@ -248,8 +244,7 @@ class TestDegenerateCollections:
             docs={
                 ROOT: catalog("./c/collection.json"),
                 "https://ex.org/c/collection.json": collection(
-                    extent={"spatial": {"bbox": [[0, 0, 1, 1]]},
-                            "temporal": {"interval": []}},
+                    extent={"spatial": {"bbox": [[0, 0, 1, 1]]}, "temporal": {"interval": []}},
                 ),
             }
         )
@@ -343,17 +338,13 @@ class TestSpecVersion:
 
     def test_ignores_other_extensions(self):
         doc = catalog()
-        doc["stac_extensions"] = [
-            "https://stac-extensions.github.io/file/v2.1.0/schema.json"
-        ]
+        doc["stac_extensions"] = ["https://stac-extensions.github.io/file/v2.1.0/schema.json"]
         f = FakeFetcher(docs={ROOT: doc})
         assert crawl_catalog(ROOT, f, now=FROZEN)["spec_version"] is None
 
     def test_ignores_an_unversioned_portolan_uri(self):
         doc = catalog()
-        doc["stac_extensions"] = [
-            "https://schemas.portolan-sdi.org/portolan/latest/schema.json"
-        ]
+        doc["stac_extensions"] = ["https://schemas.portolan-sdi.org/portolan/latest/schema.json"]
         f = FakeFetcher(docs={ROOT: doc})
         assert crawl_catalog(ROOT, f, now=FROZEN)["spec_version"] is None
 
@@ -361,9 +352,7 @@ class TestSpecVersion:
         """The org owns the URI. A shorter version is a declaration, not
         silence."""
         doc = catalog()
-        doc["stac_extensions"] = [
-            "https://schemas.portolan-sdi.org/portolan/v0.2/schema.json"
-        ]
+        doc["stac_extensions"] = ["https://schemas.portolan-sdi.org/portolan/v0.2/schema.json"]
         f = FakeFetcher(docs={ROOT: doc})
         assert crawl_catalog(ROOT, f, now=FROZEN)["spec_version"] == "0.2"
 
@@ -371,9 +360,7 @@ class TestSpecVersion:
         f = FakeFetcher(
             docs={
                 ROOT: {**catalog("./c/collection.json"), "stac_extensions": [V010]},
-                "https://ex.org/c/collection.json": collection(
-                    stac_extensions=[V011]
-                ),
+                "https://ex.org/c/collection.json": collection(stac_extensions=[V011]),
             }
         )
         r = crawl_catalog(ROOT, f, now=FROZEN)
@@ -410,9 +397,7 @@ class TestSpecVersion:
 
 class TestUpdated:
     def test_passes_the_catalogs_own_updated_through(self, tree):
-        assert crawl_catalog(ROOT, tree, now=FROZEN)["updated"] == (
-            "2026-01-10T08:30:00Z"
-        )
+        assert crawl_catalog(ROOT, tree, now=FROZEN)["updated"] == ("2026-01-10T08:30:00Z")
 
     def test_is_none_when_the_catalog_sets_none(self):
         f = FakeFetcher(docs={ROOT: catalog()})
@@ -526,4 +511,3 @@ class TestProbes:
     def test_missing_search_endpoint_marks_static(self):
         f = FakeFetcher(docs={ROOT: catalog()})
         assert crawl_catalog(ROOT, f, now=FROZEN)["api_type"] == "static"
-

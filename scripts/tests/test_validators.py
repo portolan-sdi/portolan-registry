@@ -15,6 +15,7 @@ import subprocess
 
 import pytest
 from conftest import FROZEN, FakeFetcher
+
 from registry import validators
 from registry.fetch import NotFound
 from registry.mirror import Mirror
@@ -101,7 +102,10 @@ class TestRender:
     def test_a_schema_url_rule_id_is_quoted(self):
         rule = "https://e.org/v1.0.0/schema.json\n\n@octocat"
         header = RuleGroup("stac-node-validator", rule, "d", 1, []).render().splitlines()[0]
-        assert header == "stac-node-validator `https://e.org/v1.0.0/schema.json @octocat` (1 finding): d"
+        assert (
+            header
+            == "stac-node-validator `https://e.org/v1.0.0/schema.json @octocat` (1 finding): d"
+        )
 
 
 class TestRashid:
@@ -144,9 +148,7 @@ class TestStacNodeValidator:
         out = json.dumps(
             {
                 "files_checked": 1,
-                "findings": [
-                    {"path": "c.json", "schema": "core", "message": "/id must be string"}
-                ],
+                "findings": [{"path": "c.json", "schema": "core", "message": "/id must be string"}],
             }
         )
         found = run_stac_node_validator(tmp_path, run=stub(stdout=out))
@@ -220,9 +222,7 @@ class TestCrawlAndValidate:
     def test_a_finding_beside_a_fetch_failure_is_invalid(self):
         f = catalog_tree()
         f.docs["https://ex.org/a/collection.json"] = TimeoutError("timed out")
-        _, report = crawl_and_validate(
-            ROOT, lambda: f, now=FROZEN, validate=lambda d: [finding()]
-        )
+        _, report = crawl_and_validate(ROOT, lambda: f, now=FROZEN, validate=lambda d: [finding()])
         assert report.passed is False
 
     def test_a_mirror_that_cannot_be_written_leaves_no_answer(self):
@@ -349,7 +349,9 @@ class TestRealTools:
                     "stac_version": "1.1.0",
                     "id": "plain",
                     "description": "Plain STAC.",
-                    "links": [{"rel": "root", "href": "./catalog.json", "type": "application/json"}],
+                    "links": [
+                        {"rel": "root", "href": "./catalog.json", "type": "application/json"}
+                    ],
                 }
             }
         )

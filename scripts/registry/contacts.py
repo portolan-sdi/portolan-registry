@@ -33,7 +33,5 @@ def validate_submitter_email(
     try:
         result = validate_email(email, check_deliverability=check_deliverability)
     except EmailNotValidError as e:
-        raise ValueError(
-            f"Invalid submitter_email for catalog {catalog_id}: {email} - {e}"
-        ) from e
+        raise ValueError(f"Invalid submitter_email for catalog {catalog_id}: {email} - {e}") from e
     return result.normalized

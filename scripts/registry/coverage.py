@@ -4,11 +4,11 @@ from __future__ import annotations
 
 import json
 from collections.abc import Mapping, Sequence
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 from registry.crawl import CollectionSummary
-from registry.export import ExportRefused, ROOT_URL, TIMESTAMP_REFRESH_DAYS
+from registry.export import ROOT_URL, TIMESTAMP_REFRESH_DAYS, ExportRefused
 from registry.status import parse_timestamp
 
 COVERAGE_PATH = Path("exports/coverage-bboxes.json")
@@ -61,7 +61,7 @@ def build_coverage_export(
     extra_catalogs: Sequence[Mapping] = (),
 ) -> dict:
     """Assemble the collection coverage export from one registry crawl."""
-    now = now or datetime.now(timezone.utc)
+    now = now or datetime.now(UTC)
     records = [_catalog_coverage(catalog) for catalog in catalogs]
     records.extend(extra_catalogs)
     records.sort(key=lambda catalog: catalog["id"])
@@ -79,11 +79,7 @@ def load_coverage(coverage_path: Path = COVERAGE_PATH) -> dict[str, dict]:
         return {}
     with open(coverage_path) as f:
         coverage = json.load(f)
-    return {
-        catalog["id"]: catalog
-        for catalog in coverage.get("catalogs", [])
-        if catalog.get("id")
-    }
+    return {catalog["id"]: catalog for catalog in coverage.get("catalogs", []) if catalog.get("id")}
 
 
 def check_coverage_safe(coverage: Mapping, *, expected_ids: set[str]) -> None:
@@ -118,7 +114,7 @@ def coverage_changed(
         return True
     if _without_volatile(coverage) != _without_volatile(previous):
         return True
-    now = now or datetime.now(timezone.utc)
+    now = now or datetime.now(UTC)
     written = parse_timestamp(previous.get("generated"))
     return written is None or now - written >= refresh_after
 

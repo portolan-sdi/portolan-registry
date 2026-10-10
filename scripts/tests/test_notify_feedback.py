@@ -85,9 +85,7 @@ def sent(monkeypatch):
 
 def run(registry, extra=()):
     catalogs, export = registry
-    return notify_feedback.main(
-        ["--catalog-dir", str(catalogs), "--export", str(export), *extra]
-    )
+    return notify_feedback.main(["--catalog-dir", str(catalogs), "--export", str(export), *extra])
 
 
 class TestParseSections:
@@ -119,9 +117,7 @@ class TestParseCatalogId:
     def test_a_missing_section_is_none(self):
         assert parse_catalog_id("### Kind of problem\n\nSchema\n") is None
 
-    @pytest.mark.parametrize(
-        "value", ["../../etc/passwd", "a/b", "with space", "semi;colon"]
-    )
+    @pytest.mark.parametrize("value", ["../../etc/passwd", "a/b", "with space", "semi;colon"])
     def test_anything_that_is_not_a_file_stem_is_none(self, value):
         assert parse_catalog_id(f"### Catalog ID\n\n{value}\n") is None
 
@@ -154,9 +150,7 @@ class TestResolvedCatalog:
 
 
 class TestUnresolvedCatalog:
-    def test_an_unregistered_id_comments_instead(
-        self, registry, sent, monkeypatch, capsys
-    ):
+    def test_an_unregistered_id_comments_instead(self, registry, sent, monkeypatch, capsys):
         monkeypatch.setenv("ISSUE_BODY", "### Catalog ID\n\nnot-registered\n")
         assert run(registry) == 0
         assert sent == []
@@ -178,18 +172,14 @@ class TestUnresolvedCatalog:
 
 
 class TestUnreachableSubmitter:
-    def test_an_entry_with_no_address_sends_and_says_nothing(
-        self, registry, sent, capsys
-    ):
+    def test_an_entry_with_no_address_sends_and_says_nothing(self, registry, sent, capsys):
         catalogs, _ = registry
         (catalogs / "pergamino-ide.yaml").write_text("url: https://ex.org/catalog.json\n")
         assert run(registry) == 0
         assert sent == []
         assert capsys.readouterr().out == ""
 
-    def test_an_unparseable_address_is_not_the_reporters_problem(
-        self, registry, sent, capsys
-    ):
+    def test_an_unparseable_address_is_not_the_reporters_problem(self, registry, sent, capsys):
         catalogs, _ = registry
         (catalogs / "pergamino-ide.yaml").write_text(
             "url: https://ex.org/catalog.json\nsubmitter_email: not-an-address\n"

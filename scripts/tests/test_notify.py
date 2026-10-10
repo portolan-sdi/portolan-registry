@@ -87,9 +87,7 @@ class TestFeedbackNotification:
     def test_body_links_the_issue_and_names_the_kind(self, post):
         feedback()
         html = post.calls[0]["json"]["html"]
-        assert (
-            'href="https://github.com/portolan-sdi/portolan-registry/issues/9"' in html
-        )
+        assert 'href="https://github.com/portolan-sdi/portolan-registry/issues/9"' in html
         assert "Every collection claims proprietary" in html
         assert "Data quality" in html
 
@@ -123,9 +121,7 @@ class TestDeclining:
 class TestFailuresDoNotPropagate:
     def test_a_transport_error_returns_false(self, monkeypatch):
         monkeypatch.setenv("RESEND_API_KEY", "test-key")
-        monkeypatch.setattr(
-            notify.requests, "post", Recorder(raises=RuntimeError("no route"))
-        )
+        monkeypatch.setattr(notify.requests, "post", Recorder(raises=RuntimeError("no route")))
         assert stale() is False
         assert feedback() is False
 

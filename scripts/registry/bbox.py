@@ -28,13 +28,9 @@ def clean_bbox(bbox: Sequence[float] | None) -> list[float] | None:
     """
     if not bbox or len(bbox) not in (4, 6):
         return None
-    if not all(
-        isinstance(v, (int, float)) and not isinstance(v, bool) for v in bbox
-    ):
+    if not all(isinstance(v, (int, float)) and not isinstance(v, bool) for v in bbox):
         return None
-    if any(
-        math.isnan(v) or math.isinf(v) or abs(v) > BBOX_SENTINEL for v in bbox
-    ):
+    if any(math.isnan(v) or math.isinf(v) or abs(v) > BBOX_SENTINEL for v in bbox):
         return None
 
     half = len(bbox) // 2

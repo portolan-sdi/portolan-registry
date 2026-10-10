@@ -10,6 +10,7 @@ import json
 
 import pytest
 from conftest import FROZEN, FakeFetcher
+
 from registry.crawl import crawl_catalog
 from registry.mirror import Mirror, MirrorFull, MirroringFetcher, complete_mirror
 
@@ -130,7 +131,10 @@ class TestCompleteMirror:
         has to be on disk, or rashid reports its link as unresolved."""
         f = FakeFetcher(
             docs={
-                ROOT: {"type": "Catalog", "links": [{"rel": "child", "href": "./a/collection.json"}]},
+                ROOT: {
+                    "type": "Catalog",
+                    "links": [{"rel": "child", "href": "./a/collection.json"}],
+                },
                 "https://ex.org/a/collection.json": {
                     "type": "Collection",
                     "links": [{"rel": "child", "href": "./b/collection.json"}],

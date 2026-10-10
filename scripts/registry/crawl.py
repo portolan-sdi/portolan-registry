@@ -12,9 +12,9 @@ from __future__ import annotations
 import re
 from collections import Counter
 from collections.abc import Mapping
-from dataclasses import dataclass, field
-from datetime import datetime, timezone
-from typing import Any, TypedDict
+from dataclasses import dataclass
+from datetime import UTC, datetime
+from typing import TypedDict
 from urllib.parse import urlsplit
 
 from registry.bbox import collection_bbox, union_bboxes
@@ -234,7 +234,7 @@ def crawl_catalog(
     nested call sees only what has been visited so far; read
     `spec_version_mixed` off the outermost result.
     """
-    now = now or datetime.now(timezone.utc)
+    now = now or datetime.now(UTC)
     is_root = seen is None
     seen = seen if seen is not None else set()
     seen.add(catalog_url)
@@ -306,10 +306,7 @@ def crawl_catalog(
                     versions.add(summary.spec_version)
                     # A collection that declares nothing is a conformance
                     # failure for the validator, not a version disagreement.
-                    if (
-                        result["spec_version"]
-                        and summary.spec_version != result["spec_version"]
-                    ):
+                    if result["spec_version"] and summary.spec_version != result["spec_version"]:
                         log(
                             f"  Warning: {child_url} declares Portolan "
                             f"{summary.spec_version}, catalog declares "
@@ -317,9 +314,7 @@ def crawl_catalog(
                         )
 
             elif child.get("type") == "Catalog":
-                sub = crawl_catalog(
-                    child_url, fetcher, now=now, seen=seen, versions=versions
-                )
+                sub = crawl_catalog(child_url, fetcher, now=now, seen=seen, versions=versions)
                 result["collections"].extend(sub["collections"])
                 result["collection_count"] += sub["collection_count"]
                 result["feature_count"] += sub["feature_count"]
@@ -362,9 +357,7 @@ def crawl_catalog(
     # unmeasurable branch turning the whole tree null.
     if not any(c.sized_asset_count for c in result["collections"]):
         result["total_size_bytes"] = None
-    if result["item_count"] == 0 and any(
-        c.items_unenumerable for c in result["collections"]
-    ):
+    if result["item_count"] == 0 and any(c.items_unenumerable for c in result["collections"]):
         result["item_count"] = None
 
     result["bbox"] = union_bboxes(bboxes)

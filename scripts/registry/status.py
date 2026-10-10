@@ -8,7 +8,7 @@ valid, which is how a re-submitted catalog comes back.
 from __future__ import annotations
 
 from collections.abc import Mapping
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 STALE_THRESHOLD_DAYS = 30
 
@@ -34,7 +34,7 @@ def update_status(
     `now` is injected so the 30-day rule is testable without freezing wall
     time.
     """
-    now = now or datetime.now(timezone.utc)
+    now = now or datetime.now(UTC)
     stamp = now.isoformat()
     status = current_state.get("status", "valid")
     stale_since = current_state.get("stale_since")

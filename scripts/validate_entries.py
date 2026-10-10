@@ -38,7 +38,6 @@ from registry.mirror import MirrorSource
 from registry.report import log
 from registry.validators import crawl_and_validate
 
-
 APPROVAL_HINT = (
     "A maintainer with the admin or maintain role must approve the head "
     "commit of this pull request."
@@ -225,9 +224,7 @@ def collect_errors(
 
         errors: list[str] = []
         if maintainer_approved:
-            log(
-                "A maintainer approved the head commit. Changes to current entries pass."
-            )
+            log("A maintainer approved the head commit. Changes to current entries pass.")
         else:
             errors.extend(deleted_entries(changed_file))
             if added_file is not None:

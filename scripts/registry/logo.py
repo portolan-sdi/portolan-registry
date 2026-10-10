@@ -66,9 +66,7 @@ def find_logo_link(catalog: Mapping) -> Mapping | None:
     return None
 
 
-def catalog_logo(
-    catalog: Mapping, base_url: str, fetcher: Fetcher
-) -> dict[str, str] | None:
+def catalog_logo(catalog: Mapping, base_url: str, fetcher: Fetcher) -> dict[str, str] | None:
     """The logo to publish for a catalog, or None.
 
     The href is resolved against the catalog it was found in, so a consumer

@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import json
 from collections.abc import Mapping, Sequence
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 from registry.status import parse_timestamp
@@ -153,9 +153,7 @@ def child_link(catalog: Mapping) -> dict:
             "portolan_registry:status": catalog.get("status", "valid"),
             "portolan_registry:api_type": catalog.get("api_type"),
             "portolan_registry:spec_version": catalog.get("spec_version"),
-            "portolan_registry:spec_version_mixed": catalog.get(
-                "spec_version_mixed", False
-            ),
+            "portolan_registry:spec_version_mixed": catalog.get("spec_version_mixed", False),
             "portolan_registry:stac_version": catalog.get("stac_version"),
             # {href, type, title} read off the catalog's own icon link, with
             # the href resolved and the image confirmed to exist. Null when
@@ -212,7 +210,7 @@ def build_export(
     fresh one. `extra_links` carries forward already-built child links for
     catalogs this run could not crawl.
     """
-    now = now or datetime.now(timezone.utc)
+    now = now or datetime.now(UTC)
     links = [
         {
             "rel": "root",
@@ -265,8 +263,7 @@ def check_export_safe(
     missing = expected_ids - got
     if missing:
         raise ExportRefused(
-            f"export is missing {len(missing)} registered catalog(s): "
-            f"{', '.join(sorted(missing))}"
+            f"export is missing {len(missing)} registered catalog(s): {', '.join(sorted(missing))}"
         )
 
     # Only still-registered catalogs. Deleting an entry file is a deliberate
@@ -275,14 +272,11 @@ def check_export_safe(
     dropped_state = {
         cid
         for cid, st in previous_state.items()
-        if cid in expected_ids
-        and cid not in got
-        and any(v is not None for v in st.values())
+        if cid in expected_ids and cid not in got and any(v is not None for v in st.values())
     }
     if dropped_state:
         raise ExportRefused(
-            f"export would discard validation state for: "
-            f"{', '.join(sorted(dropped_state))}"
+            f"export would discard validation state for: {', '.join(sorted(dropped_state))}"
         )
 
 
@@ -334,7 +328,7 @@ def export_changed(
     if _without_volatile(export) != _without_volatile(previous):
         return True
 
-    now = now or datetime.now(timezone.utc)
+    now = now or datetime.now(UTC)
     written = parse_timestamp(previous.get("generated"))
     # An export with no readable `generated` has no age to check, so refresh
     # it and give the next run something to measure.

@@ -50,9 +50,7 @@ def test_every_validating_workflow_installs_both_validators():
     ]:
         steps = _steps(name, job)
         runs = [step.get("run", "") for step in steps]
-        assert any(
-            "npm ci --prefix scripts/stac-node-validator" in run for run in runs
-        ), name
+        assert any("npm ci --prefix scripts/stac-node-validator" in run for run in runs), name
         node = next(s for s in steps if s.get("uses", "").startswith("actions/setup-node@"))
         assert int(str(node["with"]["node-version"]).split(".")[0]) >= 22, name
         crawl = next(run for run in runs if script in run)

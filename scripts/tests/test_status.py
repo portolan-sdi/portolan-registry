@@ -2,15 +2,15 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from registry.status import STALE_THRESHOLD_DAYS, update_status
 
-JAN1 = datetime(2026, 1, 1, tzinfo=timezone.utc)
+JAN1 = datetime(2026, 1, 1, tzinfo=UTC)
 
 
 def at(day: int) -> datetime:
-    return datetime(2026, 1, day, tzinfo=timezone.utc)
+    return datetime(2026, 1, day, tzinfo=UTC)
 
 
 class TestSuccess:
@@ -31,9 +31,7 @@ class TestSuccess:
 
 class TestFailure:
     def test_first_failure_goes_stale_and_starts_the_clock(self):
-        out = update_status(
-            {"status": "valid"}, passed=False, failure_reason="404", now=at(5)
-        )
+        out = update_status({"status": "valid"}, passed=False, failure_reason="404", now=at(5))
         assert out["status"] == "stale"
         assert out["stale_since"] == at(5).isoformat()
         assert out["failure_reason"] == "404"
@@ -71,9 +69,7 @@ class TestMalformedState:
         """Regression: this raised AttributeError from inside the caller's
         except block, failing the step so the commit never ran and every
         catalog's state froze."""
-        out = update_status(
-            {"status": "stale", "stale_since": None}, passed=False, now=at(5)
-        )
+        out = update_status({"status": "stale", "stale_since": None}, passed=False, now=at(5))
         assert out["status"] == "stale"
         assert out["stale_since"] == at(5).isoformat()
 

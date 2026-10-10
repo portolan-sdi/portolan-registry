@@ -13,7 +13,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 from registry.coverage import (
@@ -38,8 +38,8 @@ from registry.export import (
 )
 from registry.fetch import HttpFetcher
 from registry.history import first_registered
-from registry.report import log
 from registry.notify import send_stale_notification
+from registry.report import log
 from registry.status import update_status
 from registry.validators import crawl_and_validate, log_validation, settle_stac_valid
 
@@ -57,12 +57,9 @@ def main(argv: list[str] | None = None) -> int:
 
     output = Path(args.output)
     if args.output != "-" and output.name == COVERAGE_PATH.name:
-        parser.error(
-            "--output names the catalog export; it cannot be named "
-            f"{COVERAGE_PATH.name}"
-        )
+        parser.error(f"--output names the catalog export; it cannot be named {COVERAGE_PATH.name}")
 
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     paths = entry_paths(Path(args.catalog_dir))
     state = load_state(EXPORT_PATH)
     expected_ids = {p.stem for p in paths}
@@ -222,18 +219,13 @@ def main(argv: list[str] | None = None) -> int:
         sys.stdout.write("\n")
     else:
         coverage_output = coverage_path_for(output)
-        changed = export_changed(export, output) or coverage_changed(
-            coverage, coverage_output
-        )
+        changed = export_changed(export, output) or coverage_changed(coverage, coverage_output)
         if not changed:
             log("\n=== No change beyond timestamps; left exports untouched ===")
             return 0
         write_export(export, output)
         write_coverage(coverage, coverage_output)
-        log(
-            f"\n=== Generated {output} and {coverage_output} "
-            f"with {export['count']} catalog(s) ==="
-        )
+        log(f"\n=== Generated {output} and {coverage_output} with {export['count']} catalog(s) ===")
 
     counts = {"valid": 0, "stale": 0, "removed": 0}
     for st in state.values():
