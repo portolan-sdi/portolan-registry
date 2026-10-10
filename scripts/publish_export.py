@@ -15,6 +15,7 @@ import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import UTC, datetime
 from pathlib import Path
+from typing import Any
 
 from registry.coverage import (
     COVERAGE_PATH,
@@ -25,6 +26,7 @@ from registry.coverage import (
     load_coverage,
     write_coverage,
 )
+from registry.crawl import CrawlResult
 from registry.entries import CATALOG_DIR, entry_paths, load_entry
 from registry.export import (
     EXPORT_PATH,
@@ -44,7 +46,9 @@ from registry.validators import crawl_and_validate, log_validation, settle_stac_
 MAX_WORKERS = 4
 
 
-def process_entry(path: Path, now: datetime, previous_links: dict[str, dict]) -> dict | None:
+def process_entry(
+    path: Path, now: datetime, previous_links: dict[str, dict[str, Any]]
+) -> CrawlResult | None:
     """Crawl one registry entry. Returns None if it could not be crawled."""
     log(f"\n=== Processing {path} ===")
     entry = load_entry(path)
@@ -99,7 +103,7 @@ def main(argv: list[str] | None = None) -> int:
     previous_coverage = load_coverage(COVERAGE_PATH)
     previous_links = load_links(EXPORT_PATH)
 
-    catalogs: list[dict] = []
+    catalogs: list[CrawlResult] = []
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
         futures = {executor.submit(process_entry, p, now, previous_links): p for p in paths}
         for future in as_completed(futures):

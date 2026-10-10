@@ -6,6 +6,7 @@ import json
 from collections.abc import Mapping, Sequence
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
+from typing import Any
 
 from registry.crawl import CollectionSummary
 from registry.export import ROOT_URL, TIMESTAMP_REFRESH_DAYS, ExportRefused
@@ -38,7 +39,7 @@ def _map_bboxes(bbox: Sequence[float]) -> list[list[float]]:
     return [[west, south, 180.0, north], [-180.0, south, east, north]]
 
 
-def _catalog_coverage(catalog: Mapping) -> dict:
+def _catalog_coverage(catalog: Mapping[str, Any]) -> dict[str, Any]:
     """Make coverage records for one successfully crawled catalog."""
     records = []
     for summary in catalog.get("collections") or []:
@@ -55,14 +56,14 @@ def _catalog_coverage(catalog: Mapping) -> dict:
 
 
 def build_coverage_export(
-    catalogs: Sequence[Mapping],
+    catalogs: Sequence[Mapping[str, Any]],
     *,
     now: datetime | None = None,
-    extra_catalogs: Sequence[Mapping] = (),
-) -> dict:
+    extra_catalogs: Sequence[Mapping[str, Any]] = (),
+) -> dict[str, Any]:
     """Assemble the collection coverage export from one registry crawl."""
     now = now or datetime.now(UTC)
-    records = [_catalog_coverage(catalog) for catalog in catalogs]
+    records: list[Mapping[str, Any]] = [_catalog_coverage(catalog) for catalog in catalogs]
     records.extend(extra_catalogs)
     records.sort(key=lambda catalog: catalog["id"])
     return {
@@ -73,7 +74,7 @@ def build_coverage_export(
     }
 
 
-def load_coverage(coverage_path: Path = COVERAGE_PATH) -> dict[str, dict]:
+def load_coverage(coverage_path: Path = COVERAGE_PATH) -> dict[str, dict[str, Any]]:
     """Read previous coverage catalog records by registry id."""
     if not coverage_path.exists():
         return {}
@@ -82,7 +83,7 @@ def load_coverage(coverage_path: Path = COVERAGE_PATH) -> dict[str, dict]:
     return {catalog["id"]: catalog for catalog in coverage.get("catalogs", []) if catalog.get("id")}
 
 
-def check_coverage_safe(coverage: Mapping, *, expected_ids: set[str]) -> None:
+def check_coverage_safe(coverage: Mapping[str, Any], *, expected_ids: set[str]) -> None:
     """Refuse a coverage export that would drop a registered catalog."""
     got = {catalog.get("id") for catalog in coverage.get("catalogs", [])}
     missing = expected_ids - got
@@ -93,12 +94,12 @@ def check_coverage_safe(coverage: Mapping, *, expected_ids: set[str]) -> None:
         )
 
 
-def _without_volatile(coverage: Mapping) -> dict:
+def _without_volatile(coverage: Mapping[str, Any]) -> dict[str, Any]:
     return {k: v for k, v in coverage.items() if k not in _VOLATILE_FIELDS}
 
 
 def coverage_changed(
-    coverage: Mapping,
+    coverage: Mapping[str, Any],
     coverage_path: Path = COVERAGE_PATH,
     *,
     now: datetime | None = None,
@@ -119,7 +120,7 @@ def coverage_changed(
     return written is None or now - written >= refresh_after
 
 
-def write_coverage(coverage: Mapping, coverage_path: Path = COVERAGE_PATH) -> None:
+def write_coverage(coverage: Mapping[str, Any], coverage_path: Path = COVERAGE_PATH) -> None:
     """Write coverage as pretty-printed JSON."""
     coverage_path.parent.mkdir(parents=True, exist_ok=True)
     with open(coverage_path, "w") as f:

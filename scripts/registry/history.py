@@ -8,7 +8,8 @@ shells out; the crawler stays free of the working tree.
 
 from __future__ import annotations
 
-import subprocess
+# bandit B404: this module runs git with a fixed argument list.
+import subprocess  # nosec B404
 from datetime import datetime
 from pathlib import Path
 
@@ -44,8 +45,10 @@ def first_registered(path: Path) -> str | None:
     if not path.parent.is_dir():
         return None
 
+    # The argument list is fixed and runs without a shell. git comes from PATH,
+    # as it does for every other step of the workflows.
     try:
-        completed = subprocess.run(
+        completed = subprocess.run(  # nosec B603 B607
             [
                 "git",
                 "log",

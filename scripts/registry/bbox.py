@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import math
 from collections.abc import Mapping, Sequence
+from typing import Any
 
 # Anything at or beyond this magnitude is an uninitialised float, not a
 # coordinate. sys.float_info.max (~1.797e308) is the value seen in the wild.
@@ -43,7 +44,7 @@ def clean_bbox(bbox: Sequence[float] | None) -> list[float] | None:
     return mins + maxs
 
 
-def collection_bbox(collection: Mapping) -> list[float] | None:
+def collection_bbox(collection: Mapping[str, Any]) -> list[float] | None:
     """Read the overall bbox out of a STAC Collection's spatial extent.
 
     Tolerates a missing, null, or empty value at every level. A collection

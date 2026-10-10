@@ -24,3 +24,8 @@ __pycache__/
 .venv/
 .pytest_cache/
 .benchmarks/
+.coverage
+.coverage.*
+coverage.xml
+.mypy_cache/
+.ruff_cache/

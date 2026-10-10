@@ -14,7 +14,7 @@ from collections import Counter
 from collections.abc import Mapping
 from dataclasses import dataclass
 from datetime import UTC, datetime
-from typing import TypedDict
+from typing import Any, TypedDict
 from urllib.parse import urlsplit
 
 from registry.bbox import collection_bbox, union_bboxes
@@ -32,7 +32,7 @@ PORTOLAN_SCHEMA = re.compile(
 )
 
 
-def declared_version(obj: Mapping) -> str | None:
+def declared_version(obj: Mapping[str, Any]) -> str | None:
     """The Portolan specification version an object claims, or None."""
     for uri in obj.get("stac_extensions") or []:
         match = PORTOLAN_SCHEMA.match(uri) if isinstance(uri, str) else None
@@ -41,7 +41,7 @@ def declared_version(obj: Mapping) -> str | None:
     return None
 
 
-def _links_to_markdown_file(obj: Mapping, rel: str, filename: str) -> bool:
+def _links_to_markdown_file(obj: Mapping[str, Any], rel: str, filename: str) -> bool:
     """True when `obj` links `filename` under `rel` as Markdown.
 
     PORTO-CORE-061 and PORTO-CORE-062 each name a relation, a media type, and
@@ -110,8 +110,8 @@ class CrawlResult(TypedDict, total=False):
     spec_version: str | None
     spec_version_mixed: bool
     updated: str | None
-    providers: list | None
-    keywords: list | None
+    providers: list[Any] | None
+    keywords: list[Any] | None
     logo: dict[str, str] | None
     bbox: list[float] | None
     licenses: dict[str, int]
@@ -135,11 +135,17 @@ class CrawlResult(TypedDict, total=False):
     temporal_extent: list[str | None] | None
     api_type: str | None
     last_crawled: str | None
-    validation: dict
+    validation: dict[str, Any]
     collections: list[CollectionSummary]
+    # publish_export.py and revalidate_all.py add these after the crawl.
+    first_registered: str | None
+    status: str
+    last_validated: str | None
+    stale_since: str | None
+    failure_reason: str | None
 
 
-def _empty_result(catalog_url: str, catalog: Mapping, now: datetime) -> CrawlResult:
+def _empty_result(catalog_url: str, catalog: Mapping[str, Any], now: datetime) -> CrawlResult:
     return {
         "url": catalog_url,
         "title": catalog.get("title"),
@@ -176,7 +182,7 @@ def _empty_result(catalog_url: str, catalog: Mapping, now: datetime) -> CrawlRes
     }
 
 
-def _summarize_collection(url: str, collection: Mapping) -> CollectionSummary:
+def _summarize_collection(url: str, collection: Mapping[str, Any]) -> CollectionSummary:
     summary = CollectionSummary(
         id=collection.get("id"),
         url=url,
@@ -212,6 +218,122 @@ def _summarize_collection(url: str, collection: Mapping) -> CollectionSummary:
     summary.items_unenumerable = has_items_endpoint and summary.item_count == 0
 
     return summary
+
+
+# The running totals below hold an int for the whole crawl. Only
+# _settle_totals turns item_count or total_size_bytes into None, after the
+# last child. The `or 0` satisfies the type, which allows None.
+def _add_collection(
+    result: CrawlResult,
+    child_url: str,
+    child: Mapping[str, Any],
+    versions: set[str],
+    bboxes: list[list[float]],
+    temporal_extents: list[list[str | None]],
+) -> None:
+    summary = _summarize_collection(child_url, child)
+    result["collections"].append(summary)
+    result["collection_count"] += 1
+    result["feature_count"] += summary.row_count
+    result["item_count"] = (result["item_count"] or 0) + summary.item_count
+    result["asset_count"] += summary.asset_count
+    result["total_size_bytes"] = (result["total_size_bytes"] or 0) + summary.size_bytes
+    if summary.items_unenumerable:
+        result["counts_partial"] = True
+
+    if summary.bbox:
+        bboxes.append(summary.bbox)
+    elif (child.get("extent") or {}).get("spatial"):
+        log(f"  Warning: discarding invalid bbox on {child_url}")
+    if summary.temporal:
+        temporal_extents.append(summary.temporal)
+    if summary.spec_version:
+        versions.add(summary.spec_version)
+        # A collection that declares nothing is a conformance
+        # failure for the validator, not a version disagreement.
+        if result["spec_version"] and summary.spec_version != result["spec_version"]:
+            log(
+                f"  Warning: {child_url} declares Portolan "
+                f"{summary.spec_version}, catalog declares "
+                f"{result['spec_version']}"
+            )
+
+
+def _add_subcatalog(
+    result: CrawlResult,
+    child_url: str,
+    sub: CrawlResult,
+    bboxes: list[list[float]],
+    temporal_extents: list[list[str | None]],
+) -> None:
+    result["collections"].extend(sub["collections"])
+    result["collection_count"] += sub["collection_count"]
+    result["feature_count"] += sub["feature_count"]
+    # A sub-catalog has already resolved its own unmeasurable
+    # counts to None. Add what it did measure and let this level
+    # decide again, over the whole merged collection list.
+    result["item_count"] = (result["item_count"] or 0) + (sub["item_count"] or 0)
+    result["asset_count"] += sub["asset_count"]
+    result["total_size_bytes"] = (result["total_size_bytes"] or 0) + (sub["total_size_bytes"] or 0)
+    if sub["counts_partial"]:
+        result["counts_partial"] = True
+    result["fetch_failures"].extend(sub["fetch_failures"])
+    if sub["bbox"]:
+        bboxes.append(sub["bbox"])
+    if sub["temporal_extent"]:
+        temporal_extents.append(sub["temporal_extent"])
+    if (
+        sub["spec_version"]
+        and result["spec_version"]
+        and sub["spec_version"] != result["spec_version"]
+    ):
+        log(
+            f"  Warning: {child_url} declares Portolan "
+            f"{sub['spec_version']}, catalog declares "
+            f"{result['spec_version']}"
+        )
+
+
+def _settle_totals(
+    result: CrawlResult,
+    bboxes: list[list[float]],
+    temporal_extents: list[list[str | None]],
+    versions: set[str],
+) -> None:
+    # Decided here, over `result["collections"]`, which already holds every
+    # collection merged up from every sub-catalog. A nested catalog therefore
+    # keeps a measurement any descendant managed to make, instead of one
+    # unmeasurable branch turning the whole tree null.
+    if not any(c.sized_asset_count for c in result["collections"]):
+        result["total_size_bytes"] = None
+    if result["item_count"] == 0 and any(c.items_unenumerable for c in result["collections"]):
+        result["item_count"] = None
+
+    result["bbox"] = union_bboxes(bboxes)
+
+    # The spec permits a mixed-version catalog and asks a validator to warn
+    # rather than reject, so the registry records the disagreement instead of
+    # picking a winner.
+    result["spec_version_mixed"] = len(versions) > 1
+
+    if temporal_extents:
+        starts = [t[0] for t in temporal_extents if t[0]]
+        ends = [t[1] for t in temporal_extents if t[1]]
+        result["temporal_extent"] = [
+            min(starts) if starts else None,
+            max(ends) if ends else None,
+        ]
+
+    # The whole mix, weighted, rather than one license standing in for the
+    # rest. A catalog of 190 ODbL-1.0 collections and 2 CC-BY-4.0 ones has a
+    # mix, and any single label for it hides that. Counted from
+    # `result["collections"]`, which already holds the collections merged up
+    # from every sub-catalog, so a nested tree keeps its licenses instead of
+    # collapsing once per level. Sorted by identifier to keep the export diff
+    # quiet when nothing moved. Collections declaring no license are absent
+    # here; their count is `collection_count` minus the sum of these.
+    counts = Counter(c.license for c in result["collections"] if c.license)
+    result["licenses"] = dict(sorted(counts.items()))
 
 
 def crawl_catalog(
@@ -286,61 +408,10 @@ def crawl_catalog(
 
             if child.get("type") == "Collection":
                 seen.add(child_url)
-                summary = _summarize_collection(child_url, child)
-                result["collections"].append(summary)
-                result["collection_count"] += 1
-                result["feature_count"] += summary.row_count
-                result["item_count"] += summary.item_count
-                result["asset_count"] += summary.asset_count
-                result["total_size_bytes"] += summary.size_bytes
-                if summary.items_unenumerable:
-                    result["counts_partial"] = True
-
-                if summary.bbox:
-                    bboxes.append(summary.bbox)
-                elif (child.get("extent") or {}).get("spatial"):
-                    log(f"  Warning: discarding invalid bbox on {child_url}")
-                if summary.temporal:
-                    temporal_extents.append(summary.temporal)
-                if summary.spec_version:
-                    versions.add(summary.spec_version)
-                    # A collection that declares nothing is a conformance
-                    # failure for the validator, not a version disagreement.
-                    if result["spec_version"] and summary.spec_version != result["spec_version"]:
-                        log(
-                            f"  Warning: {child_url} declares Portolan "
-                            f"{summary.spec_version}, catalog declares "
-                            f"{result['spec_version']}"
-                        )
-
+                _add_collection(result, child_url, child, versions, bboxes, temporal_extents)
             elif child.get("type") == "Catalog":
                 sub = crawl_catalog(child_url, fetcher, now=now, seen=seen, versions=versions)
-                result["collections"].extend(sub["collections"])
-                result["collection_count"] += sub["collection_count"]
-                result["feature_count"] += sub["feature_count"]
-                # A sub-catalog has already resolved its own unmeasurable
-                # counts to None. Add what it did measure and let this level
-                # decide again, over the whole merged collection list.
-                result["item_count"] += sub["item_count"] or 0
-                result["asset_count"] += sub["asset_count"]
-                result["total_size_bytes"] += sub["total_size_bytes"] or 0
-                if sub["counts_partial"]:
-                    result["counts_partial"] = True
-                result["fetch_failures"].extend(sub["fetch_failures"])
-                if sub["bbox"]:
-                    bboxes.append(sub["bbox"])
-                if sub["temporal_extent"]:
-                    temporal_extents.append(sub["temporal_extent"])
-                if (
-                    sub["spec_version"]
-                    and result["spec_version"]
-                    and sub["spec_version"] != result["spec_version"]
-                ):
-                    log(
-                        f"  Warning: {child_url} declares Portolan "
-                        f"{sub['spec_version']}, catalog declares "
-                        f"{result['spec_version']}"
-                    )
+                _add_subcatalog(result, child_url, sub, bboxes, temporal_extents)
 
         except Exception as e:
             # The crawl keeps going: one unreachable sub-tree should not cost
@@ -351,39 +422,5 @@ def crawl_catalog(
             result["fetch_failures"].append(f"{child_url}: {e}")
             log(f"  Warning: Failed to fetch {child_url}: {e}")
 
-    # Decided here, over `result["collections"]`, which already holds every
-    # collection merged up from every sub-catalog. A nested catalog therefore
-    # keeps a measurement any descendant managed to make, instead of one
-    # unmeasurable branch turning the whole tree null.
-    if not any(c.sized_asset_count for c in result["collections"]):
-        result["total_size_bytes"] = None
-    if result["item_count"] == 0 and any(c.items_unenumerable for c in result["collections"]):
-        result["item_count"] = None
-
-    result["bbox"] = union_bboxes(bboxes)
-
-    # The spec permits a mixed-version catalog and asks a validator to warn
-    # rather than reject, so the registry records the disagreement instead of
-    # picking a winner.
-    result["spec_version_mixed"] = len(versions) > 1
-
-    if temporal_extents:
-        starts = [t[0] for t in temporal_extents if t[0]]
-        ends = [t[1] for t in temporal_extents if t[1]]
-        result["temporal_extent"] = [
-            min(starts) if starts else None,
-            max(ends) if ends else None,
-        ]
-
-    # The whole mix, weighted, rather than one license standing in for the
-    # rest. A catalog of 190 ODbL-1.0 collections and 2 CC-BY-4.0 ones has a
-    # mix, and any single label for it hides that. Counted from
-    # `result["collections"]`, which already holds the collections merged up
-    # from every sub-catalog, so a nested tree keeps its licenses instead of
-    # collapsing once per level. Sorted by identifier to keep the export diff
-    # quiet when nothing moved. Collections declaring no license are absent
-    # here; their count is `collection_count` minus the sum of these.
-    counts = Counter(c.license for c in result["collections"] if c.license)
-    result["licenses"] = dict(sorted(counts.items()))
-
+    _settle_totals(result, bboxes, temporal_extents, versions)
     return result

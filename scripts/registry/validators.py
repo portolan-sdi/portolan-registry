@@ -23,12 +23,15 @@ from __future__ import annotations
 
 import json
 import re
-import subprocess
+
+# bandit B404: this module runs the pinned validators without a shell.
+import subprocess  # nosec B404
 import tempfile
 from collections.abc import Callable, Iterable, Mapping
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
+from typing import Any
 
 from registry.crawl import CrawlResult, crawl_catalog
 from registry.entries import normalize_url
@@ -52,7 +55,7 @@ EXAMPLES_PER_RULE = 3
 # seconds on ghsl, which mirrors to 3,997 files.
 TIMEOUT_SECONDS = 600
 
-Runner = Callable[..., subprocess.CompletedProcess]
+Runner = Callable[..., subprocess.CompletedProcess[str]]
 
 
 class ValidatorError(Exception):
@@ -148,7 +151,7 @@ def group_findings(
     return sorted(groups.values(), key=lambda g: (-g.count, g.tool, g.rule_id))
 
 
-def _run(command: list[str], run: Runner) -> subprocess.CompletedProcess:
+def _run(command: list[str], run: Runner) -> subprocess.CompletedProcess[str]:
     try:
         return run(command, capture_output=True, text=True, timeout=TIMEOUT_SECONDS)
     except FileNotFoundError as e:
@@ -157,12 +160,13 @@ def _run(command: list[str], run: Runner) -> subprocess.CompletedProcess:
         raise ValidatorError(f"{command[0]} ran longer than {TIMEOUT_SECONDS}s") from e
 
 
-def _parse(name: str, proc: subprocess.CompletedProcess) -> dict:
+def _parse(name: str, proc: subprocess.CompletedProcess[str]) -> dict[str, Any]:
     try:
-        return json.loads(proc.stdout)
+        report: dict[str, Any] = json.loads(proc.stdout)
     except ValueError as e:
         detail = (proc.stderr or proc.stdout or "").strip()[-500:]
         raise ValidatorError(f"{name} printed no JSON report: {detail}") from e
+    return report
 
 
 def run_rashid(mirror_dir: Path, *, run: Runner = subprocess.run) -> list[Finding]:
@@ -237,7 +241,9 @@ def _fetch_findings(failures: Iterable[str]) -> list[Finding]:
     ]
 
 
-def settle_stac_valid(result: CrawlResult, url: str, previous_link: Mapping | None) -> None:
+def settle_stac_valid(
+    result: CrawlResult, url: str, previous_link: Mapping[str, Any] | None
+) -> None:
     """Keep the last published `stac_valid` when this run has no answer.
 
     A run with no answer is a slow host or a broken tool, not news about the
@@ -257,7 +263,7 @@ def settle_stac_valid(result: CrawlResult, url: str, previous_link: Mapping | No
         result["validation"]["stac_valid"] = previous
 
 
-def log_validation(report) -> None:
+def log_validation(report: ValidationReport) -> None:
     """Report what the validators found. Status does not depend on it yet."""
     if report.error:
         log(f"  Validators could not run: {report.error}")

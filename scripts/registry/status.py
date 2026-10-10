@@ -9,6 +9,7 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 from datetime import UTC, datetime, timedelta
+from typing import Any
 
 STALE_THRESHOLD_DAYS = 30
 
@@ -23,12 +24,12 @@ def parse_timestamp(ts: str | None) -> datetime | None:
 
 
 def update_status(
-    current_state: Mapping,
+    current_state: Mapping[str, Any],
     *,
     passed: bool,
     failure_reason: str | None = None,
     now: datetime | None = None,
-) -> dict:
+) -> dict[str, Any]:
     """Return the next state for one catalog.
 
     `now` is injected so the 30-day rule is testable without freezing wall

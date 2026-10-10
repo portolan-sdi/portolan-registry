@@ -24,7 +24,7 @@ from __future__ import annotations
 import json
 import posixpath
 import threading
-from collections.abc import Callable
+from collections.abc import Callable, Mapping
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import Any, Protocol
@@ -89,7 +89,7 @@ class Mirror:
         # fault and is not a finding about it.
         self.unwritable: list[str] = []
         # URL -> parsed document, for every catalog and collection mirrored.
-        self.containers: dict[str, dict] = {}
+        self.containers: dict[str, dict[str, Any]] = {}
         # Every URL a fetch was started for, whether or not it succeeded.
         self.attempted: set[str] = set()
         # "<url>: <error>" for each fetch that failed for a reason other than
@@ -180,11 +180,11 @@ class MirroringFetcher:
     def probe(self, url: str, timeout: float = 5) -> bool:
         return self._inner.probe(url, timeout)
 
-    def head(self, url: str, timeout: float = 5):
+    def head(self, url: str, timeout: float = 5) -> Mapping[str, str] | None:
         return self._inner.head(url, timeout)
 
 
-def _wanted(mirror: Mirror, url: str, doc: dict) -> list[str]:
+def _wanted(mirror: Mirror, url: str, doc: dict[str, Any]) -> list[str]:
     """URLs this container needs in the mirror that nothing has fetched."""
     directory = url.rsplit("/", 1)[0]
     wanted = [f"{directory}/{name}" for name in SIDECARS]
@@ -214,13 +214,13 @@ def complete_mirror(
     """
     local = threading.local()
 
-    def fetch(url: str) -> tuple[str, bytes | None, Exception | None]:
+    def fetch(url: str) -> tuple[str, bytes | Exception]:
         if not hasattr(local, "source"):
             local.source = source_factory()
         try:
-            return url, local.source.get_bytes(url), None
+            return url, local.source.get_bytes(url)
         except Exception as e:
-            return url, None, e
+            return url, e
 
     pending = dict(mirror.containers)
     with ThreadPoolExecutor(max_workers=workers) as pool:
@@ -241,12 +241,12 @@ def complete_mirror(
                     wave.append(target)
 
             pending = {}
-            for url, data, error in pool.map(fetch, wave):
-                if isinstance(error, NotFound):
+            for url, data in pool.map(fetch, wave):
+                if isinstance(data, NotFound):
                     continue
-                if error is not None:
-                    mirror.failures.append(f"{url}: {error}")
-                    log(f"  Warning: Failed to fetch {url}: {error}")
+                if isinstance(data, Exception):
+                    mirror.failures.append(f"{url}: {data}")
+                    log(f"  Warning: Failed to fetch {url}: {data}")
                     continue
                 mirror.write(url, data)
                 # Written as served. A document that does not parse stays in

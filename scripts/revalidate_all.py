@@ -15,6 +15,7 @@ import json
 import sys
 from datetime import UTC, datetime
 from pathlib import Path
+from typing import Any
 
 from registry.coverage import (
     COVERAGE_PATH,
@@ -25,6 +26,7 @@ from registry.coverage import (
     load_coverage,
     write_coverage,
 )
+from registry.crawl import CrawlResult
 from registry.entries import CATALOG_DIR, entry_paths, load_entry
 from registry.export import (
     EXPORT_PATH,
@@ -66,8 +68,8 @@ def main(argv: list[str] | None = None) -> int:
     previous_coverage = load_coverage(COVERAGE_PATH)
     previous_links = load_links(EXPORT_PATH)
 
-    newly_stale: list[tuple[str, dict, str]] = []
-    crawled: dict[str, dict] = {}
+    newly_stale: list[tuple[str, dict[str, Any], str]] = []
+    crawled: dict[str, CrawlResult] = {}
 
     for path in paths:
         catalog_id = path.stem

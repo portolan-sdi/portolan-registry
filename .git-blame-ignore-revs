@@ -1,0 +1,6 @@
+# Commits that git blame skips. Enable it once per clone:
+#   git config blame.ignoreRevsFile .git-blame-ignore-revs
+# GitHub reads this file without that step.
+
+# style: apply ruff format and ruff check --fix to scripts
+f17e662a32d1afe9c41cb855ef79e44f3fdc7d3e
