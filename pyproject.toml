@@ -55,6 +55,8 @@ addopts = "-m 'not network' -q"
 [tool.ruff]
 line-length = 100
 target-version = "py311"
+# A copy of the portolan-ops template. Keep it byte-identical to ops.
+extend-exclude = ["scripts/pip_audit_ignores.py"]
 
 [tool.ruff.lint]
 select = ["E", "W", "F", "I", "B", "C4", "UP"]
@@ -83,4 +85,5 @@ exclude = [".venv", "scripts/tests", ".claude"]
 
 [tool.coverage.run]
 source = ["scripts"]
-omit = ["scripts/tests/*"]
+# pip_audit_ignores.py is a copy of the portolan-ops template, and ops tests it.
+omit = ["scripts/tests/*", "scripts/pip_audit_ignores.py"]

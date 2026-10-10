@@ -1,34 +1,58 @@
+# The portolan-ops Python family config (ci/python-package/dependabot.yml),
+# plus the npm ecosystem this repo needs.
 version: 2
 updates:
-  # GitHub Actions dependencies
-  - package-ecosystem: "github-actions"
-    directory: "/"
+  # The github-actions ecosystem turns an ops v2 release into a pull
+  # request here instead of a silent break.
+  - package-ecosystem: github-actions
+    directory: /
     schedule:
-      interval: "weekly"
-    labels:
-      - "dependencies"
-      - "github-actions"
+      interval: weekly
+    labels: [dependencies, github-actions]
     open-pull-requests-limit: 5
+    commit-message:
+      prefix: ci
+    # Fresh releases are where supply-chain compromises surface. The
+    # delay lets advisories and yanks land first (zizmor
+    # dependabot-cooldown).
+    cooldown:
+      default-days: 7
 
   # Python dependencies for the registry crawler. The workflows run with
   # `uv run --frozen`, so a stale lockfile fails every job. Keep it fresh.
-  - package-ecosystem: "uv"
-    directory: "/"
+  - package-ecosystem: uv
+    directory: /
     schedule:
-      interval: "weekly"
-    labels:
-      - "dependencies"
-      - "python"
-    open-pull-requests-limit: 5
+      interval: weekly
+    labels: [dependencies, python]
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: build
+      include: scope
+    cooldown:
+      default-days: 7
+    # rashid stays out of the groups. A new release can add rules, so it
+    # arrives as its own pull request (pyproject.toml, `validators`).
+    groups:
+      development-dependencies:
+        dependency-type: development
+        update-types: [minor, patch]
+        exclude-patterns: [rashid]
+      production-dependencies:
+        dependency-type: production
+        update-types: [minor, patch]
+        exclude-patterns: [rashid]
 
   # stac-node-validator, which the gate and the nightly run over each
   # catalog's metadata. Pinned exactly in package.json, so each release
   # arrives as its own pull request.
-  - package-ecosystem: "npm"
-    directory: "/scripts/stac-node-validator"
+  - package-ecosystem: npm
+    directory: /scripts/stac-node-validator
     schedule:
-      interval: "weekly"
-    labels:
-      - "dependencies"
-      - "javascript"
+      interval: weekly
+    labels: [dependencies, javascript]
     open-pull-requests-limit: 5
+    commit-message:
+      prefix: build
+    cooldown:
+      default-days: 7

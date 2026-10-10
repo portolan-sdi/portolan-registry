@@ -1,4 +1,10 @@
-# Basic CI - validates schema and catalog files
+# CI for the registry: the portolan-ops Python family, plus the checks on
+# the JSON schemas and the export that only this repo needs.
+#
+# The `ci` job calls ops' reusable-python-ci.yml. It runs the quality
+# floor: the prek hooks, bandit, pip-audit, and pytest with a 90%
+# diff-cover gate (portolan-ops, norms/ci.md, "Python quality floor").
+# The other jobs are this repo's own.
 name: CI
 
 on:
@@ -8,22 +14,65 @@ on:
     # No branch filter. A pull request aimed anywhere else still runs
     # these checks; without that, a stacked pull request shows green
     # having run none of them.
+  schedule:
+    # Nightly run catches dependency drift on an idle repo. A distinct
+    # minute, so the fleet does not fire at once.
+    - cron: "43 2 * * *"
   workflow_dispatch:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
+  ci:
+    # v1 is a moving major tag. Compatible changes reach this repo when
+    # ops moves the tag; a breaking change ships as v2 and arrives as a
+    # Dependabot PR here (norms/ci.md, "Changing and releasing CI").
+    uses: portolan-sdi/portolan-ops/.github/workflows/reusable-python-ci.yml@v1
+    permissions:
+      contents: read
+      # The reusable test job requests this for Codecov OIDC even when the
+      # upload is off, and a caller must grant what the called workflow
+      # requests.
+      id-token: write
+    with:
+      # requires-python is >=3.11.
+      python-versions: '["3.11", "3.12", "3.13"]'
+      # The scripts run on the ubuntu runners of this repo's own
+      # workflows, and nowhere else.
+      os: '["ubuntu"]'
+      # Install rashid, so pip-audit also reads rashid and its rasterio and
+      # pyarrow stack. The tests that run the real validators also need
+      # stac-node-validator on Node 22.12. They skip here and run in
+      # `test` below.
+      sync-args: "--group validators"
+      # Flat layout: the code and its tests live in scripts/.
+      coverage-target: scripts
+      bandit-target: scripts
+      # The registry has no Codecov project. The diff-cover gate still runs.
+      codecov: false
+
   validate-schema:
     name: Validate JSON Schema
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Setup Node.js
-        uses: actions/setup-node@v7
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: '20'
 
       - name: Install ajv-cli
-        run: npm install -g ajv-cli ajv-formats
+        # Exact versions. These CLI tools have no lockfile of their own.
+        run: npm install -g ajv-cli@5.0.0 ajv-formats@3.0.1 # zizmor: ignore[adhoc-packages]
 
       - name: Validate schema is valid JSON Schema
         run: |
@@ -33,10 +82,12 @@ jobs:
             --all-errors \
             -s schema/entry.schema.json
 
+      - name: Install js-yaml
+        run: npm install -g js-yaml@5.4.3 # zizmor: ignore[adhoc-packages]
+
       - name: Validate all catalog entries against schema
         run: |
           # Convert YAML to JSON and validate each
-          npm install -g js-yaml
           for f in catalogs/*.yaml; do
             echo "Validating $f..."
             js-yaml "$f" > /tmp/entry.json
@@ -51,30 +102,40 @@ jobs:
   json-lint:
     name: Lint JSON Files
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Check JSON formatting
         run: |
           # Validate all JSON files are valid
-          for f in $(find . -name '*.json' -not -path './.git/*'); do
-            echo "Checking $f..."
-            python3 -m json.tool "$f" > /dev/null
-          done
+          find . -name '*.json' -not -path './.git/*' -print0 |
+            while IFS= read -r -d '' f; do
+              echo "Checking $f..."
+              python3 -m json.tool "$f" > /dev/null
+            done
 
+  # The one job that runs the real stac-node-validator, which needs Node
+  # 22.12. The family test job in `ci` runs without it. Branch protection
+  # requires this check by its name, "Python Tests".
   test:
     name: Python Tests
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Setup uv
-        uses: astral-sh/setup-uv@v7
+        uses: astral-sh/setup-uv@37802adc94f370d6bfd71619e3f0bf239e1f3b78 # v7.6.0
 
       # The validator tests run the pinned rashid and stac-node-validator,
       # and skip without them. Install both so CI exercises the real tools.
       - name: Setup Node.js
-        uses: actions/setup-node@v7
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: '22'
 
@@ -89,16 +150,20 @@ jobs:
   exports-valid:
     name: Validate Exports
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Setup Node.js
-        uses: actions/setup-node@v7
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: '20'
 
       - name: Install ajv-cli
-        run: npm install -g ajv-cli ajv-formats
+        # Exact versions. These CLI tools have no lockfile of their own.
+        run: npm install -g ajv-cli@5.0.0 ajv-formats@3.0.1 # zizmor: ignore[adhoc-packages]
 
       - name: Validate export against schema
         run: |

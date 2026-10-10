@@ -1,6 +1,8 @@
 name: Auto-merge after validation
 
-on:
+# zizmor flags every workflow_run trigger. This one checks out nothing and
+# runs no submitted code. It reads the pull request through the API only.
+on: # zizmor: ignore[dangerous-triggers]
   workflow_run:
     workflows: ["Validate Catalogs"]
     types: [completed]
@@ -16,10 +18,11 @@ jobs:
       github.event.workflow_run.event == 'pull_request' &&
       github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Decide whether the pull request merges itself
         id: pr
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
           script: |
             const run = await github.rest.actions.getWorkflowRun({
