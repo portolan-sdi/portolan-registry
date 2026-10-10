@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-09T12:37:34.667972+00:00",
+  "generated": "2026-10-10T05:27:01.989865+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-10-09T12:37:34.667972+00:00",
+  "registry_generated": "2026-10-10T05:27:01.989865+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -54395,6 +54395,502 @@
             -55.9854,
             179.9979,
             83.6229
+          ]
+        }
+      ]
+    },
+    {
+      "id": "summerland-open-data",
+      "collection_count": 49,
+      "collections": [
+        {
+          "id": "base-layers/beyond-summerland",
+          "title": "Beyond Summerland",
+          "bbox": [
+            -133.7046,
+            48.2248,
+            -114.0534,
+            60.0048
+          ]
+        },
+        {
+          "id": "base-layers/building-footprints-2018",
+          "title": "Building Footprints 2018",
+          "bbox": [
+            -119.7848,
+            49.554,
+            -119.6199,
+            49.6922
+          ]
+        },
+        {
+          "id": "base-layers/civic-address",
+          "title": "Civic Address",
+          "bbox": [
+            -119.8052,
+            49.483,
+            -119.6048,
+            49.7212
+          ]
+        },
+        {
+          "id": "base-layers/district-boundary",
+          "title": "District Boundary",
+          "bbox": [
+            -119.8052,
+            49.5479,
+            -119.6166,
+            49.7122
+          ]
+        },
+        {
+          "id": "base-layers/district-owned-property",
+          "title": "District Owned Property",
+          "bbox": [
+            -119.7941,
+            49.5569,
+            -119.6194,
+            49.7082
+          ]
+        },
+        {
+          "id": "base-layers/neighbourhoods",
+          "title": "Neighbourhoods",
+          "bbox": [
+            -119.8052,
+            49.548,
+            -119.6168,
+            49.7122
+          ]
+        },
+        {
+          "id": "community/cultural-assets",
+          "title": "Cultural Assets",
+          "bbox": [
+            -119.777,
+            49.5641,
+            -119.6226,
+            49.6887
+          ]
+        },
+        {
+          "id": "community/curbside-collection",
+          "title": "Curbside Collection",
+          "bbox": [
+            -119.749,
+            49.5553,
+            -119.6194,
+            49.6742
+          ]
+        },
+        {
+          "id": "community/curbside-collection-roads",
+          "title": "Curbside Collection Roads",
+          "bbox": [
+            -119.7486,
+            49.5606,
+            -119.6208,
+            49.6676
+          ]
+        },
+        {
+          "id": "community/heritage-list",
+          "title": "Heritage List",
+          "bbox": [
+            -119.7203,
+            49.5655,
+            -119.6333,
+            49.6186
+          ]
+        },
+        {
+          "id": "community/sister-and-friendship-cities",
+          "title": "Sister and Friendship Cities",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "development-permit-areas/bentley-road-industrial",
+          "title": "Bentley Road Industrial Development Permit Area",
+          "bbox": [
+            -119.6909,
+            49.619,
+            -119.6833,
+            49.6243
+          ]
+        },
+        {
+          "id": "development-permit-areas/downtown",
+          "title": "Downtown Development Permit Area",
+          "bbox": [
+            -119.6845,
+            49.5995,
+            -119.6621,
+            49.608
+          ]
+        },
+        {
+          "id": "development-permit-areas/environmentally-sensitive",
+          "title": "Environmentally Sensitive Development Permit Area",
+          "bbox": [
+            -119.8052,
+            49.548,
+            -119.6252,
+            49.7122
+          ]
+        },
+        {
+          "id": "development-permit-areas/high-hazard",
+          "title": "High Hazard Development Permit Area",
+          "bbox": [
+            -119.6943,
+            49.5567,
+            -119.6393,
+            49.6532
+          ]
+        },
+        {
+          "id": "development-permit-areas/lower-town",
+          "title": "Lower Town Development Permit Area",
+          "bbox": [
+            -119.6568,
+            49.5996,
+            -119.6496,
+            49.6048
+          ]
+        },
+        {
+          "id": "development-permit-areas/trout-creek",
+          "title": "Trout Creek Development Permit Area",
+          "bbox": [
+            -119.6321,
+            49.5673,
+            -119.6293,
+            49.5741
+          ]
+        },
+        {
+          "id": "development-permit-areas/watercourse-riparian",
+          "title": "Watercourse (Riparian) Development Permit Area",
+          "bbox": [
+            -119.798,
+            49.548,
+            -119.6194,
+            49.7087
+          ]
+        },
+        {
+          "id": "development-permit-areas/wildfire-hazard",
+          "title": "Wildfire Hazard Development Permit Area",
+          "bbox": [
+            -119.7151,
+            49.567,
+            -119.6688,
+            49.6302
+          ]
+        },
+        {
+          "id": "environment/osprey-nest-platforms",
+          "title": "Osprey Nest Platforms",
+          "bbox": [
+            -119.6811,
+            49.5719,
+            -119.6297,
+            49.6292
+          ]
+        },
+        {
+          "id": "environment/powell-beach-tree-inventory-2005",
+          "title": "Tree Inventory- Powell Beach Park 2005",
+          "bbox": [
+            -119.6258,
+            49.5728,
+            -119.6197,
+            49.574
+          ]
+        },
+        {
+          "id": "environment/shim-trees-2008",
+          "title": "Trees- SHIM 2008",
+          "bbox": [
+            -119.7424,
+            49.6073,
+            -119.6551,
+            49.6612
+          ]
+        },
+        {
+          "id": "parks-and-recreation/furniture",
+          "title": "Park Furniture",
+          "bbox": [
+            -119.7744,
+            49.5654,
+            -119.6199,
+            49.6848
+          ]
+        },
+        {
+          "id": "parks-and-recreation/park-areas",
+          "title": "Park Areas",
+          "bbox": [
+            -119.777,
+            49.5383,
+            -119.6193,
+            49.6882
+          ]
+        },
+        {
+          "id": "parks-and-recreation/playgrounds",
+          "title": "Playground",
+          "bbox": [
+            -119.6879,
+            49.5731,
+            -119.6212,
+            49.6083
+          ]
+        },
+        {
+          "id": "parks-and-recreation/structures",
+          "title": "Park Structures",
+          "bbox": [
+            -119.6517,
+            49.5995,
+            -119.6501,
+            49.6076
+          ]
+        },
+        {
+          "id": "parks-and-recreation/trails",
+          "title": "Trails",
+          "bbox": [
+            -120.4976,
+            49.481,
+            -119.5819,
+            49.7473
+          ]
+        },
+        {
+          "id": "planning/ocp-land-use",
+          "title": "Official Community Plan Land Use",
+          "bbox": [
+            -119.8052,
+            49.5479,
+            -119.6194,
+            49.7121
+          ]
+        },
+        {
+          "id": "planning/urban-growth",
+          "title": "Urban Growth",
+          "bbox": [
+            -119.7151,
+            49.5653,
+            -119.6194,
+            49.6271
+          ]
+        },
+        {
+          "id": "planning/zoning",
+          "title": "Zoning",
+          "bbox": [
+            -119.8052,
+            49.483,
+            -119.6048,
+            49.7161
+          ]
+        },
+        {
+          "id": "transportation/evc-stations",
+          "title": "EVC Stations",
+          "bbox": [
+            -119.6845,
+            49.5998,
+            -119.6536,
+            49.6084
+          ]
+        },
+        {
+          "id": "transportation/sidewalks",
+          "title": "Sidewalks",
+          "bbox": [
+            -119.7055,
+            49.5697,
+            -119.6203,
+            49.6121
+          ]
+        },
+        {
+          "id": "utilities/electrical/event-power",
+          "title": "Electrical Event Power",
+          "bbox": [
+            -119.7328,
+            49.5655,
+            -119.6225,
+            49.619
+          ]
+        },
+        {
+          "id": "utilities/sanitary/gravity-mains",
+          "title": "Gravity Main - Sanitary",
+          "bbox": [
+            -119.7032,
+            49.5653,
+            -119.621,
+            49.6274
+          ]
+        },
+        {
+          "id": "utilities/sanitary/manholes",
+          "title": "Manhole - Sanitary",
+          "bbox": [
+            -119.7024,
+            49.5653,
+            -119.621,
+            49.6274
+          ]
+        },
+        {
+          "id": "utilities/sanitary/network-structures",
+          "title": "Network Structure - Sanitary",
+          "bbox": [
+            -119.6863,
+            49.5739,
+            -119.624,
+            49.6247
+          ]
+        },
+        {
+          "id": "utilities/sanitary/pressure-mains",
+          "title": "Pressure Main - Sanitary",
+          "bbox": [
+            -119.7031,
+            49.5738,
+            -119.6239,
+            49.6247
+          ]
+        },
+        {
+          "id": "utilities/sanitary/services",
+          "title": "Service - Sanitary",
+          "bbox": [
+            -119.7034,
+            49.5653,
+            -119.6206,
+            49.6275
+          ]
+        },
+        {
+          "id": "utilities/storm/culverts",
+          "title": "Culverts - Storm",
+          "bbox": [
+            -119.7129,
+            49.5659,
+            -119.6376,
+            49.6286
+          ]
+        },
+        {
+          "id": "utilities/storm/discharge-points",
+          "title": "Discharge Point - Storm",
+          "bbox": [
+            -119.6912,
+            49.564,
+            -119.6252,
+            49.6239
+          ]
+        },
+        {
+          "id": "utilities/storm/gravity-mains",
+          "title": "Gravity Main - Storm",
+          "bbox": [
+            -119.7193,
+            49.564,
+            -119.6214,
+            49.6271
+          ]
+        },
+        {
+          "id": "utilities/storm/inlets",
+          "title": "Inlet - Storm",
+          "bbox": [
+            -119.7189,
+            49.5634,
+            -119.621,
+            49.6273
+          ]
+        },
+        {
+          "id": "utilities/storm/leads",
+          "title": "Leads - Storm",
+          "bbox": [
+            -119.7168,
+            49.5634,
+            -119.621,
+            49.6323
+          ]
+        },
+        {
+          "id": "utilities/storm/manholes",
+          "title": "Manhole - Storm",
+          "bbox": [
+            -119.7304,
+            49.5641,
+            -119.6229,
+            49.6248
+          ]
+        },
+        {
+          "id": "utilities/water/hydrants",
+          "title": "Hydrants",
+          "bbox": [
+            -119.7449,
+            49.5625,
+            -119.6212,
+            49.6646
+          ]
+        },
+        {
+          "id": "utilities/water/mains",
+          "title": "Main - Water Utility",
+          "bbox": [
+            -119.7738,
+            49.5625,
+            -119.6211,
+            49.6833
+          ]
+        },
+        {
+          "id": "utilities/water/pump-stations",
+          "title": "Pump Stations - Water Utility",
+          "bbox": [
+            -119.7169,
+            49.5687,
+            -119.6777,
+            49.626
+          ]
+        },
+        {
+          "id": "utilities/water/services",
+          "title": "Services - Water Utility",
+          "bbox": [
+            -119.7488,
+            49.5626,
+            -119.6206,
+            49.6678
+          ]
+        },
+        {
+          "id": "utilities/water/tanks",
+          "title": "Tank - Water Utility",
+          "bbox": [
+            -119.7119,
+            49.5702,
+            -119.6544,
+            49.625
           ]
         }
       ]
