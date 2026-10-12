@@ -71,10 +71,20 @@ def test_the_gate_reads_the_export_from_the_base_branch():
 
 def test_every_crawling_job_has_a_timeout():
     # One host that stalls must not hold a runner for the 6 hour default.
+    # The bound leaves room for a catalog of 135,914 documents.
     for name, job in [
         ("validate.yml", "validate"),
         ("revalidate.yml", "revalidate"),
         ("publish.yml", "publish"),
     ]:
         workflow = yaml.safe_load(Path(f".github/workflows/{name}").read_text())
-        assert 0 < workflow["jobs"][job]["timeout-minutes"] <= 180, name
+        assert 0 < workflow["jobs"][job]["timeout-minutes"] <= 300, name
+
+
+def test_a_validator_stops_before_the_gate_job_does():
+    # A validator that hangs must end with a report the notifier can read.
+    # The job limit ends the run with no report at all.
+    from registry.validators import TIMEOUT_SECONDS
+
+    workflow = yaml.safe_load(Path(".github/workflows/validate.yml").read_text())
+    assert TIMEOUT_SECONDS < workflow["jobs"]["validate"]["timeout-minutes"] * 60

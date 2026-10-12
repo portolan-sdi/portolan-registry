@@ -28,6 +28,7 @@ import re
 import subprocess  # nosec B404
 import tempfile
 from collections.abc import Callable, Iterable, Mapping
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
@@ -52,8 +53,11 @@ FETCH_TOOL = "fetch"
 EXAMPLES_PER_RULE = 3
 
 # The longest a validator may run on one mirror. rashid takes about 16
-# seconds on ghsl, which mirrors to 3,997 files.
-TIMEOUT_SECONDS = 600
+# seconds on ghsl, which mirrors to 3,997 files. rashid 0.1.8 took more than
+# 25 minutes on epoch-forest-typology-2020, which mirrors to 135,914 files.
+# It uses one core (portolan-sdi/rashid#214). The limit stops a validator
+# that hangs, and it must stay below the job limits in the workflows.
+TIMEOUT_SECONDS = 2 * 60 * 60
 
 Runner = Callable[..., subprocess.CompletedProcess[str]]
 
@@ -224,8 +228,16 @@ def run_stac_node_validator(mirror_dir: Path, *, run: Runner = subprocess.run) -
 
 
 def validate_mirror(mirror_dir: Path) -> list[Finding]:
-    """Run both validators. Raises ValidatorError if either cannot run."""
-    return run_rashid(mirror_dir) + run_stac_node_validator(mirror_dir)
+    """Run both validators. Raises ValidatorError if either cannot run.
+
+    Each validator is a separate process that only reads the mirror, so the
+    two run at the same time. The run then takes as long as the slower one.
+    rashid findings come first, as they did when the two ran in sequence.
+    """
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        rashid = pool.submit(run_rashid, mirror_dir)
+        snv = pool.submit(run_stac_node_validator, mirror_dir)
+        return rashid.result() + snv.result()
 
 
 def _fetch_findings(failures: Iterable[str]) -> list[Finding]:

@@ -12,6 +12,7 @@ import functools
 import json
 import shutil
 import subprocess
+import threading
 
 import pytest
 from conftest import FROZEN, FakeFetcher
@@ -200,7 +201,32 @@ class TestValidateMirror:
         monkeypatch.setattr(validators, "run_stac_node_validator", fake("S"))
         found = validators.validate_mirror(tmp_path)
         assert [f.rule_id for f in found] == ["R", "S"]
-        assert seen == [("R", tmp_path), ("S", tmp_path)]
+        assert sorted(seen) == [("R", tmp_path), ("S", tmp_path)]
+
+    def test_runs_the_validators_at_the_same_time(self, tmp_path, monkeypatch):
+        # Each fake waits for the other to start. In sequence, the first
+        # one waits alone and the barrier breaks.
+        barrier = threading.Barrier(2, timeout=5)
+
+        def fake(name):
+            def run(mirror_dir):
+                barrier.wait()
+                return [finding(name)]
+
+            return run
+
+        monkeypatch.setattr(validators, "run_rashid", fake("R"))
+        monkeypatch.setattr(validators, "run_stac_node_validator", fake("S"))
+        assert [f.rule_id for f in validators.validate_mirror(tmp_path)] == ["R", "S"]
+
+    def test_a_validator_that_cannot_run_raises(self, tmp_path, monkeypatch):
+        def broken(mirror_dir):
+            raise ValidatorError("stac-node-validator exited 2")
+
+        monkeypatch.setattr(validators, "run_rashid", lambda d: [finding("R")])
+        monkeypatch.setattr(validators, "run_stac_node_validator", broken)
+        with pytest.raises(ValidatorError, match="exited 2"):
+            validators.validate_mirror(tmp_path)
 
 
 def catalog_tree():

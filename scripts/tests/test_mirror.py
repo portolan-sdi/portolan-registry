@@ -11,6 +11,7 @@ import json
 import pytest
 from conftest import FROZEN, FakeFetcher
 
+from registry import mirror as mirror_module
 from registry.crawl import crawl_catalog
 from registry.mirror import Mirror, MirrorFull, MirroringFetcher, complete_mirror
 
@@ -211,6 +212,25 @@ class TestLimits:
         complete_mirror(mirror, lambda: tree)
         assert len(mirror.attempted) == mirror.max_documents
         assert "more than" in mirror.problem()
+
+    def test_a_long_wave_logs_its_progress(self, monkeypatch, tmp_path, capsys):
+        monkeypatch.setattr(mirror_module, "PROGRESS_EVERY", 2)
+        f = FakeFetcher(
+            docs={
+                ROOT: {
+                    "type": "Catalog",
+                    "links": [{"rel": "item", "href": f"./i{n}.json"} for n in range(3)],
+                },
+                **{f"https://ex.org/i{n}.json": {"type": "Feature"} for n in range(3)},
+            }
+        )
+        mirror = mirrored(f, tmp_path)
+        complete_mirror(mirror, lambda: f)
+        err = capsys.readouterr().err
+        # Two documents beside the root, and three items.
+        assert "Mirroring 5 documents" in err
+        assert "Mirrored 2 of 5 documents" in err
+        assert "Mirrored 4 of 5 documents" in err
 
     def test_a_complete_mirror_has_no_problem(self, tree, tmp_path):
         mirror = mirrored(tree, tmp_path)

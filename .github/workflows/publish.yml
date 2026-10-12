@@ -24,8 +24,10 @@ jobs:
     if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     # The run crawls and mirrors every catalog with 4 workers. It took
-    # about 10 minutes before the mirror in October 2026.
-    timeout-minutes: 120
+    # about 30 minutes on 12 October 2026. epoch-forest-typology-2020
+    # alone mirrors 135,914 documents, and rashid takes more than 25
+    # minutes on it.
+    timeout-minutes: 300
     steps:
       - name: Checkout code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1

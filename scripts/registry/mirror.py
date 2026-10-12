@@ -24,10 +24,10 @@ from __future__ import annotations
 import json
 import posixpath
 import threading
-from collections.abc import Callable, Mapping
+from collections.abc import Callable, Iterable, Iterator, Mapping
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
-from typing import Any, Protocol
+from typing import Any, Protocol, TypeVar
 from urllib.parse import urlsplit
 
 import requests
@@ -44,14 +44,23 @@ FOLLOWED_RELS = ("child", "item")
 # holds both. rashid checks that each file exists and reads the README.
 SIDECARS = ("AGENTS.md", "README.md")
 
-# Items outnumber collections by orders of magnitude. ghsl links 3,984 of
-# them, which takes about 40 seconds at this width.
-WORKERS = 8
+# Items outnumber collections by orders of magnitude, and each fetch waits
+# on the host. epoch-forest-typology-2020 mirrors to 135,914 documents. In
+# October 2026, 8 threads fetched 50,000 of them in 20 minutes. 64 threads
+# fetched all of them in 11 minutes, with no failures.
+WORKERS = 64
 
 # The most documents one mirror fetches. The largest registered catalog,
-# jrc-glofas, linked 4,336 items in October 2026. A server that makes up a
-# new child URL on each request would otherwise hold the job until it times out.
-MAX_DOCUMENTS = 50_000
+# epoch-forest-typology-2020, linked 135,542 items in October 2026. A server
+# that makes up a new child URL on each request would otherwise hold the job
+# until it times out.
+MAX_DOCUMENTS = 500_000
+
+# How often the mirror logs its progress. A large catalog fetches for many
+# minutes, and a log with no output reads as a job that hangs.
+PROGRESS_EVERY = 10_000
+
+T = TypeVar("T")
 
 
 class MirrorFull(requests.RequestException):
@@ -197,6 +206,16 @@ def _wanted(mirror: Mirror, url: str, doc: dict[str, Any]) -> list[str]:
     return wanted
 
 
+def _with_progress(results: Iterable[T], total: int) -> Iterator[T]:
+    """Yield `results` and log a line after each PROGRESS_EVERY of them."""
+    if total > PROGRESS_EVERY:
+        log(f"  Mirroring {total} documents")
+    for done, result in enumerate(results, start=1):
+        if done % PROGRESS_EVERY == 0:
+            log(f"  Mirrored {done} of {total} documents")
+        yield result
+
+
 def complete_mirror(
     mirror: Mirror,
     source_factory: Callable[[], MirrorSource],
@@ -241,7 +260,7 @@ def complete_mirror(
                     wave.append(target)
 
             pending = {}
-            for url, data in pool.map(fetch, wave):
+            for url, data in _with_progress(pool.map(fetch, wave), len(wave)):
                 if isinstance(data, NotFound):
                     continue
                 if isinstance(data, Exception):
