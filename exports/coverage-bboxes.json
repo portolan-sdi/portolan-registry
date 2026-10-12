@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-11T12:09:42.630390+00:00",
+  "generated": "2026-10-12T12:45:31.142195+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-10-11T12:09:42.630390+00:00",
+  "registry_generated": "2026-10-12T12:45:31.142195+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -38296,6 +38296,1302 @@
       ]
     },
     {
+      "id": "epoch-forest-typology-2020",
+      "collection_count": 111,
+      "collections": [
+        {
+          "id": "utm-01n",
+          "title": "ForTy 2020, UTM zone 1 north (EPSG:32601)",
+          "bbox": [
+            179.6135,
+            51.158,
+            180.0,
+            72.0287
+          ]
+        },
+        {
+          "id": "utm-01n",
+          "title": "ForTy 2020, UTM zone 1 north (EPSG:32601)",
+          "bbox": [
+            -180.0,
+            51.158,
+            -173.6356,
+            72.0287
+          ]
+        },
+        {
+          "id": "utm-02n",
+          "title": "ForTy 2020, UTM zone 2 north (EPSG:32602)",
+          "bbox": [
+            -174.3865,
+            51.9457,
+            -167.6971,
+            67.1804
+          ]
+        },
+        {
+          "id": "utm-03n",
+          "title": "ForTy 2020, UTM zone 3 north (EPSG:32603)",
+          "bbox": [
+            -168.2257,
+            53.1667,
+            -161.5779,
+            70.4022
+          ]
+        },
+        {
+          "id": "utm-04n",
+          "title": "ForTy 2020, UTM zone 4 north (EPSG:32604)",
+          "bbox": [
+            -162.4559,
+            1.5362,
+            -155.5779,
+            71.618
+          ]
+        },
+        {
+          "id": "utm-05n",
+          "title": "ForTy 2020, UTM zone 5 north (EPSG:32605)",
+          "bbox": [
+            -156.4559,
+            18.7558,
+            -149.5779,
+            71.6148
+          ]
+        },
+        {
+          "id": "utm-06n",
+          "title": "ForTy 2020, UTM zone 6 north (EPSG:32606)",
+          "bbox": [
+            -150.4559,
+            59.1514,
+            -143.5779,
+            70.8178
+          ]
+        },
+        {
+          "id": "utm-07n",
+          "title": "ForTy 2020, UTM zone 7 north (EPSG:32607)",
+          "bbox": [
+            -144.4559,
+            58.7388,
+            -137.5779,
+            70.41
+          ]
+        },
+        {
+          "id": "utm-08n",
+          "title": "ForTy 2020, UTM zone 8 north (EPSG:32608)",
+          "bbox": [
+            -138.4031,
+            52.3567,
+            -131.5779,
+            70.0105
+          ]
+        },
+        {
+          "id": "utm-09n",
+          "title": "ForTy 2020, UTM zone 9 north (EPSG:32609)",
+          "bbox": [
+            -132.4559,
+            49.1112,
+            -125.5779,
+            72.5673
+          ]
+        },
+        {
+          "id": "utm-10n",
+          "title": "ForTy 2020, UTM zone 10 north (EPSG:32610)",
+          "bbox": [
+            -126.4031,
+            33.5173,
+            -119.487,
+            77.41
+          ]
+        },
+        {
+          "id": "utm-11n",
+          "title": "ForTy 2020, UTM zone 11 north (EPSG:32611)",
+          "bbox": [
+            -120.5187,
+            26.7489,
+            -113.4212,
+            78.6152
+          ]
+        },
+        {
+          "id": "utm-12n",
+          "title": "ForTy 2020, UTM zone 12 north (EPSG:32612)",
+          "bbox": [
+            -114.5788,
+            9.9514,
+            -107.487,
+            79.2246
+          ]
+        },
+        {
+          "id": "utm-13n",
+          "title": "ForTy 2020, UTM zone 13 north (EPSG:32613)",
+          "bbox": [
+            -108.5788,
+            17.5358,
+            -101.4212,
+            79.8281
+          ]
+        },
+        {
+          "id": "utm-14n",
+          "title": "ForTy 2020, UTM zone 14 north (EPSG:32614)",
+          "bbox": [
+            -102.5788,
+            15.2363,
+            -95.4212,
+            81.0276
+          ]
+        },
+        {
+          "id": "utm-15n",
+          "title": "ForTy 2020, UTM zone 15 north (EPSG:32615)",
+          "bbox": [
+            -96.6647,
+            -0.0926,
+            -89.1823,
+            82.2401
+          ]
+        },
+        {
+          "id": "utm-16n",
+          "title": "ForTy 2020, UTM zone 16 north (EPSG:32616)",
+          "bbox": [
+            -90.9256,
+            -0.0925,
+            -83.1823,
+            82.844
+          ]
+        },
+        {
+          "id": "utm-17n",
+          "title": "ForTy 2020, UTM zone 17 north (EPSG:32617)",
+          "bbox": [
+            -84.9256,
+            -0.0926,
+            -77.1823,
+            82.844
+          ]
+        },
+        {
+          "id": "utm-18n",
+          "title": "ForTy 2020, UTM zone 18 north (EPSG:32618)",
+          "bbox": [
+            -78.9256,
+            -0.0926,
+            -71.1823,
+            82.844
+          ]
+        },
+        {
+          "id": "utm-19n",
+          "title": "ForTy 2020, UTM zone 19 north (EPSG:32619)",
+          "bbox": [
+            -72.9256,
+            -0.0926,
+            -65.1823,
+            82.844
+          ]
+        },
+        {
+          "id": "utm-20n",
+          "title": "ForTy 2020, UTM zone 20 north (EPSG:32620)",
+          "bbox": [
+            -66.8253,
+            -0.0926,
+            -59.1823,
+            82.844
+          ]
+        },
+        {
+          "id": "utm-21n",
+          "title": "ForTy 2020, UTM zone 21 north (EPSG:32621)",
+          "bbox": [
+            -60.9256,
+            -0.0926,
+            -53.1823,
+            82.844
+          ]
+        },
+        {
+          "id": "utm-22n",
+          "title": "ForTy 2020, UTM zone 22 north (EPSG:32622)",
+          "bbox": [
+            -54.9256,
+            -0.0926,
+            -47.1823,
+            82.844
+          ]
+        },
+        {
+          "id": "utm-23n",
+          "title": "ForTy 2020, UTM zone 23 north (EPSG:32623)",
+          "bbox": [
+            -48.9256,
+            59.5742,
+            -41.1823,
+            82.844
+          ]
+        },
+        {
+          "id": "utm-24n",
+          "title": "ForTy 2020, UTM zone 24 north (EPSG:32624)",
+          "bbox": [
+            -42.9256,
+            61.1713,
+            -35.1823,
+            82.844
+          ]
+        },
+        {
+          "id": "utm-25n",
+          "title": "ForTy 2020, UTM zone 25 north (EPSG:32625)",
+          "bbox": [
+            -36.9256,
+            39.2188,
+            -29.1823,
+            82.844
+          ]
+        },
+        {
+          "id": "utm-26n",
+          "title": "ForTy 2020, UTM zone 26 north (EPSG:32626)",
+          "bbox": [
+            -30.9256,
+            14.4228,
+            -23.1823,
+            82.844
+          ]
+        },
+        {
+          "id": "utm-27n",
+          "title": "ForTy 2020, UTM zone 27 north (EPSG:32627)",
+          "bbox": [
+            -24.9256,
+            14.8268,
+            -17.1823,
+            82.844
+          ]
+        },
+        {
+          "id": "utm-28n",
+          "title": "ForTy 2020, UTM zone 28 north (EPSG:32628)",
+          "bbox": [
+            -18.9256,
+            6.8267,
+            -11.1823,
+            82.2405
+          ]
+        },
+        {
+          "id": "utm-29n",
+          "title": "ForTy 2020, UTM zone 29 north (EPSG:32629)",
+          "bbox": [
+            -12.2778,
+            3.9816,
+            -5.6403,
+            81.6321
+          ]
+        },
+        {
+          "id": "utm-30n",
+          "title": "ForTy 2020, UTM zone 30 north (EPSG:32630)",
+          "bbox": [
+            -6.3434,
+            4.3894,
+            0.3786,
+            61.1958
+          ]
+        },
+        {
+          "id": "utm-31n",
+          "title": "ForTy 2020, UTM zone 31 north (EPSG:32631)",
+          "bbox": [
+            -0.3752,
+            3.978,
+            6.3786,
+            53.9849
+          ]
+        },
+        {
+          "id": "utm-32n",
+          "title": "ForTy 2020, UTM zone 32 north (EPSG:32632)",
+          "bbox": [
+            4.1717,
+            -0.0926,
+            12.5634,
+            67.5664
+          ]
+        },
+        {
+          "id": "utm-33n",
+          "title": "ForTy 2020, UTM zone 33 north (EPSG:32633)",
+          "bbox": [
+            9.4559,
+            -0.0926,
+            22.3,
+            81.0166
+          ]
+        },
+        {
+          "id": "utm-34n",
+          "title": "ForTy 2020, UTM zone 34 north (EPSG:32634)",
+          "bbox": [
+            17.5441,
+            -0.0926,
+            24.4221,
+            71.2136
+          ]
+        },
+        {
+          "id": "utm-35n",
+          "title": "ForTy 2020, UTM zone 35 north (EPSG:32635)",
+          "bbox": [
+            10.0458,
+            -0.0926,
+            34.959,
+            81.0351
+          ]
+        },
+        {
+          "id": "utm-36n",
+          "title": "ForTy 2020, UTM zone 36 north (EPSG:32636)",
+          "bbox": [
+            29.5441,
+            -0.0926,
+            36.4221,
+            70.8115
+          ]
+        },
+        {
+          "id": "utm-37n",
+          "title": "ForTy 2020, UTM zone 37 north (EPSG:32637)",
+          "bbox": [
+            32.0075,
+            -0.0926,
+            42.4221,
+            80.9915
+          ]
+        },
+        {
+          "id": "utm-38n",
+          "title": "ForTy 2020, UTM zone 38 north (EPSG:32638)",
+          "bbox": [
+            41.5969,
+            -0.0926,
+            48.5639,
+            81.0351
+          ]
+        },
+        {
+          "id": "utm-39n",
+          "title": "ForTy 2020, UTM zone 39 north (EPSG:32639)",
+          "bbox": [
+            47.3353,
+            4.3842,
+            54.5639,
+            81.6371
+          ]
+        },
+        {
+          "id": "utm-40n",
+          "title": "ForTy 2020, UTM zone 40 north (EPSG:32640)",
+          "bbox": [
+            53.3353,
+            11.9792,
+            60.8177,
+            82.2405
+          ]
+        },
+        {
+          "id": "utm-41n",
+          "title": "ForTy 2020, UTM zone 41 north (EPSG:32641)",
+          "bbox": [
+            59.3353,
+            24.7338,
+            66.513,
+            82.2405
+          ]
+        },
+        {
+          "id": "utm-42n",
+          "title": "ForTy 2020, UTM zone 42 north (EPSG:32642)",
+          "bbox": [
+            65.5969,
+            20.3918,
+            72.4947,
+            77.4153
+          ]
+        },
+        {
+          "id": "utm-43n",
+          "title": "ForTy 2020, UTM zone 43 north (EPSG:32643)",
+          "bbox": [
+            71.5441,
+            -0.0926,
+            78.6794,
+            79.8277
+          ]
+        },
+        {
+          "id": "utm-44n",
+          "title": "ForTy 2020, UTM zone 44 north (EPSG:32644)",
+          "bbox": [
+            77.5441,
+            5.6128,
+            84.4947,
+            81.6365
+          ]
+        },
+        {
+          "id": "utm-45n",
+          "title": "ForTy 2020, UTM zone 45 north (EPSG:32645)",
+          "bbox": [
+            83.5441,
+            17.9428,
+            90.8177,
+            81.6291
+          ]
+        },
+        {
+          "id": "utm-46n",
+          "title": "ForTy 2020, UTM zone 46 north (EPSG:32646)",
+          "bbox": [
+            89.0744,
+            2.3489,
+            96.8177,
+            81.6371
+          ]
+        },
+        {
+          "id": "utm-47n",
+          "title": "ForTy 2020, UTM zone 47 north (EPSG:32647)",
+          "bbox": [
+            95.0744,
+            -0.0926,
+            102.6794,
+            81.6321
+          ]
+        },
+        {
+          "id": "utm-48n",
+          "title": "ForTy 2020, UTM zone 48 north (EPSG:32648)",
+          "bbox": [
+            101.2317,
+            -0.0926,
+            108.513,
+            79.8262
+          ]
+        },
+        {
+          "id": "utm-49n",
+          "title": "ForTy 2020, UTM zone 49 north (EPSG:32649)",
+          "bbox": [
+            107.4212,
+            -0.0926,
+            114.513,
+            78.6069
+          ]
+        },
+        {
+          "id": "utm-50n",
+          "title": "ForTy 2020, UTM zone 50 north (EPSG:32650)",
+          "bbox": [
+            113.4212,
+            -0.0926,
+            120.4947,
+            76.1923
+          ]
+        },
+        {
+          "id": "utm-51n",
+          "title": "ForTy 2020, UTM zone 51 north (EPSG:32651)",
+          "bbox": [
+            119.5441,
+            -0.0926,
+            126.4947,
+            74.3983
+          ]
+        },
+        {
+          "id": "utm-52n",
+          "title": "ForTy 2020, UTM zone 52 north (EPSG:32652)",
+          "bbox": [
+            125.5441,
+            -0.0926,
+            132.4221,
+            73.7946
+          ]
+        },
+        {
+          "id": "utm-53n",
+          "title": "ForTy 2020, UTM zone 53 north (EPSG:32653)",
+          "bbox": [
+            131.5441,
+            6.835,
+            138.513,
+            76.2078
+          ]
+        },
+        {
+          "id": "utm-54n",
+          "title": "ForTy 2020, UTM zone 54 north (EPSG:32654)",
+          "bbox": [
+            137.4212,
+            9.1296,
+            144.513,
+            76.8117
+          ]
+        },
+        {
+          "id": "utm-55n",
+          "title": "ForTy 2020, UTM zone 55 north (EPSG:32655)",
+          "bbox": [
+            143.4212,
+            12.7991,
+            150.4947,
+            76.8089
+          ]
+        },
+        {
+          "id": "utm-56n",
+          "title": "ForTy 2020, UTM zone 56 north (EPSG:32656)",
+          "bbox": [
+            149.5441,
+            45.5947,
+            156.4221,
+            76.8117
+          ]
+        },
+        {
+          "id": "utm-57n",
+          "title": "ForTy 2020, UTM zone 57 north (EPSG:32657)",
+          "bbox": [
+            155.5441,
+            5.6107,
+            162.4221,
+            71.2213
+          ]
+        },
+        {
+          "id": "utm-58n",
+          "title": "ForTy 2020, UTM zone 58 north (EPSG:32658)",
+          "bbox": [
+            161.5441,
+            5.2018,
+            168.4221,
+            70.8028
+          ]
+        },
+        {
+          "id": "utm-59n",
+          "title": "ForTy 2020, UTM zone 59 north (EPSG:32659)",
+          "bbox": [
+            167.5441,
+            -0.0926,
+            174.4221,
+            70.4136
+          ]
+        },
+        {
+          "id": "utm-60n",
+          "title": "ForTy 2020, UTM zone 60 north (EPSG:32660)",
+          "bbox": [
+            173.5441,
+            51.1503,
+            180.0,
+            72.0126
+          ]
+        },
+        {
+          "id": "utm-60n",
+          "title": "ForTy 2020, UTM zone 60 north (EPSG:32660)",
+          "bbox": [
+            -180.0,
+            51.1503,
+            -179.5053,
+            72.0126
+          ]
+        },
+        {
+          "id": "utm-01s",
+          "title": "ForTy 2020, UTM zone 1 south (EPSG:32701)",
+          "bbox": [
+            179.9014,
+            -44.7916,
+            180.0,
+            -12.8159
+          ]
+        },
+        {
+          "id": "utm-01s",
+          "title": "ForTy 2020, UTM zone 1 south (EPSG:32701)",
+          "bbox": [
+            -180.0,
+            -44.7916,
+            -173.9166,
+            -12.8159
+          ]
+        },
+        {
+          "id": "utm-02s",
+          "title": "ForTy 2020, UTM zone 2 south (EPSG:32702)",
+          "bbox": [
+            -174.0986,
+            -19.1927,
+            -169.1313,
+            -13.2152
+          ]
+        },
+        {
+          "id": "utm-04s",
+          "title": "ForTy 2020, UTM zone 4 south (EPSG:32704)",
+          "bbox": [
+            -159.9509,
+            -22.0419,
+            -157.1385,
+            -8.7407
+          ]
+        },
+        {
+          "id": "utm-05s",
+          "title": "ForTy 2020, UTM zone 5 south (EPSG:32705)",
+          "bbox": [
+            -156.0362,
+            -22.8598,
+            -149.9453,
+            -5.2053
+          ]
+        },
+        {
+          "id": "utm-06s",
+          "title": "ForTy 2020, UTM zone 6 south (EPSG:32706)",
+          "bbox": [
+            -150.0766,
+            -27.9863,
+            -143.9521,
+            -14.0289
+          ]
+        },
+        {
+          "id": "utm-07s",
+          "title": "ForTy 2020, UTM zone 7 south (EPSG:32707)",
+          "bbox": [
+            -144.0563,
+            -27.9923,
+            -138.1904,
+            -7.6576
+          ]
+        },
+        {
+          "id": "utm-08s",
+          "title": "ForTy 2020, UTM zone 8 south (EPSG:32708)",
+          "bbox": [
+            -137.2332,
+            -23.6735,
+            -134.6893,
+            -17.961
+          ]
+        },
+        {
+          "id": "utm-09s",
+          "title": "ForTy 2020, UTM zone 9 south (EPSG:32709)",
+          "bbox": [
+            -130.9278,
+            -25.1592,
+            -128.0711,
+            -23.6616
+          ]
+        },
+        {
+          "id": "utm-10s",
+          "title": "ForTy 2020, UTM zone 10 south (EPSG:32710)",
+          "bbox": [
+            -125.1089,
+            -24.7484,
+            -124.4967,
+            -24.3338
+          ]
+        },
+        {
+          "id": "utm-12s",
+          "title": "ForTy 2020, UTM zone 12 south (EPSG:32712)",
+          "bbox": [
+            -109.7462,
+            -27.5977,
+            -109.1147,
+            -26.7778
+          ]
+        },
+        {
+          "id": "utm-15s",
+          "title": "ForTy 2020, UTM zone 15 south (EPSG:32715)",
+          "bbox": [
+            -91.7707,
+            -1.5431,
+            -89.9482,
+            0.0868
+          ]
+        },
+        {
+          "id": "utm-16s",
+          "title": "ForTy 2020, UTM zone 16 south (EPSG:32716)",
+          "bbox": [
+            -90.0207,
+            -1.5432,
+            -89.1104,
+            -0.321
+          ]
+        },
+        {
+          "id": "utm-17s",
+          "title": "ForTy 2020, UTM zone 17 south (EPSG:32717)",
+          "bbox": [
+            -81.5945,
+            -33.969,
+            -77.9186,
+            0.0869
+          ]
+        },
+        {
+          "id": "utm-18s",
+          "title": "ForTy 2020, UTM zone 18 south (EPSG:32718)",
+          "bbox": [
+            -78.0495,
+            -54.8195,
+            -71.6238,
+            0.0869
+          ]
+        },
+        {
+          "id": "utm-19s",
+          "title": "ForTy 2020, UTM zone 19 south (EPSG:32719)",
+          "bbox": [
+            -72.3719,
+            -56.7648,
+            -65.6399,
+            0.0869
+          ]
+        },
+        {
+          "id": "utm-20s",
+          "title": "ForTy 2020, UTM zone 20 south (EPSG:32720)",
+          "bbox": [
+            -66.3387,
+            -55.2347,
+            -59.6594,
+            0.0869
+          ]
+        },
+        {
+          "id": "utm-21s",
+          "title": "ForTy 2020, UTM zone 21 south (EPSG:32721)",
+          "bbox": [
+            -60.2999,
+            -53.1951,
+            -53.7286,
+            0.0869
+          ]
+        },
+        {
+          "id": "utm-22s",
+          "title": "ForTy 2020, UTM zone 22 south (EPSG:32722)",
+          "bbox": [
+            -54.2341,
+            -34.7574,
+            -47.8113,
+            0.0869
+          ]
+        },
+        {
+          "id": "utm-23s",
+          "title": "ForTy 2020, UTM zone 23 south (EPSG:32723)",
+          "bbox": [
+            -48.2044,
+            -25.5439,
+            -41.831,
+            -0.3209
+          ]
+        },
+        {
+          "id": "utm-24s",
+          "title": "ForTy 2020, UTM zone 24 south (EPSG:32724)",
+          "bbox": [
+            -42.1847,
+            -55.2109,
+            -35.7873,
+            -2.3562
+          ]
+        },
+        {
+          "id": "utm-25s",
+          "title": "ForTy 2020, UTM zone 25 south (EPSG:32725)",
+          "bbox": [
+            -36.16,
+            -55.2287,
+            -34.3772,
+            -4.7991
+          ]
+        },
+        {
+          "id": "utm-26s",
+          "title": "ForTy 2020, UTM zone 26 south (EPSG:32726)",
+          "bbox": [
+            -28.2117,
+            -59.5973,
+            -25.987,
+            -55.9508
+          ]
+        },
+        {
+          "id": "utm-28s",
+          "title": "ForTy 2020, UTM zone 28 south (EPSG:32728)",
+          "bbox": [
+            -14.6821,
+            -37.6096,
+            -12.0589,
+            -7.6576
+          ]
+        },
+        {
+          "id": "utm-29s",
+          "title": "ForTy 2020, UTM zone 29 south (EPSG:32729)",
+          "bbox": [
+            -10.2354,
+            -40.7342,
+            -9.616,
+            -39.9165
+          ]
+        },
+        {
+          "id": "utm-30s",
+          "title": "ForTy 2020, UTM zone 30 south (EPSG:32730)",
+          "bbox": [
+            -6.0936,
+            -16.3303,
+            -5.4375,
+            -15.6472
+          ]
+        },
+        {
+          "id": "utm-32s",
+          "title": "ForTy 2020, UTM zone 32 south (EPSG:32732)",
+          "bbox": [
+            6.2834,
+            -18.7681,
+            12.1265,
+            0.0869
+          ]
+        },
+        {
+          "id": "utm-33s",
+          "title": "ForTy 2020, UTM zone 33 south (EPSG:32733)",
+          "bbox": [
+            11.9064,
+            -33.5319,
+            18.2571,
+            0.0869
+          ]
+        },
+        {
+          "id": "utm-34s",
+          "title": "ForTy 2020, UTM zone 34 south (EPSG:32734)",
+          "bbox": [
+            17.7659,
+            -35.1847,
+            24.2714,
+            0.0869
+          ]
+        },
+        {
+          "id": "utm-35s",
+          "title": "ForTy 2020, UTM zone 35 south (EPSG:32735)",
+          "bbox": [
+            23.7659,
+            -34.3698,
+            30.2571,
+            0.0869
+          ]
+        },
+        {
+          "id": "utm-36s",
+          "title": "ForTy 2020, UTM zone 36 south (EPSG:32736)",
+          "bbox": [
+            29.78,
+            -31.6439,
+            36.1265,
+            0.0869
+          ]
+        },
+        {
+          "id": "utm-37s",
+          "title": "ForTy 2020, UTM zone 37 south (EPSG:32737)",
+          "bbox": [
+            35.9014,
+            -47.2235,
+            42.0523,
+            0.0869
+          ]
+        },
+        {
+          "id": "utm-38s",
+          "title": "ForTy 2020, UTM zone 38 south (EPSG:32738)",
+          "bbox": [
+            41.9798,
+            -25.9754,
+            48.169,
+            0.0868
+          ]
+        },
+        {
+          "id": "utm-39s",
+          "title": "ForTy 2020, UTM zone 39 south (EPSG:32739)",
+          "bbox": [
+            47.8342,
+            -46.8206,
+            53.4554,
+            -4.8014
+          ]
+        },
+        {
+          "id": "utm-40s",
+          "title": "ForTy 2020, UTM zone 40 south (EPSG:32740)",
+          "bbox": [
+            54.2171,
+            -21.6356,
+            57.9287,
+            -3.5802
+          ]
+        },
+        {
+          "id": "utm-41s",
+          "title": "ForTy 2020, UTM zone 41 south (EPSG:32741)",
+          "bbox": [
+            62.9924,
+            -20.009,
+            63.6134,
+            -19.6017
+          ]
+        },
+        {
+          "id": "utm-42s",
+          "title": "ForTy 2020, UTM zone 42 south (EPSG:32742)",
+          "bbox": [
+            68.0884,
+            -50.3764,
+            72.0658,
+            -5.2051
+          ]
+        },
+        {
+          "id": "utm-43s",
+          "title": "ForTy 2020, UTM zone 43 south (EPSG:32743)",
+          "bbox": [
+            71.966,
+            -53.61,
+            74.0222,
+            0.0868
+          ]
+        },
+        {
+          "id": "utm-47s",
+          "title": "ForTy 2020, UTM zone 47 south (EPSG:32747)",
+          "bbox": [
+            97.8009,
+            -4.3954,
+            102.0571,
+            0.0869
+          ]
+        },
+        {
+          "id": "utm-48s",
+          "title": "ForTy 2020, UTM zone 48 south (EPSG:32748)",
+          "bbox": [
+            101.966,
+            -10.7801,
+            108.0814,
+            0.0869
+          ]
+        },
+        {
+          "id": "utm-49s",
+          "title": "ForTy 2020, UTM zone 49 south (EPSG:32749)",
+          "bbox": [
+            107.9505,
+            -29.2055,
+            114.1887,
+            0.0869
+          ]
+        },
+        {
+          "id": "utm-50s",
+          "title": "ForTy 2020, UTM zone 50 south (EPSG:32750)",
+          "bbox": [
+            113.7956,
+            -35.5933,
+            120.2714,
+            0.0869
+          ]
+        },
+        {
+          "id": "utm-51s",
+          "title": "ForTy 2020, UTM zone 51 south (EPSG:32751)",
+          "bbox": [
+            119.7659,
+            -34.7824,
+            126.2714,
+            0.0869
+          ]
+        },
+        {
+          "id": "utm-52s",
+          "title": "ForTy 2020, UTM zone 52 south (EPSG:32752)",
+          "bbox": [
+            125.7659,
+            -32.7378,
+            132.2714,
+            0.0869
+          ]
+        },
+        {
+          "id": "utm-53s",
+          "title": "ForTy 2020, UTM zone 53 south (EPSG:32753)",
+          "bbox": [
+            131.7659,
+            -36.4002,
+            138.2714,
+            0.0869
+          ]
+        },
+        {
+          "id": "utm-54s",
+          "title": "ForTy 2020, UTM zone 54 south (EPSG:32754)",
+          "bbox": [
+            137.7659,
+            -40.2972,
+            144.3216,
+            -1.1348
+          ]
+        },
+        {
+          "id": "utm-55s",
+          "title": "ForTy 2020, UTM zone 55 south (EPSG:32755)",
+          "bbox": [
+            143.6613,
+            -43.981,
+            150.2714,
+            -0.7288
+          ]
+        },
+        {
+          "id": "utm-56s",
+          "title": "ForTy 2020, UTM zone 56 south (EPSG:32756)",
+          "bbox": [
+            149.7659,
+            -37.5903,
+            156.0755,
+            -1.5424
+          ]
+        },
+        {
+          "id": "utm-57s",
+          "title": "ForTy 2020, UTM zone 57 south (EPSG:32757)",
+          "bbox": [
+            155.9563,
+            -55.2366,
+            162.0629,
+            -4.3946
+          ]
+        },
+        {
+          "id": "utm-58s",
+          "title": "ForTy 2020, UTM zone 58 south (EPSG:32758)",
+          "bbox": [
+            161.9693,
+            -51.1845,
+            168.3762,
+            -0.3211
+          ]
+        },
+        {
+          "id": "utm-59s",
+          "title": "ForTy 2020, UTM zone 59 south (EPSG:32759)",
+          "bbox": [
+            167.6281,
+            -52.7963,
+            174.3601,
+            -11.991
+          ]
+        },
+        {
+          "id": "utm-60s",
+          "title": "ForTy 2020, UTM zone 60 south (EPSG:32760)",
+          "bbox": [
+            173.6809,
+            -42.331,
+            180.0,
+            -0.3209
+          ]
+        },
+        {
+          "id": "utm-60s",
+          "title": "ForTy 2020, UTM zone 60 south (EPSG:32760)",
+          "bbox": [
+            -180.0,
+            -42.331,
+            -179.9089,
+            -0.3209
+          ]
+        }
+      ]
+    },
+    {
+      "id": "epoch-global-forest-loss-drivers",
+      "collection_count": 1,
+      "collections": [
+        {
+          "id": "forest-loss-drivers",
+          "title": "Global Drivers of Forest Loss at 1 km, v1.3",
+          "bbox": [
+            -180.0,
+            -56.0,
+            180.0,
+            84.0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "epoch-global-natural-planted-forests",
+      "collection_count": 1,
+      "collections": [
+        {
+          "id": "natural-planted-forests",
+          "title": "Global Natural and Planted Forests at 30 m, v1",
+          "bbox": [
+            -180.0,
+            -60.0,
+            180.0,
+            85.0002
+          ]
+        }
+      ]
+    },
+    {
+      "id": "epoch-jrc-global-forest-cover-2020",
+      "collection_count": 2,
+      "collections": [
+        {
+          "id": "forest-cover-2020-v4",
+          "title": "JRC Global Map of Forest Cover 2020, version 4",
+          "bbox": [
+            -180.0,
+            -60.0,
+            180.0,
+            80.0
+          ]
+        },
+        {
+          "id": "forest-cover-2020-v3",
+          "title": "JRC Global Map of Forest Cover 2020, version 3 (deprecated)",
+          "bbox": [
+            -180.0,
+            -60.0,
+            180.0,
+            80.0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "epoch-jrc-global-forest-types-2020",
+      "collection_count": 1,
+      "collections": [
+        {
+          "id": "forest-types-2020",
+          "title": "Global Forest Types 2020, version 1",
+          "bbox": [
+            -180.0,
+            -60.0,
+            180.0,
+            80.0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "epoch-jrc-tmf",
+      "collection_count": 6,
+      "collections": [
+        {
+          "id": "annual-change",
+          "title": "TMF Annual Change, 1990 to 2025",
+          "bbox": [
+            -110.0001,
+            -40.1078,
+            180.0,
+            30.0947
+          ]
+        },
+        {
+          "id": "deforestation-year",
+          "title": "TMF Deforestation Year",
+          "bbox": [
+            -110.0001,
+            -40.1078,
+            180.0,
+            30.0947
+          ]
+        },
+        {
+          "id": "degradation-year",
+          "title": "TMF Degradation Year",
+          "bbox": [
+            -110.0001,
+            -40.1078,
+            180.0,
+            30.0947
+          ]
+        },
+        {
+          "id": "transition-map-main-classes",
+          "title": "TMF Transition Map, main classes",
+          "bbox": [
+            -110.0001,
+            -40.1078,
+            180.0,
+            30.0947
+          ]
+        },
+        {
+          "id": "transition-map-subtypes",
+          "title": "TMF Transition Map, sub-types",
+          "bbox": [
+            -110.0001,
+            -40.1078,
+            180.0,
+            30.0947
+          ]
+        },
+        {
+          "id": "undisturbed-degraded-forest",
+          "title": "TMF Undisturbed and Degraded Forest",
+          "bbox": [
+            -110.0001,
+            -40.1078,
+            180.0,
+            30.0947
+          ]
+        }
+      ]
+    },
+    {
       "id": "estonia-maa-amet",
       "collection_count": 38,
       "collections": [
@@ -42561,10 +43857,10 @@
           "id": "it_1",
           "title": "Italy Tuscany (ITI1) Crop Fields \u2014 EuroCropsV2",
           "bbox": [
-            9.717,
-            42.3009,
-            12.4013,
-            44.471
+            9.7168,
+            42.3233,
+            12.3707,
+            44.4714
           ]
         },
         {
@@ -51661,7 +52957,7 @@
     },
     {
       "id": "planet-disasterdata",
-      "collection_count": 30,
+      "collection_count": 33,
       "collections": [
         {
           "id": "post-event-pelican-2026-09-29",
@@ -51691,6 +52987,36 @@
             28.1728,
             85.7062,
             28.4512
+          ]
+        },
+        {
+          "id": "post-event-planetscope-2026-10-10",
+          "title": "Budhi Gandaki valley, day before the 11 Oct landslide \u2014 Baseline Imagery",
+          "bbox": [
+            84.5669,
+            27.845,
+            85.1213,
+            28.8211
+          ]
+        },
+        {
+          "id": "post-event-planetscope-2026-10-11",
+          "title": "Budhi Gandaki valley, same day as the 11 Oct landslide \u2014 Post-event Imagery",
+          "bbox": [
+            84.5053,
+            27.8448,
+            85.2969,
+            28.7213
+          ]
+        },
+        {
+          "id": "post-event-planetscope-2026-10-12",
+          "title": "Budhi Gandaki valley, one day after the 11 Oct landslide \u2014 Post-event Imagery",
+          "bbox": [
+            84.8391,
+            28.0934,
+            85.3014,
+            28.6355
           ]
         },
         {
