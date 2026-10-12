@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-12T12:45:31.142195+00:00",
+  "generated": "2026-10-12T13:26:44.478228+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-10-12T12:45:31.142195+00:00",
+  "registry_generated": "2026-10-12T13:26:44.478228+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -57543,6 +57543,42 @@
             51.4964,
             -3.1069,
             53.3734
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wb-fwi",
+      "collection_count": 3,
+      "collections": [
+        {
+          "id": "fwi-rp2",
+          "title": "Wildfire hazard: FWI, 2-year return period",
+          "bbox": [
+            -180.0,
+            -58.25,
+            180.0,
+            75.25
+          ]
+        },
+        {
+          "id": "fwi-rp10",
+          "title": "Wildfire hazard: FWI, 10-year return period",
+          "bbox": [
+            -180.0,
+            -58.25,
+            180.0,
+            75.25
+          ]
+        },
+        {
+          "id": "fwi-rp30",
+          "title": "Wildfire hazard: FWI, 30-year return period",
+          "bbox": [
+            -180.0,
+            -58.25,
+            180.0,
+            75.25
           ]
         }
       ]
