@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-12T19:01:04.602040+00:00",
+  "generated": "2026-10-13T13:37:45.097391+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-10-12T19:01:04.602040+00:00",
+  "registry_generated": "2026-10-13T13:37:45.097391+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -50,7 +50,7 @@
             -124.5085,
             -83.1643,
             120.6733,
-            84.0302
+            90.0
           ]
         },
         {
@@ -46400,36 +46400,6 @@
       "collection_count": 39,
       "collections": [
         {
-          "id": "aree-protette/monumenti-naturali-puntuali",
-          "title": "Monumenti naturali puntuali",
-          "bbox": [
-            8.5854,
-            45.6349,
-            10.5041,
-            45.9319
-          ]
-        },
-        {
-          "id": "aree-protette/plis",
-          "title": "Parchi locali di interesse sovracomunale (PLIS)",
-          "bbox": [
-            8.5534,
-            44.846,
-            11.3252,
-            46.2972
-          ]
-        },
-        {
-          "id": "aree-protette/zsc-sic",
-          "title": "Rete Natura 2000 \u2013 ZSC e SIC",
-          "bbox": [
-            8.5771,
-            44.6798,
-            11.2539,
-            46.5987
-          ]
-        },
-        {
           "id": "aree-protette/aree-prioritarie-biodiversita",
           "title": "Aree prioritarie per la biodiversit\u00e0",
           "bbox": [
@@ -46470,6 +46440,16 @@
           ]
         },
         {
+          "id": "aree-protette/monumenti-naturali-puntuali",
+          "title": "Monumenti naturali puntuali",
+          "bbox": [
+            8.5854,
+            45.6349,
+            10.5041,
+            45.9319
+          ]
+        },
+        {
           "id": "aree-protette/parchi-naturali",
           "title": "Parchi naturali",
           "bbox": [
@@ -46487,6 +46467,16 @@
             44.9162,
             11.2535,
             46.6355
+          ]
+        },
+        {
+          "id": "aree-protette/plis",
+          "title": "Parchi locali di interesse sovracomunale (PLIS)",
+          "bbox": [
+            8.5534,
+            44.846,
+            11.3252,
+            46.2972
           ]
         },
         {
@@ -46510,13 +46500,13 @@
           ]
         },
         {
-          "id": "foreste/aree-percorse-dal-fuoco",
-          "title": "Aree percorse dal fuoco",
+          "id": "aree-protette/zsc-sic",
+          "title": "Rete Natura 2000 \u2013 ZSC e SIC",
           "bbox": [
-            8.5579,
-            44.6904,
-            10.8032,
-            46.4944
+            8.5771,
+            44.6798,
+            11.2539,
+            46.5987
           ]
         },
         {
@@ -46537,6 +46527,16 @@
             44.6918,
             10.7497,
             46.5689
+          ]
+        },
+        {
+          "id": "foreste/aree-percorse-dal-fuoco",
+          "title": "Aree percorse dal fuoco",
+          "bbox": [
+            8.5579,
+            44.6904,
+            10.8032,
+            46.4944
           ]
         },
         {
@@ -46570,16 +46570,6 @@
           ]
         },
         {
-          "id": "geologia/faglie-250000",
-          "title": "Carta Geologica 250.000 \u2013 faglie",
-          "bbox": [
-            8.6234,
-            44.6841,
-            10.7933,
-            46.6227
-          ]
-        },
-        {
           "id": "geologia/cave-attive",
           "title": "Catasto cave \u2013 cave attive",
           "bbox": [
@@ -46600,6 +46590,16 @@
           ]
         },
         {
+          "id": "geologia/faglie-250000",
+          "title": "Carta Geologica 250.000 \u2013 faglie",
+          "bbox": [
+            8.6234,
+            44.6841,
+            10.7933,
+            46.6227
+          ]
+        },
+        {
           "id": "geologia/litologia",
           "title": "Basi Ambientali della Pianura \u2013 litologia",
           "bbox": [
@@ -46607,26 +46607,6 @@
             44.9001,
             11.4293,
             45.9222
-          ]
-        },
-        {
-          "id": "idrografia/fontanili",
-          "title": "Fontanili della Lombardia",
-          "bbox": [
-            8.5421,
-            45.0579,
-            10.8222,
-            45.5926
-          ]
-        },
-        {
-          "id": "idrografia/reticolo-idrografico",
-          "title": "Basi Ambientali della Pianura \u2013 reticolo idrografico",
-          "bbox": [
-            8.5015,
-            44.9036,
-            11.4307,
-            45.9069
           ]
         },
         {
@@ -46650,6 +46630,16 @@
           ]
         },
         {
+          "id": "idrografia/fontanili",
+          "title": "Fontanili della Lombardia",
+          "bbox": [
+            8.5421,
+            45.0579,
+            10.8222,
+            45.5926
+          ]
+        },
+        {
           "id": "idrografia/grandi-dighe",
           "title": "Grandi dighe",
           "bbox": [
@@ -46670,13 +46660,13 @@
           ]
         },
         {
-          "id": "limiti-amministrativi/distretti-sanitari",
-          "title": "Distretti delle Agenzie di Tutela della Salute",
+          "id": "idrografia/reticolo-idrografico",
+          "title": "Basi Ambientali della Pianura \u2013 reticolo idrografico",
           "bbox": [
-            8.4984,
-            44.6798,
-            11.4293,
-            46.6354
+            8.5015,
+            44.9036,
+            11.4307,
+            45.9069
           ]
         },
         {
@@ -46716,6 +46706,16 @@
             8.5521,
             44.6798,
             10.8415,
+            46.6354
+          ]
+        },
+        {
+          "id": "limiti-amministrativi/distretti-sanitari",
+          "title": "Distretti delle Agenzie di Tutela della Salute",
+          "bbox": [
+            8.4984,
+            44.6798,
+            11.4293,
             46.6354
           ]
         },
@@ -46760,16 +46760,6 @@
           ]
         },
         {
-          "id": "viabilita/qualificazione",
-          "title": "Qualificazione della rete viaria (LR 9/2001)",
-          "bbox": [
-            8.5868,
-            44.6836,
-            10.8348,
-            46.4826
-          ]
-        },
-        {
           "id": "viabilita/impianti-a-fune",
           "title": "Banca dati impianti a fune \u2013 linee",
           "bbox": [
@@ -46777,6 +46767,16 @@
             44.7398,
             10.7554,
             46.5357
+          ]
+        },
+        {
+          "id": "viabilita/qualificazione",
+          "title": "Qualificazione della rete viaria (LR 9/2001)",
+          "bbox": [
+            8.5868,
+            44.6836,
+            10.8348,
+            46.4826
           ]
         },
         {
@@ -49080,6 +49080,16 @@
       "collection_count": 34,
       "collections": [
         {
+          "id": "abfall/entsorgungsanlagen",
+          "title": "Abfallentsorgungsanlagen der Landeshauptstadt M\u00fcnchen",
+          "bbox": [
+            11.421,
+            48.0938,
+            11.7134,
+            48.2258
+          ]
+        },
+        {
           "id": "abfall/wertstoffhoefe",
           "title": "Wertstoffh\u00f6fe der Landeshauptstadt M\u00fcnchen",
           "bbox": [
@@ -49100,13 +49110,13 @@
           ]
         },
         {
-          "id": "abfall/entsorgungsanlagen",
-          "title": "Abfallentsorgungsanlagen der Landeshauptstadt M\u00fcnchen",
+          "id": "bau/bebauungsplan-umgriffe",
+          "title": "Fl\u00e4chen von Bebauungspl\u00e4nen, Bebauungspl\u00e4nen in Aufstellung, Au\u00dfenbereichssatzungen und Umlegungsgebieten",
           "bbox": [
-            11.421,
-            48.0938,
-            11.7134,
-            48.2258
+            11.3677,
+            48.0687,
+            11.7229,
+            48.2481
           ]
         },
         {
@@ -49120,18 +49130,18 @@
           ]
         },
         {
-          "id": "bau/bebauungsplan-umgriffe",
-          "title": "Fl\u00e4chen von Bebauungspl\u00e4nen, Bebauungspl\u00e4nen in Aufstellung, Au\u00dfenbereichssatzungen und Umlegungsgebieten",
+          "id": "grenzen/bezirksteile",
+          "title": "Stadtbezirksteile M\u00fcnchen",
           "bbox": [
-            11.3677,
-            48.0687,
+            11.3608,
+            48.0616,
             11.7229,
             48.2481
           ]
         },
         {
-          "id": "grenzen/bezirksteile",
-          "title": "Stadtbezirksteile M\u00fcnchen",
+          "id": "grenzen/kehrbezirke",
+          "title": "Kehrbezirke",
           "bbox": [
             11.3608,
             48.0616,
@@ -49160,13 +49170,13 @@
           ]
         },
         {
-          "id": "grenzen/kehrbezirke",
-          "title": "Kehrbezirke",
+          "id": "rad/fahrradparken",
+          "title": "Fahrradparken mit Standardma\u00dfen",
           "bbox": [
-            11.3608,
-            48.0616,
-            11.7229,
-            48.2481
+            11.3905,
+            48.069,
+            11.705,
+            48.2185
           ]
         },
         {
@@ -49190,6 +49200,16 @@
           ]
         },
         {
+          "id": "rad/radservicestationen",
+          "title": "Radservicestationen",
+          "bbox": [
+            11.4611,
+            48.1089,
+            11.6567,
+            48.2033
+          ]
+        },
+        {
           "id": "rad/radwege",
           "title": "Radlstadtplan (Radwege)",
           "bbox": [
@@ -49210,23 +49230,13 @@
           ]
         },
         {
-          "id": "rad/fahrradparken",
-          "title": "Fahrradparken mit Standardma\u00dfen",
+          "id": "sharing/carsharing-parkplaetze",
+          "title": "Allgemeine Carsharing-Parkpl\u00e4tze",
           "bbox": [
-            11.3905,
-            48.069,
-            11.705,
-            48.2185
-          ]
-        },
-        {
-          "id": "rad/radservicestationen",
-          "title": "Radservicestationen",
-          "bbox": [
-            11.4611,
-            48.1089,
-            11.6567,
-            48.2033
+            11.4072,
+            48.0894,
+            11.6981,
+            48.2091
           ]
         },
         {
@@ -49250,13 +49260,13 @@
           ]
         },
         {
-          "id": "sharing/carsharing-parkplaetze",
-          "title": "Allgemeine Carsharing-Parkpl\u00e4tze",
+          "id": "soziales/alten-und-servicezentren",
+          "title": "Alten- und Servicezentrum",
           "bbox": [
-            11.4072,
-            48.0894,
-            11.6981,
-            48.2091
+            11.4165,
+            48.0766,
+            11.6906,
+            48.217
           ]
         },
         {
@@ -49277,16 +49287,6 @@
             48.0664,
             11.6764,
             48.2219
-          ]
-        },
-        {
-          "id": "soziales/alten-und-servicezentren",
-          "title": "Alten- und Servicezentrum",
-          "bbox": [
-            11.4165,
-            48.0766,
-            11.6906,
-            48.217
           ]
         },
         {
@@ -49350,16 +49350,6 @@
           ]
         },
         {
-          "id": "umwelt/isar-gefahrenstellen",
-          "title": "Gefahrenstellen",
-          "bbox": [
-            11.5407,
-            48.083,
-            11.6154,
-            48.1673
-          ]
-        },
-        {
           "id": "umwelt/isar-bootszonen",
           "title": "Bootfahren in der Isar",
           "bbox": [
@@ -49370,13 +49360,33 @@
           ]
         },
         {
+          "id": "umwelt/isar-gefahrenstellen",
+          "title": "Gefahrenstellen",
+          "bbox": [
+            11.5407,
+            48.083,
+            11.6154,
+            48.1673
+          ]
+        },
+        {
           "id": "verkehr/baustellen",
           "title": "Baustellen - Tempor\u00e4re Einschr\u00e4nkungen beim Gehen, Fahren und Parken (Opendata)",
           "bbox": [
-            11.3891,
+            11.3706,
             48.0347,
-            11.7447,
+            11.9859,
             48.2697
+          ]
+        },
+        {
+          "id": "verkehr/behindertenparkplaetze",
+          "title": "Behindertenparkpl\u00e4tze",
+          "bbox": [
+            11.4054,
+            48.0738,
+            11.6949,
+            48.2218
           ]
         },
         {
@@ -49397,16 +49407,6 @@
             48.0957,
             11.7083,
             48.1879
-          ]
-        },
-        {
-          "id": "verkehr/behindertenparkplaetze",
-          "title": "Behindertenparkpl\u00e4tze",
-          "bbox": [
-            11.4054,
-            48.0738,
-            11.6949,
-            48.2218
           ]
         },
         {
@@ -50835,9 +50835,19 @@
           "id": "buildings",
           "title": "Buildings",
           "bbox": [
-            -178.2944,
+            173.1597,
             14.534,
-            179.2717,
+            180.0,
+            83.0941
+          ]
+        },
+        {
+          "id": "buildings",
+          "title": "Buildings",
+          "bbox": [
+            -180.0,
+            14.534,
+            -52.6213,
             83.0941
           ]
         },
@@ -50845,9 +50855,19 @@
           "id": "roads",
           "title": "Roads and Paths",
           "bbox": [
-            -178.2962,
+            173.1012,
             14.5347,
-            179.3901,
+            180.0,
+            82.5255
+          ]
+        },
+        {
+          "id": "roads",
+          "title": "Roads and Paths",
+          "bbox": [
+            -180.0,
+            14.5347,
+            -52.6206,
             82.5255
           ]
         },
@@ -50857,7 +50877,7 @@
           "bbox": [
             -166.7347,
             14.6722,
-            -52.7005,
+            -52.7004,
             65.2191
           ]
         },
@@ -50865,9 +50885,19 @@
           "id": "waterways",
           "title": "Waterways",
           "bbox": [
-            -179.1402,
+            172.4583,
             14.5311,
-            179.6725,
+            180.0,
+            83.1262
+          ]
+        },
+        {
+          "id": "waterways",
+          "title": "Waterways",
+          "bbox": [
+            -180.0,
+            14.5311,
+            -52.6326,
             83.1262
           ]
         },
@@ -50875,9 +50905,19 @@
           "id": "water",
           "title": "Water Bodies",
           "bbox": [
-            -179.1391,
+            172.4928,
             14.5301,
-            179.6584,
+            180.0,
+            83.1034
+          ]
+        },
+        {
+          "id": "water",
+          "title": "Water Bodies",
+          "bbox": [
+            -180.0,
+            14.5301,
+            -52.6338,
             83.1034
           ]
         },
@@ -50885,9 +50925,19 @@
           "id": "landuse",
           "title": "Land Use",
           "bbox": [
-            -177.2015,
+            173.1449,
             14.5344,
-            179.2925,
+            180.0,
+            82.5287
+          ]
+        },
+        {
+          "id": "landuse",
+          "title": "Land Use",
+          "bbox": [
+            -180.0,
+            14.5344,
+            -52.6575,
             82.5287
           ]
         },
@@ -50895,9 +50945,19 @@
           "id": "natural_areas",
           "title": "Natural Areas",
           "bbox": [
-            -179.1501,
+            172.4284,
             14.5315,
-            179.7754,
+            180.0,
+            83.1898
+          ]
+        },
+        {
+          "id": "natural_areas",
+          "title": "Natural Areas",
+          "bbox": [
+            -180.0,
+            14.5315,
+            -52.6189,
             83.1898
           ]
         },
@@ -50905,9 +50965,19 @@
           "id": "natural_features",
           "title": "Natural Point Features",
           "bbox": [
-            -179.1413,
+            172.4375,
             14.551,
-            179.7732,
+            180.0,
+            83.1507
+          ]
+        },
+        {
+          "id": "natural_features",
+          "title": "Natural Point Features",
+          "bbox": [
+            -180.0,
+            14.551,
+            -52.6198,
             83.1507
           ]
         },
@@ -50915,9 +50985,19 @@
           "id": "places",
           "title": "Place Names",
           "bbox": [
-            -179.1387,
+            172.4362,
             14.5358,
-            179.7732,
+            180.0,
+            83.0996
+          ]
+        },
+        {
+          "id": "places",
+          "title": "Place Names",
+          "bbox": [
+            -180.0,
+            14.5358,
+            -52.6375,
             83.0996
           ]
         },
@@ -50925,9 +51005,19 @@
           "id": "boundaries",
           "title": "Administrative Boundaries",
           "bbox": [
-            -179.2313,
+            172.3478,
             14.5311,
-            179.8599,
+            180.0,
+            83.3363
+          ]
+        },
+        {
+          "id": "boundaries",
+          "title": "Administrative Boundaries",
+          "bbox": [
+            -180.0,
+            14.5311,
+            -52.3237,
             83.3363
           ]
         },
@@ -50935,9 +51025,19 @@
           "id": "pois",
           "title": "Points of Interest",
           "bbox": [
-            -177.3683,
+            172.4286,
             14.6168,
-            172.429,
+            180.0,
+            82.5246
+          ]
+        },
+        {
+          "id": "pois",
+          "title": "Points of Interest",
+          "bbox": [
+            -180.0,
+            14.6168,
+            -52.6205,
             82.5246
           ]
         },
@@ -50945,9 +51045,19 @@
           "id": "amenities_polygons",
           "title": "Points of Interest (Areas)",
           "bbox": [
-            -179.148,
+            172.4361,
             14.5249,
-            179.7732,
+            180.0,
+            82.4998
+          ]
+        },
+        {
+          "id": "amenities_polygons",
+          "title": "Points of Interest (Areas)",
+          "bbox": [
+            -180.0,
+            14.5249,
+            -52.6193,
             82.4998
           ]
         },
@@ -50955,7 +51065,7 @@
           "id": "power",
           "title": "Power Infrastructure",
           "bbox": [
-            -176.6604,
+            -176.6605,
             14.5543,
             -52.6322,
             82.5249
@@ -50965,9 +51075,19 @@
           "id": "aeroways",
           "title": "Aeroways",
           "bbox": [
-            -178.6642,
+            173.1489,
             14.6357,
-            179.3154,
+            180.0,
+            83.0925
+          ]
+        },
+        {
+          "id": "aeroways",
+          "title": "Aeroways",
+          "bbox": [
+            -180.0,
+            14.6357,
+            -52.6879,
             83.0925
           ]
         },
@@ -50985,7 +51105,7 @@
           "id": "public_transport",
           "title": "Public Transport Stops",
           "bbox": [
-            -166.5275,
+            -166.5276,
             14.7383,
             -52.6235,
             71.2991
@@ -56402,16 +56522,6 @@
           ]
         },
         {
-          "id": "internationellt-skydd/natura-2000",
-          "title": "Natura 2000 \u2013 hela det svenska n\u00e4tverket (SCI, SAC och SPA)",
-          "bbox": [
-            10.0313,
-            55.011,
-            24.167,
-            69.06
-          ]
-        },
-        {
           "id": "internationellt-skydd/oecm-2024",
           "title": "OECM 2024 (Sveriges rapportering till EEA)",
           "bbox": [
@@ -56449,6 +56559,16 @@
             62.7451,
             20.4202,
             67.8042
+          ]
+        },
+        {
+          "id": "internationellt-skydd/natura-2000",
+          "title": "Natura 2000 \u2013 hela det svenska n\u00e4tverket (SCI, SAC och SPA)",
+          "bbox": [
+            10.0313,
+            55.011,
+            24.167,
+            69.06
           ]
         },
         {
@@ -56933,7 +57053,7 @@
     },
     {
       "id": "us-census-tiger",
-      "collection_count": 3,
+      "collection_count": 19,
       "collections": [
         {
           "id": "cd120",
@@ -56993,6 +57113,256 @@
             17.8315,
             -65.1684,
             71.4399
+          ]
+        },
+        {
+          "id": "state",
+          "title": "States and equivalent entities, 2026",
+          "bbox": [
+            144.5632,
+            -14.6018,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "state",
+          "title": "States and equivalent entities, 2026",
+          "bbox": [
+            -180.0,
+            -14.6018,
+            -64.5126,
+            71.4399
+          ]
+        },
+        {
+          "id": "county",
+          "title": "Counties and equivalent entities, 2026",
+          "bbox": [
+            144.5632,
+            -14.6018,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "county",
+          "title": "Counties and equivalent entities, 2026",
+          "bbox": [
+            -180.0,
+            -14.6018,
+            -64.5126,
+            71.4399
+          ]
+        },
+        {
+          "id": "place",
+          "title": "Places: incorporated places and census designated places, 2026",
+          "bbox": [
+            144.6179,
+            -14.42,
+            180.0,
+            71.3403
+          ]
+        },
+        {
+          "id": "place",
+          "title": "Places: incorporated places and census designated places, 2026",
+          "bbox": [
+            -180.0,
+            -14.42,
+            -64.6956,
+            71.3403
+          ]
+        },
+        {
+          "id": "concity",
+          "title": "Consolidated cities, 2026",
+          "bbox": [
+            -113.0857,
+            33.2271,
+            -72.9789,
+            46.1853
+          ]
+        },
+        {
+          "id": "cousub",
+          "title": "County subdivisions, 2026",
+          "bbox": [
+            144.5632,
+            -14.6018,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "cousub",
+          "title": "County subdivisions, 2026",
+          "bbox": [
+            -180.0,
+            -14.6018,
+            -64.5126,
+            71.4399
+          ]
+        },
+        {
+          "id": "tract",
+          "title": "Census tracts, 2026",
+          "bbox": [
+            144.5632,
+            -14.6018,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "tract",
+          "title": "Census tracts, 2026",
+          "bbox": [
+            -180.0,
+            -14.6018,
+            -64.5126,
+            71.4399
+          ]
+        },
+        {
+          "id": "bg",
+          "title": "Census block groups, 2026",
+          "bbox": [
+            144.5632,
+            -14.6018,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "bg",
+          "title": "Census block groups, 2026",
+          "bbox": [
+            -180.0,
+            -14.6018,
+            -64.5126,
+            71.4399
+          ]
+        },
+        {
+          "id": "cbsa",
+          "title": "Core based statistical areas: metropolitan and micropolitan, 2026",
+          "bbox": [
+            -178.4438,
+            17.8315,
+            -65.4226,
+            65.4536
+          ]
+        },
+        {
+          "id": "csa",
+          "title": "Combined statistical areas, 2026",
+          "bbox": [
+            -124.7037,
+            17.8315,
+            -65.4226,
+            49.0008
+          ]
+        },
+        {
+          "id": "metdiv",
+          "title": "Metropolitan divisions, 2026",
+          "bbox": [
+            -123.174,
+            25.1374,
+            -70.3224,
+            48.299
+          ]
+        },
+        {
+          "id": "uac20",
+          "title": "2020 Census urban areas, 2026",
+          "bbox": [
+            144.641,
+            -14.3654,
+            180.0,
+            64.929
+          ]
+        },
+        {
+          "id": "uac20",
+          "title": "2020 Census urban areas, 2026",
+          "bbox": [
+            -180.0,
+            -14.3654,
+            -64.5854,
+            64.929
+          ]
+        },
+        {
+          "id": "zcta520",
+          "title": "2020 Census ZIP Code Tabulation Areas (ZCTA5), 2026",
+          "bbox": [
+            144.6179,
+            -14.3738,
+            180.0,
+            71.3414
+          ]
+        },
+        {
+          "id": "zcta520",
+          "title": "2020 Census ZIP Code Tabulation Areas (ZCTA5), 2026",
+          "bbox": [
+            -180.0,
+            -14.3738,
+            -64.5651,
+            71.3414
+          ]
+        },
+        {
+          "id": "unsd",
+          "title": "Unified school districts, 2026",
+          "bbox": [
+            144.5632,
+            -14.6018,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "unsd",
+          "title": "Unified school districts, 2026",
+          "bbox": [
+            -180.0,
+            -14.6018,
+            -64.5126,
+            71.4399
+          ]
+        },
+        {
+          "id": "elsd",
+          "title": "Elementary school districts, 2026",
+          "bbox": [
+            -124.313,
+            29.4017,
+            -67.0196,
+            49.0012
+          ]
+        },
+        {
+          "id": "scsd",
+          "title": "Secondary school districts, 2026",
+          "bbox": [
+            -124.313,
+            29.4017,
+            -67.3887,
+            49.0012
+          ]
+        },
+        {
+          "id": "sdadm",
+          "title": "School district administrative areas (Vermont), 2026",
+          "bbox": [
+            -73.438,
+            42.7269,
+            -71.4649,
+            45.0167
           ]
         }
       ]
