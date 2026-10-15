@@ -1,46 +1,50 @@
 name: Documentation
-description: Docs that are wrong, missing, or hard to follow
+description: Report docs that are wrong, missing, or hard to follow
 labels: [documentation]
 body:
   - type: markdown
     attributes:
       value: >-
-        Point at the page and say what a reader ends up believing that is not
-        true. "Unclear" on its own gives whoever fixes this nothing to work
-        from.
+        Thanks for helping improve the docs! Please point us to the relevant
+        page and explain what needs correcting or clarifying. If the change
+        is small and clear, we'd really appreciate a fix PR alongside the issue.
+
   - type: input
     id: where
     attributes:
       label: Where
       description: >-
-        The URL, or the file and heading. If the docs are silent on the
-        subject, name the page a reader would have looked at.
+        Include the URL or the file and heading. For missing documentation,
+        name the page where you expected to find it.
     validations:
       required: true
+
   - type: textarea
     id: problem
     attributes:
-      label: What is wrong
+      label: What needs to change?
       description: >-
-        What the text says now, and what is actually true. Quote the line if
-        it is short.
+        Explain what is incorrect, missing, or hard to follow. Include a
+        short quote if it helps, and describe what you expected to learn.
     validations:
       required: true
+
   - type: textarea
     id: reader
     attributes:
-      label: Who hits this
+      label: Who does this affect?
       description: >-
-        The reader it costs, and what they were trying to do. This decides
-        whether the fix is a correction or a rewrite.
+        Who would use this documentation, and what would they be trying
+        to do? Your own experience is a useful example.
     validations:
       required: true
+
   - type: textarea
     id: done
     attributes:
-      label: Done when
+      label: How to confirm the fix
       description: >-
-        What the page should say, and how a reviewer checks it. Naming the
-        replacement text is the fastest version of this.
+        Describe what the page should explain and how a reviewer can
+        check that it is correct. Suggest replacement text if you have it.
     validations:
       required: true
