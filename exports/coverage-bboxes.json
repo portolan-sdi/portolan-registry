@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-14T11:15:37.392274+00:00",
+  "generated": "2026-10-15T10:54:38.975993+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-10-14T11:15:37.392274+00:00",
+  "registry_generated": "2026-10-15T10:54:38.975993+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -49466,16 +49466,6 @@
           ]
         },
         {
-          "id": "forecast/watches-warnings",
-          "title": "Coastal watches and warnings (78 advisories)",
-          "bbox": [
-            -78.62,
-            17.7,
-            -64.54,
-            32.43
-          ]
-        },
-        {
           "id": "forecast/points",
           "title": "Forecast points with intensity (all 80 advisories)",
           "bbox": [
@@ -49483,6 +49473,16 @@
             14.2,
             -11.7,
             62.6
+          ]
+        },
+        {
+          "id": "forecast/watches-warnings",
+          "title": "Coastal watches and warnings (78 advisories)",
+          "bbox": [
+            -78.62,
+            17.7,
+            -64.54,
+            32.43
           ]
         },
         {
@@ -49566,16 +49566,6 @@
           ]
         },
         {
-          "id": "wind-speed-probabilities/day-2025-10-23/cycle-2025102318",
-          "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-23 18:00 UTC",
-          "bbox": [
-            -90.0,
-            10.0,
-            -67.139,
-            25.0
-          ]
-        },
-        {
           "id": "wind-speed-probabilities/day-2025-10-23/cycle-2025102306",
           "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-23 06:00 UTC",
           "bbox": [
@@ -49592,6 +49582,16 @@
             -90.0,
             10.0,
             -65.8802,
+            25.0
+          ]
+        },
+        {
+          "id": "wind-speed-probabilities/day-2025-10-23/cycle-2025102318",
+          "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-23 18:00 UTC",
+          "bbox": [
+            -90.0,
+            10.0,
+            -67.139,
             25.0
           ]
         },
@@ -49616,16 +49616,6 @@
           ]
         },
         {
-          "id": "wind-speed-probabilities/day-2025-10-24/cycle-2025102418",
-          "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-24 18:00 UTC",
-          "bbox": [
-            -84.8966,
-            10.0361,
-            -65.6105,
-            25.0
-          ]
-        },
-        {
           "id": "wind-speed-probabilities/day-2025-10-24/cycle-2025102412",
           "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-24 12:00 UTC",
           "bbox": [
@@ -49636,21 +49626,21 @@
           ]
         },
         {
+          "id": "wind-speed-probabilities/day-2025-10-24/cycle-2025102418",
+          "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-24 18:00 UTC",
+          "bbox": [
+            -84.8966,
+            10.0361,
+            -65.6105,
+            25.0
+          ]
+        },
+        {
           "id": "wind-speed-probabilities/day-2025-10-25/cycle-2025102500",
           "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-25 00:00 UTC",
           "bbox": [
             -85.3012,
             10.0,
-            -65.0,
-            25.0
-          ]
-        },
-        {
-          "id": "wind-speed-probabilities/day-2025-10-25/cycle-2025102518",
-          "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-25 18:00 UTC",
-          "bbox": [
-            -83.7727,
-            10.9802,
             -65.0,
             25.0
           ]
@@ -49676,21 +49666,21 @@
           ]
         },
         {
-          "id": "wind-speed-probabilities/day-2025-10-26/cycle-2025102600",
-          "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-26 00:00 UTC",
+          "id": "wind-speed-probabilities/day-2025-10-25/cycle-2025102518",
+          "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-25 18:00 UTC",
           "bbox": [
-            -83.5479,
-            11.16,
+            -83.7727,
+            10.9802,
             -65.0,
             25.0
           ]
         },
         {
-          "id": "wind-speed-probabilities/day-2025-10-26/cycle-2025102618",
-          "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-26 18:00 UTC",
+          "id": "wind-speed-probabilities/day-2025-10-26/cycle-2025102600",
+          "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-26 00:00 UTC",
           "bbox": [
-            -83.8626,
-            11.3399,
+            -83.5479,
+            11.16,
             -65.0,
             25.0
           ]
@@ -49716,6 +49706,26 @@
           ]
         },
         {
+          "id": "wind-speed-probabilities/day-2025-10-26/cycle-2025102618",
+          "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-26 18:00 UTC",
+          "bbox": [
+            -83.8626,
+            11.3399,
+            -65.0,
+            25.0
+          ]
+        },
+        {
+          "id": "wind-speed-probabilities/day-2025-10-27/cycle-2025102700",
+          "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-27 00:00 UTC",
+          "bbox": [
+            -83.6828,
+            11.6546,
+            -65.0,
+            25.0
+          ]
+        },
+        {
           "id": "wind-speed-probabilities/day-2025-10-27/cycle-2025102706",
           "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-27 06:00 UTC",
           "bbox": [
@@ -49731,16 +49741,6 @@
           "bbox": [
             -83.503,
             12.0592,
-            -65.0,
-            25.0
-          ]
-        },
-        {
-          "id": "wind-speed-probabilities/day-2025-10-27/cycle-2025102700",
-          "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-27 00:00 UTC",
-          "bbox": [
-            -83.6828,
-            11.6546,
             -65.0,
             25.0
           ]
@@ -49766,16 +49766,6 @@
           ]
         },
         {
-          "id": "wind-speed-probabilities/day-2025-10-28/cycle-2025102818",
-          "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-28 18:00 UTC",
-          "bbox": [
-            -82.0194,
-            14.8464,
-            -65.0,
-            25.0
-          ]
-        },
-        {
           "id": "wind-speed-probabilities/day-2025-10-28/cycle-2025102806",
           "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-28 06:00 UTC",
           "bbox": [
@@ -49796,12 +49786,12 @@
           ]
         },
         {
-          "id": "wind-speed-probabilities/day-2025-10-29/cycle-2025102906",
-          "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-29 06:00 UTC",
+          "id": "wind-speed-probabilities/day-2025-10-28/cycle-2025102818",
+          "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-28 18:00 UTC",
           "bbox": [
-            -80.3111,
-            16.9594,
-            -65.4307,
+            -82.0194,
+            14.8464,
+            -65.0,
             25.0
           ]
         },
@@ -49812,6 +49802,16 @@
             -80.9854,
             15.9703,
             -65.2509,
+            25.0
+          ]
+        },
+        {
+          "id": "wind-speed-probabilities/day-2025-10-29/cycle-2025102906",
+          "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-29 06:00 UTC",
+          "bbox": [
+            -80.3111,
+            16.9594,
+            -65.4307,
             25.0
           ]
         },
@@ -53193,7 +53193,7 @@
     },
     {
       "id": "planet-disasterdata",
-      "collection_count": 33,
+      "collection_count": 34,
       "collections": [
         {
           "id": "post-event-pelican-2026-09-29",
@@ -53203,6 +53203,16 @@
             28.253,
             85.5881,
             28.3573
+          ]
+        },
+        {
+          "id": "post-event-pelican-2026-10-12",
+          "title": "East of the Rasuwa corridor, 12 Oct (Pelican) \u2014 Post-event Imagery",
+          "bbox": [
+            85.4492,
+            28.2533,
+            85.5936,
+            28.3714
           ]
         },
         {
@@ -54014,16 +54024,6 @@
           ]
         },
         {
-          "id": "metropolitni-plan/transformacni-rozvojove-plochy",
-          "title": "MPP - Transforma\u010dn\u00ed a rozvojov\u00e9 plochy",
-          "bbox": [
-            14.2554,
-            49.9433,
-            14.6865,
-            50.176
-          ]
-        },
-        {
           "id": "metropolitni-plan/ulice-cesty",
           "title": "MPP - Ulice, cesty",
           "bbox": [
@@ -54051,6 +54051,16 @@
             49.9419,
             14.7068,
             50.1774
+          ]
+        },
+        {
+          "id": "metropolitni-plan/transformacni-rozvojove-plochy",
+          "title": "MPP - Transforma\u010dn\u00ed a rozvojov\u00e9 plochy",
+          "bbox": [
+            14.2554,
+            49.9433,
+            14.6865,
+            50.176
           ]
         },
         {
