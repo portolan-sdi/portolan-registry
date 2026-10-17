@@ -59,6 +59,34 @@ def collection_bbox(collection: Mapping[str, Any]) -> list[float] | None:
     return clean_bbox(bboxes[0])
 
 
+def _union_longitudes(spans: Sequence[tuple[float, float]]) -> tuple[float, float]:
+    """Union (west, east) spans on the circle.
+
+    STAC marks a bbox that crosses the antimeridian with west > east. Such a
+    span counts as two intervals, [west, 180] and [-180, east]. The union is
+    the circle minus its largest empty arc. The result has west > east when
+    that arc does not contain the antimeridian.
+    """
+    intervals = sorted(
+        interval
+        for west, east in spans
+        for interval in ([(west, 180.0), (-180.0, east)] if west > east else [(west, east)])
+    )
+    merged: list[list[float]] = []
+    for lo, hi in intervals:
+        if merged and lo <= merged[-1][1]:
+            merged[-1][1] = max(merged[-1][1], hi)
+        else:
+            merged.append([lo, hi])
+    best_gap = merged[0][0] + 360.0 - merged[-1][1]
+    west, east = merged[0][0], merged[-1][1]
+    for left, right in zip(merged, merged[1:], strict=False):
+        if right[0] - left[1] > best_gap:
+            best_gap = right[0] - left[1]
+            west, east = right[0], left[1]
+    return west, east
+
+
 def union_bboxes(bboxes: Sequence[Sequence[float]]) -> list[float] | None:
     """Union cleaned bboxes.
 
@@ -66,10 +94,15 @@ def union_bboxes(bboxes: Sequence[Sequence[float]]) -> list[float] | None:
     bbox is ordered [west, south, min_alt, east, north, max_alt], so reading
     index 2 as east would return max altitude in the longitude slot. A set
     mixing 2D and 3D degrades to 2D.
+
+    Longitude is unioned on the circle, so a box with west > east (an
+    antimeridian crossing) keeps its meaning. Latitude and altitude use
+    min and max.
     """
     if not bboxes:
         return None
     half = min(len(b) // 2 for b in bboxes)
     mins = [min(b[i] for b in bboxes) for i in range(half)]
     maxs = [max(b[len(b) // 2 + i] for b in bboxes) for i in range(half)]
+    mins[0], maxs[0] = _union_longitudes([(b[0], b[len(b) // 2]) for b in bboxes])
     return mins + maxs

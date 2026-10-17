@@ -54,6 +54,30 @@ class TestUnionBboxes:
     def test_2d_union(self):
         assert union_bboxes([[0, 0, 1, 1], [-5, -5, 2, 2]]) == [-5, -5, 2, 2]
 
+    def test_crossing_box_stays_crossing(self):
+        # Alaska with the Aleutians, west of 180 degrees.
+        assert union_bboxes([[172.3, 51.2, -129.9, 71.4]]) == [172.3, 51.2, -129.9, 71.4]
+
+    def test_crossing_and_plain_boxes_union_across_the_antimeridian(self):
+        # OSM North America: the collections that reach the Aleutians cross,
+        # railways do not. A min/max union gave [-166.7, ..., -52.6, ...].
+        osm = [[172.3, 14.5, -52.6, 83.3], [-166.7, 14.7, -52.7, 65.2]]
+        assert union_bboxes(osm) == [172.3, 14.5, -52.6, 83.3]
+
+    def test_boxes_on_both_sides_keep_the_short_way_round(self):
+        # Guam and the Virgin Islands: the shorter union crosses 180.
+        assert union_bboxes(
+            [[144.6, 13.2, 145.0, 13.7], [-65.1, 17.6, -64.5, 18.5], [-160.0, 18.0, -100.0, 50.0]]
+        ) == [144.6, 13.2, -64.5, 50.0]
+
+    def test_full_circle_is_global(self):
+        assert union_bboxes([[-180.0, -90.0, 180.0, 90.0], [172.0, 0.0, -170.0, 1.0]]) == [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0,
+        ]
+
     def test_3d_union_keeps_altitude_and_correct_corners(self):
         a = [0.0, 0.0, 10.0, 1.0, 1.0, 20.0]
         b = [-5.0, -5.0, 0.0, 5.0, 5.0, 30.0]
