@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-15T10:54:38.975993+00:00",
+  "generated": "2026-10-17T10:11:27.046215+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-10-15T10:54:38.975993+00:00",
+  "registry_generated": "2026-10-17T10:11:27.046215+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -4981,7 +4981,7 @@
     },
     {
       "id": "bologna-open-data",
-      "collection_count": 35,
+      "collection_count": 36,
       "collections": [
         {
           "id": "ambiente/aree-ortive",
@@ -5191,6 +5191,16 @@
             44.4474,
             11.4194,
             44.544
+          ]
+        },
+        {
+          "id": "statistica/popolazione-residente-aree-statistiche",
+          "title": "Popolazione residente per et\u00e0, sesso, cittadinanza, quartiere, zona, area statistica - serie storica",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
           ]
         },
         {
@@ -53193,8 +53203,78 @@
     },
     {
       "id": "planet-disasterdata",
-      "collection_count": 34,
+      "collection_count": 35,
       "collections": [
+        {
+          "id": "post-event-pelican-2026-10-15",
+          "title": "Upper Budhi Gandaki / Chamar, 15 Oct (Pelican) \u2014 Post-event Imagery",
+          "bbox": [
+            84.8573,
+            28.4337,
+            85.0073,
+            28.5616
+          ]
+        },
+        {
+          "id": "post-event-pelican-2026-08-27",
+          "title": "Syabrubesi to Rasuwagadhi (Pelican) \u2014 Post-event Imagery",
+          "bbox": [
+            85.2807,
+            28.0787,
+            85.4341,
+            28.3512
+          ]
+        },
+        {
+          "id": "post-event-pelican-2026-09-01",
+          "title": "Syabrubesi to Rasuwagadhi, five-day repeat (Pelican) \u2014 Post-event Imagery",
+          "bbox": [
+            85.2847,
+            28.1043,
+            85.4365,
+            28.351
+          ]
+        },
+        {
+          "id": "post-event-planetscope-2026-08-26",
+          "title": "Flood corridor, same-day coverage \u2014 Post-event Imagery",
+          "bbox": [
+            84.8943,
+            27.8293,
+            85.648,
+            28.6595
+          ]
+        },
+        {
+          "id": "post-event-planetscope-2026-08-28",
+          "title": "Corridor and lower Trishuli, two days after \u2014 Post-event Imagery",
+          "bbox": [
+            84.9106,
+            27.7107,
+            85.5768,
+            28.5115
+          ]
+        },
+        {
+          "id": "post-event-skysat-2026-08-27",
+          "title": "Rasuwagadhi and Syabrubesi (SkySat) \u2014 Post-event Imagery",
+          "bbox": [
+            85.2787,
+            28.0822,
+            85.4428,
+            28.3661
+          ]
+        },
+        {
+          "id": "post-event-skysat-2026-08-31",
+          "title": "Betrawati to Trishuli Bazaar (SkySat) \u2014 Post-event Imagery",
+          "bbox": [
+            85.0854,
+            27.792,
+            85.2315,
+            28.0297
+          ]
+        },
         {
           "id": "post-event-pelican-2026-09-29",
           "title": "pelican-2026-09-29 \u2014 Post-event Imagery",
@@ -53283,66 +53363,6 @@
             28.2474,
             85.5823,
             28.4136
-          ]
-        },
-        {
-          "id": "post-event-pelican-2026-08-27",
-          "title": "Syabrubesi to Rasuwagadhi (Pelican) \u2014 Post-event Imagery",
-          "bbox": [
-            85.2807,
-            28.0787,
-            85.4341,
-            28.3512
-          ]
-        },
-        {
-          "id": "post-event-pelican-2026-09-01",
-          "title": "Syabrubesi to Rasuwagadhi, five-day repeat (Pelican) \u2014 Post-event Imagery",
-          "bbox": [
-            85.2847,
-            28.1043,
-            85.4365,
-            28.351
-          ]
-        },
-        {
-          "id": "post-event-planetscope-2026-08-26",
-          "title": "Flood corridor, same-day coverage \u2014 Post-event Imagery",
-          "bbox": [
-            84.8943,
-            27.8293,
-            85.648,
-            28.6595
-          ]
-        },
-        {
-          "id": "post-event-planetscope-2026-08-28",
-          "title": "Corridor and lower Trishuli, two days after \u2014 Post-event Imagery",
-          "bbox": [
-            84.9106,
-            27.7107,
-            85.5768,
-            28.5115
-          ]
-        },
-        {
-          "id": "post-event-skysat-2026-08-27",
-          "title": "Rasuwagadhi and Syabrubesi (SkySat) \u2014 Post-event Imagery",
-          "bbox": [
-            85.2787,
-            28.0822,
-            85.4428,
-            28.3661
-          ]
-        },
-        {
-          "id": "post-event-skysat-2026-08-31",
-          "title": "Betrawati to Trishuli Bazaar (SkySat) \u2014 Post-event Imagery",
-          "bbox": [
-            85.0854,
-            27.792,
-            85.2315,
-            28.0297
           ]
         },
         {
@@ -56512,6 +56532,16 @@
           ]
         },
         {
+          "id": "internationellt-skydd/natura-2000",
+          "title": "Natura 2000 \u2013 hela det svenska n\u00e4tverket (SCI, SAC och SPA)",
+          "bbox": [
+            10.0313,
+            55.011,
+            24.167,
+            69.06
+          ]
+        },
+        {
           "id": "internationellt-skydd/oecm-2024",
           "title": "OECM 2024 (Sveriges rapportering till EEA)",
           "bbox": [
@@ -56549,16 +56579,6 @@
             62.7451,
             20.4202,
             67.8042
-          ]
-        },
-        {
-          "id": "internationellt-skydd/natura-2000",
-          "title": "Natura 2000 \u2013 hela det svenska n\u00e4tverket (SCI, SAC och SPA)",
-          "bbox": [
-            10.0313,
-            55.011,
-            24.167,
-            69.06
           ]
         },
         {
@@ -57778,26 +57798,6 @@
           ]
         },
         {
-          "id": "flood/flood-risk-areas",
-          "title": "Flood Risk Areas (Cycle 1)",
-          "bbox": [
-            -4.0236,
-            51.4589,
-            -2.9839,
-            51.8184
-          ]
-        },
-        {
-          "id": "flood/recorded-flood-extents",
-          "title": "Recorded Flood Extents",
-          "bbox": [
-            -5.2958,
-            51.3996,
-            -2.6502,
-            53.3761
-          ]
-        },
-        {
           "id": "flood/areas-benefiting-from-flood-defences",
           "title": "Areas Benefiting from Flood Defences",
           "bbox": [
@@ -57808,6 +57808,16 @@
           ]
         },
         {
+          "id": "flood/flood-risk-areas",
+          "title": "Flood Risk Areas (Cycle 1)",
+          "bbox": [
+            -4.0236,
+            51.4589,
+            -2.9839,
+            51.8184
+          ]
+        },
+        {
           "id": "flood/flood-storage-areas",
           "title": "Flood Storage Areas",
           "bbox": [
@@ -57815,6 +57825,16 @@
             51.4106,
             -3.0079,
             53.295
+          ]
+        },
+        {
+          "id": "flood/recorded-flood-extents",
+          "title": "Recorded Flood Extents",
+          "bbox": [
+            -5.2958,
+            51.3996,
+            -2.6502,
+            53.3761
           ]
         },
         {
@@ -57878,6 +57898,16 @@
           ]
         },
         {
+          "id": "historic-environment/listed-buildings",
+          "title": "Listed Buildings",
+          "bbox": [
+            -5.6699,
+            51.3757,
+            -2.6617,
+            53.4235
+          ]
+        },
+        {
           "id": "historic-environment/maritime-sites",
           "title": "National Monuments Record of Wales - Heritage Assets (Maritime)",
           "bbox": [
@@ -57918,6 +57948,16 @@
           ]
         },
         {
+          "id": "historic-environment/scheduled-monuments",
+          "title": "Scheduled Monuments",
+          "bbox": [
+            -5.3163,
+            51.3752,
+            -2.6656,
+            53.4301
+          ]
+        },
+        {
           "id": "historic-environment/world-heritage-site-essential-setting",
           "title": "World Heritage Sites in Wales - WHS - Essential Setting",
           "bbox": [
@@ -57935,26 +57975,6 @@
             51.7464,
             -3.0295,
             53.2828
-          ]
-        },
-        {
-          "id": "historic-environment/listed-buildings",
-          "title": "Listed Buildings",
-          "bbox": [
-            -5.6699,
-            51.3757,
-            -2.6617,
-            53.4235
-          ]
-        },
-        {
-          "id": "historic-environment/scheduled-monuments",
-          "title": "Scheduled Monuments",
-          "bbox": [
-            -5.3163,
-            51.3752,
-            -2.6656,
-            53.4301
           ]
         },
         {
@@ -57988,16 +58008,6 @@
           ]
         },
         {
-          "id": "landscape/landmap-landscape-habitats",
-          "title": "Landmap Landscape Habitats",
-          "bbox": [
-            -5.3536,
-            51.3742,
-            -2.6498,
-            53.4357
-          ]
-        },
-        {
           "id": "landscape/landmap-historic-landscape",
           "title": "Landmap Historic Landscape",
           "bbox": [
@@ -58008,6 +58018,16 @@
           ]
         },
         {
+          "id": "landscape/landmap-landscape-habitats",
+          "title": "Landmap Landscape Habitats",
+          "bbox": [
+            -5.3536,
+            51.3742,
+            -2.6498,
+            53.4357
+          ]
+        },
+        {
           "id": "landscape/landmap-visual-sensory",
           "title": "Landmap Visual Sensory",
           "bbox": [
@@ -58015,6 +58035,16 @@
             51.3725,
             -2.6498,
             53.4301
+          ]
+        },
+        {
+          "id": "statistics/lower-layer-super-output-areas-2011",
+          "title": "Lower Super Output Areas (LSOAs) - Wales - 2011",
+          "bbox": [
+            -5.6701,
+            51.375,
+            -2.6498,
+            53.4357
           ]
         },
         {
@@ -58038,28 +58068,18 @@
           ]
         },
         {
-          "id": "statistics/welsh-language-2021",
-          "title": "Welsh Language Percentage of people aged three years or older able to speak Welsh by LSOA 2021",
-          "bbox": [
-            -5.6701,
-            51.375,
-            -2.6498,
-            53.4357
-          ]
-        },
-        {
-          "id": "statistics/lower-layer-super-output-areas-2011",
-          "title": "Lower Super Output Areas (LSOAs) - Wales - 2011",
-          "bbox": [
-            -5.6701,
-            51.375,
-            -2.6498,
-            53.4357
-          ]
-        },
-        {
           "id": "statistics/welsh-index-of-multiple-deprivation-2019",
           "title": "Welsh Index of Multiple Deprivation (WIMD) 2019 - Overall",
+          "bbox": [
+            -5.6701,
+            51.375,
+            -2.6498,
+            53.4357
+          ]
+        },
+        {
+          "id": "statistics/welsh-language-2021",
+          "title": "Welsh Language Percentage of people aged three years or older able to speak Welsh by LSOA 2021",
           "bbox": [
             -5.6701,
             51.375,
