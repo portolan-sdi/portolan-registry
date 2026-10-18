@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-17T10:11:27.046215+00:00",
+  "generated": "2026-10-18T10:27:37.184415+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-10-17T10:11:27.046215+00:00",
+  "registry_generated": "2026-10-18T10:27:37.184415+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -53203,8 +53203,58 @@
     },
     {
       "id": "planet-disasterdata",
-      "collection_count": 35,
+      "collection_count": 40,
       "collections": [
+        {
+          "id": "post-event-pelican-2026-10-11",
+          "title": "Santiago de Veraguas and eastern Herrera, 11 Oct (Pelican) \u2014 Post-event Imagery",
+          "bbox": [
+            -80.9977,
+            7.9371,
+            -80.3532,
+            8.1365
+          ]
+        },
+        {
+          "id": "post-event-planetscope-2026-10-11",
+          "title": "Western Veraguas, 11 Oct (PlanetScope) \u2014 Post-event Imagery",
+          "bbox": [
+            -81.3283,
+            7.6647,
+            -80.8724,
+            8.4965
+          ]
+        },
+        {
+          "id": "post-event-skysat-2026-10-14",
+          "title": "Coast west of Tonos\u00ed to the Gulf of Montijo, 14 Oct (SkySat) \u2014 Post-event Imagery",
+          "bbox": [
+            -81.7338,
+            7.5098,
+            -80.8046,
+            8.0086
+          ]
+        },
+        {
+          "id": "post-event-skysat-2026-10-15",
+          "title": "Southern Azuero Peninsula around Tonos\u00ed, 15 Oct (SkySat) \u2014 Post-event Imagery",
+          "bbox": [
+            -80.933,
+            7.208,
+            -80.2456,
+            7.6439
+          ]
+        },
+        {
+          "id": "pre-event-basemap-2026q3",
+          "title": "Central Panama and the Azuero Peninsula, Jul\u2013Sep 2026 (Planet Basemap) \u2014 Pre-event Imagery",
+          "bbox": [
+            -81.9141,
+            7.0137,
+            -79.8047,
+            8.7548
+          ]
+        },
         {
           "id": "post-event-pelican-2026-10-15",
           "title": "Upper Budhi Gandaki / Chamar, 15 Oct (Pelican) \u2014 Post-event Imagery",
