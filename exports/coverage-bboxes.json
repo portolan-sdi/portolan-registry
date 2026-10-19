@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-18T10:27:37.184415+00:00",
+  "generated": "2026-10-19T12:14:03.655876+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-10-18T10:27:37.184415+00:00",
+  "registry_generated": "2026-10-19T12:14:03.655876+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -41984,16 +41984,6 @@
           ]
         },
         {
-          "id": "utah_water_systems",
-          "title": "Utah water systems",
-          "bbox": [
-            -114.0531,
-            36.9395,
-            -109.0697,
-            42.6816
-          ]
-        },
-        {
           "id": "usgs_nhdplusv2_huc12pp",
           "title": "HUC12 pour points",
           "bbox": [
@@ -42001,6 +41991,16 @@
             25.2156,
             -66.995,
             49.364
+          ]
+        },
+        {
+          "id": "utah_water_systems",
+          "title": "Utah water systems",
+          "bbox": [
+            -114.0531,
+            36.9395,
+            -109.0697,
+            42.6816
           ]
         },
         {
@@ -42014,16 +42014,6 @@
           ]
         },
         {
-          "id": "iow_state_gages_ndwr",
-          "title": "Nevada state gages",
-          "bbox": [
-            -120.0028,
-            36.1513,
-            -114.0219,
-            41.997
-          ]
-        },
-        {
           "id": "ca_gage_assessment_gages",
           "title": "California stream gage assessment",
           "bbox": [
@@ -42031,6 +42021,16 @@
             32.5515,
             -114.1393,
             42.0061
+          ]
+        },
+        {
+          "id": "iow_state_gages_ndwr",
+          "title": "Nevada state gages",
+          "bbox": [
+            -120.0028,
+            36.1513,
+            -114.0219,
+            41.997
           ]
         },
         {
@@ -42074,16 +42074,6 @@
           ]
         },
         {
-          "id": "iow_state_gages_mtdnrc",
-          "title": "Montana state gages",
-          "bbox": [
-            -114.5287,
-            44.588,
-            -104.2928,
-            48.9552
-          ]
-        },
-        {
           "id": "wwdh_awdb_forecasts",
           "title": "NRCS water supply forecast points",
           "bbox": [
@@ -42091,6 +42081,16 @@
             32.6463,
             -103.482,
             62.5205
+          ]
+        },
+        {
+          "id": "iow_state_gages_mtdnrc",
+          "title": "Montana state gages",
+          "bbox": [
+            -114.5287,
+            44.588,
+            -104.2928,
+            48.9552
           ]
         },
         {
