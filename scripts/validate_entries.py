@@ -576,8 +576,21 @@ def collect_errors(
 
 
 def write_report(path: Path, errors: list[str]) -> None:
-    """Record the outcome where the notifier can find it."""
-    report = {"ok": not errors, "errors": errors}
+    """Record the outcome where the notifier can find it.
+
+    The notifier picks its closing line from two flags. An error that a
+    maintainer approval clears ends with APPROVAL_HINT, and no other error
+    does. `needs_approval` is true when at least one error is of that kind.
+    `approval_only` is true when every error is, so a push cannot clear the
+    check and an approval can.
+    """
+    approvable = [e for e in errors if e.endswith(APPROVAL_HINT)]
+    report = {
+        "ok": not errors,
+        "needs_approval": bool(approvable),
+        "approval_only": bool(errors) and len(approvable) == len(errors),
+        "errors": errors,
+    }
     path.write_text(json.dumps(report, indent=2) + "\n")
 
 

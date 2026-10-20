@@ -220,10 +220,48 @@ def test_a_root_that_returns_empty_json_exits_nonzero(tmp_path, monkeypatch):
 
 
 class TestReport:
+    def test_an_approval_only_failure_says_so(self, tmp_path):
+        """The notifier tells the author that no push clears a deletion."""
+        path = tmp_path / "report.json"
+        hint = validate_entries.APPROVAL_HINT
+        validate_entries.write_report(path, [f"a.yaml: deleted. {hint}", f"b.yaml: edited. {hint}"])
+        report = json.loads(path.read_text())
+        assert report["needs_approval"] is True
+        assert report["approval_only"] is True
+
+    def test_a_mixed_failure_needs_a_push_and_an_approval(self, tmp_path):
+        path = tmp_path / "report.json"
+        hint = validate_entries.APPROVAL_HINT
+        validate_entries.write_report(path, [f"a.yaml: deleted. {hint}", "b.yaml: bad URL"])
+        report = json.loads(path.read_text())
+        assert report["needs_approval"] is True
+        assert report["approval_only"] is False
+
+    def test_a_failure_with_no_approval_error_needs_a_push(self, tmp_path):
+        path = tmp_path / "report.json"
+        validate_entries.write_report(path, ["b.yaml: bad URL"])
+        report = json.loads(path.read_text())
+        assert report["needs_approval"] is False
+        assert report["approval_only"] is False
+
+    def test_a_deletion_reports_approval_only(self, tmp_path):
+        """The real deletion error, not a hand-written one."""
+        changed = tmp_path / "changed.txt"
+        changed.write_text(f"{tmp_path / 'gone.yaml'}\n")
+        errors = validate_entries.deleted_entries(changed)
+        path = tmp_path / "report.json"
+        validate_entries.write_report(path, errors)
+        assert json.loads(path.read_text())["approval_only"] is True
+
     def test_a_clean_run_records_no_errors(self, tmp_path):
         path = tmp_path / "report.json"
         validate_entries.write_report(path, [])
-        assert json.loads(path.read_text()) == {"ok": True, "errors": []}
+        assert json.loads(path.read_text()) == {
+            "ok": True,
+            "needs_approval": False,
+            "approval_only": False,
+            "errors": [],
+        }
 
     def test_errors_are_recorded_verbatim(self, tmp_path):
         path = tmp_path / "report.json"
@@ -248,7 +286,12 @@ class TestReport:
             ]
         )
         assert code == 0
-        assert json.loads(report.read_text()) == {"ok": True, "errors": []}
+        assert json.loads(report.read_text()) == {
+            "ok": True,
+            "needs_approval": False,
+            "approval_only": False,
+            "errors": [],
+        }
 
     def test_main_reports_a_failing_entry_and_exits_nonzero(self, tmp_path):
         entry_file(tmp_path, "cat.yaml", f"url: {ROOT}\n")

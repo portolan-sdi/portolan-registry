@@ -69,8 +69,19 @@ jobs:
               echo "- The run ended before it recorded a reason." >> comment.md
             fi
             echo >> comment.md
-            echo "Fix the entry and push again. This check runs on every push." \
-              >> comment.md
+            # A deletion or an edit of a current entry waits for a maintainer.
+            # A push cannot clear it, so say who acts. validate_entries.py
+            # sets both flags in write_report.
+            if jq -e '.approval_only' outcome/report.json > /dev/null 2>&1; then
+              echo "A maintainer approval of the head commit clears this check." \
+                "A new push needs a new approval." >> comment.md
+            elif jq -e '.needs_approval' outcome/report.json > /dev/null 2>&1; then
+              echo "Fix the other errors and push again." \
+                "Then a maintainer must approve the new head commit." >> comment.md
+            else
+              echo "Fix the entry and push again. This check runs on every push." \
+                >> comment.md
+            fi
           fi
           echo >> comment.md
           echo "[Full log]($RUN_URL)" >> comment.md
