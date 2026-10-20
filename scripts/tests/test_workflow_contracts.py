@@ -112,3 +112,15 @@ def test_the_gate_reads_registry_id_history_from_the_base_branch():
     )
     assert validate["env"]["BASE_REF"] == "${{ github.event.pull_request.base.ref }}"
     assert '--base-ref "origin/$BASE_REF"' in validate["run"]
+
+
+def test_the_failure_comment_reads_the_approval_flags():
+    """A deletion waits for a maintainer. The comment must not tell the
+    author that a push clears it."""
+    write = next(
+        step
+        for step in _steps("notify-pr.yml", "report")
+        if step.get("name") == "Write the comment"
+    )
+    assert "jq -e '.approval_only'" in write["run"]
+    assert "jq -e '.needs_approval'" in write["run"]
