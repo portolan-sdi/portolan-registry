@@ -370,12 +370,24 @@ def deprecation_errors(
     return errors
 
 
-def is_new_entry(catalog_id: str, url: str, published: Mapping[str, Mapping[str, Any]]) -> bool:
-    """True when the validators gate this entry. See the module docstring."""
+def is_new_entry(
+    catalog_id: str,
+    url: str,
+    published: Mapping[str, Mapping[str, Any]],
+    *,
+    deprecated: bool = False,
+) -> bool:
+    """True when the validators gate this entry. See the module docstring.
+
+    A removed catalog that an edit brings back counts as new. A deprecated
+    one does not come back that way. The publish run keeps a deprecated
+    catalog removed until it passes validation. So an edit that keeps a
+    removed entry deprecated at its URL is not a re-registration (#234).
+    """
     link = published.get(catalog_id)
     if not link:
         return True
-    if link.get("portolan_registry:status") == "removed":
+    if link.get("portolan_registry:status") == "removed" and not deprecated:
         return True
     href = link.get("href")
     return not href or normalize_url(href) != normalize_url(url)
@@ -424,7 +436,7 @@ def check_entry(
             f"This catalog already exists in {', '.join(repr(o) for o in others)}"
         ]
 
-    gated = is_new_entry(path.stem, url, published or {})
+    gated = is_new_entry(path.stem, url, published or {}, deprecated=deprecation(entry).deprecated)
 
     # Fetch failures do not block edits to an existing catalog at its
     # registered URL, so an offline catalog can still be deprecated.

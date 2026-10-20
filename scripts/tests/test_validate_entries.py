@@ -500,6 +500,23 @@ class TestOfflineCatalog:
         assert len(errors) == 1
         assert "Failed to fetch catalog" in errors[0]
 
+    def test_a_removed_entry_can_be_deprecated_while_offline(self, tmp_path):
+        """Review finding: the gate treated every removed catalog as new."""
+        path = entry_file(tmp_path, "cat.yaml", ENTRY + "deprecated: true\n")
+        assert check(path, self.down(), published=published(status="removed")) == []
+
+    def test_a_removed_entry_that_is_not_deprecated_is_gated_again(self, tmp_path):
+        """Re-registration still needs a catalog that answers."""
+        path = entry_file(tmp_path, "cat.yaml", ENTRY)
+        errors = check(path, self.down(), published=published(status="removed"))
+        assert len(errors) == 1
+        assert "Failed to fetch catalog" in errors[0]
+
+    def test_a_removed_deprecated_entry_at_a_new_url_is_gated(self, tmp_path):
+        path = entry_file(tmp_path, "cat.yaml", ENTRY + "deprecated: true\n")
+        moved = published(href="https://old.example.org/catalog.json", status="removed")
+        assert len(check(path, self.down(), published=moved)) == 1
+
     def test_a_registered_entry_at_a_new_url_that_does_not_answer_fails(self, tmp_path):
         path = entry_file(tmp_path, "cat.yaml", ENTRY)
         moved = published(href="https://old.example.org/catalog.json")

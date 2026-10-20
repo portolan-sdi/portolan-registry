@@ -247,6 +247,38 @@ class TestDeprecatedSince:
 
     URL = "url: https://ex.org/catalog.json\n"
 
+    def test_a_comment_on_the_line_does_not_move_the_date(self, repo):
+        """Review finding: a text match on the line moved the date."""
+        entry = repo / "catalogs" / "example.yaml"
+        entry.write_text(self.URL + "deprecated: true\n")
+        commit_at(repo, "deprecate", "2026-10-01T09:00:00+00:00")
+        entry.write_text(self.URL + "deprecated: true  # replaced by geoconnex\n")
+        commit_at(repo, "add a comment", "2026-10-20T09:00:00+00:00")
+        assert deprecated_since(entry) == "2026-10-01T09:00:00+00:00"
+
+    def test_a_quoted_key_gives_a_date(self, repo):
+        """Review finding: `"deprecated": true` is valid YAML and gave none."""
+        entry = repo / "catalogs" / "example.yaml"
+        entry.write_text(self.URL + '"deprecated": true\n')
+        commit_at(repo, "deprecate", "2026-10-16T09:12:00+00:00")
+        assert deprecated_since(entry) == "2026-10-16T09:12:00+00:00"
+
+    def test_a_flip_from_false_takes_the_date_of_the_flip(self, repo):
+        entry = repo / "catalogs" / "example.yaml"
+        entry.write_text(self.URL + "deprecated: false\n")
+        commit_at(repo, "say false", "2026-10-10T09:00:00+00:00")
+        entry.write_text(self.URL + "deprecated: true\n")
+        commit_at(repo, "deprecate", "2026-10-12T09:00:00+00:00")
+        assert deprecated_since(entry) == "2026-10-12T09:00:00+00:00"
+
+    def test_an_unrelated_edit_does_not_move_the_date(self, repo):
+        entry = repo / "catalogs" / "example.yaml"
+        entry.write_text(self.URL + "deprecated: true\n")
+        commit_at(repo, "deprecate", "2026-10-12T09:00:00+00:00")
+        entry.write_text(self.URL + "submitter_email: new@example.org\ndeprecated: true\n")
+        commit_at(repo, "new contact", "2026-10-15T09:00:00+00:00")
+        assert deprecated_since(entry) == "2026-10-12T09:00:00+00:00"
+
     def test_reads_the_commit_that_deprecated_the_entry(self, repo):
         entry = repo / "catalogs" / "example.yaml"
         entry.write_text(self.URL + "deprecated: true\n")

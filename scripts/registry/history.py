@@ -18,6 +18,7 @@ from typing import Any
 
 import yaml
 
+from registry.entries import deprecation
 from registry.report import log
 
 
@@ -119,16 +120,27 @@ def url_at(ref: str, path: Path) -> str | None:
 def deprecated_since(path: Path) -> str | None:
     """Return the RFC 3339 timestamp of the commit that deprecated `path`.
 
-    Call this only for a currently deprecated entry. It uses the latest
-    commit that changed the top-level `deprecated:` line. Changes to
-    `deprecated_reason:` do not affect the date.
+    Parse the entry at each commit that changed the file, newest first. The
+    date is the oldest commit of the newest unbroken run of commits where
+    the entry is deprecated. A text match on the `deprecated:` line is not
+    enough: a comment on the line, or a quoted key, would move or lose the
+    date without a change of value.
 
-    If Git cannot find the date, return `None`. The caller keeps the
-    previously published date, as with `first_registered`.
+    Walk with `--first-parent`, so the date is when the deprecation reached
+    the branch, not when a side branch drafted it.
+
+    If the newest commit does not deprecate the entry, or Git cannot answer,
+    return `None`. The caller keeps the previously published date, as with
+    `first_registered`.
     """
-    out = _git(path.parent, "log", "-1", "-G", "^deprecated:", "--format=%aI", "--", path.name)
-    stamp = (out or "").strip()
-    return _canonical(stamp) if stamp else None
+    out = _git(path.parent, "log", "--first-parent", "--format=%H %aI", "--", path.name)
+    since = None
+    for line in (out or "").splitlines():
+        commit, _, stamp = line.strip().partition(" ")
+        if not commit or not deprecation(entry_at(commit, path) or {}).deprecated:
+            break
+        since = stamp
+    return _canonical(since) if since else None
 
 
 @dataclass(frozen=True)
