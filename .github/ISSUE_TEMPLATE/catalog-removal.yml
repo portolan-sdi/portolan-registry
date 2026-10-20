@@ -1,19 +1,19 @@
 name: Catalog removal request
-description: Ask to take a registered catalog out of the registry
-# The catalog-removal label starts the mail to the submitter, in
+description: Request a catalog's removal from the registry
+# The catalog-removal label triggers an email to the submitter through
 # .github/workflows/notify-feedback.yml.
 labels: [catalog-removal]
 body:
   - type: markdown
     attributes:
       value: >-
-        Use this form to ask the registry to remove a catalog. Anyone can ask.
-        The registry emails your request to the person who registered the
-        catalog. A maintainer reviews every request. If you did not register
-        the catalog, the maintainer waits 14 days for that person to reply
-        before the removal. Spam and legal requests do not wait. Your request
-        and your GitHub name are public. After the removal, no other catalog
-        can use the id.
+        You can request a catalog's removal even if someone else registered
+        it. The registry emails your request to the person who registered the
+        catalog, and a maintainer reviews it. If someone else registered the
+        catalog, the maintainer waits 14 days for that person to object before
+        approving removal. Removals for spam or legal reasons do not require
+        this waiting period. Your request and GitHub username are public.
+        After removal, no other catalog can use the ID.
   # notify_feedback.py reads the answers under these headings. Keep the
   # labels "Catalog ID", "Relationship", and "Why".
   - type: input
@@ -21,9 +21,10 @@ body:
     attributes:
       label: Catalog ID
       description: >-
-        The registry id, which is the stem of `catalogs/{id}.yaml` and the
-        `portolan_registry:id` of the catalog's link in
-        [the export](https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json).
+        Enter the catalog's filename in `catalogs/` without `.yaml`.
+        You can also find the ID in the `portolan_registry:id` field of the
+        catalog's link in the
+        [JSON registry export](https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json).
       placeholder: geoconnex-geoparquet
     validations:
       required: true
@@ -31,7 +32,7 @@ body:
     id: relationship
     attributes:
       label: Relationship
-      description: How you relate to the catalog. The maintainer can ask you to confirm it.
+      description: Select your relationship to the catalog. A maintainer may ask you to confirm it.
       options:
         - I registered this catalog
         - I work for the publisher, and someone else registered it
@@ -44,8 +45,8 @@ body:
     attributes:
       label: Why
       description: >-
-        Why the catalog should leave the registry. Example: the official
-        publisher now registers its own catalog.
+        Explain why you want to remove the catalog. For example, the
+        publisher may have registered a replacement catalog.
     validations:
       required: true
   - type: input
@@ -53,16 +54,16 @@ body:
     attributes:
       label: Contact address
       description: >-
-        Optional. An address where the maintainer can reach you. It is
-        public on this issue. Your GitHub account is enough if you leave this
-        blank.
+        If you want a maintainer to contact you outside GitHub, enter an
+        email address. This address is public. If you leave this field blank,
+        the maintainer can contact you through this issue.
     validations:
       required: false
   - type: dropdown
     id: url-online
     attributes:
-      label: Does the catalog stay online?
-      description: Optional. Whether the catalog's URL still answers after the removal.
+      label: Will the catalog remain online?
+      description: Indicate whether the catalog's URL will remain accessible after removal from the registry. This field is optional.
       options:
         - "Yes"
         - "No"

@@ -1,18 +1,16 @@
 #!/usr/bin/env python3
-"""Mail the submitter of a catalog someone filed an issue against.
+"""Email a catalog's submitter about feedback or a removal request.
 
-Two issue forms reach this script. `--form feedback`, the default, reads a
-catalog feedback report. `--form removal` reads a catalog removal request, so
-the submitter hears about it even when someone else asks.
+Use `--form feedback` (the default) for a catalog feedback report or
+`--form removal` for a catalog removal request.
 
-Reads the issue from the environment, so nothing an issue author writes ever
-reaches a shell. Resolves the catalog id it names against `catalogs/`, and
-mails the address on that entry file.
+The script reads issue details from environment variables, looks up the
+catalog ID in `catalogs/`, and emails the address in the entry file. Issue
+content never reaches the shell.
 
-Whatever it cannot resolve it says on the issue instead: the script prints a
-comment to stdout, and the workflow posts it when the output is non-empty.
-Progress goes to stderr. The exit code is always 0, because a report that
-names the wrong catalog is still a report worth keeping.
+If the script cannot find the catalog, it prints a comment to stdout for the
+workflow to post on the issue. Progress messages go to stderr. The script
+returns exit code 0 even if the catalog ID is invalid.
 
     ISSUE_BODY="$(cat body.md)" uv run --frozen scripts/notify_feedback.py
     ISSUE_BODY="$(cat body.md)" uv run --frozen scripts/notify_feedback.py --form removal
@@ -47,7 +45,7 @@ KIND_FIELD = "kind of problem"
 RELATIONSHIP_FIELD = "relationship"
 REASON_FIELD = "why"
 
-# Each form applies its own label, and re-applying it re-sends the mail.
+# Each form applies its own label. Reapply the label to resend the email.
 LABELS = {"feedback": "catalog-feedback", "removal": "catalog-removal"}
 
 
@@ -91,18 +89,18 @@ def parse_catalog_id(body: str) -> str | None:
 def unknown_catalog_comment(
     catalog_id: str | None, known: list[str], label: str = LABELS["feedback"]
 ) -> str:
-    """What to say on an issue whose catalog we could not resolve."""
+    """Explain how to correct an issue with an unrecognized catalog ID."""
     named = f"`{catalog_id}`" if catalog_id else "no catalog"
     ids = ", ".join(f"`{i}`" for i in known) or "none yet"
     return (
-        f"This issue names {named}, which is not registered here, so nobody "
-        "was notified.\n\n"
-        f"Registered ids: {ids}\n\n"
-        "Correct the **Catalog ID** section, then a maintainer can re-apply "
-        f"the `{label}` label to send the notification. If the "
-        "catalog is not in the registry at all, "
-        "[register it first](https://github.com/portolan-sdi/portolan-registry"
-        "#submit-a-catalog)."
+        f"This issue names {named}. The registry could not find a matching "
+        "entry and did not send a notification.\n\n"
+        f"Registered IDs: {ids}\n\n"
+        "If the catalog is registered, correct the **Catalog ID** section "
+        f"and ask a maintainer to reapply the `{label}` label to send the "
+        "notification. If the catalog is not registered, "
+        "[submit the catalog](https://github.com/portolan-sdi/portolan-registry"
+        "#quickstart)."
     )
 
 
@@ -114,7 +112,7 @@ def main(argv: list[str] | None = None) -> int:
         "--form",
         choices=sorted(LABELS),
         default="feedback",
-        help="Which issue form filed the issue.",
+        help="Select the issue form to read (default: feedback).",
     )
     parser.add_argument(
         "--no-notify",

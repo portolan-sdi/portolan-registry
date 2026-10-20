@@ -50,8 +50,8 @@ REMOVAL_FORM = (
     "https://github.com/portolan-sdi/portolan-registry/issues/new?template=catalog-removal.yml"
 )
 
-# The file stem is the registry id. It never changes and never names a second
-# catalog (#242), so a new one has to be right the first time.
+# The filename without its extension is the registry ID. IDs cannot change
+# or be reused for another catalog (#242).
 STEM_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 
 
@@ -71,13 +71,13 @@ def deleted_entries(changed_file: Path) -> list[str]:
 
     The gate lists every changed entry, deleted ones too. Without this check
     a deletion leaves nothing to validate, and an empty run reports success.
-    A deletion is how a catalog leaves the registry on request, so it needs a
-    maintainer to review the request and approve the head commit.
+    To remove a catalog on request, delete its entry file. A maintainer must
+    review the request and approve the pull request's head commit.
     """
     return [
-        f"{p}: This pull request deletes an entry. The catalog leaves the "
-        "registry, and no other catalog can use its id. File a removal "
-        f"request first, so a maintainer can review it: {REMOVAL_FORM} "
+        f"{p}: This pull request deletes an entry, which removes the catalog "
+        "from the registry. You cannot reuse its ID for another catalog. "
+        f"Before deleting the entry, open a catalog removal request: {REMOVAL_FORM} "
         f"{APPROVAL_HINT}"
         for p in read_paths(changed_file)
         if not p.exists()
@@ -99,24 +99,22 @@ def modified_entries(changed_file: Path, added_file: Path) -> list[str]:
 
 
 def _url_of(path: Path) -> str | None:
-    """The normalized URL of an entry file, or None when it names none."""
+    """Return the entry's normalized URL, or `None` if it has no URL."""
     url = load_entry(path).get("url")
     return normalize_url(url) if isinstance(url, str) and url else None
 
 
 def id_errors(changed_file: Path, added_file: Path, *, maintainer_approved: bool) -> list[str]:
-    """One error for each new entry whose id breaks a rule from #242.
+    """Return an error for each new entry with an invalid registry ID (#242).
 
-    An id is the file stem. It must match STEM_RE. It never changes, so a
-    rename fails even with an approval. It never names a second catalog, so a
-    new file fails when git history holds a deletion of the same path. The
-    one exception is the same catalog coming back at the same URL, which a
-    maintainer approves.
+    An ID is the filename without its extension and must match `STEM_RE`.
+    Renames fail even with maintainer approval. If Git history records a
+    deletion at the same path, the new entry fails unless a maintainer
+    approves re-registration of the same catalog at the same URL.
 
-    A rename reaches the gate as a deletion and an addition, because the
-    workflow lists paths with --no-renames. The pull request commits the
-    deletion, so git history gives the URL the deleted file held. A deletion
-    and an addition with the same URL is a rename.
+    The workflow lists paths with `--no-renames`, so a rename appears as a
+    deletion and an addition. Git history provides the deleted file's URL.
+    If the added file uses the same URL, treat the change as a rename.
     """
     added = [p for p in read_paths(added_file) if p.exists()]
     renamed_from: dict[str, Path] = {}
@@ -131,9 +129,10 @@ def id_errors(changed_file: Path, added_file: Path, *, maintainer_approved: bool
     for path in added:
         if not STEM_RE.match(path.stem):
             errors.append(
-                f"{path}: The file name '{path.stem}' is not a valid registry id. "
-                "Use lowercase letters, digits, and single hyphens, such as "
-                "'city-of-example-parcels'. The id never changes after the merge."
+                f"{path}: '{path.stem}' is not a valid registry ID. "
+                "Use lowercase letters and digits, with single hyphens between "
+                "groups, such as 'city-of-example-parcels'. "
+                "You cannot change the ID after the pull request merges."
             )
             continue
 
@@ -142,8 +141,8 @@ def id_errors(changed_file: Path, added_file: Path, *, maintainer_approved: bool
         if old is not None:
             errors.append(
                 f"{path}: This pull request renames '{old.stem}' to '{path.stem}'. "
-                f"A registry id never changes, so keep {old.name}. The id is not "
-                "the title. The registry reads the title from the catalog."
+                f"Registry IDs cannot change. Keep {old.name}. "
+                "To change the display title, update the title in your catalog."
             )
             continue
 
@@ -152,18 +151,20 @@ def id_errors(changed_file: Path, added_file: Path, *, maintainer_approved: bool
             continue
         if url and gone.url and normalize_url(gone.url) == url:
             if maintainer_approved:
-                log(f"{path}: A maintainer approved the return of '{path.stem}' at its old URL.")
+                log(
+                    f"{path}: A maintainer approved re-registration of '{path.stem}' at the same URL."
+                )
                 continue
             errors.append(
-                f"{path}: The id '{path.stem}' left the registry in commit "
-                f"{gone.commit[:12]}. This entry has the same URL, so it brings "
-                f"back the same catalog. {APPROVAL_HINT}"
+                f"{path}: Commit {gone.commit[:12]} removed registry ID "
+                f"'{path.stem}'. This entry uses the same URL to register "
+                f"the same catalog again. {APPROVAL_HINT}"
             )
             continue
         errors.append(
-            f"{path}: The id '{path.stem}' belonged to another catalog, which "
-            f"left the registry in commit {gone.commit[:12]}. A registry id "
-            "never names a second catalog. Choose another file name."
+            f"{path}: Registry ID '{path.stem}' belonged to another catalog, "
+            f"which commit {gone.commit[:12]} removed. "
+            "You cannot reuse an ID for another catalog. Choose a different filename."
         )
     return errors
 
@@ -288,9 +289,9 @@ def collect_errors(
     with a red check and no explanation. So an unexpected failure becomes an
     error string like any other. The traceback still reaches the run log.
 
-    With `added_file`, a deleted or edited entry fails unless
-    `maintainer_approved` is set, and each new id is checked by `id_errors`.
-    Without it, only a deletion fails. CI always passes `added_file`.
+    If you pass `added_file`, a deleted or edited entry fails unless you set
+    `maintainer_approved`. The `id_errors` function also checks each new ID.
+    Without `added_file`, only deletions require approval. CI always passes it.
 
     `export_path` decides which entries are new. CI passes the export from
     the base branch. The pull request can change its own copy, and an entry

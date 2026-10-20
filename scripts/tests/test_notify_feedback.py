@@ -208,7 +208,7 @@ The publisher now registers its own catalog.
 
 _No response_
 
-### Does the catalog stay online?
+### Will the catalog remain online?
 
 Yes"""
 
@@ -268,8 +268,11 @@ class TestRemovalRequest:
 
 
 def test_the_removal_form_carries_the_headings_the_script_reads():
-    """GitHub renders each field label as a heading. Renaming a label in the
-    form would leave the mail saying "not stated" without an error."""
+    """Check form labels against the parser's expected headings.
+
+    GitHub renders each label as a heading. If a label changes, the email
+    silently reports "not stated" for that answer.
+    """
     form = yaml.safe_load(Path(".github/ISSUE_TEMPLATE/catalog-removal.yml").read_text())
     assert form["labels"] == [notify_feedback.LABELS["removal"]]
     labels = {

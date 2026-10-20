@@ -32,20 +32,20 @@ New catalogs must pass deterministic validation before they enter the registry. 
 
 After your submission passes validation and a maintainer merges it, the registry publishes its metadata in [`exports/catalogs.json`](./exports/catalogs.json). Your catalog then appears on the registry page. Scheduled checks revisit registered catalogs and notify submitters about failures.
 
-The filename is the catalog's registry ID. It must use lowercase letters, digits, and single hyphens, such as `city-of-example-parcels`. An ID never changes after the merge, and no second catalog can use it. The registry reads the title from your catalog, so the ID does not need to match it.
+Your catalog's registry ID is its filename without `.yaml`, such as `city-of-example-parcels`. Use lowercase letters and digits, with single hyphens between groups. Once a maintainer merges your submission, you cannot change the ID or reuse it for another catalog. The registry reads the title from your catalog, so the ID does not need to match the title.
 
 ## Remove a catalog
 
-Anyone can ask to remove a registered catalog. You do not need to be the person who registered it. A new contact at the same publisher can ask, and so can a registry maintainer.
+You can request a catalog's removal even if someone else registered it.
 
-1. File a [catalog removal request](https://github.com/portolan-sdi/portolan-registry/issues/new?template=catalog-removal.yml). Name the catalog ID, your relationship to the catalog, and the reason.
-2. Open a pull request that deletes `catalogs/<id>.yaml` and links the request.
+1. Open a [catalog removal request](https://github.com/portolan-sdi/portolan-registry/issues/new?template=catalog-removal.yml). Include the catalog ID, your relationship to the catalog, and your reason for requesting removal.
+2. Open a pull request that deletes `catalogs/<id>.yaml` and links to your removal request.
 
-The registry emails the request to the catalog's submitter. A maintainer reviews the request. If the request is legitimate, the maintainer approves and merges the pull request. If you did not register the catalog, the maintainer waits 14 days for the submitter to object first. Spam and legal requests skip the wait. The registry cannot verify who you are, so the maintainer may ask you to confirm your relationship to the publisher.
+The registry emails your request to the person who registered the catalog. If someone else registered it, a maintainer waits 14 days for that person to object before approving removal. Removals for spam or legal reasons do not require this waiting period. The maintainer reviews your request and may ask you to confirm your relationship to the publisher. If the maintainer accepts your request, they approve and merge the pull request.
 
-After the merge, the next publish drops the catalog from [`exports/catalogs.json`](./exports/catalogs.json) and [`exports/coverage-bboxes.json`](./exports/coverage-bboxes.json). The git history of the export records when it left. No other catalog can take its ID. Only the same catalog, at the same URL and with a maintainer's approval, can register under it again.
+After the merge, the next registry update removes the catalog from [`exports/catalogs.json`](./exports/catalogs.json) and [`exports/coverage-bboxes.json`](./exports/coverage-bboxes.json). The export's Git history records the removal. If you want to register the same catalog again, use the same ID and URL and get a maintainer's approval. You cannot reuse the ID for another catalog.
 
-A catalog can also leave without a request. When a registered catalog stops answering, nightly re-validation marks it `stale` and emails its submitter. After 30 days as `stale`, it becomes `removed`. Its link stays in the export with that status, and its entry file stays in `catalogs/`.
+If the registry cannot fetch a registered catalog, the nightly validation check marks it `stale` and emails the person who registered it. If the catalog remains unreachable for 30 days, the check changes its status to `removed`. The registry keeps its link in the export with that status and keeps its entry file in `catalogs/`.
 
 ## Report a bug
 

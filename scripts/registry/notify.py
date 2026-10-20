@@ -1,19 +1,14 @@
-"""Mail to the submitter of a registered catalog.
+"""Email the submitter when a catalog becomes stale or receives an issue.
 
-Three things prompt mail. A catalog goes stale when its root catalog.json could
-not be fetched, so at the moment we want to send mail the catalog itself is
-unreadable, and any address inside it is out of reach precisely when we need
-it. A reader files feedback when the catalog is readable but wrong, which the
-crawler cannot detect at all. Someone asks to remove the catalog, and the
-submitter may not be the person who asks. All three need the same thing: an
-address the registry holds itself. That is `submitter_email` on the entry file, which
-stays readable whatever happens to the catalog.
+Notifications cover unreachable catalogs, feedback reports, and removal
+requests. Each uses `submitter_email` from the entry file so the registry can
+contact the submitter even when the catalog is unreachable.
 
-The export must never carry that address. It is built from crawl results
-rather than from entry files, so the address has no path into it.
+The export uses crawl results rather than entry files and excludes this
+email address.
 
-Every body interpolates strings the registry did not write, such as a crawled
-title or an issue title and its answers, so every interpolation is escaped.
+Each email body escapes external text, including catalog titles, issue
+titles, and form answers, before inserting it into HTML.
 """
 
 from __future__ import annotations
@@ -67,8 +62,8 @@ def _feedback_body(title: str, kind: str, issue_url: str, issue_title: str) -> s
     """
 
 
-# A maintainer waits this long for the submitter to object to a request from
-# someone else. The README states the same rule.
+# Allow this many days for the submitter to object to someone else's removal
+# request. See the removal policy in the README.
 OBJECTION_DAYS = 14
 
 
@@ -89,12 +84,18 @@ def _removal_body(
         html.escape(issue_title),
     )
     return f"""
-        <h2>Request to Remove Your Catalog</h2>
-        <p>GitHub user <strong>{requester}</strong> asked to remove <strong>{title}</strong> from the Portolan Registry. You registered this catalog.</p>
-        <p><strong>Relationship to the catalog, as they state it:</strong> {relationship}</p>
-        <p><strong>Reason they give:</strong> {reason}</p>
-        <p><strong>Request:</strong> <a href="{issue_url}">{issue_title}</a></p>
-        <p>If you made this request, you do not need to do anything. If you object, reply on the request within {OBJECTION_DAYS} days. A maintainer reviews every request before a catalog leaves the registry.</p>
+        <h2>Request to remove your catalog</h2>
+        <p>GitHub user <strong>{requester}</strong> requested removal of <strong>{title}</strong>, which you registered in the Portolan registry.</p>
+        <dl>
+            <dt>Requester's stated relationship to the catalog</dt>
+            <dd>{relationship}</dd>
+            <dt>Reason for the request</dt>
+            <dd>{reason}</dd>
+            <dt>Removal request</dt>
+            <dd><a href="{issue_url}">{issue_title}</a></dd>
+        </dl>
+        <p>If you made this request, you do not need to take any action. If you object to the removal, comment on the linked issue within {OBJECTION_DAYS} days.</p>
+        <p>A maintainer reviews every request before removing a catalog from the registry.</p>
         {FOOTER}
     """
 
@@ -205,7 +206,7 @@ def send_removal_request_notification(
     title: str | None = None,
     enabled: bool = True,
 ) -> bool:
-    """Mail the submitter that someone asked to remove the catalog. Returns True if sent."""
+    """Email the submitter a removal request. Return `True` if the email was sent."""
     return _send(
         catalog_id,
         submitter_email=submitter_email,

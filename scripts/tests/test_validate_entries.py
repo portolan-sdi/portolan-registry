@@ -537,7 +537,7 @@ class TestRegistryIds:
         new = self.write(repo, stem)
         errors = self.run(repo, [new], [new], approved=True)
         assert len(errors) == 1
-        assert "not a valid registry id" in errors[0]
+        assert "not a valid registry ID" in errors[0]
 
     def test_a_current_id_outside_the_pattern_is_not_checked(self, repo):
         """The rule gates new ids. An edit keeps the id it has."""
@@ -553,7 +553,7 @@ class TestRegistryIds:
         errors = self.run(repo, [old, new], [new], approved=True)
         assert len(errors) == 1
         assert "renames 'old-name' to 'new-name'" in errors[0]
-        assert "keep old-name.yaml" in errors[0]
+        assert "Keep old-name.yaml" in errors[0]
 
     def test_a_rename_that_respells_the_url_still_fails(self, repo):
         self.write(repo, "old-name", url="https://www.ex.org/catalog.json")
@@ -582,7 +582,7 @@ class TestRegistryIds:
         errors = self.run(repo, [new], [new], approved=True)
         assert len(errors) == 1
         assert "belonged to another catalog" in errors[0]
-        assert "Choose another file name" in errors[0]
+        assert "Choose a different filename" in errors[0]
 
     def test_the_same_catalog_needs_an_approval_to_return(self, repo):
         self.write(repo, "placeholder")
@@ -592,7 +592,7 @@ class TestRegistryIds:
         back = self.write(repo, "placeholder")
         errors = self.run(repo, [back], [back])
         assert len(errors) == 1
-        assert "brings back the same catalog" in errors[0]
+        assert "register the same catalog again" in errors[0]
         assert validate_entries.APPROVAL_HINT in errors[0]
 
     def test_an_approval_lets_the_same_catalog_return(self, repo):

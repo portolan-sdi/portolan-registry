@@ -1,5 +1,5 @@
-# Mails the submitter of a catalog when someone files feedback against it, or
-# asks to remove it. Each issue form applies its own label: `catalog-feedback`
+# Email the catalog's submitter when someone reports a problem or requests
+# removal. Each issue form applies its own label: `catalog-feedback`
 # or `catalog-removal`.
 #
 # It runs on `labeled` alone. Applying the label is the trigger, and the issue
@@ -10,7 +10,7 @@
 #
 # The issue body is attacker-controlled text. It reaches the script through
 # `env:` and never through a `run:` string.
-name: Notify the Catalog Submitter
+name: Notify the catalog submitter
 
 on:
   issues:
