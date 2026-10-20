@@ -1,18 +1,19 @@
 """Mail to the submitter of a registered catalog.
 
-Two things prompt mail. A catalog goes stale when its root catalog.json could
+Three things prompt mail. A catalog goes stale when its root catalog.json could
 not be fetched, so at the moment we want to send mail the catalog itself is
 unreadable, and any address inside it is out of reach precisely when we need
 it. A reader files feedback when the catalog is readable but wrong, which the
-crawler cannot detect at all. Both need the same thing: an address the
-registry holds itself. That is `submitter_email` on the entry file, which
+crawler cannot detect at all. Someone asks to remove the catalog, and the
+submitter may not be the person who asks. All three need the same thing: an
+address the registry holds itself. That is `submitter_email` on the entry file, which
 stays readable whatever happens to the catalog.
 
 The export must never carry that address. It is built from crawl results
 rather than from entry files, so the address has no path into it.
 
-Both bodies interpolate strings the registry did not write, a crawled title in
-one case and an issue title in the other, so every interpolation is escaped.
+Every body interpolates strings the registry did not write, such as a crawled
+title or an issue title and its answers, so every interpolation is escaped.
 """
 
 from __future__ import annotations
@@ -62,6 +63,38 @@ def _feedback_body(title: str, kind: str, issue_url: str, issue_title: str) -> s
         <p><strong>Kind of problem:</strong> {kind}</p>
         <p><strong>Report:</strong> <a href="{issue_url}">{issue_title}</a></p>
         <p>The report is a public issue on the registry. Reply there to reach whoever filed it. Nothing about your registration changes because of this mail.</p>
+        {FOOTER}
+    """
+
+
+# A maintainer waits this long for the submitter to object to a request from
+# someone else. The README states the same rule.
+OBJECTION_DAYS = 14
+
+
+def _removal_body(
+    title: str,
+    requester: str,
+    relationship: str,
+    reason: str,
+    issue_url: str,
+    issue_title: str,
+) -> str:
+    title, requester, relationship, reason, issue_url, issue_title = (
+        html.escape(title),
+        html.escape(requester),
+        html.escape(relationship),
+        html.escape(reason),
+        html.escape(issue_url),
+        html.escape(issue_title),
+    )
+    return f"""
+        <h2>Request to Remove Your Catalog</h2>
+        <p>GitHub user <strong>{requester}</strong> asked to remove <strong>{title}</strong> from the Portolan Registry. You registered this catalog.</p>
+        <p><strong>Relationship to the catalog, as they state it:</strong> {relationship}</p>
+        <p><strong>Reason they give:</strong> {reason}</p>
+        <p><strong>Request:</strong> <a href="{issue_url}">{issue_title}</a></p>
+        <p>If you made this request, you do not need to do anything. If you object, reply on the request within {OBJECTION_DAYS} days. A maintainer reviews every request before a catalog leaves the registry.</p>
         {FOOTER}
     """
 
@@ -156,5 +189,29 @@ def send_feedback_notification(
         submitter_email=submitter_email,
         subject=f"[Portolan Registry] Feedback on your catalog: {title or catalog_id}",
         body=_feedback_body(title or catalog_id, kind, issue_url, issue_title),
+        enabled=enabled,
+    )
+
+
+def send_removal_request_notification(
+    catalog_id: str,
+    *,
+    submitter_email: str | None,
+    issue_url: str,
+    issue_title: str,
+    requester: str,
+    relationship: str,
+    reason: str,
+    title: str | None = None,
+    enabled: bool = True,
+) -> bool:
+    """Mail the submitter that someone asked to remove the catalog. Returns True if sent."""
+    return _send(
+        catalog_id,
+        submitter_email=submitter_email,
+        subject=f"[Portolan Registry] Request to remove your catalog: {title or catalog_id}",
+        body=_removal_body(
+            title or catalog_id, requester, relationship, reason, issue_url, issue_title
+        ),
         enabled=enabled,
     )

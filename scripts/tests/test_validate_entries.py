@@ -11,6 +11,7 @@ afterwards.
 from __future__ import annotations
 
 import json
+import subprocess
 
 import pytest
 import validate_entries
@@ -293,11 +294,15 @@ class TestDeletedEntry:
         assert report["ok"] is False
         assert len(report["errors"]) == 1
         assert "cadastral.yaml" in report["errors"][0]
-        assert "Deleting an entry is not allowed" in report["errors"][0]
+        assert "This pull request deletes an entry" in report["errors"][0]
 
     def test_the_message_names_the_removal_path(self, tmp_path):
+        """Issue #234: the old message said to keep the file, which was wrong."""
         _, report = self.run(tmp_path, [tmp_path / "cadastral.yaml"])
-        assert "status: removed" in report["errors"][0]
+        message = report["errors"][0]
+        assert validate_entries.REMOVAL_FORM in message
+        assert validate_entries.APPROVAL_HINT in message
+        assert "Keep the file" not in message
 
     def test_a_deletion_fails_beside_a_valid_entry(self, tmp_path, monkeypatch):
         """A rename lists the old path as deleted and the new path as added."""
@@ -472,3 +477,138 @@ class TestUnexpectedFailure:
         )
         assert len(errors) == 1
         assert "export unreadable" in errors[0]
+
+
+def git(*args, cwd):
+    subprocess.run(["git", *args], cwd=cwd, check=True, capture_output=True)
+
+
+class TestRegistryIds:
+    """Issue #242: an id never changes and never names a second catalog.
+
+    Each test builds a throwaway repository. The rename and reuse rules read
+    deletions out of git history, as the gate does on the pull request's
+    merge commit.
+    """
+
+    @pytest.fixture(autouse=True)
+    def no_crawl(self, monkeypatch):
+        monkeypatch.setattr(validate_entries, "check_entry", lambda *a, **k: [])
+
+    @pytest.fixture
+    def repo(self, tmp_path):
+        git("init", "-q", cwd=tmp_path)
+        git("config", "user.email", "test@example.org", cwd=tmp_path)
+        git("config", "user.name", "Test", cwd=tmp_path)
+        git("config", "commit.gpgsign", "false", cwd=tmp_path)
+        catalogs = tmp_path / "catalogs"
+        catalogs.mkdir()
+        return catalogs
+
+    def write(self, catalogs, stem, url=ROOT):
+        path = catalogs / f"{stem}.yaml"
+        path.write_text(f"url: {url}\nsubmitter_email: submitter@example.com\n")
+        return path
+
+    def commit(self, catalogs, message):
+        git("add", "-A", cwd=catalogs)
+        git("commit", "-q", "-m", message, cwd=catalogs)
+
+    def run(self, catalogs, changed, added, approved=False):
+        changed_file = catalogs.parent / "changed.txt"
+        changed_file.write_text("".join(f"{p}\n" for p in changed))
+        added_file = catalogs.parent / "added.txt"
+        added_file.write_text("".join(f"{p}\n" for p in added))
+        return validate_entries.collect_errors(
+            changed_file=changed_file,
+            catalog_dir=catalogs,
+            added_file=added_file,
+            maintainer_approved=approved,
+        )
+
+    def test_a_new_id_passes(self, repo):
+        new = self.write(repo, "city-of-example-parcels")
+        assert self.run(repo, [new], [new]) == []
+
+    @pytest.mark.parametrize(
+        "stem", ["Parcels", "city_parcels", "city--parcels", "-parcels", "a.b"]
+    )
+    def test_an_id_outside_the_pattern_fails(self, repo, stem):
+        new = self.write(repo, stem)
+        errors = self.run(repo, [new], [new], approved=True)
+        assert len(errors) == 1
+        assert "not a valid registry id" in errors[0]
+
+    def test_a_current_id_outside_the_pattern_is_not_checked(self, repo):
+        """The rule gates new ids. An edit keeps the id it has."""
+        current = self.write(repo, "Legacy_Name")
+        assert self.run(repo, [current], [], approved=True) == []
+
+    def test_a_rename_fails_even_with_an_approval(self, repo):
+        self.write(repo, "old-name")
+        self.commit(repo, "add old-name")
+        git("mv", "old-name.yaml", "new-name.yaml", cwd=repo)
+        self.commit(repo, "rename")
+        old, new = repo / "old-name.yaml", repo / "new-name.yaml"
+        errors = self.run(repo, [old, new], [new], approved=True)
+        assert len(errors) == 1
+        assert "renames 'old-name' to 'new-name'" in errors[0]
+        assert "keep old-name.yaml" in errors[0]
+
+    def test_a_rename_that_respells_the_url_still_fails(self, repo):
+        self.write(repo, "old-name", url="https://www.ex.org/catalog.json")
+        self.commit(repo, "add old-name")
+        (repo / "old-name.yaml").unlink()
+        new = self.write(repo, "new-name", url="https://ex.org/catalog.json")
+        self.commit(repo, "rename")
+        errors = self.run(repo, [repo / "old-name.yaml", new], [new], approved=True)
+        assert len(errors) == 1
+        assert "renames" in errors[0]
+
+    def test_a_deletion_beside_an_unrelated_addition_passes_with_an_approval(self, repo):
+        self.write(repo, "leaving")
+        self.commit(repo, "add leaving")
+        (repo / "leaving.yaml").unlink()
+        new = self.write(repo, "arriving", url="https://other.org/catalog.json")
+        self.commit(repo, "swap")
+        assert self.run(repo, [repo / "leaving.yaml", new], [new], approved=True) == []
+
+    def test_a_retired_id_fails_for_another_catalog(self, repo):
+        self.write(repo, "placeholder")
+        self.commit(repo, "add placeholder")
+        (repo / "placeholder.yaml").unlink()
+        self.commit(repo, "remove placeholder")
+        new = self.write(repo, "placeholder", url="https://other.org/catalog.json")
+        errors = self.run(repo, [new], [new], approved=True)
+        assert len(errors) == 1
+        assert "belonged to another catalog" in errors[0]
+        assert "Choose another file name" in errors[0]
+
+    def test_the_same_catalog_needs_an_approval_to_return(self, repo):
+        self.write(repo, "placeholder")
+        self.commit(repo, "add placeholder")
+        (repo / "placeholder.yaml").unlink()
+        self.commit(repo, "remove placeholder")
+        back = self.write(repo, "placeholder")
+        errors = self.run(repo, [back], [back])
+        assert len(errors) == 1
+        assert "brings back the same catalog" in errors[0]
+        assert validate_entries.APPROVAL_HINT in errors[0]
+
+    def test_an_approval_lets_the_same_catalog_return(self, repo):
+        self.write(repo, "placeholder")
+        self.commit(repo, "add placeholder")
+        (repo / "placeholder.yaml").unlink()
+        self.commit(repo, "remove placeholder")
+        back = self.write(repo, "placeholder", url="https://www.ex.org/catalog.json/")
+        assert self.run(repo, [back], [back], approved=True) == []
+
+    def test_main_checks_ids_when_ci_passes_the_added_file(self, repo, monkeypatch):
+        monkeypatch.setattr(validate_entries, "load_links", lambda p: {})
+        monkeypatch.setattr(validate_entries, "load_state", lambda p: {})
+        new = self.write(repo, "Bad_Name")
+        listing = repo.parent / "changed.txt"
+        listing.write_text(f"{new}\n")
+        args = ["--changed-file", str(listing), "--catalog-dir", str(repo)]
+        assert validate_entries.main(args) == 0
+        assert validate_entries.main([*args, "--added-file", str(listing)]) == 1

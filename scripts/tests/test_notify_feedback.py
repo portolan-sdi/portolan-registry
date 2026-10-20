@@ -9,9 +9,11 @@ test is which catalog the script resolves, and what it says when it cannot.
 from __future__ import annotations
 
 import json
+from pathlib import Path
 
 import notify_feedback
 import pytest
+import yaml
 from notify_feedback import parse_catalog_id, parse_sections
 
 # What GitHub renders from .github/ISSUE_TEMPLATE/catalog-feedback.yml.
@@ -187,3 +189,97 @@ class TestUnreachableSubmitter:
         assert run(registry) == 0
         assert sent == []
         assert capsys.readouterr().out == ""
+
+
+# What GitHub renders from .github/ISSUE_TEMPLATE/catalog-removal.yml.
+REMOVAL = """### Catalog ID
+
+pergamino-ide
+
+### Relationship
+
+I work for the publisher, and someone else registered it
+
+### Why
+
+The publisher now registers its own catalog.
+
+### Contact address
+
+_No response_
+
+### Does the catalog stay online?
+
+Yes"""
+
+
+@pytest.fixture
+def requested(registry, monkeypatch):
+    monkeypatch.setenv("ISSUE_BODY", REMOVAL)
+    monkeypatch.setenv("ISSUE_AUTHOR", "someone-else")
+    return registry
+
+
+@pytest.fixture
+def removal_sent(monkeypatch):
+    calls = []
+    monkeypatch.setattr(
+        notify_feedback,
+        "send_removal_request_notification",
+        lambda catalog_id, **kw: calls.append({"id": catalog_id, **kw}) or True,
+    )
+    return calls
+
+
+class TestRemovalRequest:
+    def test_mails_the_submitter_with_the_request(self, requested, sent, removal_sent, capsys):
+        assert run(requested, extra=["--form", "removal"]) == 0
+        assert sent == []
+        assert removal_sent[0]["id"] == "pergamino-ide"
+        assert removal_sent[0]["submitter_email"] == "you@example.org"
+        assert removal_sent[0]["requester"] == "someone-else"
+        assert removal_sent[0]["relationship"].startswith("I work for the publisher")
+        assert removal_sent[0]["reason"] == "The publisher now registers its own catalog."
+        assert removal_sent[0]["title"] == "Pergamino IDE"
+        assert capsys.readouterr().out == ""
+
+    def test_a_blank_answer_reads_as_not_stated(self, requested, removal_sent, monkeypatch):
+        monkeypatch.setenv("ISSUE_BODY", "### Catalog ID\n\npergamino-ide\n")
+        monkeypatch.delenv("ISSUE_AUTHOR")
+        run(requested, extra=["--form", "removal"])
+        assert removal_sent[0]["relationship"] == "not stated"
+        assert removal_sent[0]["reason"] == "not stated"
+        assert removal_sent[0]["requester"] == "unknown"
+
+    def test_an_unregistered_id_names_the_removal_label(
+        self, requested, removal_sent, monkeypatch, capsys
+    ):
+        monkeypatch.setenv("ISSUE_BODY", "### Catalog ID\n\nnot-registered\n")
+        run(requested, extra=["--form", "removal"])
+        assert removal_sent == []
+        out = capsys.readouterr().out
+        assert "`catalog-removal`" in out
+        assert "`catalog-feedback`" not in out
+
+    def test_feedback_stays_the_default(self, registry, sent, removal_sent):
+        run(registry)
+        assert removal_sent == []
+        assert sent[0]["kind"] == "Data quality"
+
+
+def test_the_removal_form_carries_the_headings_the_script_reads():
+    """GitHub renders each field label as a heading. Renaming a label in the
+    form would leave the mail saying "not stated" without an error."""
+    form = yaml.safe_load(Path(".github/ISSUE_TEMPLATE/catalog-removal.yml").read_text())
+    assert form["labels"] == [notify_feedback.LABELS["removal"]]
+    labels = {
+        field["attributes"]["label"].casefold()
+        for field in form["body"]
+        if field["type"] != "markdown"
+    }
+    for heading in (
+        notify_feedback.CATALOG_FIELD,
+        notify_feedback.RELATIONSHIP_FIELD,
+        notify_feedback.REASON_FIELD,
+    ):
+        assert heading in labels

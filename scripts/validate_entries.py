@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import traceback
 from collections.abc import Callable, Mapping
 from pathlib import Path
@@ -35,6 +36,7 @@ from registry.contacts import validate_submitter_email
 from registry.entries import CATALOG_DIR, load_entries, load_entry, normalize_url
 from registry.export import EXPORT_PATH, load_links, load_state
 from registry.fetch import HttpFetcher
+from registry.history import last_deletion
 from registry.mirror import MirrorSource
 from registry.report import log
 from registry.validators import crawl_and_validate
@@ -43,6 +45,14 @@ APPROVAL_HINT = (
     "A maintainer with the admin or maintain role must approve the head "
     "commit of this pull request."
 )
+
+REMOVAL_FORM = (
+    "https://github.com/portolan-sdi/portolan-registry/issues/new?template=catalog-removal.yml"
+)
+
+# The file stem is the registry id. It never changes and never names a second
+# catalog (#242), so a new one has to be right the first time.
+STEM_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 
 
 def read_paths(listing: Path) -> list[Path]:
@@ -61,12 +71,14 @@ def deleted_entries(changed_file: Path) -> list[str]:
 
     The gate lists every changed entry, deleted ones too. Without this check
     a deletion leaves nothing to validate, and an empty run reports success.
-    A catalog leaves the registry through `status: removed` in the export.
+    A deletion is how a catalog leaves the registry on request, so it needs a
+    maintainer to review the request and approve the head commit.
     """
     return [
-        f"{p}: Deleting an entry is not allowed. Keep the file. A catalog "
-        "leaves the registry through 'status: removed' in the export, which "
-        f"nightly re-validation sets. {APPROVAL_HINT}"
+        f"{p}: This pull request deletes an entry. The catalog leaves the "
+        "registry, and no other catalog can use its id. File a removal "
+        f"request first, so a maintainer can review it: {REMOVAL_FORM} "
+        f"{APPROVAL_HINT}"
         for p in read_paths(changed_file)
         if not p.exists()
     ]
@@ -84,6 +96,76 @@ def modified_entries(changed_file: Path, added_file: Path) -> list[str]:
         for p in changed_entries(changed_file)
         if p.resolve() not in added
     ]
+
+
+def _url_of(path: Path) -> str | None:
+    """The normalized URL of an entry file, or None when it names none."""
+    url = load_entry(path).get("url")
+    return normalize_url(url) if isinstance(url, str) and url else None
+
+
+def id_errors(changed_file: Path, added_file: Path, *, maintainer_approved: bool) -> list[str]:
+    """One error for each new entry whose id breaks a rule from #242.
+
+    An id is the file stem. It must match STEM_RE. It never changes, so a
+    rename fails even with an approval. It never names a second catalog, so a
+    new file fails when git history holds a deletion of the same path. The
+    one exception is the same catalog coming back at the same URL, which a
+    maintainer approves.
+
+    A rename reaches the gate as a deletion and an addition, because the
+    workflow lists paths with --no-renames. The pull request commits the
+    deletion, so git history gives the URL the deleted file held. A deletion
+    and an addition with the same URL is a rename.
+    """
+    added = [p for p in read_paths(added_file) if p.exists()]
+    renamed_from: dict[str, Path] = {}
+    for path in read_paths(changed_file):
+        if path.exists():
+            continue
+        gone = last_deletion(path)
+        if gone and gone.url:
+            renamed_from[normalize_url(gone.url)] = path
+
+    errors = []
+    for path in added:
+        if not STEM_RE.match(path.stem):
+            errors.append(
+                f"{path}: The file name '{path.stem}' is not a valid registry id. "
+                "Use lowercase letters, digits, and single hyphens, such as "
+                "'city-of-example-parcels'. The id never changes after the merge."
+            )
+            continue
+
+        url = _url_of(path)
+        old = renamed_from.get(url) if url else None
+        if old is not None:
+            errors.append(
+                f"{path}: This pull request renames '{old.stem}' to '{path.stem}'. "
+                f"A registry id never changes, so keep {old.name}. The id is not "
+                "the title. The registry reads the title from the catalog."
+            )
+            continue
+
+        gone = last_deletion(path)
+        if gone is None:
+            continue
+        if url and gone.url and normalize_url(gone.url) == url:
+            if maintainer_approved:
+                log(f"{path}: A maintainer approved the return of '{path.stem}' at its old URL.")
+                continue
+            errors.append(
+                f"{path}: The id '{path.stem}' left the registry in commit "
+                f"{gone.commit[:12]}. This entry has the same URL, so it brings "
+                f"back the same catalog. {APPROVAL_HINT}"
+            )
+            continue
+        errors.append(
+            f"{path}: The id '{path.stem}' belonged to another catalog, which "
+            f"left the registry in commit {gone.commit[:12]}. A registry id "
+            "never names a second catalog. Choose another file name."
+        )
+    return errors
 
 
 def is_new_entry(catalog_id: str, url: str, published: Mapping[str, Mapping[str, Any]]) -> bool:
@@ -207,8 +289,8 @@ def collect_errors(
     error string like any other. The traceback still reaches the run log.
 
     With `added_file`, a deleted or edited entry fails unless
-    `maintainer_approved` is set. Without it, only a deletion fails. CI always
-    passes `added_file`.
+    `maintainer_approved` is set, and each new id is checked by `id_errors`.
+    Without it, only a deletion fails. CI always passes `added_file`.
 
     `export_path` decides which entries are new. CI passes the export from
     the base branch. The pull request can change its own copy, and an entry
@@ -230,6 +312,10 @@ def collect_errors(
             errors.extend(deleted_entries(changed_file))
             if added_file is not None:
                 errors.extend(modified_entries(changed_file, added_file))
+        if added_file is not None:
+            errors.extend(
+                id_errors(changed_file, added_file, maintainer_approved=maintainer_approved)
+            )
         for path in changed_entries(changed_file):
             errors.extend(
                 check_entry(

@@ -88,3 +88,16 @@ def test_a_validator_stops_before_the_gate_job_does():
 
     workflow = yaml.safe_load(Path(".github/workflows/validate.yml").read_text())
     assert TIMEOUT_SECONDS < workflow["jobs"]["validate"]["timeout-minutes"] * 60
+
+
+def test_both_issue_forms_reach_the_submitter_notice():
+    workflow = yaml.safe_load(Path(".github/workflows/notify-feedback.yml").read_text())
+    job = workflow["jobs"]["notify"]
+    for label in ("catalog-feedback", "catalog-removal"):
+        assert f"'{label}'" in job["if"]
+    notify = next(step for step in job["steps"] if step.get("id") == "notify")
+    assert notify["env"]["LABEL"] == "${{ github.event.label.name }}"
+    assert notify["env"]["ISSUE_AUTHOR"] == "${{ github.event.issue.user.login }}"
+    assert '--form "$form"' in notify["run"]
+    # The label reaches the script through env, never interpolated into run.
+    assert "${{" not in notify["run"]
