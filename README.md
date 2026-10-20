@@ -43,7 +43,7 @@ You can request a catalog's removal even if someone else registered it.
 
 The registry emails your request to the person who registered the catalog. If someone else registered it, a maintainer waits 14 days for that person to object before approving removal. Removals for spam or legal reasons do not require this waiting period. The maintainer reviews your request and may ask you to confirm your relationship to the publisher. If the maintainer accepts your request, they approve and merge the pull request.
 
-After the merge, the next registry update removes the catalog from [`exports/catalogs.json`](./exports/catalogs.json) and [`exports/coverage-bboxes.json`](./exports/coverage-bboxes.json). The export's Git history records the removal. If you want to register the same catalog again, use the same ID and URL and get a maintainer's approval. You cannot reuse the ID for another catalog.
+After the merge, the next registry update removes the catalog from [`exports/catalogs.json`](./exports/catalogs.json) and [`exports/coverage-bboxes.json`](./exports/coverage-bboxes.json). The export's Git history records the removal. If you want to register the same catalog again, use the same ID and URL and get a maintainer's approval. The registry rejects that URL under any other ID. You cannot reuse the ID for another catalog.
 
 If the registry cannot fetch a registered catalog, the nightly validation check marks it `stale` and emails the person who registered it. If the catalog remains unreachable for 30 days, the check changes its status to `removed`. The registry keeps its link in the export with that status and keeps its entry file in `catalogs/`.
 

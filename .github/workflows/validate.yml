@@ -120,9 +120,12 @@ jobs:
             console.log(`No maintainer approval of ${pr.head.sha}`);
             return 'false';
 
+      # The registry ID rules read Git history on the base branch, not in the
+      # pull request. A draft commit inside the pull request registers no ID.
       - name: Validate changed catalogs
         env:
           APPROVED: ${{ steps.approval.outputs.result }}
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
         run: |
           approval=()
           if [ "$APPROVED" = "true" ]; then
@@ -132,6 +135,7 @@ jobs:
             --changed-file changed.txt \
             --added-file added.txt \
             --export base-export.json \
+            --base-ref "origin/$BASE_REF" \
             "${approval[@]}" \
             --report report.json
 

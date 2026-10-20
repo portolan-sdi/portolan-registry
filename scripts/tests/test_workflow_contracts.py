@@ -101,3 +101,14 @@ def test_both_issue_forms_reach_the_submitter_notice():
     assert '--form "$form"' in notify["run"]
     # The label reaches the script through env, never interpolated into run.
     assert "${{" not in notify["run"]
+
+
+def test_the_gate_reads_registry_id_history_from_the_base_branch():
+    """A draft commit inside the pull request must not retire an ID (#242)."""
+    validate = next(
+        step
+        for step in _steps("validate.yml", "validate")
+        if "scripts/validate_entries.py" in step.get("run", "")
+    )
+    assert validate["env"]["BASE_REF"] == "${{ github.event.pull_request.base.ref }}"
+    assert '--base-ref "origin/$BASE_REF"' in validate["run"]

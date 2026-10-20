@@ -11,7 +11,7 @@ import subprocess
 
 import pytest
 
-from registry.history import Deletion, _canonical, first_registered, last_deletion
+from registry.history import Deletion, _canonical, deletions, first_registered, url_at
 
 
 def git(*args, cwd):
@@ -100,41 +100,53 @@ def head(repo):
     return out.stdout.strip()
 
 
-class TestLastDeletion:
-    def test_a_file_never_deleted_has_none(self, repo):
-        assert last_deletion(repo / "catalogs" / "example.yaml") is None
+class TestUrlAt:
+    def test_reads_the_url_at_a_ref(self, repo):
+        entry = repo / "catalogs" / "example.yaml"
+        base = head(repo)
+        entry.write_text("url: https://ex.org/moved/catalog.json\n")
+        commit_all(repo, "move example")
+        assert url_at(base, entry) == "https://ex.org/catalog.json"
+        assert url_at("HEAD", entry) == "https://ex.org/moved/catalog.json"
 
-    def test_a_path_never_committed_has_none(self, repo):
-        assert last_deletion(repo / "catalogs" / "unseen.yaml") is None
+    def test_a_file_absent_at_the_ref_has_none(self, repo):
+        assert url_at("HEAD", repo / "catalogs" / "unseen.yaml") is None
+
+
+class TestDeletions:
+    def catalogs(self, repo):
+        return repo / "catalogs"
+
+    def test_a_history_without_deletions_is_empty(self, repo):
+        assert deletions("HEAD", self.catalogs(repo)) == []
 
     def test_reads_the_url_the_deleted_file_held(self, repo):
-        entry = repo / "catalogs" / "example.yaml"
-        entry.unlink()
+        (repo / "catalogs" / "example.yaml").unlink()
         commit_all(repo, "remove example")
-        assert last_deletion(entry) == Deletion(
-            commit=head(repo), url="https://ex.org/catalog.json"
-        )
+        assert deletions("HEAD", self.catalogs(repo)) == [
+            Deletion(stem="example", commit=head(repo), url="https://ex.org/catalog.json")
+        ]
 
-    def test_reports_the_newest_deletion(self, repo):
+    def test_lists_the_newest_deletion_first(self, repo):
         entry = repo / "catalogs" / "example.yaml"
         entry.unlink()
         commit_all(repo, "remove example")
+        first = head(repo)
         entry.write_text("url: https://ex.org/second/catalog.json\n")
         commit_all(repo, "add example again")
         entry.unlink()
         commit_all(repo, "remove example again")
-        gone = last_deletion(entry)
-        assert gone.commit == head(repo)
-        assert gone.url == "https://ex.org/second/catalog.json"
+        found = deletions("HEAD", self.catalogs(repo))
+        assert [(d.commit, d.url) for d in found] == [
+            (head(repo), "https://ex.org/second/catalog.json"),
+            (first, "https://ex.org/catalog.json"),
+        ]
 
-    def test_a_deletion_of_another_name_does_not_count(self, repo):
-        """No --follow: the id is the file name."""
+    def test_a_rename_counts_as_a_deletion_of_the_old_name(self, repo):
+        """No --follow. The ID is the filename."""
         git("mv", "catalogs/example.yaml", "catalogs/renamed.yaml", cwd=repo)
         commit_all(repo, "rename example")
-        assert last_deletion(repo / "catalogs" / "renamed.yaml") is None
-        assert (
-            last_deletion(repo / "catalogs" / "example.yaml").url == "https://ex.org/catalog.json"
-        )
+        assert [d.stem for d in deletions("HEAD", self.catalogs(repo))] == ["example"]
 
     def test_a_deleted_file_that_does_not_parse_has_no_url(self, repo):
         entry = repo / "catalogs" / "example.yaml"
@@ -142,9 +154,57 @@ class TestLastDeletion:
         commit_all(repo, "break example")
         entry.unlink()
         commit_all(repo, "remove example")
-        gone = last_deletion(entry)
-        assert gone is not None
-        assert gone.url is None
+        assert deletions("HEAD", self.catalogs(repo))[0].url is None
 
-    def test_returns_none_outside_a_repository(self, tmp_path):
-        assert last_deletion(tmp_path / "example.yaml") is None
+    def test_only_entry_files_count(self, repo):
+        nested = repo / "catalogs" / "drafts" / "nested.yaml"
+        nested.parent.mkdir()
+        nested.write_text("url: https://ex.org/nested/catalog.json\n")
+        (repo / "catalogs" / "notes.md").write_text("notes\n")
+        commit_all(repo, "add a nested file and notes")
+        nested.unlink()
+        (repo / "catalogs" / "notes.md").unlink()
+        commit_all(repo, "remove them")
+        assert deletions("HEAD", self.catalogs(repo)) == []
+
+    def test_reads_only_the_history_of_the_ref(self, repo):
+        """A deletion on another branch is not in the history of HEAD."""
+        base = head(repo)
+        git("switch", "-q", "-c", "side", cwd=repo)
+        (repo / "catalogs" / "example.yaml").unlink()
+        commit_all(repo, "remove example on side")
+        assert deletions(base, self.catalogs(repo)) == []
+        assert len(deletions("side", self.catalogs(repo))) == 1
+
+    def test_finds_a_deletion_behind_a_merge_that_kept_the_file(self, repo):
+        """A branch keeps a file that its base deleted, then merges the base.
+
+        Git's default history simplification follows the branch side of the
+        merge, where the file never changed, and hides the deletion.
+        """
+        git("branch", "-M", "main", cwd=repo)
+        git("switch", "-q", "-c", "keeper", cwd=repo)
+        entry = repo / "catalogs" / "example.yaml"
+        entry.write_text("url: https://other.org/catalog.json\n")
+        commit_all(repo, "point example at another catalog")
+        git("switch", "-q", "main", cwd=repo)
+        entry.unlink()
+        commit_all(repo, "remove example")
+        deleted_on_main = head(repo)
+        git("switch", "-q", "keeper", cwd=repo)
+        subprocess.run(["git", "merge", "-q", "main"], cwd=repo, capture_output=True)
+        git("add", "catalogs/example.yaml", cwd=repo)
+        git("commit", "-q", "--no-edit", cwd=repo)
+
+        simplified = subprocess.run(
+            ["git", "log", "--diff-filter=D", "--format=%H", "--", "example.yaml"],
+            cwd=repo / "catalogs",
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        assert simplified.stdout.strip() == ""
+        assert [d.commit for d in deletions("HEAD", self.catalogs(repo))] == [deleted_on_main]
+
+    def test_returns_empty_outside_a_repository(self, tmp_path):
+        assert deletions("HEAD", tmp_path) == []

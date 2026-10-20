@@ -484,11 +484,11 @@ def git(*args, cwd):
 
 
 class TestRegistryIds:
-    """Issue #242: an id never changes and never names a second catalog.
+    """Issue #242: an ID never changes and never names a second catalog.
 
-    Each test builds a throwaway repository. The rename and reuse rules read
-    deletions out of git history, as the gate does on the pull request's
-    merge commit.
+    Each test builds a throwaway repository with a `main` branch and a pull
+    request branch. The history rules read `main`, as CI reads the base
+    branch.
     """
 
     @pytest.fixture(autouse=True)
@@ -497,12 +497,14 @@ class TestRegistryIds:
 
     @pytest.fixture
     def repo(self, tmp_path):
-        git("init", "-q", cwd=tmp_path)
+        git("init", "-q", "-b", "main", cwd=tmp_path)
         git("config", "user.email", "test@example.org", cwd=tmp_path)
         git("config", "user.name", "Test", cwd=tmp_path)
         git("config", "commit.gpgsign", "false", cwd=tmp_path)
         catalogs = tmp_path / "catalogs"
         catalogs.mkdir()
+        self.write(catalogs, "seed", url="https://seed.org/catalog.json")
+        self.commit(catalogs, "seed")
         return catalogs
 
     def write(self, catalogs, stem, url=ROOT):
@@ -514,7 +516,17 @@ class TestRegistryIds:
         git("add", "-A", cwd=catalogs)
         git("commit", "-q", "-m", message, cwd=catalogs)
 
-    def run(self, catalogs, changed, added, approved=False):
+    def registered_then_removed(self, catalogs, stem, url=ROOT):
+        """On main: register an entry, then remove it."""
+        self.write(catalogs, stem, url=url)
+        self.commit(catalogs, f"add {stem}")
+        (catalogs / f"{stem}.yaml").unlink()
+        self.commit(catalogs, f"remove {stem}")
+
+    def open_pull_request(self, catalogs):
+        git("switch", "-q", "-c", "pr", cwd=catalogs)
+
+    def run(self, catalogs, changed, added, approved=False, base_ref="main"):
         changed_file = catalogs.parent / "changed.txt"
         changed_file.write_text("".join(f"{p}\n" for p in changed))
         added_file = catalogs.parent / "added.txt"
@@ -524,9 +536,11 @@ class TestRegistryIds:
             catalog_dir=catalogs,
             added_file=added_file,
             maintainer_approved=approved,
+            base_ref=base_ref,
         )
 
     def test_a_new_id_passes(self, repo):
+        self.open_pull_request(repo)
         new = self.write(repo, "city-of-example-parcels")
         assert self.run(repo, [new], [new]) == []
 
@@ -540,13 +554,14 @@ class TestRegistryIds:
         assert "not a valid registry ID" in errors[0]
 
     def test_a_current_id_outside_the_pattern_is_not_checked(self, repo):
-        """The rule gates new ids. An edit keeps the id it has."""
+        """The rule gates new IDs. An edit keeps the ID it has."""
         current = self.write(repo, "Legacy_Name")
         assert self.run(repo, [current], [], approved=True) == []
 
     def test_a_rename_fails_even_with_an_approval(self, repo):
         self.write(repo, "old-name")
         self.commit(repo, "add old-name")
+        self.open_pull_request(repo)
         git("mv", "old-name.yaml", "new-name.yaml", cwd=repo)
         self.commit(repo, "rename")
         old, new = repo / "old-name.yaml", repo / "new-name.yaml"
@@ -555,9 +570,21 @@ class TestRegistryIds:
         assert "renames 'old-name' to 'new-name'" in errors[0]
         assert "Keep old-name.yaml" in errors[0]
 
+    def test_an_uncommitted_rename_still_fails(self, repo):
+        """The old URL comes from the base branch, not from the PR commits."""
+        self.write(repo, "old-name")
+        self.commit(repo, "add old-name")
+        self.open_pull_request(repo)
+        (repo / "old-name.yaml").unlink()
+        new = self.write(repo, "new-name")
+        errors = self.run(repo, [repo / "old-name.yaml", new], [new], approved=True)
+        assert len(errors) == 1
+        assert "renames" in errors[0]
+
     def test_a_rename_that_respells_the_url_still_fails(self, repo):
         self.write(repo, "old-name", url="https://www.ex.org/catalog.json")
         self.commit(repo, "add old-name")
+        self.open_pull_request(repo)
         (repo / "old-name.yaml").unlink()
         new = self.write(repo, "new-name", url="https://ex.org/catalog.json")
         self.commit(repo, "rename")
@@ -565,19 +592,38 @@ class TestRegistryIds:
         assert len(errors) == 1
         assert "renames" in errors[0]
 
+    def test_a_rename_split_across_two_pull_requests_fails(self, repo):
+        """Review finding: the first PR removes the entry, the second re-adds
+        its URL under a new name."""
+        self.registered_then_removed(repo, "original")
+        self.open_pull_request(repo)
+        renamed = self.write(repo, "renamed")
+        errors = self.run(repo, [renamed], [renamed], approved=True)
+        assert len(errors) == 1
+        assert "belonged to registry ID 'original'" in errors[0]
+        assert "name the file original.yaml" in errors[0]
+
+    def test_a_url_that_moved_to_a_current_entry_is_not_an_id_error(self, repo):
+        """The duplicate URL check owns this case. The ID rule stays quiet."""
+        self.registered_then_removed(repo, "original")
+        self.write(repo, "original")
+        self.commit(repo, "bring original back")
+        self.open_pull_request(repo)
+        other = self.write(repo, "other")
+        assert self.run(repo, [other], [other], approved=True) == []
+
     def test_a_deletion_beside_an_unrelated_addition_passes_with_an_approval(self, repo):
         self.write(repo, "leaving")
         self.commit(repo, "add leaving")
+        self.open_pull_request(repo)
         (repo / "leaving.yaml").unlink()
         new = self.write(repo, "arriving", url="https://other.org/catalog.json")
         self.commit(repo, "swap")
         assert self.run(repo, [repo / "leaving.yaml", new], [new], approved=True) == []
 
     def test_a_retired_id_fails_for_another_catalog(self, repo):
-        self.write(repo, "placeholder")
-        self.commit(repo, "add placeholder")
-        (repo / "placeholder.yaml").unlink()
-        self.commit(repo, "remove placeholder")
+        self.registered_then_removed(repo, "placeholder")
+        self.open_pull_request(repo)
         new = self.write(repo, "placeholder", url="https://other.org/catalog.json")
         errors = self.run(repo, [new], [new], approved=True)
         assert len(errors) == 1
@@ -585,10 +631,8 @@ class TestRegistryIds:
         assert "Choose a different filename" in errors[0]
 
     def test_the_same_catalog_needs_an_approval_to_return(self, repo):
-        self.write(repo, "placeholder")
-        self.commit(repo, "add placeholder")
-        (repo / "placeholder.yaml").unlink()
-        self.commit(repo, "remove placeholder")
+        self.registered_then_removed(repo, "placeholder")
+        self.open_pull_request(repo)
         back = self.write(repo, "placeholder")
         errors = self.run(repo, [back], [back])
         assert len(errors) == 1
@@ -596,19 +640,64 @@ class TestRegistryIds:
         assert validate_entries.APPROVAL_HINT in errors[0]
 
     def test_an_approval_lets_the_same_catalog_return(self, repo):
-        self.write(repo, "placeholder")
-        self.commit(repo, "add placeholder")
-        (repo / "placeholder.yaml").unlink()
-        self.commit(repo, "remove placeholder")
+        self.registered_then_removed(repo, "placeholder")
+        self.open_pull_request(repo)
         back = self.write(repo, "placeholder", url="https://www.ex.org/catalog.json/")
         assert self.run(repo, [back], [back], approved=True) == []
 
-    def test_main_checks_ids_when_ci_passes_the_added_file(self, repo, monkeypatch):
+    def test_a_merge_cannot_hide_a_retired_id(self, repo):
+        """Review finding: a branch keeps an ID that main deleted, points it
+        at another catalog, and merges main. The merge keeps the file."""
+        self.write(repo, "placeholder")
+        self.commit(repo, "add placeholder")
+        self.open_pull_request(repo)
+        entry = self.write(repo, "placeholder", url="https://other.org/catalog.json")
+        self.commit(repo, "point placeholder at another catalog")
+        git("switch", "-q", "main", cwd=repo)
+        (repo / "placeholder.yaml").unlink()
+        self.commit(repo, "remove placeholder")
+        git("switch", "-q", "pr", cwd=repo)
+        subprocess.run(["git", "merge", "-q", "main"], cwd=repo, capture_output=True)
+        git("add", "placeholder.yaml", cwd=repo)
+        git("commit", "-q", "--no-edit", cwd=repo)
+        assert entry.exists()
+        errors = self.run(repo, [entry], [entry])
+        assert len(errors) == 1
+        assert "belonged to another catalog" in errors[0]
+
+    def test_a_draft_deleted_inside_the_pull_request_retires_nothing(self, repo):
+        """Review finding: the PR adds a draft, deletes it, and adds it again
+        with a corrected URL. The registry never held that ID."""
+        self.open_pull_request(repo)
+        self.write(repo, "draft", url="https://typo.org/catalog.json")
+        self.commit(repo, "add draft")
+        (repo / "draft.yaml").unlink()
+        self.commit(repo, "remove draft")
+        draft = self.write(repo, "draft")
+        self.commit(repo, "add draft again")
+        assert self.run(repo, [draft], [draft]) == []
+
+    def test_without_a_base_ref_only_the_pattern_rule_runs(self, repo):
+        self.registered_then_removed(repo, "placeholder")
+        new = self.write(repo, "placeholder", url="https://other.org/catalog.json")
+        assert self.run(repo, [new], [new], base_ref=None) == []
+        bad = self.write(repo, "Bad_Name")
+        assert len(self.run(repo, [bad], [bad], base_ref=None)) == 1
+
+    def test_main_passes_the_base_ref_through(self, repo, monkeypatch):
         monkeypatch.setattr(validate_entries, "load_links", lambda p: {})
         monkeypatch.setattr(validate_entries, "load_state", lambda p: {})
-        new = self.write(repo, "Bad_Name")
+        self.registered_then_removed(repo, "placeholder")
+        new = self.write(repo, "placeholder", url="https://other.org/catalog.json")
         listing = repo.parent / "changed.txt"
         listing.write_text(f"{new}\n")
-        args = ["--changed-file", str(listing), "--catalog-dir", str(repo)]
+        args = [
+            "--changed-file",
+            str(listing),
+            "--added-file",
+            str(listing),
+            "--catalog-dir",
+            str(repo),
+        ]
         assert validate_entries.main(args) == 0
-        assert validate_entries.main([*args, "--added-file", str(listing)]) == 1
+        assert validate_entries.main([*args, "--base-ref", "main"]) == 1

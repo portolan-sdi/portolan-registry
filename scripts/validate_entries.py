@@ -36,7 +36,7 @@ from registry.contacts import validate_submitter_email
 from registry.entries import CATALOG_DIR, load_entries, load_entry, normalize_url
 from registry.export import EXPORT_PATH, load_links, load_state
 from registry.fetch import HttpFetcher
-from registry.history import last_deletion
+from registry.history import Deletion, deletions, url_at
 from registry.mirror import MirrorSource
 from registry.report import log
 from registry.validators import crawl_and_validate
@@ -104,26 +104,52 @@ def _url_of(path: Path) -> str | None:
     return normalize_url(url) if isinstance(url, str) and url else None
 
 
-def id_errors(changed_file: Path, added_file: Path, *, maintainer_approved: bool) -> list[str]:
+def id_errors(
+    changed_file: Path,
+    added_file: Path,
+    *,
+    catalog_dir: Path,
+    base_ref: str | None,
+    maintainer_approved: bool,
+) -> list[str]:
     """Return an error for each new entry with an invalid registry ID (#242).
 
     An ID is the filename without its extension and must match `STEM_RE`.
-    Renames fail even with maintainer approval. If Git history records a
-    deletion at the same path, the new entry fails unless a maintainer
-    approves re-registration of the same catalog at the same URL.
+    The other rules read Git history at `base_ref`, the branch the pull
+    request merges into. Commits inside the pull request do not register an
+    ID, so they cannot retire one.
 
-    The workflow lists paths with `--no-renames`, so a rename appears as a
-    deletion and an addition. Git history provides the deleted file's URL.
-    If the added file uses the same URL, treat the change as a rename.
+    - Renames fail even with maintainer approval. The workflow lists paths
+      with `--no-renames`, so a rename appears as a deletion and an addition.
+      If the added file uses the deleted file's URL at `base_ref`, the change
+      is a rename.
+    - If the registry deleted an entry at the same path, the new entry fails
+      unless a maintainer approves re-registration of the same catalog at the
+      same URL.
+    - If the registry deleted an entry with the same URL under another ID,
+      the new entry fails even with approval. The catalog keeps its old ID.
+
+    Without `base_ref`, only the `STEM_RE` rule runs.
     """
     added = [p for p in read_paths(added_file) if p.exists()]
+    if base_ref is None:
+        log("No base ref. Skipping the registry ID history rules.")
+
     renamed_from: dict[str, Path] = {}
-    for path in read_paths(changed_file):
-        if path.exists():
-            continue
-        gone = last_deletion(path)
-        if gone and gone.url:
-            renamed_from[normalize_url(gone.url)] = path
+    by_stem: dict[str, Deletion] = {}
+    by_url: dict[str, Deletion] = {}
+    if base_ref is not None:
+        for path in read_paths(changed_file):
+            if path.exists():
+                continue
+            old_url = url_at(base_ref, path)
+            if old_url:
+                renamed_from[normalize_url(old_url)] = path
+        # Newest first, so setdefault keeps the newest deletion of each.
+        for deletion in deletions(base_ref, catalog_dir):
+            by_stem.setdefault(deletion.stem, deletion)
+            if deletion.url:
+                by_url.setdefault(normalize_url(deletion.url), deletion)
 
     errors = []
     for path in added:
@@ -146,26 +172,35 @@ def id_errors(changed_file: Path, added_file: Path, *, maintainer_approved: bool
             )
             continue
 
-        gone = last_deletion(path)
-        if gone is None:
-            continue
-        if url and gone.url and normalize_url(gone.url) == url:
-            if maintainer_approved:
-                log(
-                    f"{path}: A maintainer approved re-registration of '{path.stem}' at the same URL."
+        gone = by_stem.get(path.stem)
+        if gone is not None:
+            if url and gone.url and normalize_url(gone.url) == url:
+                if maintainer_approved:
+                    log(
+                        f"{path}: A maintainer approved re-registration of "
+                        f"'{path.stem}' at the same URL."
+                    )
+                    continue
+                errors.append(
+                    f"{path}: Commit {gone.commit[:12]} removed registry ID "
+                    f"'{path.stem}'. This entry uses the same URL to register "
+                    f"the same catalog again. {APPROVAL_HINT}"
                 )
                 continue
             errors.append(
-                f"{path}: Commit {gone.commit[:12]} removed registry ID "
-                f"'{path.stem}'. This entry uses the same URL to register "
-                f"the same catalog again. {APPROVAL_HINT}"
+                f"{path}: Registry ID '{path.stem}' belonged to another catalog, "
+                f"which commit {gone.commit[:12]} removed. "
+                "You cannot reuse an ID for another catalog. Choose a different filename."
             )
             continue
-        errors.append(
-            f"{path}: Registry ID '{path.stem}' belonged to another catalog, "
-            f"which commit {gone.commit[:12]} removed. "
-            "You cannot reuse an ID for another catalog. Choose a different filename."
-        )
+
+        owner = by_url.get(url) if url else None
+        if owner is not None and not (catalog_dir / f"{owner.stem}.yaml").exists():
+            errors.append(
+                f"{path}: This URL belonged to registry ID '{owner.stem}', which "
+                f"commit {owner.commit[:12]} removed. Registry IDs cannot change. "
+                f"To register this catalog again, name the file {owner.stem}.yaml."
+            )
     return errors
 
 
@@ -282,6 +317,7 @@ def collect_errors(
     added_file: Path | None = None,
     maintainer_approved: bool = False,
     export_path: Path = EXPORT_PATH,
+    base_ref: str | None = None,
 ) -> list[str]:
     """Validate every changed entry. Returns error strings, and never raises.
 
@@ -296,6 +332,9 @@ def collect_errors(
     `export_path` decides which entries are new. CI passes the export from
     the base branch. The pull request can change its own copy, and an entry
     it lists there would skip the validators.
+
+    `base_ref` names the branch the pull request merges into. The ID history
+    rules in `id_errors` read Git history there. CI passes it.
     """
     try:
         state = load_state(export_path)
@@ -315,7 +354,13 @@ def collect_errors(
                 errors.extend(modified_entries(changed_file, added_file))
         if added_file is not None:
             errors.extend(
-                id_errors(changed_file, added_file, maintainer_approved=maintainer_approved)
+                id_errors(
+                    changed_file,
+                    added_file,
+                    catalog_dir=catalog_dir,
+                    base_ref=base_ref,
+                    maintainer_approved=maintainer_approved,
+                )
             )
         for path in changed_entries(changed_file):
             errors.extend(
@@ -364,6 +409,11 @@ def main(argv: list[str] | None = None) -> int:
         "CI passes the copy from the base branch.",
     )
     parser.add_argument(
+        "--base-ref",
+        help="The Git ref of the branch the pull request merges into, such as "
+        "origin/main. The registry ID history rules read it. CI passes it.",
+    )
+    parser.add_argument(
         "--report",
         help="Write the outcome to this path as JSON. See the module docstring.",
     )
@@ -375,6 +425,7 @@ def main(argv: list[str] | None = None) -> int:
         added_file=Path(args.added_file) if args.added_file else None,
         maintainer_approved=args.maintainer_approved,
         export_path=Path(args.export),
+        base_ref=args.base_ref,
     )
 
     if args.report:
