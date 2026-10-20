@@ -7,7 +7,9 @@ duplicates, crawls the catalog, and validates a mirror of its metadata with
 rashid and stac-node-validator (registry.validators).
 
 The validators gate a new entry only. An entry is new when the registry has
-not published it, has removed it, or published it at another URL. 8 of 13
+not published it, has removed it, or published it at another URL. A removed
+entry that stays deprecated at its published URL is not new, because the
+deprecation does not bring it back (#234). 8 of 13
 registered catalogs failed rashid in an August 2026 run, so a change to an
 existing entry reports what the validators find and does not fail on it. The
 nightly re-validation publishes the same result as

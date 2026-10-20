@@ -279,6 +279,25 @@ class TestDeprecatedSince:
         commit_at(repo, "new contact", "2026-10-15T09:00:00+00:00")
         assert deprecated_since(entry) == "2026-10-12T09:00:00+00:00"
 
+    def test_a_merged_side_branch_takes_the_date_of_the_merge(self, repo):
+        """The date is when the deprecation reached the branch, not when a
+        side branch drafted it."""
+        git("branch", "-M", "main", cwd=repo)
+        git("switch", "-q", "-c", "draft", cwd=repo)
+        entry = repo / "catalogs" / "example.yaml"
+        entry.write_text(self.URL + "deprecated: true\n")
+        commit_at(repo, "deprecate on a side branch", "2026-10-01T09:00:00+00:00")
+        git("switch", "-q", "main", cwd=repo)
+        stamp = "2026-10-20T09:00:00+00:00"
+        subprocess.run(
+            ["git", "merge", "-q", "--no-ff", "-m", "merge the deprecation", "draft"],
+            cwd=repo,
+            check=True,
+            capture_output=True,
+            env={**os.environ, "GIT_AUTHOR_DATE": stamp, "GIT_COMMITTER_DATE": stamp},
+        )
+        assert deprecated_since(entry) == stamp
+
     def test_reads_the_commit_that_deprecated_the_entry(self, repo):
         entry = repo / "catalogs" / "example.yaml"
         entry.write_text(self.URL + "deprecated: true\n")
