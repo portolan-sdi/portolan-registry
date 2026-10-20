@@ -267,6 +267,41 @@ class TestRemovalRequest:
         assert sent[0]["kind"] == "Data quality"
 
 
+def form_labels(path):
+    form = yaml.safe_load(path.read_text())
+    labels = {
+        field["attributes"]["label"].casefold()
+        for field in form["body"]
+        if field["type"] != "markdown"
+    }
+    return form["labels"], labels
+
+
+@pytest.mark.parametrize(
+    "path",
+    [
+        path
+        for path in sorted(Path(".github/ISSUE_TEMPLATE").glob("*.yml"))
+        if "catalog-feedback" in (yaml.safe_load(path.read_text()) or {}).get("labels", [])
+    ],
+    ids=lambda path: path.name,
+)
+def test_each_feedback_form_carries_the_headings_the_script_reads(path):
+    """A form with an unknown kind heading sends mail that says "unspecified"."""
+    _, labels = form_labels(path)
+    assert notify_feedback.CATALOG_FIELD in labels
+    assert labels & set(notify_feedback.KIND_FIELDS)
+
+
+def test_a_dataset_problem_report_names_its_kind(registry, sent, monkeypatch):
+    monkeypatch.setenv(
+        "ISSUE_BODY",
+        "### Catalog ID\n\npergamino-ide\n\n### What kind of problem is it?\n\nMissing data\n",
+    )
+    run(registry)
+    assert sent[0]["kind"] == "Missing data"
+
+
 def test_the_removal_form_carries_the_headings_the_script_reads():
     """Check form labels against the parser's expected headings.
 

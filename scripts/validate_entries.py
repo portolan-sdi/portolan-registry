@@ -128,6 +128,9 @@ def id_errors(
       same URL.
     - If the registry deleted an entry with the same URL under another ID,
       the new entry fails even with approval. The catalog keeps its old ID.
+      The rule stays quiet when another current entry holds the URL, because
+      the duplicate URL check reports that. It also stays quiet when the old
+      ID's newest deletion held another URL, because no ID is left to name.
 
     Without `base_ref`, only the `STEM_RE` rule runs.
     """
@@ -150,6 +153,14 @@ def id_errors(
             by_stem.setdefault(deletion.stem, deletion)
             if deletion.url:
                 by_url.setdefault(normalize_url(deletion.url), deletion)
+
+    # Which current entries hold each URL. The added entry holds its own URL,
+    # so the URL rule asks about the other entries only.
+    holders: dict[str, set[str]] = {}
+    for current in sorted(catalog_dir.glob("*.yaml")):
+        current_url = _url_of(current)
+        if current_url:
+            holders.setdefault(current_url, set()).add(current.stem)
 
     errors = []
     for path in added:
@@ -195,7 +206,13 @@ def id_errors(
             continue
 
         owner = by_url.get(url) if url else None
-        if owner is not None and not (catalog_dir / f"{owner.stem}.yaml").exists():
+        if (
+            url is not None
+            and owner is not None
+            and by_stem.get(owner.stem) is owner
+            and not (catalog_dir / f"{owner.stem}.yaml").exists()
+            and not holders.get(url, set()) - {path.stem}
+        ):
             errors.append(
                 f"{path}: This URL belonged to registry ID '{owner.stem}', which "
                 f"commit {owner.commit[:12]} removed. Registry IDs cannot change. "

@@ -40,7 +40,10 @@ NO_RESPONSE = "_No response_"
 ID_RE = re.compile(r"^[A-Za-z0-9._-]+$")
 
 CATALOG_FIELD = "catalog id"
-KIND_FIELD = "kind of problem"
+# Two forms apply the catalog-feedback label, and each labels the kind of
+# problem in its own words: catalog-feedback.yml and the synced
+# dataset-problem.yml.
+KIND_FIELDS = ("kind of problem", "what kind of problem is it?")
 # The removal request form, .github/ISSUE_TEMPLATE/catalog-removal.yml.
 RELATIONSHIP_FIELD = "relationship"
 REASON_FIELD = "why"
@@ -171,7 +174,7 @@ def main(argv: list[str] | None = None) -> int:
         submitter_email=address,
         issue_url=issue_url,
         issue_title=issue_title,
-        kind=sections.get(KIND_FIELD, "unspecified"),
+        kind=next((sections[f] for f in KIND_FIELDS if f in sections), "unspecified"),
         title=link.get("title"),
         enabled=not args.no_notify,
     )

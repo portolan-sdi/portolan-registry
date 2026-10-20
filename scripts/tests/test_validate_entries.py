@@ -612,6 +612,28 @@ class TestRegistryIds:
         other = self.write(repo, "other")
         assert self.run(repo, [other], [other], approved=True) == []
 
+    def test_a_url_that_moved_to_another_current_id_is_not_an_id_error(self, repo):
+        """Review finding: the old hint would name an ID that fails too."""
+        self.registered_then_removed(repo, "old")
+        self.write(repo, "new-id")
+        self.commit(repo, "register the catalog as new-id")
+        self.open_pull_request(repo)
+        bar = self.write(repo, "bar")
+        assert self.run(repo, [bar], [bar], approved=True) == []
+
+    def test_an_id_whose_newest_deletion_held_another_url_is_not_named(self, repo):
+        """Review finding: the history renamed `main.yaml` twice, once per
+        catalog. The hint must not name an ID that now points elsewhere."""
+        self.registered_then_removed(repo, "main", url="https://madrid.org/catalog.json")
+        self.registered_then_removed(repo, "main", url="https://finland.org/catalog.json")
+        self.open_pull_request(repo)
+        madrid = self.write(repo, "madrid", url="https://madrid.org/catalog.json")
+        assert self.run(repo, [madrid], [madrid], approved=True) == []
+        finland = self.write(repo, "finland", url="https://finland.org/catalog.json")
+        errors = self.run(repo, [finland], [finland], approved=True)
+        assert len(errors) == 1
+        assert "name the file main.yaml" in errors[0]
+
     def test_a_deletion_beside_an_unrelated_addition_passes_with_an_approval(self, repo):
         self.write(repo, "leaving")
         self.commit(repo, "add leaving")
