@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   dependabot:
-    uses: portolan-sdi/portolan-ops/.github/workflows/reusable-dependabot-automerge.yml@v1
+    uses: portolan-sdi/portolan-ops/.github/workflows/reusable-dependabot-automerge.yml@bba12692563d6cd77aa9207c6152174240295839
     permissions:
       contents: write
       pull-requests: write

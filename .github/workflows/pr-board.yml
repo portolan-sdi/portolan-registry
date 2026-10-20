@@ -29,7 +29,7 @@ jobs:
   board:
     # v1 is a moving major tag. A change to the rule reaches this repo when
     # the tag moves, not when ops merges.
-    uses: portolan-sdi/portolan-ops/.github/workflows/reusable-pr-board.yml@v1
+    uses: portolan-sdi/portolan-ops/.github/workflows/reusable-pr-board.yml@bba12692563d6cd77aa9207c6152174240295839
     permissions:
       contents: read
     secrets:

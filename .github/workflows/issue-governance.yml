@@ -23,7 +23,7 @@ jobs:
   enforce:
     # v1 is a moving major tag. Changes to the label set or the rules reach
     # this repo when the tag moves, not when ops merges.
-    uses: portolan-sdi/portolan-ops/.github/workflows/reusable-issue-governance.yml@v1
+    uses: portolan-sdi/portolan-ops/.github/workflows/reusable-issue-governance.yml@bba12692563d6cd77aa9207c6152174240295839
     permissions:
       contents: read
       issues: write
@@ -34,3 +34,5 @@ jobs:
       # gets the milestone and label rules.
       OPS_SYNC_APP_CLIENT_ID: ${{ secrets.OPS_SYNC_APP_CLIENT_ID }}
       OPS_SYNC_APP_KEY: ${{ secrets.OPS_SYNC_APP_KEY }}
+    with:
+      ops-ref: bba12692563d6cd77aa9207c6152174240295839
