@@ -1,0 +1,103 @@
+name: Problem with a dataset
+description: Tell the publisher about wrong, missing, or broken data in a dataset
+# The catalog-feedback label starts the mail in portolan-registry.
+labels: [catalog-feedback]
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Use this form when the data in a dataset looks wrong, is missing, or
+        does not open. The registry emails your report to the person who
+        registered the catalog. Your report and your GitHub name are public,
+        so remove private information before you submit. Is a tool at fault,
+        such as the QGIS plugin? Then report it in that tool's repository.
+
+  # notify_feedback.py in portolan-registry reads the ID under the heading
+  # "Catalog ID". Keep this label as it is.
+  - type: input
+    id: catalog-id
+    attributes:
+      label: Catalog ID
+      description: >-
+        The QGIS plugin fills this in. Did you open this form yourself? Then
+        give the ID that the catalog's entry in the registry shows.
+      placeholder: pergamino-ide
+    validations:
+      required: true
+
+  - type: textarea
+    id: dataset
+    attributes:
+      label: Dataset
+      description: >-
+        The link to the dataset. The QGIS plugin fills this in. Otherwise,
+        copy the address of the dataset's page in the Portolan browser.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of problem is it?
+      options:
+        - Data is missing
+        - Values are wrong
+        - Features are in the wrong place on the map
+        - The data does not open or load
+        - The description, license, or documentation is wrong
+        - Something else
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-is-wrong
+    attributes:
+      label: What is wrong?
+      description: >-
+        Tell us what you see and what you expected. Name a feature, a
+        column, or a place where you can. You can paste a screenshot here.
+      placeholder: >-
+        The parcel with ID 1043 has the area 0. The town's
+        cadastre gives 312 m².
+    validations:
+      required: true
+
+  - type: textarea
+    id: how-found
+    attributes:
+      label: How did you find it?
+      description: >-
+        Tell us the steps you took, for example in QGIS or in the Portolan
+        browser. Name any other source you compared the data with.
+    validations:
+      required: true
+
+  - type: textarea
+    id: why-it-matters
+    attributes:
+      label: Why does it matter?
+      description: >-
+        Tell us what this stops you from doing, and who else it can affect.
+    validations:
+      required: true
+
+  - type: input
+    id: observed
+    attributes:
+      label: Date observed
+      description: >-
+        Data changes, so give the date you saw the problem. The QGIS plugin
+        fills this in.
+      placeholder: "2026-10-19"
+    validations:
+      required: true
+
+  - type: input
+    id: tool
+    attributes:
+      label: Tool
+      description: >-
+        The tool and its version. The QGIS plugin fills this in. Leave it
+        blank if you used only a web browser.
+    validations:
+      required: false
