@@ -32,18 +32,18 @@ New catalogs must pass deterministic validation before they enter the registry. 
 
 After your submission passes validation and a maintainer merges it, the registry publishes its metadata in [`exports/catalogs.json`](./exports/catalogs.json). Your catalog then appears on the registry page. Scheduled checks revisit registered catalogs and notify submitters about failures.
 
-The filename is the catalog's registry ID. It must use lowercase letters, digits, and single hyphens, such as `city-of-example-parcels`. An ID never changes after the merge, and it never names a second catalog. The registry reads the title from your catalog, so the ID does not need to match it.
+The filename is the catalog's registry ID. It must use lowercase letters, digits, and single hyphens, such as `city-of-example-parcels`. An ID never changes after the merge, and no second catalog can use it. The registry reads the title from your catalog, so the ID does not need to match it.
 
 ## Remove a catalog
 
-Anyone can ask to remove a registered catalog: its submitter, a new contact at the same publisher, or a registry maintainer.
+Anyone can ask to remove a registered catalog. You do not need to be the person who registered it. A new contact at the same publisher can ask, and so can a registry maintainer.
 
 1. File a [catalog removal request](https://github.com/portolan-sdi/portolan-registry/issues/new?template=catalog-removal.yml). Name the catalog ID, your relationship to the catalog, and the reason.
 2. Open a pull request that deletes `catalogs/<id>.yaml` and links the request.
 
-The registry emails the request to the catalog's submitter. A maintainer reviews it, approves the pull request, and merges it. If you did not register the catalog, the maintainer waits 14 days for the submitter to object first. Spam and legal requests skip the wait. The registry cannot verify who you are, so the maintainer may ask you to confirm your relationship to the publisher.
+The registry emails the request to the catalog's submitter. A maintainer reviews the request. If the request is legitimate, the maintainer approves and merges the pull request. If you did not register the catalog, the maintainer waits 14 days for the submitter to object first. Spam and legal requests skip the wait. The registry cannot verify who you are, so the maintainer may ask you to confirm your relationship to the publisher.
 
-After the merge, the next publish drops the catalog from [`exports/catalogs.json`](./exports/catalogs.json) and [`exports/coverage-bboxes.json`](./exports/coverage-bboxes.json). The git history of the export records when it left. Its ID stays retired. Only the same catalog, at the same URL and with a maintainer's approval, can register under it again.
+After the merge, the next publish drops the catalog from [`exports/catalogs.json`](./exports/catalogs.json) and [`exports/coverage-bboxes.json`](./exports/coverage-bboxes.json). The git history of the export records when it left. No other catalog can take its ID. Only the same catalog, at the same URL and with a maintainer's approval, can register under it again.
 
 A catalog can also leave without a request. When a registered catalog stops answering, nightly re-validation marks it `stale` and emails its submitter. After 30 days as `stale`, it becomes `removed`. Its link stays in the export with that status, and its entry file stays in `catalogs/`.
 
