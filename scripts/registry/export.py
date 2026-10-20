@@ -199,8 +199,7 @@ def child_link(catalog: Mapping[str, Any]) -> dict[str, Any]:
             # specification requires of it, AGENTS.md and README.md.
             "portolan_registry:has_agents_md": validation.get("has_agents_md", False),
             "portolan_registry:has_readme": validation.get("has_readme", False),
-            # Written from the entry file, not the crawl, by apply_entry_fields.
-            # These defaults hold for a catalog that is not deprecated.
+            # apply_entry_fields replaces these defaults with entry file values.
             "portolan_registry:deprecated": False,
             "portolan_registry:deprecated_since": None,
             "portolan_registry:deprecated_reason": None,
@@ -215,17 +214,13 @@ def apply_entry_fields(
     catalog_dir: Path,
     previous_links: Mapping[str, Mapping[str, Any]],
 ) -> None:
-    """Write the deprecation fields from the entry files onto every child link.
+    """Copy deprecation fields from entry files to every child link.
 
-    The entry file, not the crawl, says whether a catalog is deprecated. A
-    run carries a link forward unchanged when it cannot crawl the catalog,
-    and it never crawls a removed one. So the crawl result is the wrong place
-    for these fields: a deprecation merged on a night the crawl failed would
-    not reach the export, and an un-deprecation would leave the old flag.
-    This runs over the built export instead, crawled and carried links alike.
+    Read the entry files even for catalogs that were not crawled, so the
+    export reflects deprecation changes for unreachable and removed catalogs.
 
-    The date comes from git (`deprecated_since`). A shallow clone cannot see
-    the commit, so keep the date already published.
+    If Git cannot find the deprecation commit, keep the previously published
+    date.
     """
     for link in export.get("links", []):
         if link.get("rel") != "child":

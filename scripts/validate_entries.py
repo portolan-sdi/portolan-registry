@@ -246,27 +246,30 @@ def _successor_errors(
             f"{path}: 'superseded_by' must be a registry ID, such as 'city-of-example-parcels'."
         ]
     if successor == path.stem:
-        return [f"{path}: 'superseded_by' names this entry. Name the catalog that replaces it."]
+        return [f"{path}: 'superseded_by' names this entry. Use the ID of the replacement catalog."]
     if successor not in entries:
         return [
             f"{path}: 'superseded_by' names '{successor}', which has no entry file in "
-            "catalogs/. Register the successor first, or in the same pull request."
+            "catalogs/. Register the replacement first or in the same pull request."
         ]
 
-    # Follow the chain. A successor can be deprecated too, but the chain must end.
+    # Follow the replacement chain to check for cycles.
     seen = [path.stem]
     current: str | None = successor
     while current is not None:
         if current in seen:
             chain = " -> ".join([*seen, current])
-            return [f"{path}: 'superseded_by' forms a cycle: {chain}."]
+            return [
+                f"{path}: 'superseded_by' forms a cycle: {chain}. "
+                "Update the replacement IDs so the chain ends at a different catalog."
+            ]
         seen.append(current)
         current = deprecation(dict(entries.get(current, {}))).superseded_by
 
     if deprecation(dict(entries[successor])).deprecated:
-        log(f"  Warning: the successor '{successor}' is deprecated too")
+        log(f"  Warning: replacement catalog '{successor}' is also deprecated")
     if state.get(successor, {}).get("status") == "removed":
-        log(f"  Warning: the successor '{successor}' has status 'removed' in the export")
+        log(f"  Warning: replacement catalog '{successor}' has status 'removed' in the export")
     return []
 
 
@@ -278,20 +281,22 @@ def _entry_deprecation_errors(
     base_ref: str | None,
     state: Mapping[str, Mapping[str, Any]],
 ) -> list[str]:
-    """Return the deprecation errors for one changed entry that exists."""
+    """Check deprecation fields in an added or modified entry."""
     entry = load_entry(path)
     flag = entry.get("deprecated")
     if "deprecated" in entry and not isinstance(flag, bool):
         return [f"{path}: 'deprecated' must be true or false."]
     extras = [k for k in ("superseded_by", "deprecated_reason") if k in entry]
     if extras and flag is not True:
-        return [f"{path}: {' and '.join(repr(k) for k in extras)} need 'deprecated: true'."]
+        return [
+            f"{path}: Use {' and '.join(repr(k) for k in extras)} only with 'deprecated: true'."
+        ]
     if flag is not True:
         return []
     if path.resolve() in added:
         return [
-            f"{path}: A new entry cannot be deprecated. Register the catalog without "
-            "'deprecated', or do not register it."
+            f"{path}: A new entry cannot be deprecated. Register the catalog first, "
+            "then deprecate it in a separate pull request."
         ]
 
     errors = []
@@ -299,7 +304,9 @@ def _entry_deprecation_errors(
     if "deprecated_reason" in entry and (
         not isinstance(reason, str) or not 1 <= len(reason) <= REASON_MAX
     ):
-        errors.append(f"{path}: 'deprecated_reason' must be text of 1 to {REASON_MAX} characters.")
+        errors.append(
+            f"{path}: 'deprecated_reason' must be text with 1 to {REASON_MAX} characters."
+        )
     if "superseded_by" in entry:
         errors.extend(_successor_errors(path, entry["superseded_by"], entries, state))
 
@@ -313,7 +320,7 @@ def _entry_deprecation_errors(
         ):
             errors.append(
                 f"{path}: This pull request deprecates the entry and changes its URL. "
-                "Make each change in its own pull request."
+                "Submit the deprecation and URL change in separate pull requests."
             )
     return errors
 
@@ -326,18 +333,17 @@ def deprecation_errors(
     base_ref: str | None,
     state: Mapping[str, Mapping[str, Any]],
 ) -> list[str]:
-    """Return an error for each deprecation rule a changed entry breaks (#234).
+    """Check deprecation fields and replacement references in changed entries.
 
-    - `superseded_by` and `deprecated_reason` need `deprecated: true`.
-    - `superseded_by` names an entry in the pull request head. It cannot name
-      the entry itself or form a cycle.
-    - A new entry cannot be deprecated. A catalog is registered first.
-    - One pull request cannot both deprecate an entry and change its URL, so
-      a maintainer reviews the two changes apart. This rule needs `base_ref`.
-    - A deletion fails while a remaining entry names the deleted ID as its
-      successor.
+    - `superseded_by` and `deprecated_reason` require `deprecated: true`.
+    - Replacement IDs must exist in the proposed catalog entries. References
+      cannot point to the same entry or form a cycle.
+    - New entries cannot be deprecated.
+    - Deprecation and URL changes require separate pull requests. This check
+      requires `base_ref`.
+    - An entry cannot be deleted while another entry names it as a replacement.
 
-    A maintainer approval does not clear these errors.
+    Maintainer approval does not bypass these checks.
     """
     entries = load_entries(catalog_dir)
     added = {p.resolve() for p in read_paths(added_file)} if added_file else set()
@@ -356,9 +362,10 @@ def deprecation_errors(
             cid for cid, entry in entries.items() if entry.get("superseded_by") == path.stem
         )
         if referrers:
+            verb = "names" if len(referrers) == 1 else "name"
             errors.append(
-                f"{path}: {', '.join(repr(r) for r in referrers)} names '{path.stem}' in "
-                "'superseded_by'. Change or remove that successor first."
+                f"{path}: {', '.join(repr(r) for r in referrers)} {verb} '{path.stem}' in "
+                "'superseded_by'. Update or remove those references before deleting this entry."
             )
     return errors
 
@@ -419,19 +426,22 @@ def check_entry(
 
     gated = is_new_entry(path.stem, url, published or {})
 
-    # A registered entry at its published URL is not gated. A crawl failure
-    # then says nothing the gate acts on, and failing on it would block an
-    # approved edit of an offline catalog, such as its deprecation (#234).
+    # Fetch failures do not block edits to an existing catalog at its
+    # registered URL, so an offline catalog can still be deprecated.
     try:
         result, report = crawl_and_validate(url, source_factory)
     except requests.exceptions.RequestException as e:
         if not gated:
-            log(f"  Note: the catalog did not answer ({e}). It is registered, so this passes.")
+            log(
+                f"  Could not fetch the catalog ({e}). Its registered URL has not changed, so this does not block the pull request."
+            )
             return []
         return [f"{path}: Failed to fetch catalog: {e}"]
     except Exception as e:
         if not gated:
-            log(f"  Note: the crawl failed ({e}). The catalog is registered, so this passes.")
+            log(
+                f"  Could not process the catalog ({e}). Its registered URL has not changed, so this does not block the pull request."
+            )
             return []
         return [f"{path}: Error processing catalog: {e}"]
 

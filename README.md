@@ -36,41 +36,43 @@ Your catalog's registry ID is its filename without `.yaml`, such as `city-of-exa
 
 ## Remove or deprecate a catalog
 
-You can request a catalog's removal or deprecation even if someone else registered it. A removal takes the catalog out of the registry, while a deprecation keeps it listed with a flag. The flag can point to the catalog that replaces it.
+You can request removal or deprecation even if someone else registered the catalog:
 
-1. Open a [catalog removal or deprecation request](https://github.com/portolan-sdi/portolan-registry/issues/new?template=catalog-removal.yml). Include the catalog ID, the action, your relationship to the catalog, and your reason.
-2. Open a pull request that links to your request and changes `catalogs/<id>.yaml`:
-   - To remove the catalog, delete the file.
-   - To deprecate it, add `deprecated: true`. You can also add the ID of a successor and a reason:
+- **Remove** the catalog to take it out of the registry.
+- **Deprecate** the catalog to keep it listed as deprecated. You can also point users to a replacement catalog.
 
-     ```yaml
-     url: https://example.org/catalog.json
-     submitter_email: you@example.org
-     deprecated: true
-     superseded_by: example-replacement
-     deprecated_reason: The publisher now registers its own catalog.
-     ```
+1. Open a [catalog removal or deprecation request](https://github.com/portolan-sdi/portolan-registry/issues/new?template=catalog-removal.yml). Include the catalog ID, your chosen action, your relationship to the catalog, and your reason.
+2. Open a pull request and link to your request. To remove the catalog, delete `catalogs/<id>.yaml`. To deprecate it, add `deprecated: true` to that file. The replacement ID and reason are optional:
 
-The registry emails your request to the person who registered the catalog. If someone else registered it, a maintainer waits 14 days for that person to object before approving the change. Requests for spam or legal reasons do not require this waiting period. The maintainer reviews your request and may ask you to confirm your relationship to the publisher. If the maintainer accepts your request, they approve and merge the pull request.
+   ```yaml
+   url: https://example.org/catalog.json
+   submitter_email: you@example.org
+   deprecated: true
+   superseded_by: example-replacement
+   deprecated_reason: The publisher has registered a replacement catalog.
+   ```
 
-Put the reason in quotes if it contains `#` or `: `. YAML reads ` #` as the start of a comment and drops the rest of the line.
+The registry emails your request to the person who registered the catalog. If someone else registered it, a maintainer allows 14 days for that person to object before approving the change. Requests involving spam or legal concerns do not require this waiting period. A maintainer reviews each request and may ask you to confirm your relationship to the publisher before merging the pull request.
 
-The `superseded_by` field must reference a registered catalog, or one that the same pull request registers. A new entry cannot be deprecated, and one pull request cannot both deprecate an entry and change its URL. You cannot delete an entry while another entry lists it as its successor.
+If your reason contains `#` or a colon followed by a space, put it in quotes so YAML reads the full value as text.
 
-After a removal, the next registry update drops the catalog from [`exports/catalogs.json`](./exports/catalogs.json) and [`exports/coverage-bboxes.json`](./exports/coverage-bboxes.json). The export's Git history records the removal. If you want to register the same catalog again, use the same ID and URL and get a maintainer's approval. The registry rejects that URL under any other ID. You cannot reuse the ID for another catalog.
+If you set `superseded_by`, use the ID of a catalog that is already registered or that you register in the same pull request. Register a catalog before deprecating it, and submit URL changes in a separate pull request. Before deleting a catalog, update any entries that name it in `superseded_by`.
 
-After a deprecation, the catalog's link in the export includes `portolan_registry:deprecated: true`, `portolan_registry:deprecated_since`, `portolan_registry:deprecated_reason`, and `portolan_registry:superseded_by`. The registry reads the date from the commit that added `deprecated: true`. To undo a deprecation, open a pull request that deletes the field.
+After a maintainer merges a removal, the next registry update removes the catalog from the [JSON registry](./exports/catalogs.json) and [coverage export](./exports/coverage-bboxes.json). Git history preserves the record. To register the same catalog again, use its original ID and URL and get a maintainer's approval. You cannot register a different catalog with that ID or URL.
+
+For deprecated catalogs, the export includes the flag, date, reason, and replacement ID defined in the [export schema](./schema/export.schema.json). The date comes from the commit that added `deprecated: true`. To reverse a deprecation, open a pull request that removes `deprecated`, `superseded_by`, and `deprecated_reason` from the entry.
 
 ### Catalog status
 
-| Status or flag | Meaning |
+| Status | Meaning |
 |---|---|
-| `valid` | The catalog passed its last nightly check. |
-| `stale` | The catalog failed one or more nightly checks in a row. The registry emails the person who registered it on the first failure. |
-| `removed` | The catalog failed every nightly check for 30 days. Its link stays in the export with this status, and its entry file stays in `catalogs/`. |
-| `deprecated` | A flag, separate from the status. A deprecated catalog fails a check when it does not answer, or when `rashid` or `stac-node-validator` rejects it. |
+| `valid` | The catalog passed its most recent completed check. |
+| `stale` | The catalog failed a nightly check and has not passed since. The registry emails the person who registered it on the first failure. |
+| `removed` | The catalog failed a check at least 30 days after its first failure and has not passed since. Its export link and entry file remain. |
 
-A catalog that is not deprecated fails a check only when it does not answer. The 30 days start at the first failure, and one passing night resets them. A removed catalog returns to `valid` when an update to its entry file triggers a registry update and the catalog passes.
+The `deprecated` flag applies independently of these statuses. A deprecated catalog fails a check if the registry cannot fetch it or if `rashid` or `stac-node-validator` reports an error. Other catalogs fail only when the registry cannot fetch them. If a deprecated catalog is reachable but the validators return no result, the registry preserves its status and failure date.
+
+A passing check resets the 30-day period. To restore a catalog with status `removed`, update its entry file to trigger a registry update. If the catalog passes, its status returns to `valid`.
 
 ## Report a bug
 

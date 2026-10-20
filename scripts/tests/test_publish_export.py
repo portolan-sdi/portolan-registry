@@ -1,8 +1,8 @@
-"""The publish run never moves a catalog toward removal (#234).
+"""Publishing preserves failed catalogs' statuses for the nightly check (#234).
 
-Publish runs on each entry merge. If it set a failing deprecated catalog to
-`valid`, the next entry merge would bring back a catalog the nightly removed.
-If it set `stale`, the nightly would see stale -> stale and never mail.
+Publishing runs after entry changes merge. It must preserve a deprecated
+catalog's status when validation fails, so removed catalogs stay removed and
+the nightly check can detect the first failure and notify the submitter.
 """
 
 from __future__ import annotations
@@ -23,7 +23,7 @@ def run():
 
 class TestDeprecatedCatalog:
     def test_a_removed_catalog_that_fails_validation_stays_removed(self, registry):
-        """Issue #234, confirm step 8."""
+        """A failed check must not restore a removed catalog (issue #234, step 8)."""
         registry.entry("old", "deprecated: true\n")
         registry.published("old", status="removed", stale_days=40)
         registry.fail_validation()
@@ -56,7 +56,7 @@ class TestDeprecatedCatalog:
         assert registry.link("old")["portolan_registry:status"] == "valid"
 
     def test_a_failed_crawl_keeps_the_flag_on_the_carried_link(self, registry):
-        """Issue #234, confirm step 9."""
+        """Publish deprecation fields even when the crawl fails (issue #234, step 9)."""
         registry.entry("old", "deprecated: true\nsuperseded_by: next\n")
         registry.entry("next")
         registry.published("old")
@@ -70,7 +70,7 @@ class TestDeprecatedCatalog:
 
 class TestNoValidatorAnswer:
     def test_a_removed_catalog_stays_removed(self, registry):
-        """No answer is no proof that the catalog now passes."""
+        """Restoring a deprecated catalog requires a passing validation result."""
         registry.entry("old", "deprecated: true\n")
         registry.published("old", status="removed", stale_days=40, stac_valid=False)
         registry.validators_answer = False
@@ -87,7 +87,7 @@ class TestNoValidatorAnswer:
 
 class TestCatalogThatIsNotDeprecated:
     def test_a_removed_catalog_that_answers_comes_back(self, registry):
-        """Re-submission, as before #234."""
+        """Reachable catalogs that are not deprecated can be registered again."""
         registry.entry("cat")
         registry.published("cat", status="removed", stale_days=40)
         registry.fail_validation()

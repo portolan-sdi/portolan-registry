@@ -1,9 +1,8 @@
-"""A throwaway registry for tests that run publish_export or revalidate_all.
+"""Temporary registry for `publish_export` and `revalidate_all` tests.
 
-Each test gets a working directory with `catalogs/` and a previous
-`exports/catalogs.json`, because both scripts read the export from its fixed
-path. The crawler reads the `nested` fixture tree through FakeFetcher, and the
-validator double reports whatever the test asks.
+Each test gets a working directory with `catalogs/` and a previous export at
+`exports/catalogs.json`. The crawler reads the `nested` fixtures through
+`FakeFetcher`. Tests configure the validator results.
 """
 
 from __future__ import annotations
@@ -61,7 +60,7 @@ class Registry:
         stale_days: int | None = None,
         stac_valid: bool | None = None,
     ):
-        """A child link in the previous export, with its state."""
+        """Add a child link and its validation status to the previous export."""
         stale_since = None
         if stale_days is not None:
             stale_since = (datetime.now(UTC) - timedelta(days=stale_days)).isoformat()

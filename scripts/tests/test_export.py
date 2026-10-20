@@ -465,11 +465,11 @@ DEPRECATION_FIELDS = (
 
 
 class TestApplyEntryFields:
-    """Issue #234: the entry file, not the crawl, says a catalog is deprecated."""
+    """Deprecation fields come from entry files, including after failed crawls (#234)."""
 
     @pytest.fixture(autouse=True)
     def no_git(self, monkeypatch):
-        """Each test sets the date git would give. None means git cannot say."""
+        """Set the date Git returns, or `None` if no date is available."""
         self.since = None
         monkeypatch.setattr(export_module, "deprecated_since", lambda path: self.since)
 
@@ -496,7 +496,7 @@ class TestApplyEntryFields:
         assert all(link[k] is None for k in DEPRECATION_FIELDS[1:])
 
     def test_writes_the_entry_fields_onto_a_carried_link(self, tmp_path):
-        """A deprecation merged on a night the crawl failed still reaches the export."""
+        """Publish deprecation changes even when the crawl fails."""
         self.since = "2026-10-16T09:12:00+00:00"
         catalogs = self.entries(
             tmp_path,

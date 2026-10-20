@@ -127,12 +127,12 @@ def main(argv: list[str] | None = None) -> int:
         previous = previous_state.get(catalog["id"], {})
         deprecated = deprecation(load_entry(catalog_dir / f"{catalog['id']}.yaml")).deprecated
         if not passes(deprecated=deprecated, stac_valid=answers.get(catalog["id"])):
-            # False or None. Only the nightly run starts and advances the
-            # stale clock, and only it sends the stale mail. If this run set
-            # `stale`, the nightly would see stale -> stale and never send it.
-            # So keep the state as it stands. A removed deprecated catalog
-            # that still fails validation stays removed.
-            log(f"  {catalog['id']} is deprecated and did not pass validation; keeping its state")
+            # Preserve the status so the nightly run can detect the first
+            # failure and email the submitter. Removed catalogs that still
+            # fail validation keep their removed status.
+            log(
+                f"  {catalog['id']}: deprecated catalog did not pass validation; keeping its current status"
+            )
             catalog["status"] = previous.get("status", "valid")
             catalog["last_validated"] = previous.get("last_validated")
             catalog["stale_since"] = previous.get("stale_since")
@@ -140,8 +140,7 @@ def main(argv: list[str] | None = None) -> int:
             continue
         if previous.get("status") in ("stale", "removed"):
             log(f"  Restoring {catalog['id']} from {previous['status']} to valid")
-        # A catalog that answered and passed is valid. This is what brings a
-        # re-submitted catalog back out of removed.
+        # A passing check also restores a catalog previously marked as removed.
         catalog["status"] = "valid"
         catalog["last_validated"] = now.isoformat()
         catalog["stale_since"] = None

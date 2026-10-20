@@ -93,10 +93,10 @@ def _entry_url(text: str | None) -> str | None:
 
 
 def entry_at(ref: str, path: Path) -> dict[str, Any] | None:
-    """Return the entry at `path` as it stood at `ref`.
+    """Return the entry at `path` from Git revision `ref`.
 
-    If the entry did not exist at `ref`, did not parse, or Git cannot read
-    it, return `None`.
+    Return `None` if the entry is missing, contains invalid YAML, is not a
+    mapping, or cannot be read from Git.
     """
     # `./` makes the path relative to the entry's directory, where Git runs.
     text = _git(path.parent, "show", f"{ref}:./{path.name}")
@@ -119,13 +119,12 @@ def url_at(ref: str, path: Path) -> str | None:
 def deprecated_since(path: Path) -> str | None:
     """Return the RFC 3339 timestamp of the commit that deprecated `path`.
 
-    The entry holds no date. The newest commit that changed the top-level
-    `deprecated:` line is the one that set its current value, so call this
-    only for an entry that is deprecated now. The pattern does not match
-    `deprecated_reason:`, so an edit of the reason does not move the date.
+    Call this only for a currently deprecated entry. It uses the latest
+    commit that changed the top-level `deprecated:` line. Changes to
+    `deprecated_reason:` do not affect the date.
 
-    Return `None` when Git cannot answer. The caller then keeps the date
-    already published, as with `first_registered`.
+    If Git cannot find the date, return `None`. The caller keeps the
+    previously published date, as with `first_registered`.
     """
     out = _git(path.parent, "log", "-1", "-G", "^deprecated:", "--format=%aI", "--", path.name)
     stamp = (out or "").strip()

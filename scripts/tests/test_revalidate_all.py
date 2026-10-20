@@ -1,8 +1,7 @@
-"""The nightly run: which catalogs fail, and what it mails (#234).
+"""Nightly checks update statuses, send emails, and publish deprecations (#234).
 
-The crawl runs for real over the `nested` fixture tree. The validators and
-the mail are doubles. What is under test is the status each catalog gets,
-the mail the run sends, and the deprecation fields it publishes.
+The crawler reads the `nested` fixtures. Test doubles replace the validators
+and email sender.
 """
 
 from __future__ import annotations
@@ -53,7 +52,7 @@ class TestDeprecatedCatalog:
         assert mailed[0]["superseded_by"] == "next"
 
     def test_31_failing_nights_remove_it(self, registry, mailed):
-        """Issue #234, confirm step 7."""
+        """Validation failures change the status to removed (issue #234, step 7)."""
         registry.entry("old", "deprecated: true\n")
         registry.published("old", status="stale", stale_days=STALE_THRESHOLD_DAYS + 1)
         registry.fail_validation()
@@ -99,11 +98,11 @@ class TestDeprecatedCatalog:
 
 
 class TestNoValidatorAnswer:
-    """roborev: a night with no validator answer must not count.
+    """Preserve status when the validators return no result.
 
-    settle_stac_valid copies the last published False back in. A deprecated
-    catalog its publisher fixed would otherwise fail every silent night and
-    leave the registry after 30 of them.
+    `settle_stac_valid` preserves the last published value. A previous failure
+    must not count as a new failure, because the publisher may have fixed the
+    catalog since that check.
     """
 
     def test_a_stale_catalog_keeps_its_clock(self, registry, mailed):

@@ -43,27 +43,29 @@ def _stale_body(
     )
     if deprecated:
         successor = (
-            f" The registry lists <strong>{html.escape(superseded_by)}</strong> as its successor."
+            f" Its replacement is <code>{html.escape(superseded_by)}</code>."
             if superseded_by
             else ""
         )
         outcome = (
-            f"<p>This catalog is deprecated.{successor} A deprecated catalog that "
-            "does not answer, or that rashid or stac-node-validator rejects, every "
-            "night for 30 days is marked as removed from the registry.</p>"
-            "<p>To keep the catalog listed, fix the reported errors. If the catalog "
-            "should leave the registry now, you do not need to do anything.</p>"
+            f"<p>This catalog is deprecated.{successor} Its nightly checks fail if "
+            "the registry cannot fetch it or if <code>rashid</code> or "
+            "<code>stac-node-validator</code> reports an error. If these checks keep "
+            "failing for 30 days, the registry changes its status to <code>removed</code>. "
+            "Its entry and export link remain.</p>"
+            "<p>To keep the catalog active, fix the reported errors. If you want "
+            "these checks to mark it as removed, you do not need to take action.</p>"
         )
     else:
         outcome = (
-            "<p>If the catalog remains unreachable for 30 days, it will be marked as "
-            "removed from the registry.</p>"
-            "<p>To resolve this issue, please ensure your catalog is accessible and "
-            "re-submit if needed.</p>"
+            "<p>If the catalog remains unreachable for 30 days, the registry changes "
+            "its status to <code>removed</code>. Its entry and export link remain.</p>"
+            "<p>To keep the catalog active, restore access to its registered URL. "
+            "The next successful nightly check clears the failure.</p>"
         )
     return f"""
-        <h2>Catalog Validation Failed</h2>
-        <p>Your STAC catalog <strong>{title}</strong> failed validation during our periodic re-check.</p>
+        <h2>Catalog validation failed</h2>
+        <p>Your STAC catalog <strong>{title}</strong> failed its nightly registry check.</p>
         <p><strong>Catalog URL:</strong> <a href="{url}">{url}</a></p>
         <p><strong>Reason:</strong> {failure_reason}</p>
         {outcome}
@@ -93,8 +95,7 @@ def _feedback_body(title: str, kind: str, issue_url: str, issue_title: str) -> s
 OBJECTION_DAYS = 14
 
 
-# The removal request form asks for one of these actions. Each maps to the
-# words the mail uses for it: (noun, verb).
+# Map each request action to the noun and verb used in the email.
 REQUEST_ACTIONS = {"remove": ("removal", "remove"), "deprecate": ("deprecation", "deprecate")}
 
 
@@ -107,7 +108,7 @@ def _removal_body(
     issue_title: str,
     action: str = "remove",
 ) -> str:
-    noun, _ = REQUEST_ACTIONS[action]
+    noun, verb = REQUEST_ACTIONS[action]
     title, requester, relationship, reason, issue_url, issue_title = (
         html.escape(title),
         html.escape(requester),
@@ -117,18 +118,18 @@ def _removal_body(
         html.escape(issue_title),
     )
     return f"""
-        <h2>Request to {REQUEST_ACTIONS[action][1]} your catalog</h2>
-        <p>GitHub user <strong>{requester}</strong> requested {noun} of <strong>{title}</strong>, which you registered in the Portolan registry.</p>
+        <h2>Request to {verb} your catalog</h2>
+        <p>GitHub user <strong>{requester}</strong> asked to {verb} <strong>{title}</strong>, which you registered in the Portolan registry.</p>
         <dl>
-            <dt>Requester's stated relationship to the catalog</dt>
+            <dt>Requester's relationship to the catalog</dt>
             <dd>{relationship}</dd>
             <dt>Reason for the request</dt>
             <dd>{reason}</dd>
             <dt>Request</dt>
             <dd><a href="{issue_url}">{issue_title}</a></dd>
         </dl>
-        <p>If you made this request, you do not need to take any action. If you object to the {noun}, comment on the linked issue within {OBJECTION_DAYS} days.</p>
-        <p>A maintainer reviews every request before the registry acts on it.</p>
+        <p>If you made this request, you do not need to take action. If you object to the {noun}, comment on the issue within {OBJECTION_DAYS} days.</p>
+        <p>A maintainer reviews each request before making the change.</p>
         {FOOTER}
     """
 
@@ -199,10 +200,11 @@ def send_stale_notification(
     superseded_by: str | None = None,
     enabled: bool = True,
 ) -> bool:
-    """Mail the submitter that their catalog went stale. Returns True if sent.
+    """Email the submitter when their catalog becomes stale.
 
-    For a deprecated catalog, the mail names the successor, if any, and says
-    that a validator failure also counts toward removal.
+    For deprecated catalogs, include the replacement ID, if available, and
+    explain that validation errors also count as failed checks. Return
+    `True` if the email was sent.
     """
     return _send(
         catalog_id,
@@ -254,7 +256,8 @@ def send_removal_request_notification(
 ) -> bool:
     """Email the submitter a removal or deprecation request.
 
-    `action` is a key of REQUEST_ACTIONS. Return `True` if the email was sent.
+    Use a key from `REQUEST_ACTIONS` for `action`. Return `True` if the email
+    was sent.
     """
     if action not in REQUEST_ACTIONS:
         action = "remove"

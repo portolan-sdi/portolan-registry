@@ -485,7 +485,7 @@ def git(*args, cwd):
 
 
 class TestOfflineCatalog:
-    """Issue #234: a maintainer can deprecate a catalog that no longer answers."""
+    """A maintainer can deprecate an unreachable catalog (#234)."""
 
     def down(self):
         return FakeFetcher(docs={ROOT: requests.exceptions.ConnectionError("down")})
@@ -507,7 +507,7 @@ class TestOfflineCatalog:
 
 
 class TestDeprecationRules:
-    """Issue #234: what the gate checks on a deprecation."""
+    """Pull request checks for deprecation fields and replacement IDs (#234)."""
 
     @pytest.fixture(autouse=True)
     def no_crawl(self, monkeypatch):
@@ -582,7 +582,7 @@ class TestDeprecationRules:
         old = self.write(catalogs, "old", extra)
         errors = self.run(catalogs, [old])
         assert len(errors) == 1
-        assert "need 'deprecated: true'" in errors[0]
+        assert "only with 'deprecated: true'" in errors[0]
 
     def test_the_flag_must_be_a_boolean(self, catalogs):
         old = self.write(catalogs, "old", "deprecated: 'yes'\n")

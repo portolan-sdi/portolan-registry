@@ -243,7 +243,7 @@ class TestEntryAt:
 
 
 class TestDeprecatedSince:
-    """Issue #234: the entry holds no date, so git gives it."""
+    """Read deprecation dates from Git history (#234)."""
 
     URL = "url: https://ex.org/catalog.json\n"
 

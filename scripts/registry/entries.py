@@ -1,10 +1,10 @@
 """Reading the `catalogs/` directory of registry entries.
 
-Each entry is a YAML file whose stem is the registry id. It carries the two
-keys a submitter supplies, `url` and `submitter_email`, per
-schema/entry.schema.json. An entry can also carry `deprecated: true`, with an
-optional `superseded_by` and `deprecated_reason` (#234). Every other field is
-crawled from the catalog.
+Each entry is a YAML file whose name, without `.yaml`, is the registry ID.
+Submitters provide `url` and `submitter_email`. They can also set
+`deprecated: true`, with optional `superseded_by` and `deprecated_reason`
+fields. The registry reads all other metadata from the catalog. See
+schema/entry.schema.json.
 """
 
 from __future__ import annotations
@@ -37,10 +37,10 @@ def load_entries(catalog_dir: Path = CATALOG_DIR) -> dict[str, dict[str, Any]]:
 
 @dataclass(frozen=True)
 class Deprecation:
-    """What an entry file says about its deprecation.
+    """Deprecation details from an entry file.
 
-    `superseded_by` and `reason` are None when the entry gives none, and
-    always None when `deprecated` is False.
+    `superseded_by` and `reason` are `None` when omitted or when
+    `deprecated` is `False`.
     """
 
     deprecated: bool
@@ -49,10 +49,11 @@ class Deprecation:
 
 
 def deprecation(entry: dict[str, Any]) -> Deprecation:
-    """Read the deprecation fields of one entry.
+    """Read an entry's deprecation fields.
 
-    Only the boolean `true` deprecates. The schema and the gate reject the
-    other two fields without it, so they are ignored here when it is absent.
+    Only the boolean `true` marks an entry as deprecated. Otherwise, ignore
+    the replacement and reason fields. The schema and pull request checks
+    reject those fields unless `deprecated` is true.
     """
     if entry.get("deprecated") is not True:
         return Deprecation(deprecated=False)

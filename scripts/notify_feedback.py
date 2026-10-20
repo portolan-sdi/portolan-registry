@@ -166,8 +166,8 @@ def main(argv: list[str] | None = None) -> int:
             relationship=sections.get(RELATIONSHIP_FIELD, "not stated"),
             reason=sections.get(REASON_FIELD, "not stated"),
             title=link.get("title"),
-            # The form offers "Remove" and "Deprecate". Anything else, or no
-            # answer, reads as a removal.
+            # Default to removal for older forms without an action field
+            # and for unrecognized answers.
             action="deprecate"
             if sections.get(ACTION_FIELD, "").casefold() == "deprecate"
             else "remove",

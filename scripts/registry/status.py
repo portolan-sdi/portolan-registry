@@ -1,11 +1,11 @@
 """Catalog validation status transitions.
 
-valid -> stale on the first failed re-validation, stale -> removed once it
-has been stale for STALE_THRESHOLD_DAYS. A successful re-validation always
-restores valid, which is how a re-submitted catalog comes back.
+The first failed check changes `valid` to `stale`. Another failure after
+STALE_THRESHOLD_DAYS changes `stale` to `removed`. A successful check
+restores `valid`.
 
-`passes` decides what success means for a catalog that answered. A catalog
-that does not answer always fails.
+`passes` evaluates reachable catalogs. A catalog that cannot be fetched
+always fails.
 """
 
 from __future__ import annotations
@@ -27,21 +27,17 @@ def parse_timestamp(ts: str | None) -> datetime | None:
 
 
 def passes(*, deprecated: bool, stac_valid: bool | None) -> bool | None:
-    """Whether a catalog that answered passes re-validation.
+    """Return whether a reachable catalog passes its registry check.
 
-    Pass this run's validator answer (`ValidationReport.passed`), not the
-    published `stac_valid`. On a run with no answer, `settle_stac_valid`
-    copies the last published value back, and that value is not news.
+    Use `ValidationReport.passed` from the current run. The published
+    `stac_valid` can contain a previous run's result when the validators
+    return no result.
 
-    A catalog that is not deprecated passes when it answers. The validators
-    publish `stac_valid` and do not change its status, because most
-    registered catalogs predate them.
+    Catalogs that are not deprecated pass if they are reachable. Validator
+    errors affect status only for deprecated catalogs.
 
-    A deprecated catalog also fails when the validators report an error
-    (#234). So a deprecated catalog that stays broken leaves the registry
-    after STALE_THRESHOLD_DAYS. When the validators give no answer, return
-    None: the run has no verdict. The caller keeps the state as it stands, so
-    a run with no answer neither advances nor resets the stale clock.
+    If a deprecated catalog has no validation result, return `None`. The
+    caller preserves its current status and failure date.
     """
     if not deprecated:
         return True

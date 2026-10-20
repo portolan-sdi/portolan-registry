@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Re-crawl every registered catalog and update validation state.
+"""Check registered catalogs nightly and update their validation status.
 
-Runs nightly. A catalog that fails goes valid -> stale, and stale -> removed
-after 30 days. A catalog that succeeds returns to valid. A catalog fails when
-it does not answer. A deprecated catalog also fails when the validators report
-an error (registry.status.passes).
+Failed checks change `valid` to `stale`, then `removed` after 30 days without
+a passing check. A passing check restores `valid`. Checks fail when a catalog
+cannot be fetched. For deprecated catalogs, validator errors also count as
+failures. See `registry.status.passes`.
 
     uv run --frozen scripts/revalidate_all.py
     uv run --frozen scripts/revalidate_all.py --no-notify --output -
@@ -55,10 +55,10 @@ from registry.validators import (
 
 
 def validation_failure(report: ValidationReport) -> str:
-    """The failure reason for a deprecated catalog that the validators failed.
+    """Describe the validation errors for a deprecated catalog.
 
-    `report.passed` is False only when the report holds findings, so the
-    list of rules is never empty here.
+    Call this when `report.passed` is `False`, so the report contains at
+    least one finding.
     """
     rules = ", ".join(f"{g.tool} {g.rule_id}" for g in report.groups)
     return f"Deprecated catalog failed validation: {rules}"
@@ -149,7 +149,7 @@ def main(argv: list[str] | None = None) -> int:
         log(f"  OK: {result['title']} ({result['collection_count']} collections)")
         passed = passes(deprecated=state_of_entry.deprecated, stac_valid=report.passed)
         if passed is None:
-            log("  Note: the validators gave no answer, so this deprecated catalog keeps its state")
+            log("  No validation result; keeping the catalog's current status and failure date")
             state[catalog_id] = dict(current_state)
             continue
         rejected = None if passed else validation_failure(report)

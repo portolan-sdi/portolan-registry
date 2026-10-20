@@ -182,16 +182,16 @@ class TestDeprecatedStaleNotification:
         stale(deprecated=True, superseded_by="next-catalog", failure_reason="rashid PTL-1")
         html = post.calls[0]["json"]["html"]
         assert "This catalog is deprecated." in html
-        assert "<strong>next-catalog</strong> as its successor" in html
+        assert "Its replacement is <code>next-catalog</code>" in html
         assert "rashid PTL-1" in html
 
     def test_without_a_successor_names_none(self, post):
         stale(deprecated=True)
         html = post.calls[0]["json"]["html"]
         assert "This catalog is deprecated." in html
-        assert "successor" not in html
+        assert "replacement" not in html
 
-    def test_a_catalog_that_is_not_deprecated_keeps_the_old_text(self, post):
+    def test_a_catalog_that_is_not_deprecated_explains_unreachable_status(self, post):
         stale()
         html = post.calls[0]["json"]["html"]
         assert "deprecated" not in html
@@ -207,7 +207,7 @@ class TestDeprecationRequest:
         removal(action="deprecate")
         payload = post.calls[0]["json"]
         assert "Request to deprecate your catalog" in payload["subject"]
-        assert "requested deprecation of" in payload["html"]
+        assert "asked to deprecate" in payload["html"]
         assert "object to the deprecation" in payload["html"]
 
     def test_an_unknown_action_reads_as_a_removal(self, post):
