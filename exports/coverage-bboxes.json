@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-19T12:14:03.655876+00:00",
+  "generated": "2026-10-20T10:58:12.223484+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-10-19T12:14:03.655876+00:00",
+  "registry_generated": "2026-10-20T10:58:12.223484+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -54094,26 +54094,6 @@
           ]
         },
         {
-          "id": "metropolitni-plan/ulice-cesty",
-          "title": "MPP - Ulice, cesty",
-          "bbox": [
-            14.259,
-            49.9433,
-            14.6902,
-            50.172
-          ]
-        },
-        {
-          "id": "metropolitni-plan/vyskova-regulace",
-          "title": "MPP - V\u00fd\u0161kov\u00e1 regulace",
-          "bbox": [
-            14.2584,
-            49.9434,
-            14.6915,
-            50.1724
-          ]
-        },
-        {
           "id": "metropolitni-plan/lokality",
           "title": "MPP - Lokality",
           "bbox": [
@@ -54131,6 +54111,26 @@
             49.9433,
             14.6865,
             50.176
+          ]
+        },
+        {
+          "id": "metropolitni-plan/ulice-cesty",
+          "title": "MPP - Ulice, cesty",
+          "bbox": [
+            14.259,
+            49.9433,
+            14.6902,
+            50.172
+          ]
+        },
+        {
+          "id": "metropolitni-plan/vyskova-regulace",
+          "title": "MPP - V\u00fd\u0161kov\u00e1 regulace",
+          "bbox": [
+            14.2584,
+            49.9434,
+            14.6915,
+            50.1724
           ]
         },
         {
@@ -54204,16 +54204,6 @@
           ]
         },
         {
-          "id": "uzemni-plan/stavebni-uzavery",
-          "title": "Stavebn\u00ed uz\u00e1v\u011bry",
-          "bbox": [
-            14.2891,
-            50.0052,
-            14.5418,
-            50.1472
-          ]
-        },
-        {
           "id": "uzemni-plan/podmerecne-plochy-plovouci",
           "title": "Pl\u00e1n vyu\u017eit\u00ed ploch - podm\u011bre\u010dn\u00e9 funk\u010dn\u00ed plochy (plovouc\u00ed) - body (\u00fazemn\u00ed pl\u00e1n)",
           "bbox": [
@@ -54231,6 +54221,16 @@
             49.961,
             14.6687,
             50.1734
+          ]
+        },
+        {
+          "id": "uzemni-plan/stavebni-uzavery",
+          "title": "Stavebn\u00ed uz\u00e1v\u011bry",
+          "bbox": [
+            14.2891,
+            50.0052,
+            14.5418,
+            50.1472
           ]
         },
         {
@@ -54254,23 +54254,13 @@
           ]
         },
         {
-          "id": "zelen/vegetacni-prvky-body",
-          "title": "Sd\u00edlen\u00e1 data o zeleni - vegeta\u010dn\u00ed prvky - body",
+          "id": "zastavba/soucasny-stav-vyuziti-uzemi",
+          "title": "Sou\u010dasn\u00fd stav vyu\u017eit\u00ed \u00fazem\u00ed",
           "bbox": [
-            8.816,
-            49.943,
-            14.681,
-            53.0327
-          ]
-        },
-        {
-          "id": "zelen/zakladni-plochy-zelene",
-          "title": "Sd\u00edlen\u00e1 data o zeleni - z\u00e1kladn\u00ed plochy zelen\u011b",
-          "bbox": [
-            14.258,
-            49.9429,
-            14.7,
-            50.1748
+            14.2191,
+            49.9419,
+            14.7068,
+            50.1938
           ]
         },
         {
@@ -54294,6 +54284,26 @@
           ]
         },
         {
+          "id": "zelen/vegetacni-prvky-body",
+          "title": "Sd\u00edlen\u00e1 data o zeleni - vegeta\u010dn\u00ed prvky - body",
+          "bbox": [
+            8.816,
+            49.943,
+            14.681,
+            53.0327
+          ]
+        },
+        {
+          "id": "zelen/zakladni-plochy-zelene",
+          "title": "Sd\u00edlen\u00e1 data o zeleni - z\u00e1kladn\u00ed plochy zelen\u011b",
+          "bbox": [
+            14.258,
+            49.9429,
+            14.7,
+            50.1748
+          ]
+        },
+        {
           "id": "zivotni-prostredi/hlukova-mapa-den",
           "title": "Hlukov\u00e1 mapa - den",
           "bbox": [
@@ -54314,6 +54324,16 @@
           ]
         },
         {
+          "id": "zivotni-prostredi/voda-spojita",
+          "title": "Voda spojit\u00e1",
+          "bbox": [
+            14.2562,
+            49.942,
+            14.6757,
+            50.1696
+          ]
+        },
+        {
           "id": "zivotni-prostredi/zaplavove-uzemi-drobne-toky",
           "title": "Z\u00e1plavov\u00e9 \u00fazem\u00ed ( drobn\u00e9 vodn\u00ed toky )",
           "bbox": [
@@ -54331,26 +54351,6 @@
             49.9419,
             14.4772,
             50.1479
-          ]
-        },
-        {
-          "id": "zivotni-prostredi/voda-spojita",
-          "title": "Voda spojit\u00e1",
-          "bbox": [
-            14.2562,
-            49.942,
-            14.6757,
-            50.1696
-          ]
-        },
-        {
-          "id": "zastavba/soucasny-stav-vyuziti-uzemi",
-          "title": "Sou\u010dasn\u00fd stav vyu\u017eit\u00ed \u00fazem\u00ed",
-          "bbox": [
-            14.2191,
-            49.9419,
-            14.7068,
-            50.1938
           ]
         }
       ]
