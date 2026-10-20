@@ -33,7 +33,7 @@ dev = [
 # rather than turn existing entries red overnight. Kept out of `dev` because it
 # pulls in rasterio and pyarrow. Install with `--group validators`.
 validators = [
-    "rashid==0.1.8",
+    "rashid==0.3.0",
 ]
 
 # Dependencies only. There is nothing to build or install, so uv skips the
