@@ -14,6 +14,7 @@ import subprocess  # nosec B404
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
+from typing import Any
 
 import yaml
 
@@ -91,13 +92,44 @@ def _entry_url(text: str | None) -> str | None:
     return url if isinstance(url, str) and url else None
 
 
+def entry_at(ref: str, path: Path) -> dict[str, Any] | None:
+    """Return the entry at `path` as it stood at `ref`.
+
+    If the entry did not exist at `ref`, did not parse, or Git cannot read
+    it, return `None`.
+    """
+    # `./` makes the path relative to the entry's directory, where Git runs.
+    text = _git(path.parent, "show", f"{ref}:./{path.name}")
+    try:
+        entry = yaml.safe_load(text) if text else None
+    except yaml.YAMLError:
+        return None
+    return entry if isinstance(entry, dict) else None
+
+
 def url_at(ref: str, path: Path) -> str | None:
     """Return the URL that the entry at `path` held at `ref`.
 
     If the entry did not exist at `ref`, or Git cannot read it, return `None`.
     """
-    # `./` makes the path relative to the entry's directory, where Git runs.
-    return _entry_url(_git(path.parent, "show", f"{ref}:./{path.name}"))
+    url = (entry_at(ref, path) or {}).get("url")
+    return url if isinstance(url, str) and url else None
+
+
+def deprecated_since(path: Path) -> str | None:
+    """Return the RFC 3339 timestamp of the commit that deprecated `path`.
+
+    The entry holds no date. The newest commit that changed the top-level
+    `deprecated:` line is the one that set its current value, so call this
+    only for an entry that is deprecated now. The pattern does not match
+    `deprecated_reason:`, so an edit of the reason does not move the date.
+
+    Return `None` when Git cannot answer. The caller then keeps the date
+    already published, as with `first_registered`.
+    """
+    out = _git(path.parent, "log", "-1", "-G", "^deprecated:", "--format=%aI", "--", path.name)
+    stamp = (out or "").strip()
+    return _canonical(stamp) if stamp else None
 
 
 @dataclass(frozen=True)

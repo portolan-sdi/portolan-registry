@@ -33,10 +33,10 @@ from typing import Any
 import requests
 
 from registry.contacts import validate_submitter_email
-from registry.entries import CATALOG_DIR, load_entries, load_entry, normalize_url
+from registry.entries import CATALOG_DIR, deprecation, load_entries, load_entry, normalize_url
 from registry.export import EXPORT_PATH, load_links, load_state
 from registry.fetch import HttpFetcher
-from registry.history import Deletion, deletions, url_at
+from registry.history import Deletion, deletions, entry_at, url_at
 from registry.mirror import MirrorSource
 from registry.report import log
 from registry.validators import crawl_and_validate
@@ -49,6 +49,9 @@ APPROVAL_HINT = (
 REMOVAL_FORM = (
     "https://github.com/portolan-sdi/portolan-registry/issues/new?template=catalog-removal.yml"
 )
+
+# Matches schema/entry.schema.json.
+REASON_MAX = 300
 
 # The filename without its extension is the registry ID. IDs cannot change
 # or be reused for another catalog (#242).
@@ -231,6 +234,135 @@ def id_errors(
     return errors
 
 
+def _successor_errors(
+    path: Path,
+    successor: object,
+    entries: Mapping[str, Mapping[str, Any]],
+    state: Mapping[str, Mapping[str, Any]],
+) -> list[str]:
+    """Return errors for the `superseded_by` value of one deprecated entry."""
+    if not isinstance(successor, str) or not STEM_RE.match(successor):
+        return [
+            f"{path}: 'superseded_by' must be a registry ID, such as 'city-of-example-parcels'."
+        ]
+    if successor == path.stem:
+        return [f"{path}: 'superseded_by' names this entry. Name the catalog that replaces it."]
+    if successor not in entries:
+        return [
+            f"{path}: 'superseded_by' names '{successor}', which has no entry file in "
+            "catalogs/. Register the successor first, or in the same pull request."
+        ]
+
+    # Follow the chain. A successor can be deprecated too, but the chain must end.
+    seen = [path.stem]
+    current: str | None = successor
+    while current is not None:
+        if current in seen:
+            chain = " -> ".join([*seen, current])
+            return [f"{path}: 'superseded_by' forms a cycle: {chain}."]
+        seen.append(current)
+        current = deprecation(dict(entries.get(current, {}))).superseded_by
+
+    if deprecation(dict(entries[successor])).deprecated:
+        log(f"  Warning: the successor '{successor}' is deprecated too")
+    if state.get(successor, {}).get("status") == "removed":
+        log(f"  Warning: the successor '{successor}' has status 'removed' in the export")
+    return []
+
+
+def _entry_deprecation_errors(
+    path: Path,
+    *,
+    added: set[Path],
+    entries: Mapping[str, Mapping[str, Any]],
+    base_ref: str | None,
+    state: Mapping[str, Mapping[str, Any]],
+) -> list[str]:
+    """Return the deprecation errors for one changed entry that exists."""
+    entry = load_entry(path)
+    flag = entry.get("deprecated")
+    if "deprecated" in entry and not isinstance(flag, bool):
+        return [f"{path}: 'deprecated' must be true or false."]
+    extras = [k for k in ("superseded_by", "deprecated_reason") if k in entry]
+    if extras and flag is not True:
+        return [f"{path}: {' and '.join(repr(k) for k in extras)} need 'deprecated: true'."]
+    if flag is not True:
+        return []
+    if path.resolve() in added:
+        return [
+            f"{path}: A new entry cannot be deprecated. Register the catalog without "
+            "'deprecated', or do not register it."
+        ]
+
+    errors = []
+    reason = entry.get("deprecated_reason")
+    if "deprecated_reason" in entry and (
+        not isinstance(reason, str) or not 1 <= len(reason) <= REASON_MAX
+    ):
+        errors.append(f"{path}: 'deprecated_reason' must be text of 1 to {REASON_MAX} characters.")
+    if "superseded_by" in entry:
+        errors.extend(_successor_errors(path, entry["superseded_by"], entries, state))
+
+    base = entry_at(base_ref, path) if base_ref else None
+    if base is not None and not deprecation(base).deprecated:
+        old_url, new_url = base.get("url"), entry.get("url")
+        if (
+            isinstance(old_url, str)
+            and isinstance(new_url, str)
+            and normalize_url(old_url) != normalize_url(new_url)
+        ):
+            errors.append(
+                f"{path}: This pull request deprecates the entry and changes its URL. "
+                "Make each change in its own pull request."
+            )
+    return errors
+
+
+def deprecation_errors(
+    changed_file: Path,
+    added_file: Path | None,
+    *,
+    catalog_dir: Path,
+    base_ref: str | None,
+    state: Mapping[str, Mapping[str, Any]],
+) -> list[str]:
+    """Return an error for each deprecation rule a changed entry breaks (#234).
+
+    - `superseded_by` and `deprecated_reason` need `deprecated: true`.
+    - `superseded_by` names an entry in the pull request head. It cannot name
+      the entry itself or form a cycle.
+    - A new entry cannot be deprecated. A catalog is registered first.
+    - One pull request cannot both deprecate an entry and change its URL, so
+      a maintainer reviews the two changes apart. This rule needs `base_ref`.
+    - A deletion fails while a remaining entry names the deleted ID as its
+      successor.
+
+    A maintainer approval does not clear these errors.
+    """
+    entries = load_entries(catalog_dir)
+    added = {p.resolve() for p in read_paths(added_file)} if added_file else set()
+    errors: list[str] = []
+    for path in changed_entries(changed_file):
+        errors.extend(
+            _entry_deprecation_errors(
+                path, added=added, entries=entries, base_ref=base_ref, state=state
+            )
+        )
+
+    for path in read_paths(changed_file):
+        if path.exists():
+            continue
+        referrers = sorted(
+            cid for cid, entry in entries.items() if entry.get("superseded_by") == path.stem
+        )
+        if referrers:
+            errors.append(
+                f"{path}: {', '.join(repr(r) for r in referrers)} names '{path.stem}' in "
+                "'superseded_by'. Change or remove that successor first."
+            )
+    return errors
+
+
 def is_new_entry(catalog_id: str, url: str, published: Mapping[str, Mapping[str, Any]]) -> bool:
     """True when the validators gate this entry. See the module docstring."""
     link = published.get(catalog_id)
@@ -287,11 +419,20 @@ def check_entry(
 
     gated = is_new_entry(path.stem, url, published or {})
 
+    # A registered entry at its published URL is not gated. A crawl failure
+    # then says nothing the gate acts on, and failing on it would block an
+    # approved edit of an offline catalog, such as its deprecation (#234).
     try:
         result, report = crawl_and_validate(url, source_factory)
     except requests.exceptions.RequestException as e:
+        if not gated:
+            log(f"  Note: the catalog did not answer ({e}). It is registered, so this passes.")
+            return []
         return [f"{path}: Failed to fetch catalog: {e}"]
     except Exception as e:
+        if not gated:
+            log(f"  Note: the crawl failed ({e}). The catalog is registered, so this passes.")
+            return []
         return [f"{path}: Error processing catalog: {e}"]
 
     log(f"  Title: {result['title']}")
@@ -385,6 +526,15 @@ def collect_errors(
                     maintainer_approved=maintainer_approved,
                 )
             )
+        errors.extend(
+            deprecation_errors(
+                changed_file,
+                added_file,
+                catalog_dir=catalog_dir,
+                base_ref=base_ref,
+                state=state,
+            )
+        )
         for path in changed_entries(changed_file):
             errors.extend(
                 check_entry(

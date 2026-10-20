@@ -196,6 +196,10 @@ REMOVAL = """### Catalog ID
 
 pergamino-ide
 
+### Action
+
+Remove
+
 ### Relationship
 
 I work for the publisher, and someone else registered it
@@ -241,7 +245,18 @@ class TestRemovalRequest:
         assert removal_sent[0]["relationship"].startswith("I work for the publisher")
         assert removal_sent[0]["reason"] == "The publisher now registers its own catalog."
         assert removal_sent[0]["title"] == "Pergamino IDE"
+        assert removal_sent[0]["action"] == "remove"
         assert capsys.readouterr().out == ""
+
+    def test_reads_a_deprecation_request(self, requested, removal_sent, monkeypatch):
+        monkeypatch.setenv("ISSUE_BODY", REMOVAL.replace("\n\nRemove\n", "\n\nDeprecate\n"))
+        run(requested, extra=["--form", "removal"])
+        assert removal_sent[0]["action"] == "deprecate"
+
+    def test_no_action_reads_as_a_removal(self, requested, removal_sent, monkeypatch):
+        monkeypatch.setenv("ISSUE_BODY", "### Catalog ID\n\npergamino-ide\n")
+        run(requested, extra=["--form", "removal"])
+        assert removal_sent[0]["action"] == "remove"
 
     def test_a_blank_answer_reads_as_not_stated(self, requested, removal_sent, monkeypatch):
         monkeypatch.setenv("ISSUE_BODY", "### Catalog ID\n\npergamino-ide\n")
@@ -317,6 +332,7 @@ def test_the_removal_form_carries_the_headings_the_script_reads():
     }
     for heading in (
         notify_feedback.CATALOG_FIELD,
+        notify_feedback.ACTION_FIELD,
         notify_feedback.RELATIONSHIP_FIELD,
         notify_feedback.REASON_FIELD,
     ):

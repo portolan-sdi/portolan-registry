@@ -11,7 +11,15 @@ import subprocess
 
 import pytest
 
-from registry.history import Deletion, _canonical, deletions, first_registered, url_at
+from registry.history import (
+    Deletion,
+    _canonical,
+    deletions,
+    deprecated_since,
+    entry_at,
+    first_registered,
+    url_at,
+)
 
 
 def git(*args, cwd):
@@ -208,3 +216,67 @@ class TestDeletions:
 
     def test_returns_empty_outside_a_repository(self, tmp_path):
         assert deletions("HEAD", tmp_path) == []
+
+
+def commit_at(repo, message, stamp):
+    git("add", "-A", cwd=repo)
+    subprocess.run(
+        ["git", "commit", "-q", "-m", message],
+        cwd=repo,
+        check=True,
+        capture_output=True,
+        env={**os.environ, "GIT_AUTHOR_DATE": stamp, "GIT_COMMITTER_DATE": stamp},
+    )
+
+
+class TestEntryAt:
+    def test_reads_the_whole_entry_at_a_ref(self, repo):
+        assert entry_at("HEAD", repo / "catalogs" / "example.yaml") == {
+            "url": "https://ex.org/catalog.json"
+        }
+
+    def test_an_entry_that_does_not_parse_is_none(self, repo):
+        entry = repo / "catalogs" / "example.yaml"
+        entry.write_text("url: [unclosed\n")
+        commit_all(repo, "break example")
+        assert entry_at("HEAD", entry) is None
+
+
+class TestDeprecatedSince:
+    """Issue #234: the entry holds no date, so git gives it."""
+
+    URL = "url: https://ex.org/catalog.json\n"
+
+    def test_reads_the_commit_that_deprecated_the_entry(self, repo):
+        entry = repo / "catalogs" / "example.yaml"
+        entry.write_text(self.URL + "deprecated: true\n")
+        commit_at(repo, "deprecate example", "2026-10-16T09:12:00+00:00")
+        assert deprecated_since(entry) == "2026-10-16T09:12:00+00:00"
+
+    def test_an_edit_of_the_reason_does_not_move_the_date(self, repo):
+        entry = repo / "catalogs" / "example.yaml"
+        entry.write_text(self.URL + "deprecated: true\ndeprecated_reason: First.\n")
+        commit_at(repo, "deprecate example", "2026-10-16T09:12:00+00:00")
+        entry.write_text(self.URL + "deprecated: true\ndeprecated_reason: Second.\n")
+        commit_at(repo, "reword the reason", "2026-10-18T09:12:00+00:00")
+        assert deprecated_since(entry) == "2026-10-16T09:12:00+00:00"
+
+    def test_a_second_deprecation_takes_its_own_date(self, repo):
+        entry = repo / "catalogs" / "example.yaml"
+        entry.write_text(self.URL + "deprecated: true\n")
+        commit_at(repo, "deprecate", "2026-10-16T09:12:00+00:00")
+        entry.write_text(self.URL)
+        commit_at(repo, "un-deprecate", "2026-10-17T09:12:00+00:00")
+        entry.write_text(self.URL + "deprecated: true\n")
+        commit_at(repo, "deprecate again", "2026-10-19T09:12:00+00:00")
+        assert deprecated_since(entry) == "2026-10-19T09:12:00+00:00"
+
+    def test_an_uncommitted_deprecation_has_no_date(self, repo):
+        entry = repo / "catalogs" / "example.yaml"
+        entry.write_text(self.URL + "deprecated: true\n")
+        assert deprecated_since(entry) is None
+
+    def test_returns_none_outside_a_repository(self, tmp_path):
+        loose = tmp_path / "example.yaml"
+        loose.write_text(self.URL + "deprecated: true\n")
+        assert deprecated_since(loose) is None

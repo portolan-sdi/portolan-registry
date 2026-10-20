@@ -45,6 +45,7 @@ CATALOG_FIELD = "catalog id"
 # dataset-problem.yml.
 KIND_FIELDS = ("kind of problem", "what kind of problem is it?")
 # The removal request form, .github/ISSUE_TEMPLATE/catalog-removal.yml.
+ACTION_FIELD = "action"
 RELATIONSHIP_FIELD = "relationship"
 REASON_FIELD = "why"
 
@@ -165,6 +166,11 @@ def main(argv: list[str] | None = None) -> int:
             relationship=sections.get(RELATIONSHIP_FIELD, "not stated"),
             reason=sections.get(REASON_FIELD, "not stated"),
             title=link.get("title"),
+            # The form offers "Remove" and "Deprecate". Anything else, or no
+            # answer, reads as a removal.
+            action="deprecate"
+            if sections.get(ACTION_FIELD, "").casefold() == "deprecate"
+            else "remove",
             enabled=not args.no_notify,
         )
         return 0

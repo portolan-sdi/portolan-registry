@@ -9,11 +9,13 @@ from datetime import timedelta
 import pytest
 from conftest import FIXTURES, FROZEN
 
+from registry import export as export_module
 from registry.crawl import crawl_catalog
 from registry.export import (
     RETIRED_FIELDS,
     TIMESTAMP_REFRESH_DAYS,
     ExportRefused,
+    apply_entry_fields,
     build_export,
     check_export_safe,
     child_link,
@@ -238,6 +240,13 @@ class TestRetiredFields:
         assert link["portolan_registry:has_agents_md"] is False
         assert link["portolan_registry:has_readme"] is False
 
+    def test_backfills_the_deprecation_fields(self, tmp_path):
+        link = load_links(self.written(tmp_path, {"portolan_registry:id": "a"}))["a"]
+        assert link["portolan_registry:deprecated"] is False
+        assert link["portolan_registry:deprecated_since"] is None
+        assert link["portolan_registry:deprecated_reason"] is None
+        assert link["portolan_registry:superseded_by"] is None
+
     def test_keeps_a_value_the_link_already_carries(self, tmp_path):
         path = self.written(
             tmp_path,
@@ -445,3 +454,102 @@ class TestCommittedExport:
         """`portolan:` belongs to the specification. Registry-only fields
         answer to `portolan_registry:` so a reader can tell which is which."""
         assert '"portolan:' not in EXPORT.read_text()
+
+
+DEPRECATION_FIELDS = (
+    "portolan_registry:deprecated",
+    "portolan_registry:deprecated_since",
+    "portolan_registry:deprecated_reason",
+    "portolan_registry:superseded_by",
+)
+
+
+class TestApplyEntryFields:
+    """Issue #234: the entry file, not the crawl, says a catalog is deprecated."""
+
+    @pytest.fixture(autouse=True)
+    def no_git(self, monkeypatch):
+        """Each test sets the date git would give. None means git cannot say."""
+        self.since = None
+        monkeypatch.setattr(export_module, "deprecated_since", lambda path: self.since)
+
+    def entries(self, tmp_path, **files):
+        catalogs = tmp_path / "catalogs"
+        catalogs.mkdir(exist_ok=True)
+        for stem, body in files.items():
+            (catalogs / f"{stem}.yaml").write_text(f"url: {ROOT}\n{body}")
+        return catalogs
+
+    def export_of(self, *links):
+        return build_export(
+            [], extra_links=[{"rel": "child", "href": ROOT, **link} for link in links]
+        )
+
+    def child(self, export, catalog_id):
+        return next(
+            link for link in export["links"] if link.get("portolan_registry:id") == catalog_id
+        )
+
+    def test_child_link_writes_the_defaults(self):
+        link = child_link({"id": "x", "url": ROOT})
+        assert link["portolan_registry:deprecated"] is False
+        assert all(link[k] is None for k in DEPRECATION_FIELDS[1:])
+
+    def test_writes_the_entry_fields_onto_a_carried_link(self, tmp_path):
+        """A deprecation merged on a night the crawl failed still reaches the export."""
+        self.since = "2026-10-16T09:12:00+00:00"
+        catalogs = self.entries(
+            tmp_path,
+            old="deprecated: true\nsuperseded_by: new\ndeprecated_reason: Replaced.\n",
+        )
+        export = self.export_of(
+            {"portolan_registry:id": "old", "portolan_registry:status": "valid"}
+        )
+        apply_entry_fields(export, catalogs, {})
+        link = self.child(export, "old")
+        assert link["portolan_registry:deprecated"] is True
+        assert link["portolan_registry:deprecated_since"] == "2026-10-16T09:12:00+00:00"
+        assert link["portolan_registry:deprecated_reason"] == "Replaced."
+        assert link["portolan_registry:superseded_by"] == "new"
+
+    def test_the_flag_alone_publishes_nulls_for_the_rest(self, tmp_path):
+        catalogs = self.entries(tmp_path, old="deprecated: true\n")
+        export = self.export_of({"portolan_registry:id": "old"})
+        apply_entry_fields(export, catalogs, {})
+        link = self.child(export, "old")
+        assert link["portolan_registry:deprecated"] is True
+        assert link["portolan_registry:deprecated_reason"] is None
+        assert link["portolan_registry:superseded_by"] is None
+
+    def test_an_un_deprecation_clears_a_carried_flag(self, tmp_path):
+        catalogs = self.entries(tmp_path, old="")
+        export = self.export_of(
+            {
+                "portolan_registry:id": "old",
+                "portolan_registry:deprecated": True,
+                "portolan_registry:deprecated_since": "2026-10-16T09:12:00+00:00",
+                "portolan_registry:deprecated_reason": "Replaced.",
+                "portolan_registry:superseded_by": "new",
+            }
+        )
+        apply_entry_fields(export, catalogs, {})
+        link = self.child(export, "old")
+        assert link["portolan_registry:deprecated"] is False
+        assert all(link[k] is None for k in DEPRECATION_FIELDS[1:])
+
+    def test_a_shallow_clone_keeps_the_published_date(self, tmp_path):
+        catalogs = self.entries(tmp_path, old="deprecated: true\n")
+        export = self.export_of({"portolan_registry:id": "old"})
+        previous = {"old": {"portolan_registry:deprecated_since": "2026-10-16T09:12:00+00:00"}}
+        apply_entry_fields(export, catalogs, previous)
+        assert (
+            self.child(export, "old")["portolan_registry:deprecated_since"]
+            == "2026-10-16T09:12:00+00:00"
+        )
+
+    def test_root_and_self_links_are_left_alone(self, tmp_path):
+        catalogs = self.entries(tmp_path, old="deprecated: true\n")
+        export = self.export_of({"portolan_registry:id": "old"})
+        apply_entry_fields(export, catalogs, {})
+        for link in export["links"][:2]:
+            assert not any(k in link for k in DEPRECATION_FIELDS)

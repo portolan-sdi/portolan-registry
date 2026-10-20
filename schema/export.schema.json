@@ -51,7 +51,11 @@
               "portolan_registry:status",
               "portolan_registry:collection_count",
               "portolan_registry:has_agents_md",
-              "portolan_registry:has_readme"
+              "portolan_registry:has_readme",
+              "portolan_registry:deprecated",
+              "portolan_registry:deprecated_since",
+              "portolan_registry:deprecated_reason",
+              "portolan_registry:superseded_by"
             ],
             "description": "Closed on purpose. The export is the registry's published contract and its sole store of validation state, so a field the crawler stopped writing, or one a carried-forward link never gained, has to fail this check rather than ride along unnoticed. An allOf branch reads its own properties only, so the STAC link fields are declared again here.",
             "additionalProperties": false,
@@ -143,7 +147,24 @@
                 "type": ["boolean", "null"]
               },
               "portolan_registry:has_agents_md": {"type": "boolean"},
-              "portolan_registry:has_readme": {"type": "boolean"}
+              "portolan_registry:has_readme": {"type": "boolean"},
+              "portolan_registry:deprecated": {
+                "description": "True when the entry file sets deprecated: true. A deprecated catalog stays in the export. It becomes removed after 30 days in a row of failures, where a failure is a root that does not answer or portolan_registry:stac_valid false. Consumers can show a badge or hide the catalog.",
+                "type": "boolean"
+              },
+              "portolan_registry:deprecated_since": {
+                "description": "When the catalog was deprecated, RFC 3339, read from the commit that set deprecated: true in its entry file. Null when the catalog is not deprecated, or when git history cannot give the date.",
+                "type": ["string", "null"]
+              },
+              "portolan_registry:deprecated_reason": {
+                "description": "The reason the entry file gives for the deprecation, in plain text. Null when the catalog is not deprecated or gives no reason.",
+                "type": ["string", "null"]
+              },
+              "portolan_registry:superseded_by": {
+                "description": "The registry ID of the catalog that replaces this one. Find its link by portolan_registry:id. Null when the catalog is not deprecated or names no successor.",
+                "type": ["string", "null"],
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+              }
             }
           }
         }

@@ -28,19 +28,45 @@ FOOTER = (
 )
 
 
-def _stale_body(title: str, url: str, failure_reason: str) -> str:
+def _stale_body(
+    title: str,
+    url: str,
+    failure_reason: str,
+    *,
+    deprecated: bool = False,
+    superseded_by: str | None = None,
+) -> str:
     title, url, failure_reason = (
         html.escape(title),
         html.escape(url),
         html.escape(failure_reason),
     )
+    if deprecated:
+        successor = (
+            f" The registry lists <strong>{html.escape(superseded_by)}</strong> as its successor."
+            if superseded_by
+            else ""
+        )
+        outcome = (
+            f"<p>This catalog is deprecated.{successor} A deprecated catalog that "
+            "does not answer, or that rashid or stac-node-validator rejects, every "
+            "night for 30 days is marked as removed from the registry.</p>"
+            "<p>To keep the catalog listed, fix the reported errors. If the catalog "
+            "should leave the registry now, you do not need to do anything.</p>"
+        )
+    else:
+        outcome = (
+            "<p>If the catalog remains unreachable for 30 days, it will be marked as "
+            "removed from the registry.</p>"
+            "<p>To resolve this issue, please ensure your catalog is accessible and "
+            "re-submit if needed.</p>"
+        )
     return f"""
         <h2>Catalog Validation Failed</h2>
         <p>Your STAC catalog <strong>{title}</strong> failed validation during our periodic re-check.</p>
         <p><strong>Catalog URL:</strong> <a href="{url}">{url}</a></p>
         <p><strong>Reason:</strong> {failure_reason}</p>
-        <p>If the catalog remains unreachable for 30 days, it will be marked as removed from the registry.</p>
-        <p>To resolve this issue, please ensure your catalog is accessible and re-submit if needed.</p>
+        {outcome}
         {FOOTER}
     """
 
@@ -67,6 +93,11 @@ def _feedback_body(title: str, kind: str, issue_url: str, issue_title: str) -> s
 OBJECTION_DAYS = 14
 
 
+# The removal request form asks for one of these actions. Each maps to the
+# words the mail uses for it: (noun, verb).
+REQUEST_ACTIONS = {"remove": ("removal", "remove"), "deprecate": ("deprecation", "deprecate")}
+
+
 def _removal_body(
     title: str,
     requester: str,
@@ -74,7 +105,9 @@ def _removal_body(
     reason: str,
     issue_url: str,
     issue_title: str,
+    action: str = "remove",
 ) -> str:
+    noun, _ = REQUEST_ACTIONS[action]
     title, requester, relationship, reason, issue_url, issue_title = (
         html.escape(title),
         html.escape(requester),
@@ -84,18 +117,18 @@ def _removal_body(
         html.escape(issue_title),
     )
     return f"""
-        <h2>Request to remove your catalog</h2>
-        <p>GitHub user <strong>{requester}</strong> requested removal of <strong>{title}</strong>, which you registered in the Portolan registry.</p>
+        <h2>Request to {REQUEST_ACTIONS[action][1]} your catalog</h2>
+        <p>GitHub user <strong>{requester}</strong> requested {noun} of <strong>{title}</strong>, which you registered in the Portolan registry.</p>
         <dl>
             <dt>Requester's stated relationship to the catalog</dt>
             <dd>{relationship}</dd>
             <dt>Reason for the request</dt>
             <dd>{reason}</dd>
-            <dt>Removal request</dt>
+            <dt>Request</dt>
             <dd><a href="{issue_url}">{issue_title}</a></dd>
         </dl>
-        <p>If you made this request, you do not need to take any action. If you object to the removal, comment on the linked issue within {OBJECTION_DAYS} days.</p>
-        <p>A maintainer reviews every request before removing a catalog from the registry.</p>
+        <p>If you made this request, you do not need to take any action. If you object to the {noun}, comment on the linked issue within {OBJECTION_DAYS} days.</p>
+        <p>A maintainer reviews every request before the registry acts on it.</p>
         {FOOTER}
     """
 
@@ -162,14 +195,26 @@ def send_stale_notification(
     url: str,
     failure_reason: str,
     title: str | None = None,
+    deprecated: bool = False,
+    superseded_by: str | None = None,
     enabled: bool = True,
 ) -> bool:
-    """Mail the submitter that their catalog went stale. Returns True if sent."""
+    """Mail the submitter that their catalog went stale. Returns True if sent.
+
+    For a deprecated catalog, the mail names the successor, if any, and says
+    that a validator failure also counts toward removal.
+    """
     return _send(
         catalog_id,
         submitter_email=submitter_email,
         subject=(f"[Portolan Registry] Catalog validation failed: {title or catalog_id}"),
-        body=_stale_body(title or catalog_id, url, failure_reason),
+        body=_stale_body(
+            title or catalog_id,
+            url,
+            failure_reason,
+            deprecated=deprecated,
+            superseded_by=superseded_by,
+        ),
         enabled=enabled,
     )
 
@@ -204,15 +249,24 @@ def send_removal_request_notification(
     relationship: str,
     reason: str,
     title: str | None = None,
+    action: str = "remove",
     enabled: bool = True,
 ) -> bool:
-    """Email the submitter a removal request. Return `True` if the email was sent."""
+    """Email the submitter a removal or deprecation request.
+
+    `action` is a key of REQUEST_ACTIONS. Return `True` if the email was sent.
+    """
+    if action not in REQUEST_ACTIONS:
+        action = "remove"
     return _send(
         catalog_id,
         submitter_email=submitter_email,
-        subject=f"[Portolan Registry] Request to remove your catalog: {title or catalog_id}",
+        subject=(
+            f"[Portolan Registry] Request to {REQUEST_ACTIONS[action][1]} your catalog: "
+            f"{title or catalog_id}"
+        ),
         body=_removal_body(
-            title or catalog_id, requester, relationship, reason, issue_url, issue_title
+            title or catalog_id, requester, relationship, reason, issue_url, issue_title, action
         ),
         enabled=enabled,
     )

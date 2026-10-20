@@ -2,7 +2,9 @@
 """Re-crawl every registered catalog and update validation state.
 
 Runs nightly. A catalog that fails goes valid -> stale, and stale -> removed
-after 30 days. A catalog that succeeds returns to valid.
+after 30 days. A catalog that succeeds returns to valid. A catalog fails when
+it does not answer. A deprecated catalog also fails when the validators report
+an error (registry.status.passes).
 
     uv run --frozen scripts/revalidate_all.py
     uv run --frozen scripts/revalidate_all.py --no-notify --output -
@@ -27,10 +29,11 @@ from registry.coverage import (
     write_coverage,
 )
 from registry.crawl import CrawlResult
-from registry.entries import CATALOG_DIR, entry_paths, load_entry
+from registry.entries import CATALOG_DIR, Deprecation, deprecation, entry_paths, load_entry
 from registry.export import (
     EXPORT_PATH,
     ExportRefused,
+    apply_entry_fields,
     build_export,
     check_export_safe,
     export_changed,
@@ -42,8 +45,22 @@ from registry.fetch import HttpFetcher
 from registry.history import first_registered
 from registry.notify import send_stale_notification
 from registry.report import log
-from registry.status import update_status
-from registry.validators import crawl_and_validate, log_validation, settle_stac_valid
+from registry.status import passes, update_status
+from registry.validators import (
+    ValidationReport,
+    crawl_and_validate,
+    log_validation,
+    settle_stac_valid,
+)
+
+
+def validation_failure(report: ValidationReport) -> str:
+    """The failure reason for a deprecated catalog that the validators failed."""
+    rules = ", ".join(f"{g.tool} {g.rule_id}" for g in report.groups)
+    if rules:
+        return f"Deprecated catalog failed validation: {rules}"
+    # settle_stac_valid kept an earlier False because this run had no answer.
+    return "Deprecated catalog failed validation on an earlier run"
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -68,13 +85,14 @@ def main(argv: list[str] | None = None) -> int:
     previous_coverage = load_coverage(COVERAGE_PATH)
     previous_links = load_links(EXPORT_PATH)
 
-    newly_stale: list[tuple[str, dict[str, Any], str]] = []
+    newly_stale: list[tuple[str, dict[str, Any], str, Deprecation]] = []
     crawled: dict[str, CrawlResult] = {}
 
     for path in paths:
         catalog_id = path.stem
         log(f"\n=== Re-validating {catalog_id} ===")
         entry = load_entry(path)
+        state_of_entry = deprecation(entry)
 
         url = entry.get("url")
         if not url:
@@ -115,7 +133,7 @@ def main(argv: list[str] | None = None) -> int:
                 now=now,
             )
             if previous_status == "valid" and state[catalog_id]["status"] == "stale":
-                newly_stale.append((catalog_id, entry, failure_reason))
+                newly_stale.append((catalog_id, entry, failure_reason, state_of_entry))
             continue
 
         log_validation(report)
@@ -128,16 +146,29 @@ def main(argv: list[str] | None = None) -> int:
         ).get("portolan_registry:first_registered")
         crawled[catalog_id] = result
         log(f"  OK: {result['title']} ({result['collection_count']} collections)")
-        state[catalog_id] = update_status(current_state, passed=True, now=now)
+        passed = passes(
+            deprecated=state_of_entry.deprecated,
+            stac_valid=result["validation"]["stac_valid"],
+        )
+        rejected = None if passed else validation_failure(report)
+        if rejected:
+            log(f"  FAILED: {rejected}")
+        state[catalog_id] = update_status(
+            current_state, passed=passed, failure_reason=rejected, now=now
+        )
+        if rejected and previous_status == "valid" and state[catalog_id]["status"] == "stale":
+            newly_stale.append((catalog_id, entry, rejected, state_of_entry))
 
     if newly_stale:
         log(f"\n=== {len(newly_stale)} newly stale catalog(s) ===")
-        for catalog_id, entry, failure_reason in newly_stale:
+        for catalog_id, entry, failure_reason, state_of_entry in newly_stale:
             send_stale_notification(
                 catalog_id,
                 submitter_email=entry.get("submitter_email"),
                 url=entry.get("url", "unknown"),
                 failure_reason=failure_reason,
+                deprecated=state_of_entry.deprecated,
+                superseded_by=state_of_entry.superseded_by,
                 enabled=not args.no_notify,
             )
 
@@ -191,6 +222,7 @@ def main(argv: list[str] | None = None) -> int:
         carried.append(link)
 
     export = build_export(catalogs, now=now, extra_links=carried)
+    apply_entry_fields(export, Path(args.catalog_dir), previous_links)
 
     carried_coverage = [
         previous_coverage[catalog_id]

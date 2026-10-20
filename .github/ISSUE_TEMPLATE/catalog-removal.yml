@@ -1,5 +1,5 @@
-name: Catalog removal request
-description: Request a catalog's removal from the registry
+name: Catalog removal or deprecation request
+description: Request a catalog's removal from the registry, or its deprecation
 # The catalog-removal label triggers an email to the submitter through
 # .github/workflows/notify-feedback.yml.
 labels: [catalog-removal]
@@ -7,15 +7,16 @@ body:
   - type: markdown
     attributes:
       value: >-
-        You can request a catalog's removal even if someone else registered
-        it. The registry emails your request to the person who registered the
+        You can request a catalog's removal or deprecation even if someone
+        else registered it. A removal takes the catalog out of the registry.
+        A deprecation keeps it listed with a flag that can name a successor. The registry emails your request to the person who registered the
         catalog, and a maintainer reviews it. If someone else registered the
         catalog, the maintainer waits 14 days for that person to object before
         approving removal. Removals for spam or legal reasons do not require
         this waiting period. Your request and GitHub username are public.
         After removal, no other catalog can use the ID.
   # notify_feedback.py reads the answers under these headings. Keep the
-  # labels "Catalog ID", "Relationship", and "Why".
+  # labels "Catalog ID", "Action", "Relationship", and "Why".
   - type: input
     id: catalog-id
     attributes:
@@ -26,6 +27,19 @@ body:
         catalog's link in the
         [JSON registry export](https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json).
       placeholder: geoconnex-geoparquet
+    validations:
+      required: true
+  - type: dropdown
+    id: action
+    attributes:
+      label: Action
+      description: >-
+        Remove takes the catalog out of the registry. Deprecate keeps it
+        listed with a flag, and the registry removes it if it then fails
+        validation for 30 days in a row.
+      options:
+        - Remove
+        - Deprecate
     validations:
       required: true
   - type: dropdown
@@ -49,6 +63,17 @@ body:
         publisher may have registered a replacement catalog.
     validations:
       required: true
+  - type: input
+    id: successor
+    attributes:
+      label: Successor ID
+      description: >-
+        Optional, and only for a deprecation. The registry ID of the catalog
+        that replaces this one. It must already be registered, or be
+        registered in the same pull request.
+      placeholder: geoconnex
+    validations:
+      required: false
   - type: input
     id: contact
     attributes:

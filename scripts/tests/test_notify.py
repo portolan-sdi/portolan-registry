@@ -175,3 +175,41 @@ class TestFailuresDoNotPropagate:
         monkeypatch.setenv("RESEND_API_KEY", "test-key")
         monkeypatch.setattr(notify.requests, "post", Recorder(status_code=422))
         assert feedback() is False
+
+
+class TestDeprecatedStaleNotification:
+    def test_names_the_successor(self, post):
+        stale(deprecated=True, superseded_by="next-catalog", failure_reason="rashid PTL-1")
+        html = post.calls[0]["json"]["html"]
+        assert "This catalog is deprecated." in html
+        assert "<strong>next-catalog</strong> as its successor" in html
+        assert "rashid PTL-1" in html
+
+    def test_without_a_successor_names_none(self, post):
+        stale(deprecated=True)
+        html = post.calls[0]["json"]["html"]
+        assert "This catalog is deprecated." in html
+        assert "successor" not in html
+
+    def test_a_catalog_that_is_not_deprecated_keeps_the_old_text(self, post):
+        stale()
+        html = post.calls[0]["json"]["html"]
+        assert "deprecated" not in html
+        assert "remains unreachable for 30 days" in html
+
+    def test_the_successor_cannot_inject_markup(self, post):
+        stale(deprecated=True, superseded_by="<b>x</b>")
+        assert "<b>x</b>" not in post.calls[0]["json"]["html"]
+
+
+class TestDeprecationRequest:
+    def test_says_deprecate_in_the_subject_and_the_body(self, post):
+        removal(action="deprecate")
+        payload = post.calls[0]["json"]
+        assert "Request to deprecate your catalog" in payload["subject"]
+        assert "requested deprecation of" in payload["html"]
+        assert "object to the deprecation" in payload["html"]
+
+    def test_an_unknown_action_reads_as_a_removal(self, post):
+        removal(action="explode")
+        assert "Request to remove your catalog" in post.calls[0]["json"]["subject"]

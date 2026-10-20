@@ -14,6 +14,7 @@ import json
 import subprocess
 
 import pytest
+import requests
 import validate_entries
 from conftest import FakeFetcher
 from test_validators import TOOLS
@@ -481,6 +482,159 @@ class TestUnexpectedFailure:
 
 def git(*args, cwd):
     subprocess.run(["git", *args], cwd=cwd, check=True, capture_output=True)
+
+
+class TestOfflineCatalog:
+    """Issue #234: a maintainer can deprecate a catalog that no longer answers."""
+
+    def down(self):
+        return FakeFetcher(docs={ROOT: requests.exceptions.ConnectionError("down")})
+
+    def test_a_registered_entry_that_does_not_answer_passes(self, tmp_path):
+        path = entry_file(tmp_path, "cat.yaml", ENTRY + "deprecated: true\n")
+        assert check(path, self.down(), published=published()) == []
+
+    def test_a_new_entry_that_does_not_answer_still_fails(self, tmp_path):
+        path = entry_file(tmp_path, "cat.yaml", ENTRY)
+        errors = check(path, self.down(), published={})
+        assert len(errors) == 1
+        assert "Failed to fetch catalog" in errors[0]
+
+    def test_a_registered_entry_at_a_new_url_that_does_not_answer_fails(self, tmp_path):
+        path = entry_file(tmp_path, "cat.yaml", ENTRY)
+        moved = published(href="https://old.example.org/catalog.json")
+        assert len(check(path, self.down(), published=moved)) == 1
+
+
+class TestDeprecationRules:
+    """Issue #234: what the gate checks on a deprecation."""
+
+    @pytest.fixture(autouse=True)
+    def no_crawl(self, monkeypatch):
+        monkeypatch.setattr(validate_entries, "check_entry", lambda *a, **k: [])
+
+    @pytest.fixture
+    def catalogs(self, tmp_path):
+        catalogs = tmp_path / "catalogs"
+        catalogs.mkdir()
+        self.write(catalogs, "next", "")
+        return catalogs
+
+    def write(self, catalogs, stem, extra, url=None):
+        path = catalogs / f"{stem}.yaml"
+        path.write_text(
+            f"url: {url or f'https://{stem}.example.org/catalog.json'}\n"
+            f"submitter_email: submitter@example.com\n{extra}"
+        )
+        return path
+
+    def run(self, catalogs, changed, added=(), base_ref=None, approved=True):
+        changed_file = catalogs.parent / "changed.txt"
+        changed_file.write_text("".join(f"{p}\n" for p in changed))
+        added_file = catalogs.parent / "added.txt"
+        added_file.write_text("".join(f"{p}\n" for p in added))
+        return validate_entries.collect_errors(
+            changed_file=changed_file,
+            catalog_dir=catalogs,
+            added_file=added_file,
+            maintainer_approved=approved,
+            base_ref=base_ref,
+        )
+
+    def test_a_deprecation_with_a_known_successor_passes(self, catalogs):
+        old = self.write(catalogs, "old", "deprecated: true\nsuperseded_by: next\n")
+        assert self.run(catalogs, [old]) == []
+
+    def test_the_flag_alone_passes(self, catalogs):
+        old = self.write(catalogs, "old", "deprecated: true\n")
+        assert self.run(catalogs, [old]) == []
+
+    def test_an_unknown_successor_fails_and_names_the_id(self, catalogs):
+        old = self.write(catalogs, "old", "deprecated: true\nsuperseded_by: nowhere\n")
+        errors = self.run(catalogs, [old])
+        assert len(errors) == 1
+        assert "'nowhere'" in errors[0]
+
+    def test_a_successor_in_the_same_pull_request_passes(self, catalogs):
+        new = self.write(catalogs, "brand-new", "")
+        old = self.write(catalogs, "old", "deprecated: true\nsuperseded_by: brand-new\n")
+        assert self.run(catalogs, [old, new], added=[new]) == []
+
+    def test_a_self_reference_fails(self, catalogs):
+        old = self.write(catalogs, "old", "deprecated: true\nsuperseded_by: old\n")
+        assert "names this entry" in self.run(catalogs, [old])[0]
+
+    def test_a_cycle_fails(self, catalogs):
+        self.write(catalogs, "next", "deprecated: true\nsuperseded_by: old\n")
+        old = self.write(catalogs, "old", "deprecated: true\nsuperseded_by: next\n")
+        errors = self.run(catalogs, [old])
+        assert len(errors) == 1
+        assert "old -> next -> old" in errors[0]
+
+    def test_a_chain_passes(self, catalogs):
+        self.write(catalogs, "last", "")
+        self.write(catalogs, "next", "deprecated: true\nsuperseded_by: last\n")
+        old = self.write(catalogs, "old", "deprecated: true\nsuperseded_by: next\n")
+        assert self.run(catalogs, [old]) == []
+
+    @pytest.mark.parametrize("extra", ["superseded_by: next\n", "deprecated_reason: Moved.\n"])
+    def test_a_successor_or_reason_needs_the_flag(self, catalogs, extra):
+        old = self.write(catalogs, "old", extra)
+        errors = self.run(catalogs, [old])
+        assert len(errors) == 1
+        assert "need 'deprecated: true'" in errors[0]
+
+    def test_the_flag_must_be_a_boolean(self, catalogs):
+        old = self.write(catalogs, "old", "deprecated: 'yes'\n")
+        assert "must be true or false" in self.run(catalogs, [old])[0]
+
+    @pytest.mark.parametrize("reason", ["''", "'" + "x" * 301 + "'", "5"])
+    def test_the_reason_must_be_short_text(self, catalogs, reason):
+        old = self.write(catalogs, "old", f"deprecated: true\ndeprecated_reason: {reason}\n")
+        assert "1 to 300 characters" in self.run(catalogs, [old])[0]
+
+    def test_a_new_entry_cannot_be_deprecated(self, catalogs):
+        new = self.write(catalogs, "fresh", "deprecated: true\n")
+        errors = self.run(catalogs, [new], added=[new])
+        assert len(errors) == 1
+        assert "A new entry cannot be deprecated" in errors[0]
+
+    def test_a_deletion_of_a_named_successor_fails(self, catalogs):
+        self.write(catalogs, "old", "deprecated: true\nsuperseded_by: next\n")
+        (catalogs / "next.yaml").unlink()
+        errors = self.run(catalogs, [catalogs / "next.yaml"])
+        assert len(errors) == 1
+        assert "'old' names 'next'" in errors[0]
+
+    def test_an_approval_does_not_clear_the_rules(self, catalogs):
+        old = self.write(catalogs, "old", "deprecated: true\nsuperseded_by: nowhere\n")
+        assert len(self.run(catalogs, [old], approved=True)) == 1
+
+    def test_a_deprecation_with_a_url_change_fails(self, catalogs):
+        git("init", "-q", "-b", "main", cwd=catalogs)
+        git("config", "user.email", "test@example.org", cwd=catalogs)
+        git("config", "user.name", "Test", cwd=catalogs)
+        git("config", "commit.gpgsign", "false", cwd=catalogs)
+        self.write(catalogs, "old", "")
+        git("add", "-A", cwd=catalogs)
+        git("commit", "-q", "-m", "add old", cwd=catalogs)
+        old = self.write(
+            catalogs, "old", "deprecated: true\n", url="https://moved.org/catalog.json"
+        )
+        errors = self.run(catalogs, [old], base_ref="main")
+        assert len(errors) == 1
+        assert "deprecates the entry and changes its URL" in errors[0]
+
+    def test_a_deprecation_at_the_same_url_passes_with_a_base_ref(self, catalogs):
+        git("init", "-q", "-b", "main", cwd=catalogs)
+        git("config", "user.email", "test@example.org", cwd=catalogs)
+        git("config", "user.name", "Test", cwd=catalogs)
+        git("config", "commit.gpgsign", "false", cwd=catalogs)
+        self.write(catalogs, "old", "")
+        git("add", "-A", cwd=catalogs)
+        git("commit", "-q", "-m", "add old", cwd=catalogs)
+        old = self.write(catalogs, "old", "deprecated: true\n")
+        assert self.run(catalogs, [old], base_ref="main") == []
 
 
 class TestDuplicateUrl:

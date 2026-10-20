@@ -34,18 +34,43 @@ After your submission passes validation and a maintainer merges it, the registry
 
 Your catalog's registry ID is its filename without `.yaml`, such as `city-of-example-parcels`. Use lowercase letters and digits, with single hyphens between groups. Once a maintainer merges your submission, you cannot change the ID or reuse it for another catalog. The registry reads the title from your catalog, so the ID does not need to match the title.
 
-## Remove a catalog
+## Remove or deprecate a catalog
 
-You can request a catalog's removal even if someone else registered it.
+You can request a catalog's removal or deprecation even if someone else registered it. A removal takes the catalog out of the registry, while a deprecation keeps it listed with a flag. The flag can point to the catalog that replaces it.
 
-1. Open a [catalog removal request](https://github.com/portolan-sdi/portolan-registry/issues/new?template=catalog-removal.yml). Include the catalog ID, your relationship to the catalog, and your reason for requesting removal.
-2. Open a pull request that deletes `catalogs/<id>.yaml` and links to your removal request.
+1. Open a [catalog removal or deprecation request](https://github.com/portolan-sdi/portolan-registry/issues/new?template=catalog-removal.yml). Include the catalog ID, the action, your relationship to the catalog, and your reason.
+2. Open a pull request that links to your request and changes `catalogs/<id>.yaml`:
+   - To remove the catalog, delete the file.
+   - To deprecate it, add `deprecated: true`. You can also add the ID of a successor and a reason:
 
-The registry emails your request to the person who registered the catalog. If someone else registered it, a maintainer waits 14 days for that person to object before approving removal. Removals for spam or legal reasons do not require this waiting period. The maintainer reviews your request and may ask you to confirm your relationship to the publisher. If the maintainer accepts your request, they approve and merge the pull request.
+     ```yaml
+     url: https://example.org/catalog.json
+     submitter_email: you@example.org
+     deprecated: true
+     superseded_by: example-replacement
+     deprecated_reason: The publisher now registers its own catalog.
+     ```
 
-After the merge, the next registry update removes the catalog from [`exports/catalogs.json`](./exports/catalogs.json) and [`exports/coverage-bboxes.json`](./exports/coverage-bboxes.json). The export's Git history records the removal. If you want to register the same catalog again, use the same ID and URL and get a maintainer's approval. The registry rejects that URL under any other ID. You cannot reuse the ID for another catalog.
+The registry emails your request to the person who registered the catalog. If someone else registered it, a maintainer waits 14 days for that person to object before approving the change. Requests for spam or legal reasons do not require this waiting period. The maintainer reviews your request and may ask you to confirm your relationship to the publisher. If the maintainer accepts your request, they approve and merge the pull request.
 
-If the registry cannot fetch a registered catalog, the nightly validation check marks it `stale` and emails the person who registered it. If the catalog remains unreachable for 30 days, the check changes its status to `removed`. The registry keeps its link in the export with that status and keeps its entry file in `catalogs/`.
+Put the reason in quotes if it contains `#` or `: `. YAML reads ` #` as the start of a comment and drops the rest of the line.
+
+The `superseded_by` field must reference a registered catalog, or one that the same pull request registers. A new entry cannot be deprecated, and one pull request cannot both deprecate an entry and change its URL. You cannot delete an entry while another entry lists it as its successor.
+
+After a removal, the next registry update drops the catalog from [`exports/catalogs.json`](./exports/catalogs.json) and [`exports/coverage-bboxes.json`](./exports/coverage-bboxes.json). The export's Git history records the removal. If you want to register the same catalog again, use the same ID and URL and get a maintainer's approval. The registry rejects that URL under any other ID. You cannot reuse the ID for another catalog.
+
+After a deprecation, the catalog's link in the export includes `portolan_registry:deprecated: true`, `portolan_registry:deprecated_since`, `portolan_registry:deprecated_reason`, and `portolan_registry:superseded_by`. The registry reads the date from the commit that added `deprecated: true`. To undo a deprecation, open a pull request that deletes the field.
+
+### Catalog status
+
+| Status or flag | Meaning |
+|---|---|
+| `valid` | The catalog passed its last nightly check. |
+| `stale` | The catalog failed one or more nightly checks in a row. The registry emails the person who registered it on the first failure. |
+| `removed` | The catalog failed every nightly check for 30 days. Its link stays in the export with this status, and its entry file stays in `catalogs/`. |
+| `deprecated` | A flag, separate from the status. A deprecated catalog fails a check when it does not answer, or when `rashid` or `stac-node-validator` rejects it. |
+
+A catalog that is not deprecated fails a check only when it does not answer. The 30 days start at the first failure, and one passing night resets them. A removed catalog returns to `valid` when an update to its entry file triggers a registry update and the catalog passes.
 
 ## Report a bug
 

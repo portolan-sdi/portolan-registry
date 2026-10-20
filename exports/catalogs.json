@@ -53,7 +53,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -91,7 +95,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -128,7 +136,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -166,7 +178,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -203,7 +219,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -240,7 +260,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -281,7 +305,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -319,7 +347,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -362,7 +394,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -399,7 +435,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -441,7 +481,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -478,7 +522,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -519,7 +567,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -556,7 +608,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -593,7 +649,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -630,7 +690,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -671,7 +735,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -709,7 +777,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -746,7 +818,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -783,7 +859,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -820,7 +900,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -857,7 +941,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -894,7 +982,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -931,7 +1023,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -968,7 +1064,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -1005,7 +1105,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -1046,7 +1150,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -1087,7 +1195,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -1128,7 +1240,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -1169,7 +1285,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -1210,7 +1330,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -1251,7 +1375,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -1288,7 +1416,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -1329,7 +1461,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -1370,7 +1506,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -1411,7 +1551,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -1448,7 +1592,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -1496,7 +1644,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -1533,7 +1685,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -1570,7 +1726,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -1611,7 +1771,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -1648,7 +1812,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -1685,7 +1853,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
       "portolan_registry:has_agents_md": false,
-      "portolan_registry:has_readme": false
+      "portolan_registry:has_readme": false,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -1722,7 +1894,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
       "portolan_registry:has_agents_md": false,
-      "portolan_registry:has_readme": false
+      "portolan_registry:has_readme": false,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -1760,7 +1936,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -1798,7 +1978,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -1835,7 +2019,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -1872,7 +2060,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -1914,7 +2106,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -1955,7 +2151,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -1992,7 +2192,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -2033,7 +2237,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -2070,7 +2278,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -2107,7 +2319,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -2146,7 +2362,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -2184,7 +2404,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -2223,7 +2447,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -2260,7 +2488,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -2297,7 +2529,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -2338,7 +2574,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -2378,7 +2618,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -2415,7 +2659,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -2452,7 +2700,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -2493,7 +2745,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -2530,7 +2786,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -2573,7 +2833,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -2610,7 +2874,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -2651,7 +2919,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -2688,7 +2960,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -2725,7 +3001,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -2766,7 +3046,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -2809,7 +3093,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -2846,7 +3134,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -2883,7 +3175,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -2920,7 +3216,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -2957,7 +3257,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -2998,7 +3302,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -3035,7 +3343,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -3076,7 +3388,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -3113,7 +3429,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -3150,7 +3470,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -3187,7 +3511,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -3224,7 +3552,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -3261,7 +3593,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     },
     {
       "rel": "child",
@@ -3298,7 +3634,11 @@
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
       "portolan_registry:has_agents_md": true,
-      "portolan_registry:has_readme": true
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
     }
   ]
 }

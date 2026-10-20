@@ -13,6 +13,8 @@ from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
+from registry.entries import deprecation, load_entry
+from registry.history import deprecated_since
 from registry.status import parse_timestamp
 
 EXPORT_PATH = Path("exports/catalogs.json")
@@ -56,6 +58,10 @@ RETIRED_FIELDS = frozenset(
 CARRIED_DEFAULTS: dict[str, object] = {
     PREFIX + "has_agents_md": False,
     PREFIX + "has_readme": False,
+    PREFIX + "deprecated": False,
+    PREFIX + "deprecated_since": None,
+    PREFIX + "deprecated_reason": None,
+    PREFIX + "superseded_by": None,
 }
 
 
@@ -193,9 +199,53 @@ def child_link(catalog: Mapping[str, Any]) -> dict[str, Any]:
             # specification requires of it, AGENTS.md and README.md.
             "portolan_registry:has_agents_md": validation.get("has_agents_md", False),
             "portolan_registry:has_readme": validation.get("has_readme", False),
+            # Written from the entry file, not the crawl, by apply_entry_fields.
+            # These defaults hold for a catalog that is not deprecated.
+            "portolan_registry:deprecated": False,
+            "portolan_registry:deprecated_since": None,
+            "portolan_registry:deprecated_reason": None,
+            "portolan_registry:superseded_by": None,
         }
     )
     return link
+
+
+def apply_entry_fields(
+    export: Mapping[str, Any],
+    catalog_dir: Path,
+    previous_links: Mapping[str, Mapping[str, Any]],
+) -> None:
+    """Write the deprecation fields from the entry files onto every child link.
+
+    The entry file, not the crawl, says whether a catalog is deprecated. A
+    run carries a link forward unchanged when it cannot crawl the catalog,
+    and it never crawls a removed one. So the crawl result is the wrong place
+    for these fields: a deprecation merged on a night the crawl failed would
+    not reach the export, and an un-deprecation would leave the old flag.
+    This runs over the built export instead, crawled and carried links alike.
+
+    The date comes from git (`deprecated_since`). A shallow clone cannot see
+    the commit, so keep the date already published.
+    """
+    for link in export.get("links", []):
+        if link.get("rel") != "child":
+            continue
+        catalog_id = link["portolan_registry:id"]
+        path = catalog_dir / f"{catalog_id}.yaml"
+        state = deprecation(load_entry(path)) if path.exists() else deprecation({})
+        since = None
+        if state.deprecated:
+            since = deprecated_since(path) or previous_links.get(catalog_id, {}).get(
+                "portolan_registry:deprecated_since"
+            )
+        link.update(
+            {
+                "portolan_registry:deprecated": state.deprecated,
+                "portolan_registry:deprecated_since": since,
+                "portolan_registry:deprecated_reason": state.reason,
+                "portolan_registry:superseded_by": state.superseded_by,
+            }
+        )
 
 
 def build_export(
