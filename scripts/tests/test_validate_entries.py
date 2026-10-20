@@ -483,6 +483,60 @@ def git(*args, cwd):
     subprocess.run(["git", *args], cwd=cwd, check=True, capture_output=True)
 
 
+class TestDuplicateUrl:
+    """The duplicate check must not depend on which filename sorts last.
+
+    roborev found that a map with one file per URL kept the file that
+    sorted last. A new entry whose name sorted after the current holder
+    found itself in the map and passed.
+    """
+
+    def run(self, catalog_dir, new, base_ref=None):
+        changed = catalog_dir.parent / "changed.txt"
+        changed.write_text(f"{new}\n")
+        return validate_entries.collect_errors(
+            changed_file=changed,
+            catalog_dir=catalog_dir,
+            added_file=changed,
+            base_ref=base_ref,
+        )
+
+    @pytest.fixture
+    def catalogs(self, tmp_path):
+        catalogs = tmp_path / "catalogs"
+        catalogs.mkdir()
+        entry_file(catalogs, "new-id.yaml", ENTRY)
+        return catalogs
+
+    @pytest.mark.parametrize("stem", ["alpha", "zeta"])
+    def test_a_duplicate_fails_whichever_name_sorts_last(self, catalogs, stem):
+        new = entry_file(catalogs, f"{stem}.yaml", ENTRY)
+        errors = self.run(catalogs, new)
+        assert len(errors) == 1
+        assert "Duplicate catalog URL detected" in errors[0]
+        assert "'new-id.yaml'" in errors[0]
+
+    def test_a_duplicate_of_a_url_a_removed_id_held_fails_once(self, catalogs):
+        """The URL rule stays quiet and the duplicate check reports it."""
+        git("init", "-q", "-b", "main", cwd=catalogs)
+        git("config", "user.email", "test@example.org", cwd=catalogs)
+        git("config", "user.name", "Test", cwd=catalogs)
+        git("config", "commit.gpgsign", "false", cwd=catalogs)
+        (catalogs / "new-id.yaml").unlink()
+        entry_file(catalogs, "old.yaml", ENTRY)
+        git("add", "-A", cwd=catalogs)
+        git("commit", "-q", "-m", "add old", cwd=catalogs)
+        git("rm", "-q", "old.yaml", cwd=catalogs)
+        git("commit", "-q", "-m", "remove old", cwd=catalogs)
+        entry_file(catalogs, "new-id.yaml", ENTRY)
+        git("add", "-A", cwd=catalogs)
+        git("commit", "-q", "-m", "add new-id", cwd=catalogs)
+        new = entry_file(catalogs, "zeta.yaml", ENTRY)
+        errors = self.run(catalogs, new, base_ref="main")
+        assert len(errors) == 1
+        assert "Duplicate catalog URL detected" in errors[0]
+
+
 class TestRegistryIds:
     """Issue #242: an ID never changes and never names a second catalog.
 

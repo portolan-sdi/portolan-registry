@@ -98,6 +98,21 @@ def modified_entries(changed_file: Path, added_file: Path) -> list[str]:
     ]
 
 
+def url_holders(catalog_dir: Path) -> dict[str, set[str]]:
+    """Map each normalized URL to the entry files in `catalog_dir` that hold it.
+
+    Keep a set, not one file per URL. A pull request that adds a duplicate
+    puts two files on one URL. A map that keeps one of them hides the
+    duplicate whenever the new file's name sorts last.
+    """
+    holders: dict[str, set[str]] = {}
+    for cid, entry in load_entries(catalog_dir).items():
+        url = entry.get("url")
+        if isinstance(url, str) and url:
+            holders.setdefault(normalize_url(url), set()).add(f"{cid}.yaml")
+    return holders
+
+
 def _url_of(path: Path) -> str | None:
     """Return the entry's normalized URL, or `None` if it has no URL."""
     url = load_entry(path).get("url")
@@ -109,6 +124,7 @@ def id_errors(
     added_file: Path,
     *,
     catalog_dir: Path,
+    holders: Mapping[str, set[str]],
     base_ref: str | None,
     maintainer_approved: bool,
 ) -> list[str]:
@@ -132,7 +148,8 @@ def id_errors(
       the duplicate URL check reports that. It also stays quiet when the old
       ID's newest deletion held another URL, because no ID is left to name.
 
-    Without `base_ref`, only the `STEM_RE` rule runs.
+    `holders` maps each URL to the current entry files that hold it, from
+    `url_holders`. Without `base_ref`, only the `STEM_RE` rule runs.
     """
     added = [p for p in read_paths(added_file) if p.exists()]
     if base_ref is None:
@@ -153,14 +170,6 @@ def id_errors(
             by_stem.setdefault(deletion.stem, deletion)
             if deletion.url:
                 by_url.setdefault(normalize_url(deletion.url), deletion)
-
-    # Which current entries hold each URL. The added entry holds its own URL,
-    # so the URL rule asks about the other entries only.
-    holders: dict[str, set[str]] = {}
-    for current in sorted(catalog_dir.glob("*.yaml")):
-        current_url = _url_of(current)
-        if current_url:
-            holders.setdefault(current_url, set()).add(current.stem)
 
     errors = []
     for path in added:
@@ -211,7 +220,8 @@ def id_errors(
             and owner is not None
             and by_stem.get(owner.stem) is owner
             and not (catalog_dir / f"{owner.stem}.yaml").exists()
-            and not holders.get(url, set()) - {path.stem}
+            # The added entry holds its own URL. Ask about the others only.
+            and not holders.get(url, set()) - {path.name}
         ):
             errors.append(
                 f"{path}: This URL belonged to registry ID '{owner.stem}', which "
@@ -235,7 +245,7 @@ def is_new_entry(catalog_id: str, url: str, published: Mapping[str, Mapping[str,
 def check_entry(
     path: Path,
     *,
-    existing_urls: dict[str, str],
+    existing_urls: Mapping[str, set[str]],
     state: dict[str, dict[str, Any]],
     source_factory: Callable[[], MirrorSource],
     published: Mapping[str, Mapping[str, Any]] | None = None,
@@ -268,13 +278,12 @@ def check_entry(
         log("  Note: Re-submitting previously removed catalog")
         log(f"  (Was removed due to: {catalog_state.get('failure_reason', 'unknown')})")
 
-    normalized = normalize_url(url)
-    for existing_norm, existing_file in existing_urls.items():
-        if existing_norm == normalized and existing_file != path.name:
-            return [
-                f"{path}: Duplicate catalog URL detected. "
-                f"This catalog already exists in '{existing_file}'"
-            ]
+    others = sorted(existing_urls.get(normalize_url(url), set()) - {path.name})
+    if others:
+        return [
+            f"{path}: Duplicate catalog URL detected. "
+            f"This catalog already exists in {', '.join(repr(o) for o in others)}"
+        ]
 
     gated = is_new_entry(path.stem, url, published or {})
 
@@ -356,11 +365,7 @@ def collect_errors(
     try:
         state = load_state(export_path)
         published = load_links(export_path)
-        existing_urls = {
-            normalize_url(entry["url"]): f"{cid}.yaml"
-            for cid, entry in load_entries(catalog_dir).items()
-            if entry.get("url")
-        }
+        existing_urls = url_holders(catalog_dir)
 
         errors: list[str] = []
         if maintainer_approved:
@@ -375,6 +380,7 @@ def collect_errors(
                     changed_file,
                     added_file,
                     catalog_dir=catalog_dir,
+                    holders=existing_urls,
                     base_ref=base_ref,
                     maintainer_approved=maintainer_approved,
                 )
