@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-20T10:58:12.223484+00:00",
+  "generated": "2026-10-20T15:18:21.952569+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-10-20T10:58:12.223484+00:00",
+  "registry_generated": "2026-10-20T15:18:21.952569+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -41685,6 +41685,392 @@
             -89.9,
             180.0,
             83.6274
+          ]
+        }
+      ]
+    },
+    {
+      "id": "geoconnex",
+      "collection_count": 38,
+      "collections": [
+        {
+          "id": "ca_gage_assessment:gages",
+          "title": "California Streamgage Network Assessment",
+          "bbox": [
+            -124.2945,
+            32.5515,
+            -114.1395,
+            42.0061
+          ]
+        },
+        {
+          "id": "epa:wqp",
+          "title": "EPA Water Quality Portal",
+          "bbox": [
+            -180.0,
+            -90.0,
+            179.9098,
+            90.0
+          ]
+        },
+        {
+          "id": "iow:state_gages:cdss",
+          "title": "Colorado State Gages",
+          "bbox": [
+            -109.052,
+            31.0849,
+            -102.0592,
+            40.9936
+          ]
+        },
+        {
+          "id": "iow:state_gages:mtdnrc",
+          "title": "Montana State Gages",
+          "bbox": [
+            -114.5286,
+            44.5881,
+            112.6777,
+            48.9552
+          ]
+        },
+        {
+          "id": "iow:state_gages:ndwr",
+          "title": "Nevada State Gages",
+          "bbox": [
+            -120.0026,
+            36.1513,
+            -114.0221,
+            41.9969
+          ]
+        },
+        {
+          "id": "iow:state_gages:nednr",
+          "title": "Nebraska State Gages",
+          "bbox": [
+            -104.0576,
+            40.0141,
+            -96.4685,
+            42.9223
+          ]
+        },
+        {
+          "id": "iow:state_gages:wyseo",
+          "title": "Wyoming State Gages",
+          "bbox": [
+            -111.2533,
+            40.8351,
+            -104.0469,
+            45.3068
+          ]
+        },
+        {
+          "id": "ref:aiannh",
+          "title": "American Indian/Alaska Native Areas and Hawaiian Home Lands",
+          "bbox": [
+            -174.2345,
+            18.9106,
+            -67.0385,
+            71.3397
+          ]
+        },
+        {
+          "id": "ref:cbsa",
+          "title": "Core Based Statistical Areas",
+          "bbox": [
+            -178.3347,
+            17.8833,
+            -65.5643,
+            65.4535
+          ]
+        },
+        {
+          "id": "ref:counties",
+          "title": "U.S. Counties",
+          "bbox": [
+            -179.1489,
+            -14.5487,
+            179.7785,
+            71.3652
+          ]
+        },
+        {
+          "id": "ref:dams",
+          "title": "Reference Dams",
+          "bbox": [
+            -176.6873,
+            13.3605,
+            -65.672,
+            71.2667
+          ]
+        },
+        {
+          "id": "ref:gages",
+          "title": "Reference Stream Gages",
+          "bbox": [
+            -176.715,
+            -14.3359,
+            179.9098,
+            71.3874
+          ]
+        },
+        {
+          "id": "ref:hu02",
+          "title": "HUC02 Hydrologic Regions",
+          "bbox": [
+            -179.2295,
+            -14.4244,
+            179.8565,
+            71.4395
+          ]
+        },
+        {
+          "id": "ref:hu04",
+          "title": "HUC04 Hydrologic Regions",
+          "bbox": [
+            -179.2295,
+            -14.4244,
+            179.8565,
+            71.4395
+          ]
+        },
+        {
+          "id": "ref:hu06",
+          "title": "HUC06 Hydrologic Regions",
+          "bbox": [
+            -179.2295,
+            -14.4244,
+            179.8565,
+            71.4395
+          ]
+        },
+        {
+          "id": "ref:hu08",
+          "title": "HUC08 Hydrologic Regions",
+          "bbox": [
+            -179.2295,
+            -14.4244,
+            179.8565,
+            71.4395
+          ]
+        },
+        {
+          "id": "ref:hu10",
+          "title": "HUC10 Hydrologic Regions",
+          "bbox": [
+            -179.2295,
+            -14.4244,
+            179.8565,
+            71.4395
+          ]
+        },
+        {
+          "id": "ref:hu12",
+          "title": "HUC12 Hydrologic Units",
+          "bbox": [
+            -179.2297,
+            -14.6102,
+            179.8567,
+            71.4396
+          ]
+        },
+        {
+          "id": "ref:mainstems",
+          "title": "Reference Mainstems",
+          "bbox": [
+            -124.7244,
+            25.034,
+            -66.6286,
+            52.1174
+          ]
+        },
+        {
+          "id": "ref:nat_aq",
+          "title": "USGS National Aquifers",
+          "bbox": [
+            -160.2349,
+            17.6866,
+            -64.7194,
+            49.3856
+          ]
+        },
+        {
+          "id": "ref:places",
+          "title": "U.S. Places",
+          "bbox": [
+            -176.6967,
+            -14.3737,
+            173.4277,
+            71.3397
+          ]
+        },
+        {
+          "id": "ref:princi_aq",
+          "title": "USGS Principal Aquifers",
+          "bbox": [
+            -160.2349,
+            17.6866,
+            -64.7194,
+            49.3856
+          ]
+        },
+        {
+          "id": "ref:pws",
+          "title": "EPA Public Water Systems",
+          "bbox": [
+            -174.3233,
+            19.064,
+            173.033,
+            71.3402
+          ]
+        },
+        {
+          "id": "ref:sec_hydrg_reg",
+          "title": "Secondary Hydrogeologic Regions",
+          "bbox": [
+            -124.7311,
+            24.5963,
+            -66.9606,
+            49.3856
+          ]
+        },
+        {
+          "id": "ref:states",
+          "title": "U.S. States",
+          "bbox": [
+            -179.1489,
+            -14.5487,
+            179.7785,
+            71.3652
+          ]
+        },
+        {
+          "id": "ref:ua10",
+          "title": "US Census Bureau Urbanized Areas (2010)",
+          "bbox": [
+            -170.7894,
+            -14.3737,
+            145.7909,
+            66.9045
+          ]
+        },
+        {
+          "id": "usgs:gnis",
+          "title": "USGS Geographic Names (GNIS)",
+          "bbox": [
+            -179.4681,
+            -14.5475,
+            179.9833,
+            71.4175
+          ]
+        },
+        {
+          "id": "usgs:monitoring_locations",
+          "title": "USGS Monitoring Locations",
+          "bbox": [
+            -176.715,
+            -14.3478,
+            179.9098,
+            71.3874
+          ]
+        },
+        {
+          "id": "usgs:national_geologic_map",
+          "title": "National Geologic Map Database",
+          "bbox": [
+            -180.0,
+            -14.42,
+            180.0,
+            71.9996
+          ]
+        },
+        {
+          "id": "usgs:nhdplusv2:huc12pp",
+          "title": "HUC12 Pour Points",
+          "bbox": [
+            -124.709,
+            25.2156,
+            -66.9951,
+            49.364
+          ]
+        },
+        {
+          "id": "usgs:sciencebase",
+          "title": "USGS ScienceBase Catalog",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "utah:water_systems",
+          "title": "Utah Water Systems",
+          "bbox": [
+            -114.0529,
+            36.9396,
+            -109.0699,
+            42.6815
+          ]
+        },
+        {
+          "id": "wwdh:awdb_forecasts",
+          "title": "US Department of Agriculture AWDB Forecast Locations",
+          "bbox": [
+            -158.1138,
+            32.6463,
+            -103.4821,
+            62.5204
+          ]
+        },
+        {
+          "id": "wwdh:noaa_rfc",
+          "title": "NOAA River Forecast Center Locations",
+          "bbox": [
+            -123.4931,
+            32.6481,
+            -103.2014,
+            52.05
+          ]
+        },
+        {
+          "id": "wwdh:snotel",
+          "title": "US Department of Agriculture SNOTEL Locations",
+          "bbox": [
+            -164.9247,
+            32.9234,
+            -103.7876,
+            70.2806
+          ]
+        },
+        {
+          "id": "wwdh:usace:access_to_water",
+          "title": "US Army Corps of Engineers Access2Water API Locations",
+          "bbox": [
+            -147.1799,
+            26.7218,
+            -71.5181,
+            64.7925
+          ]
+        },
+        {
+          "id": "wwdh:usbr:rise",
+          "title": "US Bureau of Reclamation RISE API Locations",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "processed_usgs/reference_catchments_and_flowlines",
+          "title": "Reference Catchments with Geoconnex Mainstems",
+          "bbox": [
+            -124.7337,
+            24.6304,
+            -66.9496,
+            52.88
           ]
         }
       ]
