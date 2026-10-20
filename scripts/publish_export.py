@@ -50,8 +50,12 @@ MAX_WORKERS = 4
 
 def process_entry(
     path: Path, now: datetime, previous_links: dict[str, dict[str, Any]]
-) -> CrawlResult | None:
-    """Crawl one registry entry. Returns None if it could not be crawled."""
+) -> tuple[CrawlResult, bool | None] | None:
+    """Crawl one registry entry. Returns None if it could not be crawled.
+
+    Also returns this run's validator answer, `report.passed`. The result's
+    `stac_valid` may hold an earlier answer after `settle_stac_valid`.
+    """
     log(f"\n=== Processing {path} ===")
     entry = load_entry(path)
 
@@ -77,7 +81,7 @@ def process_entry(
         "portolan_registry:first_registered"
     )
     log(f"  OK: {result['title']} ({result['collection_count']} collections)")
-    return result
+    return result, report.passed
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -106,12 +110,15 @@ def main(argv: list[str] | None = None) -> int:
     previous_links = load_links(EXPORT_PATH)
 
     catalogs: list[CrawlResult] = []
+    answers: dict[str, bool | None] = {}
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
         futures = {executor.submit(process_entry, p, now, previous_links): p for p in paths}
         for future in as_completed(futures):
-            result = future.result()
-            if result:
+            crawled_entry = future.result()
+            if crawled_entry:
+                result, answer = crawled_entry
                 catalogs.append(result)
+                answers[result["id"]] = answer
 
     catalogs.sort(key=lambda c: c["id"])
 
@@ -119,13 +126,13 @@ def main(argv: list[str] | None = None) -> int:
     for catalog in catalogs:
         previous = previous_state.get(catalog["id"], {})
         deprecated = deprecation(load_entry(catalog_dir / f"{catalog['id']}.yaml")).deprecated
-        if not passes(deprecated=deprecated, stac_valid=catalog["validation"]["stac_valid"]):
-            # Only the nightly run starts and advances the stale clock, and
-            # only it sends the stale mail. If this run set `stale`, the
-            # nightly would see stale -> stale and never send it. So keep the
-            # state as it stands. A removed deprecated catalog that still
-            # fails validation stays removed.
-            log(f"  {catalog['id']} is deprecated and fails validation; keeping its state")
+        if not passes(deprecated=deprecated, stac_valid=answers.get(catalog["id"])):
+            # False or None. Only the nightly run starts and advances the
+            # stale clock, and only it sends the stale mail. If this run set
+            # `stale`, the nightly would see stale -> stale and never send it.
+            # So keep the state as it stands. A removed deprecated catalog
+            # that still fails validation stays removed.
+            log(f"  {catalog['id']} is deprecated and did not pass validation; keeping its state")
             catalog["status"] = previous.get("status", "valid")
             catalog["last_validated"] = previous.get("last_validated")
             catalog["stale_since"] = previous.get("stale_since")

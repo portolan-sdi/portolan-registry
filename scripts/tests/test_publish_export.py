@@ -68,6 +68,23 @@ class TestDeprecatedCatalog:
         assert link["portolan_registry:superseded_by"] == "next"
 
 
+class TestNoValidatorAnswer:
+    def test_a_removed_catalog_stays_removed(self, registry):
+        """No answer is no proof that the catalog now passes."""
+        registry.entry("old", "deprecated: true\n")
+        registry.published("old", status="removed", stale_days=40, stac_valid=False)
+        registry.validators_answer = False
+        run()
+        assert registry.link("old")["portolan_registry:status"] == "removed"
+
+    def test_a_stale_catalog_is_not_reset_to_valid(self, registry):
+        registry.entry("old", "deprecated: true\n")
+        registry.published("old", status="stale", stale_days=5, stac_valid=True)
+        registry.validators_answer = False
+        run()
+        assert registry.link("old")["portolan_registry:status"] == "stale"
+
+
 class TestCatalogThatIsNotDeprecated:
     def test_a_removed_catalog_that_answers_comes_back(self, registry):
         """Re-submission, as before #234."""

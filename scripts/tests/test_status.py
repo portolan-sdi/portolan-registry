@@ -108,5 +108,6 @@ class TestPasses:
     def test_a_deprecated_catalog_that_validates_passes(self):
         assert passes(deprecated=True, stac_valid=True) is True
 
-    def test_validators_that_did_not_finish_are_not_a_failure(self):
-        assert passes(deprecated=True, stac_valid=None) is True
+    def test_validators_that_did_not_finish_give_no_verdict(self):
+        """Neither a pass nor a failure: the caller keeps the state."""
+        assert passes(deprecated=True, stac_valid=None) is None

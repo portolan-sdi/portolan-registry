@@ -26,8 +26,12 @@ def parse_timestamp(ts: str | None) -> datetime | None:
         return None
 
 
-def passes(*, deprecated: bool, stac_valid: bool | None) -> bool:
+def passes(*, deprecated: bool, stac_valid: bool | None) -> bool | None:
     """Whether a catalog that answered passes re-validation.
+
+    Pass this run's validator answer (`ValidationReport.passed`), not the
+    published `stac_valid`. On a run with no answer, `settle_stac_valid`
+    copies the last published value back, and that value is not news.
 
     A catalog that is not deprecated passes when it answers. The validators
     publish `stac_valid` and do not change its status, because most
@@ -35,10 +39,13 @@ def passes(*, deprecated: bool, stac_valid: bool | None) -> bool:
 
     A deprecated catalog also fails when the validators report an error
     (#234). So a deprecated catalog that stays broken leaves the registry
-    after STALE_THRESHOLD_DAYS. A null `stac_valid` means the validators did
-    not finish, and that is not a failure.
+    after STALE_THRESHOLD_DAYS. When the validators give no answer, return
+    None: the run has no verdict. The caller keeps the state as it stands, so
+    a run with no answer neither advances nor resets the stale clock.
     """
-    return not (deprecated and stac_valid is False)
+    if not deprecated:
+        return True
+    return stac_valid
 
 
 def update_status(

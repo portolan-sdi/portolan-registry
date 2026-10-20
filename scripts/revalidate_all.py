@@ -55,12 +55,13 @@ from registry.validators import (
 
 
 def validation_failure(report: ValidationReport) -> str:
-    """The failure reason for a deprecated catalog that the validators failed."""
+    """The failure reason for a deprecated catalog that the validators failed.
+
+    `report.passed` is False only when the report holds findings, so the
+    list of rules is never empty here.
+    """
     rules = ", ".join(f"{g.tool} {g.rule_id}" for g in report.groups)
-    if rules:
-        return f"Deprecated catalog failed validation: {rules}"
-    # settle_stac_valid kept an earlier False because this run had no answer.
-    return "Deprecated catalog failed validation on an earlier run"
+    return f"Deprecated catalog failed validation: {rules}"
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -146,10 +147,11 @@ def main(argv: list[str] | None = None) -> int:
         ).get("portolan_registry:first_registered")
         crawled[catalog_id] = result
         log(f"  OK: {result['title']} ({result['collection_count']} collections)")
-        passed = passes(
-            deprecated=state_of_entry.deprecated,
-            stac_valid=result["validation"]["stac_valid"],
-        )
+        passed = passes(deprecated=state_of_entry.deprecated, stac_valid=report.passed)
+        if passed is None:
+            log("  Note: the validators gave no answer, so this deprecated catalog keeps its state")
+            state[catalog_id] = dict(current_state)
+            continue
         rejected = None if passed else validation_failure(report)
         if rejected:
             log(f"  FAILED: {rejected}")

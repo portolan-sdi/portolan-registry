@@ -98,6 +98,43 @@ class TestDeprecatedCatalog:
         assert link["portolan_registry:deprecated"] is True
 
 
+class TestNoValidatorAnswer:
+    """roborev: a night with no validator answer must not count.
+
+    settle_stac_valid copies the last published False back in. A deprecated
+    catalog its publisher fixed would otherwise fail every silent night and
+    leave the registry after 30 of them.
+    """
+
+    def test_a_stale_catalog_keeps_its_clock(self, registry, mailed):
+        registry.entry("old", "deprecated: true\n")
+        registry.published("old", status="stale", stale_days=20, stac_valid=False)
+        stale_since = registry.links[0]["portolan_registry:stale_since"]
+        registry.validators_answer = False
+        run()
+        link = registry.link("old")
+        assert link["portolan_registry:status"] == "stale"
+        assert link["portolan_registry:stale_since"] == stale_since
+        assert link["portolan_registry:stac_valid"] is False
+
+    def test_a_catalog_past_the_threshold_is_not_removed(self, registry, mailed):
+        registry.entry("old", "deprecated: true\n")
+        registry.published(
+            "old", status="stale", stale_days=STALE_THRESHOLD_DAYS + 1, stac_valid=False
+        )
+        registry.validators_answer = False
+        run()
+        assert registry.link("old")["portolan_registry:status"] == "stale"
+
+    def test_a_valid_catalog_does_not_go_stale(self, registry, mailed):
+        registry.entry("old", "deprecated: true\n")
+        registry.published("old", stac_valid=False)
+        registry.validators_answer = False
+        run()
+        assert registry.link("old")["portolan_registry:status"] == "valid"
+        assert mailed == []
+
+
 class TestCatalogThatIsNotDeprecated:
     def test_a_validator_failure_leaves_the_status_alone(self, registry, mailed):
         registry.entry("cat")

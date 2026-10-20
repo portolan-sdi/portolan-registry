@@ -16,7 +16,7 @@ from typing import Any
 from conftest import load_tree
 
 from registry import validators
-from registry.validators import Finding
+from registry.validators import Finding, ValidatorError
 
 ROOT = "https://ex.org/catalog.json"
 
@@ -30,9 +30,15 @@ class Registry:
         self.links: list[dict[str, Any]] = []
         self.findings: list[Finding] = []
         self.answers = True
+        self.validators_answer = True
         monkeypatch.chdir(root)
         monkeypatch.setattr(script, "HttpFetcher", self.fetcher)
-        monkeypatch.setattr(validators, "validate_mirror", lambda mirror_dir: list(self.findings))
+        monkeypatch.setattr(validators, "validate_mirror", self.validate)
+
+    def validate(self, mirror_dir):
+        if not self.validators_answer:
+            raise ValidatorError("rashid timed out")
+        return list(self.findings)
 
     def fetcher(self):
         tree = load_tree("nested")
@@ -48,7 +54,13 @@ class Registry:
             f"url: {ROOT}\nsubmitter_email: submitter@example.com\n{extra}"
         )
 
-    def published(self, catalog_id: str, status: str = "valid", stale_days: int | None = None):
+    def published(
+        self,
+        catalog_id: str,
+        status: str = "valid",
+        stale_days: int | None = None,
+        stac_valid: bool | None = None,
+    ):
         """A child link in the previous export, with its state."""
         stale_since = None
         if stale_days is not None:
@@ -65,7 +77,7 @@ class Registry:
                 "portolan_registry:last_validated": stale_since,
                 "portolan_registry:stale_since": stale_since,
                 "portolan_registry:failure_reason": "earlier failure" if stale_since else None,
-                "portolan_registry:stac_valid": None,
+                "portolan_registry:stac_valid": stac_valid,
                 "portolan_registry:has_agents_md": False,
                 "portolan_registry:has_readme": False,
             }
