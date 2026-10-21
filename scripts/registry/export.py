@@ -72,6 +72,9 @@ CARRIED_DEFAULTS: dict[str, object] = {
     PREFIX + "host": None,
     # For older links, record the timestamp when a run next detects a failure.
     PREFIX + "stac_invalid_since": None,
+    # Null is what child_link writes when no collection declares an interval.
+    # A link older than the field has no interval the registry has read.
+    PREFIX + "temporal_extent": None,
 }
 
 
@@ -217,6 +220,10 @@ def child_link(catalog: Mapping[str, Any]) -> dict[str, Any]:
             # or a collection listed its items behind an endpoint the crawler
             # does not page.
             "portolan_registry:counts_partial": catalog.get("counts_partial", False),
+            # [start, end] over every collection beneath the catalog: the
+            # earliest start and the latest end. A null end is an open
+            # interval, as in STAC. Null when no collection declares one.
+            "portolan_registry:temporal_extent": catalog.get("temporal_extent"),
             "portolan_registry:last_crawled": catalog.get("last_crawled"),
             "portolan_registry:last_validated": catalog.get("last_validated"),
             "portolan_registry:stale_since": catalog.get("stale_since"),

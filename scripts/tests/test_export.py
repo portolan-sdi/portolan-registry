@@ -58,6 +58,15 @@ class TestChildLink:
         link = child_link({"id": "x", "url": ROOT, "counts_partial": True})
         assert link["portolan_registry:counts_partial"] is True
 
+    def test_carries_the_temporal_extent_with_its_open_end(self):
+        extent = ["2013-01-09T00:00:00Z", None]
+        link = child_link({"id": "x", "url": ROOT, "temporal_extent": extent})
+        assert link["portolan_registry:temporal_extent"] == extent
+
+    def test_publishes_a_null_temporal_extent_when_unknown(self):
+        link = child_link({"id": "x", "url": ROOT})
+        assert link["portolan_registry:temporal_extent"] is None
+
     def test_falls_back_to_id_for_title(self):
         assert child_link({"id": "x", "url": ROOT})["title"] == "x"
 
@@ -284,6 +293,15 @@ class TestRetiredFields:
         assert link["portolan_registry:producers"] == []
         assert link["portolan_registry:processors"] == []
         assert link["portolan_registry:host"] is None
+        assert link["portolan_registry:temporal_extent"] is None
+
+    def test_keeps_a_temporal_extent_a_carried_link_already_carries(self, tmp_path):
+        extent = ["2013-01-09T00:00:00Z", None]
+        path = self.written(
+            tmp_path,
+            {"portolan_registry:id": "a", "portolan_registry:temporal_extent": extent},
+        )
+        assert load_links(path)["a"]["portolan_registry:temporal_extent"] == extent
 
     def test_keeps_a_provenance_a_carried_link_already_carries(self, tmp_path):
         path = self.written(

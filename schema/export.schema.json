@@ -74,7 +74,8 @@
               "portolan_registry:producers",
               "portolan_registry:processors",
               "portolan_registry:host",
-              "portolan_registry:stac_invalid_since"
+              "portolan_registry:stac_invalid_since",
+              "portolan_registry:temporal_extent"
             ],
             "description": "Closed on purpose. The export is the registry's published contract and its sole store of validation state, so a field the crawler stopped writing, or one a carried-forward link never gained, has to fail this check rather than ride along unnoticed. An allOf branch reads its own properties only, so the STAC link fields are declared again here.",
             "additionalProperties": false,
@@ -175,6 +176,13 @@
               "portolan_registry:counts_partial": {
                 "description": "True when the counts above are a floor rather than a total, because a child failed to fetch or a collection's items could not be enumerated. Absent on entries carried forward from an export published before this field existed; treat absent as false.",
                 "type": "boolean"
+              },
+              "portolan_registry:temporal_extent": {
+                "description": "[start, end] of the period the catalog's data covers, from the first extent.temporal.interval of every collection beneath it. The start is the earliest start and the end is the latest end. A null endpoint is an open end, as in STAC, and one open interval leaves that end of the whole extent open. A collection takes no part when its interval is [null, null], or when it holds a value that is not an RFC 3339 date-time. Null when no collection declares an interval that takes part.",
+                "type": ["array", "null"],
+                "minItems": 2,
+                "maxItems": 2,
+                "items": {"type": ["string", "null"], "format": "date-time"}
               },
               "portolan_registry:last_crawled": {"type": ["string", "null"]},
               "portolan_registry:last_validated": {"type": ["string", "null"]},
