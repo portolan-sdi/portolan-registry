@@ -88,3 +88,39 @@ def test_a_validator_stops_before_the_gate_job_does():
 
     workflow = yaml.safe_load(Path(".github/workflows/validate.yml").read_text())
     assert TIMEOUT_SECONDS < workflow["jobs"]["validate"]["timeout-minutes"] * 60
+
+
+def test_both_issue_forms_reach_the_submitter_notice():
+    workflow = yaml.safe_load(Path(".github/workflows/notify-feedback.yml").read_text())
+    job = workflow["jobs"]["notify"]
+    for label in ("catalog-feedback", "catalog-removal"):
+        assert f"'{label}'" in job["if"]
+    notify = next(step for step in job["steps"] if step.get("id") == "notify")
+    assert notify["env"]["LABEL"] == "${{ github.event.label.name }}"
+    assert notify["env"]["ISSUE_AUTHOR"] == "${{ github.event.issue.user.login }}"
+    assert '--form "$form"' in notify["run"]
+    # The label reaches the script through env, never interpolated into run.
+    assert "${{" not in notify["run"]
+
+
+def test_the_gate_reads_registry_id_history_from_the_base_branch():
+    """A draft commit inside the pull request must not retire an ID (#242)."""
+    validate = next(
+        step
+        for step in _steps("validate.yml", "validate")
+        if "scripts/validate_entries.py" in step.get("run", "")
+    )
+    assert validate["env"]["BASE_REF"] == "${{ github.event.pull_request.base.ref }}"
+    assert '--base-ref "origin/$BASE_REF"' in validate["run"]
+
+
+def test_the_failure_comment_reads_the_approval_flags():
+    """A deletion waits for a maintainer. The comment must not tell the
+    author that a push clears it."""
+    write = next(
+        step
+        for step in _steps("notify-pr.yml", "report")
+        if step.get("name") == "Write the comment"
+    )
+    assert "jq -e '.approval_only'" in write["run"]
+    assert "jq -e '.needs_approval'" in write["run"]

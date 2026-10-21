@@ -11,8 +11,10 @@ afterwards.
 from __future__ import annotations
 
 import json
+import subprocess
 
 import pytest
+import requests
 import validate_entries
 from conftest import FakeFetcher
 from test_validators import TOOLS
@@ -218,10 +220,48 @@ def test_a_root_that_returns_empty_json_exits_nonzero(tmp_path, monkeypatch):
 
 
 class TestReport:
+    def test_an_approval_only_failure_says_so(self, tmp_path):
+        """The notifier tells the author that no push clears a deletion."""
+        path = tmp_path / "report.json"
+        hint = validate_entries.APPROVAL_HINT
+        validate_entries.write_report(path, [f"a.yaml: deleted. {hint}", f"b.yaml: edited. {hint}"])
+        report = json.loads(path.read_text())
+        assert report["needs_approval"] is True
+        assert report["approval_only"] is True
+
+    def test_a_mixed_failure_needs_a_push_and_an_approval(self, tmp_path):
+        path = tmp_path / "report.json"
+        hint = validate_entries.APPROVAL_HINT
+        validate_entries.write_report(path, [f"a.yaml: deleted. {hint}", "b.yaml: bad URL"])
+        report = json.loads(path.read_text())
+        assert report["needs_approval"] is True
+        assert report["approval_only"] is False
+
+    def test_a_failure_with_no_approval_error_needs_a_push(self, tmp_path):
+        path = tmp_path / "report.json"
+        validate_entries.write_report(path, ["b.yaml: bad URL"])
+        report = json.loads(path.read_text())
+        assert report["needs_approval"] is False
+        assert report["approval_only"] is False
+
+    def test_a_deletion_reports_approval_only(self, tmp_path):
+        """The real deletion error, not a hand-written one."""
+        changed = tmp_path / "changed.txt"
+        changed.write_text(f"{tmp_path / 'gone.yaml'}\n")
+        errors = validate_entries.deleted_entries(changed)
+        path = tmp_path / "report.json"
+        validate_entries.write_report(path, errors)
+        assert json.loads(path.read_text())["approval_only"] is True
+
     def test_a_clean_run_records_no_errors(self, tmp_path):
         path = tmp_path / "report.json"
         validate_entries.write_report(path, [])
-        assert json.loads(path.read_text()) == {"ok": True, "errors": []}
+        assert json.loads(path.read_text()) == {
+            "ok": True,
+            "needs_approval": False,
+            "approval_only": False,
+            "errors": [],
+        }
 
     def test_errors_are_recorded_verbatim(self, tmp_path):
         path = tmp_path / "report.json"
@@ -246,7 +286,12 @@ class TestReport:
             ]
         )
         assert code == 0
-        assert json.loads(report.read_text()) == {"ok": True, "errors": []}
+        assert json.loads(report.read_text()) == {
+            "ok": True,
+            "needs_approval": False,
+            "approval_only": False,
+            "errors": [],
+        }
 
     def test_main_reports_a_failing_entry_and_exits_nonzero(self, tmp_path):
         entry_file(tmp_path, "cat.yaml", f"url: {ROOT}\n")
@@ -293,11 +338,15 @@ class TestDeletedEntry:
         assert report["ok"] is False
         assert len(report["errors"]) == 1
         assert "cadastral.yaml" in report["errors"][0]
-        assert "Deleting an entry is not allowed" in report["errors"][0]
+        assert "This pull request deletes an entry" in report["errors"][0]
 
     def test_the_message_names_the_removal_path(self, tmp_path):
+        """Issue #234: the old message said to keep the file, which was wrong."""
         _, report = self.run(tmp_path, [tmp_path / "cadastral.yaml"])
-        assert "status: removed" in report["errors"][0]
+        message = report["errors"][0]
+        assert validate_entries.REMOVAL_FORM in message
+        assert validate_entries.APPROVAL_HINT in message
+        assert "Keep the file" not in message
 
     def test_a_deletion_fails_beside_a_valid_entry(self, tmp_path, monkeypatch):
         """A rename lists the old path as deleted and the new path as added."""
@@ -472,3 +521,473 @@ class TestUnexpectedFailure:
         )
         assert len(errors) == 1
         assert "export unreadable" in errors[0]
+
+
+def git(*args, cwd):
+    subprocess.run(["git", *args], cwd=cwd, check=True, capture_output=True)
+
+
+class TestOfflineCatalog:
+    """A maintainer can deprecate an unreachable catalog (#234)."""
+
+    def down(self):
+        return FakeFetcher(docs={ROOT: requests.exceptions.ConnectionError("down")})
+
+    def test_a_registered_entry_that_does_not_answer_passes(self, tmp_path):
+        path = entry_file(tmp_path, "cat.yaml", ENTRY + "deprecated: true\n")
+        assert check(path, self.down(), published=published()) == []
+
+    def test_a_new_entry_that_does_not_answer_still_fails(self, tmp_path):
+        path = entry_file(tmp_path, "cat.yaml", ENTRY)
+        errors = check(path, self.down(), published={})
+        assert len(errors) == 1
+        assert "Failed to fetch catalog" in errors[0]
+
+    def test_a_removed_entry_can_be_deprecated_while_offline(self, tmp_path):
+        """Review finding: the gate treated every removed catalog as new."""
+        path = entry_file(tmp_path, "cat.yaml", ENTRY + "deprecated: true\n")
+        assert check(path, self.down(), published=published(status="removed")) == []
+
+    def test_a_removed_entry_that_is_not_deprecated_is_gated_again(self, tmp_path):
+        """Re-registration still needs a catalog that answers."""
+        path = entry_file(tmp_path, "cat.yaml", ENTRY)
+        errors = check(path, self.down(), published=published(status="removed"))
+        assert len(errors) == 1
+        assert "Failed to fetch catalog" in errors[0]
+
+    def test_a_removed_deprecated_entry_at_a_new_url_is_gated(self, tmp_path):
+        path = entry_file(tmp_path, "cat.yaml", ENTRY + "deprecated: true\n")
+        moved = published(href="https://old.example.org/catalog.json", status="removed")
+        assert len(check(path, self.down(), published=moved)) == 1
+
+    def test_a_registered_entry_at_a_new_url_that_does_not_answer_fails(self, tmp_path):
+        path = entry_file(tmp_path, "cat.yaml", ENTRY)
+        moved = published(href="https://old.example.org/catalog.json")
+        assert len(check(path, self.down(), published=moved)) == 1
+
+
+class TestDeprecationRules:
+    """Pull request checks for deprecation fields and replacement IDs (#234)."""
+
+    @pytest.fixture(autouse=True)
+    def no_crawl(self, monkeypatch):
+        monkeypatch.setattr(validate_entries, "check_entry", lambda *a, **k: [])
+
+    @pytest.fixture
+    def catalogs(self, tmp_path):
+        catalogs = tmp_path / "catalogs"
+        catalogs.mkdir()
+        self.write(catalogs, "next", "")
+        return catalogs
+
+    def write(self, catalogs, stem, extra, url=None):
+        path = catalogs / f"{stem}.yaml"
+        path.write_text(
+            f"url: {url or f'https://{stem}.example.org/catalog.json'}\n"
+            f"submitter_email: submitter@example.com\n{extra}"
+        )
+        return path
+
+    def run(self, catalogs, changed, added=(), base_ref=None, approved=True):
+        changed_file = catalogs.parent / "changed.txt"
+        changed_file.write_text("".join(f"{p}\n" for p in changed))
+        added_file = catalogs.parent / "added.txt"
+        added_file.write_text("".join(f"{p}\n" for p in added))
+        return validate_entries.collect_errors(
+            changed_file=changed_file,
+            catalog_dir=catalogs,
+            added_file=added_file,
+            maintainer_approved=approved,
+            base_ref=base_ref,
+        )
+
+    def test_a_deprecation_with_a_known_successor_passes(self, catalogs):
+        old = self.write(catalogs, "old", "deprecated: true\nsuperseded_by: next\n")
+        assert self.run(catalogs, [old]) == []
+
+    def test_the_flag_alone_passes(self, catalogs):
+        old = self.write(catalogs, "old", "deprecated: true\n")
+        assert self.run(catalogs, [old]) == []
+
+    def test_an_unknown_successor_fails_and_names_the_id(self, catalogs):
+        old = self.write(catalogs, "old", "deprecated: true\nsuperseded_by: nowhere\n")
+        errors = self.run(catalogs, [old])
+        assert len(errors) == 1
+        assert "'nowhere'" in errors[0]
+
+    def test_a_successor_in_the_same_pull_request_passes(self, catalogs):
+        new = self.write(catalogs, "brand-new", "")
+        old = self.write(catalogs, "old", "deprecated: true\nsuperseded_by: brand-new\n")
+        assert self.run(catalogs, [old, new], added=[new]) == []
+
+    def test_a_self_reference_fails(self, catalogs):
+        old = self.write(catalogs, "old", "deprecated: true\nsuperseded_by: old\n")
+        assert "names this entry" in self.run(catalogs, [old])[0]
+
+    def test_a_cycle_fails(self, catalogs):
+        self.write(catalogs, "next", "deprecated: true\nsuperseded_by: old\n")
+        old = self.write(catalogs, "old", "deprecated: true\nsuperseded_by: next\n")
+        errors = self.run(catalogs, [old])
+        assert len(errors) == 1
+        assert "old -> next -> old" in errors[0]
+
+    def test_a_chain_passes(self, catalogs):
+        self.write(catalogs, "last", "")
+        self.write(catalogs, "next", "deprecated: true\nsuperseded_by: last\n")
+        old = self.write(catalogs, "old", "deprecated: true\nsuperseded_by: next\n")
+        assert self.run(catalogs, [old]) == []
+
+    @pytest.mark.parametrize("extra", ["superseded_by: next\n", "deprecated_reason: Moved.\n"])
+    def test_a_successor_or_reason_needs_the_flag(self, catalogs, extra):
+        old = self.write(catalogs, "old", extra)
+        errors = self.run(catalogs, [old])
+        assert len(errors) == 1
+        assert "only with 'deprecated: true'" in errors[0]
+
+    def test_the_flag_must_be_a_boolean(self, catalogs):
+        old = self.write(catalogs, "old", "deprecated: 'yes'\n")
+        assert "must be true or false" in self.run(catalogs, [old])[0]
+
+    @pytest.mark.parametrize("reason", ["''", "'" + "x" * 301 + "'", "5"])
+    def test_the_reason_must_be_short_text(self, catalogs, reason):
+        old = self.write(catalogs, "old", f"deprecated: true\ndeprecated_reason: {reason}\n")
+        assert "1 to 300 characters" in self.run(catalogs, [old])[0]
+
+    def test_a_new_entry_cannot_be_deprecated(self, catalogs):
+        new = self.write(catalogs, "fresh", "deprecated: true\n")
+        errors = self.run(catalogs, [new], added=[new])
+        assert len(errors) == 1
+        assert "A new entry cannot be deprecated" in errors[0]
+
+    def test_a_deletion_of_a_named_successor_fails(self, catalogs):
+        self.write(catalogs, "old", "deprecated: true\nsuperseded_by: next\n")
+        (catalogs / "next.yaml").unlink()
+        errors = self.run(catalogs, [catalogs / "next.yaml"])
+        assert len(errors) == 1
+        assert "'old' names 'next'" in errors[0]
+
+    def test_an_approval_does_not_clear_the_rules(self, catalogs):
+        old = self.write(catalogs, "old", "deprecated: true\nsuperseded_by: nowhere\n")
+        assert len(self.run(catalogs, [old], approved=True)) == 1
+
+    def test_a_deprecation_with_a_url_change_fails(self, catalogs):
+        git("init", "-q", "-b", "main", cwd=catalogs)
+        git("config", "user.email", "test@example.org", cwd=catalogs)
+        git("config", "user.name", "Test", cwd=catalogs)
+        git("config", "commit.gpgsign", "false", cwd=catalogs)
+        self.write(catalogs, "old", "")
+        git("add", "-A", cwd=catalogs)
+        git("commit", "-q", "-m", "add old", cwd=catalogs)
+        old = self.write(
+            catalogs, "old", "deprecated: true\n", url="https://moved.org/catalog.json"
+        )
+        errors = self.run(catalogs, [old], base_ref="main")
+        assert len(errors) == 1
+        assert "deprecates the entry and changes its URL" in errors[0]
+
+    def test_a_deprecation_at_the_same_url_passes_with_a_base_ref(self, catalogs):
+        git("init", "-q", "-b", "main", cwd=catalogs)
+        git("config", "user.email", "test@example.org", cwd=catalogs)
+        git("config", "user.name", "Test", cwd=catalogs)
+        git("config", "commit.gpgsign", "false", cwd=catalogs)
+        self.write(catalogs, "old", "")
+        git("add", "-A", cwd=catalogs)
+        git("commit", "-q", "-m", "add old", cwd=catalogs)
+        old = self.write(catalogs, "old", "deprecated: true\n")
+        assert self.run(catalogs, [old], base_ref="main") == []
+
+
+class TestDuplicateUrl:
+    """The duplicate check must not depend on which filename sorts last.
+
+    roborev found that a map with one file per URL kept the file that
+    sorted last. A new entry whose name sorted after the current holder
+    found itself in the map and passed.
+    """
+
+    def run(self, catalog_dir, new, base_ref=None):
+        changed = catalog_dir.parent / "changed.txt"
+        changed.write_text(f"{new}\n")
+        return validate_entries.collect_errors(
+            changed_file=changed,
+            catalog_dir=catalog_dir,
+            added_file=changed,
+            base_ref=base_ref,
+        )
+
+    @pytest.fixture
+    def catalogs(self, tmp_path):
+        catalogs = tmp_path / "catalogs"
+        catalogs.mkdir()
+        entry_file(catalogs, "new-id.yaml", ENTRY)
+        return catalogs
+
+    @pytest.mark.parametrize("stem", ["alpha", "zeta"])
+    def test_a_duplicate_fails_whichever_name_sorts_last(self, catalogs, stem):
+        new = entry_file(catalogs, f"{stem}.yaml", ENTRY)
+        errors = self.run(catalogs, new)
+        assert len(errors) == 1
+        assert "Duplicate catalog URL detected" in errors[0]
+        assert "'new-id.yaml'" in errors[0]
+
+    def test_a_duplicate_of_a_url_a_removed_id_held_fails_once(self, catalogs):
+        """The URL rule stays quiet and the duplicate check reports it."""
+        git("init", "-q", "-b", "main", cwd=catalogs)
+        git("config", "user.email", "test@example.org", cwd=catalogs)
+        git("config", "user.name", "Test", cwd=catalogs)
+        git("config", "commit.gpgsign", "false", cwd=catalogs)
+        (catalogs / "new-id.yaml").unlink()
+        entry_file(catalogs, "old.yaml", ENTRY)
+        git("add", "-A", cwd=catalogs)
+        git("commit", "-q", "-m", "add old", cwd=catalogs)
+        git("rm", "-q", "old.yaml", cwd=catalogs)
+        git("commit", "-q", "-m", "remove old", cwd=catalogs)
+        entry_file(catalogs, "new-id.yaml", ENTRY)
+        git("add", "-A", cwd=catalogs)
+        git("commit", "-q", "-m", "add new-id", cwd=catalogs)
+        new = entry_file(catalogs, "zeta.yaml", ENTRY)
+        errors = self.run(catalogs, new, base_ref="main")
+        assert len(errors) == 1
+        assert "Duplicate catalog URL detected" in errors[0]
+
+
+class TestRegistryIds:
+    """Issue #242: an ID never changes and never names a second catalog.
+
+    Each test builds a throwaway repository with a `main` branch and a pull
+    request branch. The history rules read `main`, as CI reads the base
+    branch.
+    """
+
+    @pytest.fixture(autouse=True)
+    def no_crawl(self, monkeypatch):
+        monkeypatch.setattr(validate_entries, "check_entry", lambda *a, **k: [])
+
+    @pytest.fixture
+    def repo(self, tmp_path):
+        git("init", "-q", "-b", "main", cwd=tmp_path)
+        git("config", "user.email", "test@example.org", cwd=tmp_path)
+        git("config", "user.name", "Test", cwd=tmp_path)
+        git("config", "commit.gpgsign", "false", cwd=tmp_path)
+        catalogs = tmp_path / "catalogs"
+        catalogs.mkdir()
+        self.write(catalogs, "seed", url="https://seed.org/catalog.json")
+        self.commit(catalogs, "seed")
+        return catalogs
+
+    def write(self, catalogs, stem, url=ROOT):
+        path = catalogs / f"{stem}.yaml"
+        path.write_text(f"url: {url}\nsubmitter_email: submitter@example.com\n")
+        return path
+
+    def commit(self, catalogs, message):
+        git("add", "-A", cwd=catalogs)
+        git("commit", "-q", "-m", message, cwd=catalogs)
+
+    def registered_then_removed(self, catalogs, stem, url=ROOT):
+        """On main: register an entry, then remove it."""
+        self.write(catalogs, stem, url=url)
+        self.commit(catalogs, f"add {stem}")
+        (catalogs / f"{stem}.yaml").unlink()
+        self.commit(catalogs, f"remove {stem}")
+
+    def open_pull_request(self, catalogs):
+        git("switch", "-q", "-c", "pr", cwd=catalogs)
+
+    def run(self, catalogs, changed, added, approved=False, base_ref="main"):
+        changed_file = catalogs.parent / "changed.txt"
+        changed_file.write_text("".join(f"{p}\n" for p in changed))
+        added_file = catalogs.parent / "added.txt"
+        added_file.write_text("".join(f"{p}\n" for p in added))
+        return validate_entries.collect_errors(
+            changed_file=changed_file,
+            catalog_dir=catalogs,
+            added_file=added_file,
+            maintainer_approved=approved,
+            base_ref=base_ref,
+        )
+
+    def test_a_new_id_passes(self, repo):
+        self.open_pull_request(repo)
+        new = self.write(repo, "city-of-example-parcels")
+        assert self.run(repo, [new], [new]) == []
+
+    @pytest.mark.parametrize(
+        "stem", ["Parcels", "city_parcels", "city--parcels", "-parcels", "a.b"]
+    )
+    def test_an_id_outside_the_pattern_fails(self, repo, stem):
+        new = self.write(repo, stem)
+        errors = self.run(repo, [new], [new], approved=True)
+        assert len(errors) == 1
+        assert "not a valid registry ID" in errors[0]
+
+    def test_a_current_id_outside_the_pattern_is_not_checked(self, repo):
+        """The rule gates new IDs. An edit keeps the ID it has."""
+        current = self.write(repo, "Legacy_Name")
+        assert self.run(repo, [current], [], approved=True) == []
+
+    def test_a_rename_fails_even_with_an_approval(self, repo):
+        self.write(repo, "old-name")
+        self.commit(repo, "add old-name")
+        self.open_pull_request(repo)
+        git("mv", "old-name.yaml", "new-name.yaml", cwd=repo)
+        self.commit(repo, "rename")
+        old, new = repo / "old-name.yaml", repo / "new-name.yaml"
+        errors = self.run(repo, [old, new], [new], approved=True)
+        assert len(errors) == 1
+        assert "renames 'old-name' to 'new-name'" in errors[0]
+        assert "Keep old-name.yaml" in errors[0]
+
+    def test_an_uncommitted_rename_still_fails(self, repo):
+        """The old URL comes from the base branch, not from the PR commits."""
+        self.write(repo, "old-name")
+        self.commit(repo, "add old-name")
+        self.open_pull_request(repo)
+        (repo / "old-name.yaml").unlink()
+        new = self.write(repo, "new-name")
+        errors = self.run(repo, [repo / "old-name.yaml", new], [new], approved=True)
+        assert len(errors) == 1
+        assert "renames" in errors[0]
+
+    def test_a_rename_that_respells_the_url_still_fails(self, repo):
+        self.write(repo, "old-name", url="https://www.ex.org/catalog.json")
+        self.commit(repo, "add old-name")
+        self.open_pull_request(repo)
+        (repo / "old-name.yaml").unlink()
+        new = self.write(repo, "new-name", url="https://ex.org/catalog.json")
+        self.commit(repo, "rename")
+        errors = self.run(repo, [repo / "old-name.yaml", new], [new], approved=True)
+        assert len(errors) == 1
+        assert "renames" in errors[0]
+
+    def test_a_rename_split_across_two_pull_requests_fails(self, repo):
+        """Review finding: the first PR removes the entry, the second re-adds
+        its URL under a new name."""
+        self.registered_then_removed(repo, "original")
+        self.open_pull_request(repo)
+        renamed = self.write(repo, "renamed")
+        errors = self.run(repo, [renamed], [renamed], approved=True)
+        assert len(errors) == 1
+        assert "belonged to registry ID 'original'" in errors[0]
+        assert "name the file original.yaml" in errors[0]
+
+    def test_a_url_that_moved_to_a_current_entry_is_not_an_id_error(self, repo):
+        """The duplicate URL check owns this case. The ID rule stays quiet."""
+        self.registered_then_removed(repo, "original")
+        self.write(repo, "original")
+        self.commit(repo, "bring original back")
+        self.open_pull_request(repo)
+        other = self.write(repo, "other")
+        assert self.run(repo, [other], [other], approved=True) == []
+
+    def test_a_url_that_moved_to_another_current_id_is_not_an_id_error(self, repo):
+        """Review finding: the old hint would name an ID that fails too."""
+        self.registered_then_removed(repo, "old")
+        self.write(repo, "new-id")
+        self.commit(repo, "register the catalog as new-id")
+        self.open_pull_request(repo)
+        bar = self.write(repo, "bar")
+        assert self.run(repo, [bar], [bar], approved=True) == []
+
+    def test_an_id_whose_newest_deletion_held_another_url_is_not_named(self, repo):
+        """Review finding: the history renamed `main.yaml` twice, once per
+        catalog. The hint must not name an ID that now points elsewhere."""
+        self.registered_then_removed(repo, "main", url="https://madrid.org/catalog.json")
+        self.registered_then_removed(repo, "main", url="https://finland.org/catalog.json")
+        self.open_pull_request(repo)
+        madrid = self.write(repo, "madrid", url="https://madrid.org/catalog.json")
+        assert self.run(repo, [madrid], [madrid], approved=True) == []
+        finland = self.write(repo, "finland", url="https://finland.org/catalog.json")
+        errors = self.run(repo, [finland], [finland], approved=True)
+        assert len(errors) == 1
+        assert "name the file main.yaml" in errors[0]
+
+    def test_a_deletion_beside_an_unrelated_addition_passes_with_an_approval(self, repo):
+        self.write(repo, "leaving")
+        self.commit(repo, "add leaving")
+        self.open_pull_request(repo)
+        (repo / "leaving.yaml").unlink()
+        new = self.write(repo, "arriving", url="https://other.org/catalog.json")
+        self.commit(repo, "swap")
+        assert self.run(repo, [repo / "leaving.yaml", new], [new], approved=True) == []
+
+    def test_a_retired_id_fails_for_another_catalog(self, repo):
+        self.registered_then_removed(repo, "placeholder")
+        self.open_pull_request(repo)
+        new = self.write(repo, "placeholder", url="https://other.org/catalog.json")
+        errors = self.run(repo, [new], [new], approved=True)
+        assert len(errors) == 1
+        assert "belonged to another catalog" in errors[0]
+        assert "Choose a different filename" in errors[0]
+
+    def test_the_same_catalog_needs_an_approval_to_return(self, repo):
+        self.registered_then_removed(repo, "placeholder")
+        self.open_pull_request(repo)
+        back = self.write(repo, "placeholder")
+        errors = self.run(repo, [back], [back])
+        assert len(errors) == 1
+        assert "register the same catalog again" in errors[0]
+        assert validate_entries.APPROVAL_HINT in errors[0]
+
+    def test_an_approval_lets_the_same_catalog_return(self, repo):
+        self.registered_then_removed(repo, "placeholder")
+        self.open_pull_request(repo)
+        back = self.write(repo, "placeholder", url="https://www.ex.org/catalog.json/")
+        assert self.run(repo, [back], [back], approved=True) == []
+
+    def test_a_merge_cannot_hide_a_retired_id(self, repo):
+        """Review finding: a branch keeps an ID that main deleted, points it
+        at another catalog, and merges main. The merge keeps the file."""
+        self.write(repo, "placeholder")
+        self.commit(repo, "add placeholder")
+        self.open_pull_request(repo)
+        entry = self.write(repo, "placeholder", url="https://other.org/catalog.json")
+        self.commit(repo, "point placeholder at another catalog")
+        git("switch", "-q", "main", cwd=repo)
+        (repo / "placeholder.yaml").unlink()
+        self.commit(repo, "remove placeholder")
+        git("switch", "-q", "pr", cwd=repo)
+        subprocess.run(["git", "merge", "-q", "main"], cwd=repo, capture_output=True)
+        git("add", "placeholder.yaml", cwd=repo)
+        git("commit", "-q", "--no-edit", cwd=repo)
+        assert entry.exists()
+        errors = self.run(repo, [entry], [entry])
+        assert len(errors) == 1
+        assert "belonged to another catalog" in errors[0]
+
+    def test_a_draft_deleted_inside_the_pull_request_retires_nothing(self, repo):
+        """Review finding: the PR adds a draft, deletes it, and adds it again
+        with a corrected URL. The registry never held that ID."""
+        self.open_pull_request(repo)
+        self.write(repo, "draft", url="https://typo.org/catalog.json")
+        self.commit(repo, "add draft")
+        (repo / "draft.yaml").unlink()
+        self.commit(repo, "remove draft")
+        draft = self.write(repo, "draft")
+        self.commit(repo, "add draft again")
+        assert self.run(repo, [draft], [draft]) == []
+
+    def test_without_a_base_ref_only_the_pattern_rule_runs(self, repo):
+        self.registered_then_removed(repo, "placeholder")
+        new = self.write(repo, "placeholder", url="https://other.org/catalog.json")
+        assert self.run(repo, [new], [new], base_ref=None) == []
+        bad = self.write(repo, "Bad_Name")
+        assert len(self.run(repo, [bad], [bad], base_ref=None)) == 1
+
+    def test_main_passes_the_base_ref_through(self, repo, monkeypatch):
+        monkeypatch.setattr(validate_entries, "load_links", lambda p: {})
+        monkeypatch.setattr(validate_entries, "load_state", lambda p: {})
+        self.registered_then_removed(repo, "placeholder")
+        new = self.write(repo, "placeholder", url="https://other.org/catalog.json")
+        listing = repo.parent / "changed.txt"
+        listing.write_text(f"{new}\n")
+        args = [
+            "--changed-file",
+            str(listing),
+            "--added-file",
+            str(listing),
+            "--catalog-dir",
+            str(repo),
+        ]
+        assert validate_entries.main(args) == 0
+        assert validate_entries.main([*args, "--base-ref", "main"]) == 1

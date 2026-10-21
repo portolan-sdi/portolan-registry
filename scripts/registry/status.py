@@ -1,8 +1,11 @@
 """Catalog validation status transitions.
 
-valid -> stale on the first failed re-validation, stale -> removed once it
-has been stale for STALE_THRESHOLD_DAYS. A successful crawl always restores
-valid, which is how a re-submitted catalog comes back.
+The first failed check changes `valid` to `stale`. Another failure after
+STALE_THRESHOLD_DAYS changes `stale` to `removed`. A successful check
+restores `valid`.
+
+`passes` evaluates reachable catalogs. A catalog that cannot be fetched
+always fails.
 """
 
 from __future__ import annotations
@@ -21,6 +24,24 @@ def parse_timestamp(ts: str | None) -> datetime | None:
         return datetime.fromisoformat(ts.replace("Z", "+00:00"))
     except (ValueError, AttributeError):
         return None
+
+
+def passes(*, deprecated: bool, stac_valid: bool | None) -> bool | None:
+    """Return whether a reachable catalog passes its registry check.
+
+    Use `ValidationReport.passed` from the current run. The published
+    `stac_valid` can contain a previous run's result when the validators
+    return no result.
+
+    Catalogs that are not deprecated pass if they are reachable. Validator
+    errors affect status only for deprecated catalogs.
+
+    If a deprecated catalog has no validation result, return `None`. The
+    caller preserves its current status and failure date.
+    """
+    if not deprecated:
+        return True
+    return stac_valid
 
 
 def update_status(

@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-12T13:26:44.478228+00:00",
+  "generated": "2026-10-20T17:07:48.057967+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-10-12T13:26:44.478228+00:00",
+  "registry_generated": "2026-10-20T17:07:48.057967+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -50,7 +50,7 @@
             -124.5085,
             -83.1643,
             120.6733,
-            84.0302
+            90.0
           ]
         },
         {
@@ -69,7 +69,7 @@
           "bbox": [
             -8.849,
             4.8667,
-            51.7013,
+            30.5198,
             56.9438
           ]
         },
@@ -89,7 +89,7 @@
           "bbox": [
             -8.849,
             4.8667,
-            51.7013,
+            30.5198,
             56.9438
           ]
         },
@@ -120,7 +120,7 @@
             7.5929,
             47.5494,
             10.3345,
-            49.5499
+            49.5178
           ]
         },
         {
@@ -4981,7 +4981,7 @@
     },
     {
       "id": "bologna-open-data",
-      "collection_count": 35,
+      "collection_count": 36,
       "collections": [
         {
           "id": "ambiente/aree-ortive",
@@ -5191,6 +5191,16 @@
             44.4474,
             11.4194,
             44.544
+          ]
+        },
+        {
+          "id": "statistica/popolazione-residente-aree-statistiche",
+          "title": "Popolazione residente per et\u00e0, sesso, cittadinanza, quartiere, zona, area statistica - serie storica",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
           ]
         },
         {
@@ -37950,6 +37960,22 @@
       ]
     },
     {
+      "id": "corine-land-cover-2018",
+      "collection_count": 1,
+      "collections": [
+        {
+          "id": "clc_2018",
+          "title": "Corine Land Cover 2018, land cover polygons",
+          "bbox": [
+            -55.5095,
+            24.4941,
+            71.1178,
+            72.123
+          ]
+        }
+      ]
+    },
+    {
       "id": "danmark-dataforsyningen",
       "collection_count": 34,
       "collections": [
@@ -41664,192 +41690,12 @@
       ]
     },
     {
-      "id": "geoconnex-geoparquet",
-      "collection_count": 30,
+      "id": "geoconnex",
+      "collection_count": 38,
       "collections": [
         {
-          "id": "mainstems",
-          "title": "Rivers: mainstems, head to outlet",
-          "bbox": [
-            -124.7244,
-            25.034,
-            -66.6286,
-            52.1174
-          ]
-        },
-        {
-          "id": "gages",
-          "title": "Stream gages",
-          "bbox": [
-            -176.715,
-            -14.3359,
-            179.9098,
-            71.3874
-          ]
-        },
-        {
-          "id": "dams",
-          "title": "Dams",
-          "bbox": [
-            -176.6873,
-            13.3605,
-            -65.672,
-            71.2667
-          ]
-        },
-        {
-          "id": "hu02",
-          "title": "Watersheds HU02 (regions)",
-          "bbox": [
-            -179.2295,
-            -14.4244,
-            179.8565,
-            71.4395
-          ]
-        },
-        {
-          "id": "hu04",
-          "title": "Watersheds HU04 (subregions)",
-          "bbox": [
-            -179.2295,
-            -14.4244,
-            179.8565,
-            71.4395
-          ]
-        },
-        {
-          "id": "hu06",
-          "title": "Watersheds HU06 (basins)",
-          "bbox": [
-            -179.2295,
-            -14.4244,
-            179.8565,
-            71.4395
-          ]
-        },
-        {
-          "id": "hu08",
-          "title": "Watersheds HU08 (subbasins)",
-          "bbox": [
-            -179.2295,
-            -14.4244,
-            179.8565,
-            71.4395
-          ]
-        },
-        {
-          "id": "hu10",
-          "title": "Watersheds HU10",
-          "bbox": [
-            -179.2295,
-            -14.4244,
-            179.8565,
-            71.4395
-          ]
-        },
-        {
-          "id": "hu12",
-          "title": "Watersheds HU12 (subwatersheds)",
-          "bbox": [
-            -179.2297,
-            -14.6102,
-            179.8567,
-            71.4396
-          ]
-        },
-        {
-          "id": "principal_aquifers",
-          "title": "Principal aquifers",
-          "bbox": [
-            -160.2349,
-            17.6866,
-            -64.7194,
-            49.3856
-          ]
-        },
-        {
-          "id": "national_aquifers",
-          "title": "National aquifers",
-          "bbox": [
-            -160.2349,
-            17.6866,
-            -64.7194,
-            49.3856
-          ]
-        },
-        {
-          "id": "hydrogeologic_regions",
-          "title": "Secondary hydrogeologic regions",
-          "bbox": [
-            -124.7311,
-            24.5963,
-            -66.9606,
-            49.3856
-          ]
-        },
-        {
-          "id": "water_systems",
-          "title": "Public water systems",
-          "bbox": [
-            -174.3233,
-            19.064,
-            173.033,
-            71.3402
-          ]
-        },
-        {
-          "id": "epa_wqp",
-          "title": "Water Quality Portal sites",
-          "bbox": [
-            -180.0,
-            -90.0,
-            179.9098,
-            90.0
-          ]
-        },
-        {
-          "id": "usgs_monitoring_locations",
-          "title": "USGS monitoring locations",
-          "bbox": [
-            -176.715,
-            -14.3478,
-            179.9098,
-            71.3874
-          ]
-        },
-        {
-          "id": "usgs_national_geologic_map",
-          "title": "National Geologic Map units",
-          "bbox": [
-            -125.3812,
-            24.3963,
-            -66.8854,
-            49.3845
-          ]
-        },
-        {
-          "id": "usgs_gnis",
-          "title": "GNIS names",
-          "bbox": [
-            -180.0,
-            -14.5475,
-            179.9833,
-            71.4175
-          ]
-        },
-        {
-          "id": "usgs_sciencebase",
-          "title": "ScienceBase items",
-          "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
-          ]
-        },
-        {
-          "id": "ca_gage_assessment_gages",
-          "title": "California stream gage assessment",
+          "id": "ca_gage_assessment:gages",
+          "title": "California Streamgage Network Assessment",
           "bbox": [
             -124.2945,
             32.5515,
@@ -41858,28 +41704,18 @@
           ]
         },
         {
-          "id": "iow_state_gages_ndwr",
-          "title": "Nevada state gages",
+          "id": "epa:wqp",
+          "title": "EPA Water Quality Portal",
           "bbox": [
-            -120.0026,
-            36.1513,
-            -114.0221,
-            41.9969
+            -180.0,
+            -90.0,
+            179.9098,
+            90.0
           ]
         },
         {
-          "id": "utah_water_systems",
-          "title": "Utah water systems",
-          "bbox": [
-            -114.0529,
-            36.9396,
-            -109.0699,
-            42.6815
-          ]
-        },
-        {
-          "id": "iow_state_gages_cdss",
-          "title": "Colorado state gages",
+          "id": "iow:state_gages:cdss",
+          "title": "Colorado State Gages",
           "bbox": [
             -109.052,
             31.0849,
@@ -41888,68 +41724,8 @@
           ]
         },
         {
-          "id": "iow_state_gages_wyseo",
-          "title": "Wyoming state gages",
-          "bbox": [
-            -111.2533,
-            40.8351,
-            -104.0469,
-            45.3068
-          ]
-        },
-        {
-          "id": "wwdh_snotel",
-          "title": "SNOTEL stations",
-          "bbox": [
-            -164.9247,
-            32.9234,
-            -103.7876,
-            70.2806
-          ]
-        },
-        {
-          "id": "wwdh_usbr_rise",
-          "title": "Bureau of Reclamation locations",
-          "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
-          ]
-        },
-        {
-          "id": "wwdh_usace_access_to_water",
-          "title": "USACE reservoirs",
-          "bbox": [
-            -147.1799,
-            26.7218,
-            -71.5181,
-            64.7925
-          ]
-        },
-        {
-          "id": "wwdh_awdb_forecasts",
-          "title": "NRCS water supply forecast points",
-          "bbox": [
-            -158.1138,
-            32.6463,
-            -103.4821,
-            62.5204
-          ]
-        },
-        {
-          "id": "wwdh_noaa_rfc",
-          "title": "NOAA River Forecast Center points",
-          "bbox": [
-            -123.4931,
-            32.6481,
-            -103.2014,
-            52.05
-          ]
-        },
-        {
-          "id": "iow_state_gages_mtdnrc",
-          "title": "Montana state gages",
+          "id": "iow:state_gages:mtdnrc",
+          "title": "Montana State Gages",
           "bbox": [
             -114.5286,
             44.5881,
@@ -41958,13 +41734,343 @@
           ]
         },
         {
-          "id": "iow_state_gages_nednr",
-          "title": "Nebraska state gages",
+          "id": "iow:state_gages:ndwr",
+          "title": "Nevada State Gages",
+          "bbox": [
+            -120.0026,
+            36.1513,
+            -114.0221,
+            41.9969
+          ]
+        },
+        {
+          "id": "iow:state_gages:nednr",
+          "title": "Nebraska State Gages",
           "bbox": [
             -104.0576,
             40.0141,
             -96.4685,
             42.9223
+          ]
+        },
+        {
+          "id": "iow:state_gages:wyseo",
+          "title": "Wyoming State Gages",
+          "bbox": [
+            -111.2533,
+            40.8351,
+            -104.0469,
+            45.3068
+          ]
+        },
+        {
+          "id": "ref:aiannh",
+          "title": "American Indian/Alaska Native Areas and Hawaiian Home Lands",
+          "bbox": [
+            -174.2345,
+            18.9106,
+            -67.0385,
+            71.3397
+          ]
+        },
+        {
+          "id": "ref:cbsa",
+          "title": "Core Based Statistical Areas",
+          "bbox": [
+            -178.3347,
+            17.8833,
+            -65.5643,
+            65.4535
+          ]
+        },
+        {
+          "id": "ref:counties",
+          "title": "U.S. Counties",
+          "bbox": [
+            -179.1489,
+            -14.5487,
+            179.7785,
+            71.3652
+          ]
+        },
+        {
+          "id": "ref:dams",
+          "title": "Reference Dams",
+          "bbox": [
+            -176.6873,
+            13.3605,
+            -65.672,
+            71.2667
+          ]
+        },
+        {
+          "id": "ref:gages",
+          "title": "Reference Stream Gages",
+          "bbox": [
+            -176.715,
+            -14.3359,
+            179.9098,
+            71.3874
+          ]
+        },
+        {
+          "id": "ref:hu02",
+          "title": "HUC02 Hydrologic Regions",
+          "bbox": [
+            -179.2295,
+            -14.4244,
+            179.8565,
+            71.4395
+          ]
+        },
+        {
+          "id": "ref:hu04",
+          "title": "HUC04 Hydrologic Regions",
+          "bbox": [
+            -179.2295,
+            -14.4244,
+            179.8565,
+            71.4395
+          ]
+        },
+        {
+          "id": "ref:hu06",
+          "title": "HUC06 Hydrologic Regions",
+          "bbox": [
+            -179.2295,
+            -14.4244,
+            179.8565,
+            71.4395
+          ]
+        },
+        {
+          "id": "ref:hu08",
+          "title": "HUC08 Hydrologic Regions",
+          "bbox": [
+            -179.2295,
+            -14.4244,
+            179.8565,
+            71.4395
+          ]
+        },
+        {
+          "id": "ref:hu10",
+          "title": "HUC10 Hydrologic Regions",
+          "bbox": [
+            -179.2295,
+            -14.4244,
+            179.8565,
+            71.4395
+          ]
+        },
+        {
+          "id": "ref:hu12",
+          "title": "HUC12 Hydrologic Units",
+          "bbox": [
+            -179.2297,
+            -14.6102,
+            179.8567,
+            71.4396
+          ]
+        },
+        {
+          "id": "ref:mainstems",
+          "title": "Reference Mainstems",
+          "bbox": [
+            -124.7244,
+            25.034,
+            -66.6286,
+            52.1174
+          ]
+        },
+        {
+          "id": "ref:nat_aq",
+          "title": "USGS National Aquifers",
+          "bbox": [
+            -160.2349,
+            17.6866,
+            -64.7194,
+            49.3856
+          ]
+        },
+        {
+          "id": "ref:places",
+          "title": "U.S. Places",
+          "bbox": [
+            -176.6967,
+            -14.3737,
+            173.4277,
+            71.3397
+          ]
+        },
+        {
+          "id": "ref:princi_aq",
+          "title": "USGS Principal Aquifers",
+          "bbox": [
+            -160.2349,
+            17.6866,
+            -64.7194,
+            49.3856
+          ]
+        },
+        {
+          "id": "ref:pws",
+          "title": "EPA Public Water Systems",
+          "bbox": [
+            -174.3233,
+            19.064,
+            173.033,
+            71.3402
+          ]
+        },
+        {
+          "id": "ref:sec_hydrg_reg",
+          "title": "Secondary Hydrogeologic Regions",
+          "bbox": [
+            -124.7311,
+            24.5963,
+            -66.9606,
+            49.3856
+          ]
+        },
+        {
+          "id": "ref:states",
+          "title": "U.S. States",
+          "bbox": [
+            -179.1489,
+            -14.5487,
+            179.7785,
+            71.3652
+          ]
+        },
+        {
+          "id": "ref:ua10",
+          "title": "US Census Bureau Urbanized Areas (2010)",
+          "bbox": [
+            -170.7894,
+            -14.3737,
+            145.7909,
+            66.9045
+          ]
+        },
+        {
+          "id": "usgs:gnis",
+          "title": "USGS Geographic Names (GNIS)",
+          "bbox": [
+            -179.4681,
+            -14.5475,
+            179.9833,
+            71.4175
+          ]
+        },
+        {
+          "id": "usgs:monitoring_locations",
+          "title": "USGS Monitoring Locations",
+          "bbox": [
+            -176.715,
+            -14.3478,
+            179.9098,
+            71.3874
+          ]
+        },
+        {
+          "id": "usgs:national_geologic_map",
+          "title": "National Geologic Map Database",
+          "bbox": [
+            -180.0,
+            -14.42,
+            180.0,
+            71.9996
+          ]
+        },
+        {
+          "id": "usgs:nhdplusv2:huc12pp",
+          "title": "HUC12 Pour Points",
+          "bbox": [
+            -124.709,
+            25.2156,
+            -66.9951,
+            49.364
+          ]
+        },
+        {
+          "id": "usgs:sciencebase",
+          "title": "USGS ScienceBase Catalog",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "utah:water_systems",
+          "title": "Utah Water Systems",
+          "bbox": [
+            -114.0529,
+            36.9396,
+            -109.0699,
+            42.6815
+          ]
+        },
+        {
+          "id": "wwdh:awdb_forecasts",
+          "title": "US Department of Agriculture AWDB Forecast Locations",
+          "bbox": [
+            -158.1138,
+            32.6463,
+            -103.4821,
+            62.5204
+          ]
+        },
+        {
+          "id": "wwdh:noaa_rfc",
+          "title": "NOAA River Forecast Center Locations",
+          "bbox": [
+            -123.4931,
+            32.6481,
+            -103.2014,
+            52.05
+          ]
+        },
+        {
+          "id": "wwdh:snotel",
+          "title": "US Department of Agriculture SNOTEL Locations",
+          "bbox": [
+            -164.9247,
+            32.9234,
+            -103.7876,
+            70.2806
+          ]
+        },
+        {
+          "id": "wwdh:usace:access_to_water",
+          "title": "US Army Corps of Engineers Access2Water API Locations",
+          "bbox": [
+            -147.1799,
+            26.7218,
+            -71.5181,
+            64.7925
+          ]
+        },
+        {
+          "id": "wwdh:usbr:rise",
+          "title": "US Bureau of Reclamation RISE API Locations",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "processed_usgs/reference_catchments_and_flowlines",
+          "title": "Reference Catchments with Geoconnex Mainstems",
+          "bbox": [
+            -124.7337,
+            24.6304,
+            -66.9496,
+            52.88
           ]
         }
       ]
@@ -43331,7 +43437,7 @@
     },
     {
       "id": "harmonized-field-data",
-      "collection_count": 69,
+      "collection_count": 67,
       "collections": [
         {
           "id": "at",
@@ -43340,7 +43446,7 @@
             9.4053,
             46.3459,
             17.2322,
-            48.9656
+            49.0179
           ]
         },
         {
@@ -43360,17 +43466,17 @@
             2.531,
             50.6742,
             5.9327,
-            51.4955
+            51.5049
           ]
         },
         {
           "id": "be_wal",
           "title": "Belgium Wallonia: Parcellaire Agricole Anonyme",
           "bbox": [
-            2.8326,
-            49.3731,
-            6.4677,
-            50.9655
+            2.8422,
+            49.497,
+            6.4081,
+            50.8107
           ]
         },
         {
@@ -43417,10 +43523,10 @@
           "id": "de_bb",
           "title": "Field boundaries for Berlin / Brandenburg, Germany",
           "bbox": [
-            11.2351,
-            51.3107,
-            14.7655,
-            53.5645
+            11.2702,
+            51.359,
+            14.7642,
+            53.5587
           ]
         },
         {
@@ -43507,10 +43613,10 @@
           "id": "de_nrw",
           "title": "Field blocks for North Rhine-Westphalia (NRW), Germany",
           "bbox": [
-            5.7654,
-            50.3105,
-            9.4681,
-            52.5309
+            5.8666,
+            50.3229,
+            9.461,
+            52.5313
           ]
         },
         {
@@ -43584,26 +43690,6 @@
           ]
         },
         {
-          "id": "ec_ee",
-          "title": "Field boundaries for Estonia - Eurocrops 2021",
-          "bbox": [
-            21.777,
-            57.5165,
-            28.1582,
-            59.6452
-          ]
-        },
-        {
-          "id": "ec_fr",
-          "title": "Field boundaries for France - Eurocrops 2018",
-          "bbox": [
-            -5.2955,
-            41.3166,
-            10.6943,
-            50.8387
-          ]
-        },
-        {
           "id": "ec_lt",
           "title": "Field boundaries for Lithuania - Eurocrops 2021",
           "bbox": [
@@ -43647,10 +43733,10 @@
           "id": "ee",
           "title": "Field boundaries for Estonia",
           "bbox": [
-            21.6917,
-            57.4811,
-            28.1814,
-            59.6369
+            21.777,
+            57.5164,
+            28.1582,
+            59.6453
           ]
         },
         {
@@ -43659,7 +43745,7 @@
           "bbox": [
             -18.1455,
             27.6599,
-            4.307,
+            4.3088,
             43.7866
           ]
         },
@@ -43817,10 +43903,10 @@
           "id": "fr",
           "title": "Registre Parcellaire Graphique; Crop Fields France",
           "bbox": [
-            -5.5062,
-            41.3046,
-            10.6943,
-            50.8388
+            -5.1266,
+            41.366,
+            9.5597,
+            51.0751
           ]
         },
         {
@@ -46264,36 +46350,6 @@
       "collection_count": 39,
       "collections": [
         {
-          "id": "aree-protette/monumenti-naturali-puntuali",
-          "title": "Monumenti naturali puntuali",
-          "bbox": [
-            8.5854,
-            45.6349,
-            10.5041,
-            45.9319
-          ]
-        },
-        {
-          "id": "aree-protette/plis",
-          "title": "Parchi locali di interesse sovracomunale (PLIS)",
-          "bbox": [
-            8.5534,
-            44.846,
-            11.3252,
-            46.2972
-          ]
-        },
-        {
-          "id": "aree-protette/zsc-sic",
-          "title": "Rete Natura 2000 \u2013 ZSC e SIC",
-          "bbox": [
-            8.5771,
-            44.6798,
-            11.2539,
-            46.5987
-          ]
-        },
-        {
           "id": "aree-protette/aree-prioritarie-biodiversita",
           "title": "Aree prioritarie per la biodiversit\u00e0",
           "bbox": [
@@ -46334,6 +46390,16 @@
           ]
         },
         {
+          "id": "aree-protette/monumenti-naturali-puntuali",
+          "title": "Monumenti naturali puntuali",
+          "bbox": [
+            8.5854,
+            45.6349,
+            10.5041,
+            45.9319
+          ]
+        },
+        {
           "id": "aree-protette/parchi-naturali",
           "title": "Parchi naturali",
           "bbox": [
@@ -46351,6 +46417,16 @@
             44.9162,
             11.2535,
             46.6355
+          ]
+        },
+        {
+          "id": "aree-protette/plis",
+          "title": "Parchi locali di interesse sovracomunale (PLIS)",
+          "bbox": [
+            8.5534,
+            44.846,
+            11.3252,
+            46.2972
           ]
         },
         {
@@ -46374,13 +46450,13 @@
           ]
         },
         {
-          "id": "foreste/aree-percorse-dal-fuoco",
-          "title": "Aree percorse dal fuoco",
+          "id": "aree-protette/zsc-sic",
+          "title": "Rete Natura 2000 \u2013 ZSC e SIC",
           "bbox": [
-            8.5579,
-            44.6904,
-            10.8032,
-            46.4944
+            8.5771,
+            44.6798,
+            11.2539,
+            46.5987
           ]
         },
         {
@@ -46401,6 +46477,16 @@
             44.6918,
             10.7497,
             46.5689
+          ]
+        },
+        {
+          "id": "foreste/aree-percorse-dal-fuoco",
+          "title": "Aree percorse dal fuoco",
+          "bbox": [
+            8.5579,
+            44.6904,
+            10.8032,
+            46.4944
           ]
         },
         {
@@ -46434,16 +46520,6 @@
           ]
         },
         {
-          "id": "geologia/faglie-250000",
-          "title": "Carta Geologica 250.000 \u2013 faglie",
-          "bbox": [
-            8.6234,
-            44.6841,
-            10.7933,
-            46.6227
-          ]
-        },
-        {
           "id": "geologia/cave-attive",
           "title": "Catasto cave \u2013 cave attive",
           "bbox": [
@@ -46464,6 +46540,16 @@
           ]
         },
         {
+          "id": "geologia/faglie-250000",
+          "title": "Carta Geologica 250.000 \u2013 faglie",
+          "bbox": [
+            8.6234,
+            44.6841,
+            10.7933,
+            46.6227
+          ]
+        },
+        {
           "id": "geologia/litologia",
           "title": "Basi Ambientali della Pianura \u2013 litologia",
           "bbox": [
@@ -46471,26 +46557,6 @@
             44.9001,
             11.4293,
             45.9222
-          ]
-        },
-        {
-          "id": "idrografia/fontanili",
-          "title": "Fontanili della Lombardia",
-          "bbox": [
-            8.5421,
-            45.0579,
-            10.8222,
-            45.5926
-          ]
-        },
-        {
-          "id": "idrografia/reticolo-idrografico",
-          "title": "Basi Ambientali della Pianura \u2013 reticolo idrografico",
-          "bbox": [
-            8.5015,
-            44.9036,
-            11.4307,
-            45.9069
           ]
         },
         {
@@ -46514,6 +46580,16 @@
           ]
         },
         {
+          "id": "idrografia/fontanili",
+          "title": "Fontanili della Lombardia",
+          "bbox": [
+            8.5421,
+            45.0579,
+            10.8222,
+            45.5926
+          ]
+        },
+        {
           "id": "idrografia/grandi-dighe",
           "title": "Grandi dighe",
           "bbox": [
@@ -46534,13 +46610,13 @@
           ]
         },
         {
-          "id": "limiti-amministrativi/distretti-sanitari",
-          "title": "Distretti delle Agenzie di Tutela della Salute",
+          "id": "idrografia/reticolo-idrografico",
+          "title": "Basi Ambientali della Pianura \u2013 reticolo idrografico",
           "bbox": [
-            8.4984,
-            44.6798,
-            11.4293,
-            46.6354
+            8.5015,
+            44.9036,
+            11.4307,
+            45.9069
           ]
         },
         {
@@ -46580,6 +46656,16 @@
             8.5521,
             44.6798,
             10.8415,
+            46.6354
+          ]
+        },
+        {
+          "id": "limiti-amministrativi/distretti-sanitari",
+          "title": "Distretti delle Agenzie di Tutela della Salute",
+          "bbox": [
+            8.4984,
+            44.6798,
+            11.4293,
             46.6354
           ]
         },
@@ -46624,16 +46710,6 @@
           ]
         },
         {
-          "id": "viabilita/qualificazione",
-          "title": "Qualificazione della rete viaria (LR 9/2001)",
-          "bbox": [
-            8.5868,
-            44.6836,
-            10.8348,
-            46.4826
-          ]
-        },
-        {
           "id": "viabilita/impianti-a-fune",
           "title": "Banca dati impianti a fune \u2013 linee",
           "bbox": [
@@ -46641,6 +46717,16 @@
             44.7398,
             10.7554,
             46.5357
+          ]
+        },
+        {
+          "id": "viabilita/qualificazione",
+          "title": "Qualificazione della rete viaria (LR 9/2001)",
+          "bbox": [
+            8.5868,
+            44.6836,
+            10.8348,
+            46.4826
           ]
         },
         {
@@ -48944,6 +49030,16 @@
       "collection_count": 34,
       "collections": [
         {
+          "id": "abfall/entsorgungsanlagen",
+          "title": "Abfallentsorgungsanlagen der Landeshauptstadt M\u00fcnchen",
+          "bbox": [
+            11.421,
+            48.0938,
+            11.7134,
+            48.2258
+          ]
+        },
+        {
           "id": "abfall/wertstoffhoefe",
           "title": "Wertstoffh\u00f6fe der Landeshauptstadt M\u00fcnchen",
           "bbox": [
@@ -48964,13 +49060,13 @@
           ]
         },
         {
-          "id": "abfall/entsorgungsanlagen",
-          "title": "Abfallentsorgungsanlagen der Landeshauptstadt M\u00fcnchen",
+          "id": "bau/bebauungsplan-umgriffe",
+          "title": "Fl\u00e4chen von Bebauungspl\u00e4nen, Bebauungspl\u00e4nen in Aufstellung, Au\u00dfenbereichssatzungen und Umlegungsgebieten",
           "bbox": [
-            11.421,
-            48.0938,
-            11.7134,
-            48.2258
+            11.3677,
+            48.0687,
+            11.7229,
+            48.2481
           ]
         },
         {
@@ -48984,18 +49080,18 @@
           ]
         },
         {
-          "id": "bau/bebauungsplan-umgriffe",
-          "title": "Fl\u00e4chen von Bebauungspl\u00e4nen, Bebauungspl\u00e4nen in Aufstellung, Au\u00dfenbereichssatzungen und Umlegungsgebieten",
+          "id": "grenzen/bezirksteile",
+          "title": "Stadtbezirksteile M\u00fcnchen",
           "bbox": [
-            11.3677,
-            48.0687,
+            11.3608,
+            48.0616,
             11.7229,
             48.2481
           ]
         },
         {
-          "id": "grenzen/bezirksteile",
-          "title": "Stadtbezirksteile M\u00fcnchen",
+          "id": "grenzen/kehrbezirke",
+          "title": "Kehrbezirke",
           "bbox": [
             11.3608,
             48.0616,
@@ -49024,13 +49120,13 @@
           ]
         },
         {
-          "id": "grenzen/kehrbezirke",
-          "title": "Kehrbezirke",
+          "id": "rad/fahrradparken",
+          "title": "Fahrradparken mit Standardma\u00dfen",
           "bbox": [
-            11.3608,
-            48.0616,
-            11.7229,
-            48.2481
+            11.3905,
+            48.069,
+            11.705,
+            48.2185
           ]
         },
         {
@@ -49054,6 +49150,16 @@
           ]
         },
         {
+          "id": "rad/radservicestationen",
+          "title": "Radservicestationen",
+          "bbox": [
+            11.4611,
+            48.1089,
+            11.6567,
+            48.2033
+          ]
+        },
+        {
           "id": "rad/radwege",
           "title": "Radlstadtplan (Radwege)",
           "bbox": [
@@ -49074,23 +49180,13 @@
           ]
         },
         {
-          "id": "rad/fahrradparken",
-          "title": "Fahrradparken mit Standardma\u00dfen",
+          "id": "sharing/carsharing-parkplaetze",
+          "title": "Allgemeine Carsharing-Parkpl\u00e4tze",
           "bbox": [
-            11.3905,
-            48.069,
-            11.705,
-            48.2185
-          ]
-        },
-        {
-          "id": "rad/radservicestationen",
-          "title": "Radservicestationen",
-          "bbox": [
-            11.4611,
-            48.1089,
-            11.6567,
-            48.2033
+            11.4072,
+            48.0894,
+            11.698,
+            48.2091
           ]
         },
         {
@@ -49114,13 +49210,13 @@
           ]
         },
         {
-          "id": "sharing/carsharing-parkplaetze",
-          "title": "Allgemeine Carsharing-Parkpl\u00e4tze",
+          "id": "soziales/alten-und-servicezentren",
+          "title": "Alten- und Servicezentrum",
           "bbox": [
-            11.4072,
-            48.0894,
-            11.6981,
-            48.2091
+            11.4165,
+            48.0766,
+            11.6906,
+            48.217
           ]
         },
         {
@@ -49141,16 +49237,6 @@
             48.0664,
             11.6764,
             48.2219
-          ]
-        },
-        {
-          "id": "soziales/alten-und-servicezentren",
-          "title": "Alten- und Servicezentrum",
-          "bbox": [
-            11.4165,
-            48.0766,
-            11.6906,
-            48.217
           ]
         },
         {
@@ -49214,16 +49300,6 @@
           ]
         },
         {
-          "id": "umwelt/isar-gefahrenstellen",
-          "title": "Gefahrenstellen",
-          "bbox": [
-            11.5407,
-            48.083,
-            11.6154,
-            48.1673
-          ]
-        },
-        {
           "id": "umwelt/isar-bootszonen",
           "title": "Bootfahren in der Isar",
           "bbox": [
@@ -49234,13 +49310,33 @@
           ]
         },
         {
+          "id": "umwelt/isar-gefahrenstellen",
+          "title": "Gefahrenstellen",
+          "bbox": [
+            11.5407,
+            48.083,
+            11.6154,
+            48.1673
+          ]
+        },
+        {
           "id": "verkehr/baustellen",
           "title": "Baustellen - Tempor\u00e4re Einschr\u00e4nkungen beim Gehen, Fahren und Parken (Opendata)",
           "bbox": [
             11.3891,
-            48.0347,
-            11.7447,
+            48.0425,
+            11.9859,
             48.2697
+          ]
+        },
+        {
+          "id": "verkehr/behindertenparkplaetze",
+          "title": "Behindertenparkpl\u00e4tze",
+          "bbox": [
+            11.4054,
+            48.0738,
+            11.6949,
+            48.2218
           ]
         },
         {
@@ -49261,16 +49357,6 @@
             48.0957,
             11.7083,
             48.1879
-          ]
-        },
-        {
-          "id": "verkehr/behindertenparkplaetze",
-          "title": "Behindertenparkpl\u00e4tze",
-          "bbox": [
-            11.4054,
-            48.0738,
-            11.6949,
-            48.2218
           ]
         },
         {
@@ -49350,16 +49436,6 @@
           ]
         },
         {
-          "id": "forecast/watches-warnings",
-          "title": "Coastal watches and warnings (78 advisories)",
-          "bbox": [
-            -78.62,
-            17.7,
-            -64.54,
-            32.43
-          ]
-        },
-        {
           "id": "forecast/points",
           "title": "Forecast points with intensity (all 80 advisories)",
           "bbox": [
@@ -49367,6 +49443,16 @@
             14.2,
             -11.7,
             62.6
+          ]
+        },
+        {
+          "id": "forecast/watches-warnings",
+          "title": "Coastal watches and warnings (78 advisories)",
+          "bbox": [
+            -78.62,
+            17.7,
+            -64.54,
+            32.43
           ]
         },
         {
@@ -49450,16 +49536,6 @@
           ]
         },
         {
-          "id": "wind-speed-probabilities/day-2025-10-23/cycle-2025102318",
-          "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-23 18:00 UTC",
-          "bbox": [
-            -90.0,
-            10.0,
-            -67.139,
-            25.0
-          ]
-        },
-        {
           "id": "wind-speed-probabilities/day-2025-10-23/cycle-2025102306",
           "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-23 06:00 UTC",
           "bbox": [
@@ -49476,6 +49552,16 @@
             -90.0,
             10.0,
             -65.8802,
+            25.0
+          ]
+        },
+        {
+          "id": "wind-speed-probabilities/day-2025-10-23/cycle-2025102318",
+          "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-23 18:00 UTC",
+          "bbox": [
+            -90.0,
+            10.0,
+            -67.139,
             25.0
           ]
         },
@@ -49500,16 +49586,6 @@
           ]
         },
         {
-          "id": "wind-speed-probabilities/day-2025-10-24/cycle-2025102418",
-          "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-24 18:00 UTC",
-          "bbox": [
-            -84.8966,
-            10.0361,
-            -65.6105,
-            25.0
-          ]
-        },
-        {
           "id": "wind-speed-probabilities/day-2025-10-24/cycle-2025102412",
           "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-24 12:00 UTC",
           "bbox": [
@@ -49520,21 +49596,21 @@
           ]
         },
         {
+          "id": "wind-speed-probabilities/day-2025-10-24/cycle-2025102418",
+          "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-24 18:00 UTC",
+          "bbox": [
+            -84.8966,
+            10.0361,
+            -65.6105,
+            25.0
+          ]
+        },
+        {
           "id": "wind-speed-probabilities/day-2025-10-25/cycle-2025102500",
           "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-25 00:00 UTC",
           "bbox": [
             -85.3012,
             10.0,
-            -65.0,
-            25.0
-          ]
-        },
-        {
-          "id": "wind-speed-probabilities/day-2025-10-25/cycle-2025102518",
-          "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-25 18:00 UTC",
-          "bbox": [
-            -83.7727,
-            10.9802,
             -65.0,
             25.0
           ]
@@ -49560,21 +49636,21 @@
           ]
         },
         {
-          "id": "wind-speed-probabilities/day-2025-10-26/cycle-2025102600",
-          "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-26 00:00 UTC",
+          "id": "wind-speed-probabilities/day-2025-10-25/cycle-2025102518",
+          "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-25 18:00 UTC",
           "bbox": [
-            -83.5479,
-            11.16,
+            -83.7727,
+            10.9802,
             -65.0,
             25.0
           ]
         },
         {
-          "id": "wind-speed-probabilities/day-2025-10-26/cycle-2025102618",
-          "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-26 18:00 UTC",
+          "id": "wind-speed-probabilities/day-2025-10-26/cycle-2025102600",
+          "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-26 00:00 UTC",
           "bbox": [
-            -83.8626,
-            11.3399,
+            -83.5479,
+            11.16,
             -65.0,
             25.0
           ]
@@ -49600,6 +49676,26 @@
           ]
         },
         {
+          "id": "wind-speed-probabilities/day-2025-10-26/cycle-2025102618",
+          "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-26 18:00 UTC",
+          "bbox": [
+            -83.8626,
+            11.3399,
+            -65.0,
+            25.0
+          ]
+        },
+        {
+          "id": "wind-speed-probabilities/day-2025-10-27/cycle-2025102700",
+          "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-27 00:00 UTC",
+          "bbox": [
+            -83.6828,
+            11.6546,
+            -65.0,
+            25.0
+          ]
+        },
+        {
           "id": "wind-speed-probabilities/day-2025-10-27/cycle-2025102706",
           "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-27 06:00 UTC",
           "bbox": [
@@ -49615,16 +49711,6 @@
           "bbox": [
             -83.503,
             12.0592,
-            -65.0,
-            25.0
-          ]
-        },
-        {
-          "id": "wind-speed-probabilities/day-2025-10-27/cycle-2025102700",
-          "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-27 00:00 UTC",
-          "bbox": [
-            -83.6828,
-            11.6546,
             -65.0,
             25.0
           ]
@@ -49650,16 +49736,6 @@
           ]
         },
         {
-          "id": "wind-speed-probabilities/day-2025-10-28/cycle-2025102818",
-          "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-28 18:00 UTC",
-          "bbox": [
-            -82.0194,
-            14.8464,
-            -65.0,
-            25.0
-          ]
-        },
-        {
           "id": "wind-speed-probabilities/day-2025-10-28/cycle-2025102806",
           "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-28 06:00 UTC",
           "bbox": [
@@ -49680,12 +49756,12 @@
           ]
         },
         {
-          "id": "wind-speed-probabilities/day-2025-10-29/cycle-2025102906",
-          "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-29 06:00 UTC",
+          "id": "wind-speed-probabilities/day-2025-10-28/cycle-2025102818",
+          "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-28 18:00 UTC",
           "bbox": [
-            -80.3111,
-            16.9594,
-            -65.4307,
+            -82.0194,
+            14.8464,
+            -65.0,
             25.0
           ]
         },
@@ -49696,6 +49772,16 @@
             -80.9854,
             15.9703,
             -65.2509,
+            25.0
+          ]
+        },
+        {
+          "id": "wind-speed-probabilities/day-2025-10-29/cycle-2025102906",
+          "title": "Wind speed probabilities, 120 h cumulative, cycle 2025-10-29 06:00 UTC",
+          "bbox": [
+            -80.3111,
+            16.9594,
+            -65.4307,
             25.0
           ]
         },
@@ -49726,26 +49812,6 @@
       "collection_count": 33,
       "collections": [
         {
-          "id": "friluftsliv/friluftsliv-statlig-sikra",
-          "title": "Friluftslivsomr\u00e5der - statlig sikra \u2013 friluftsliv_statlig_sikra",
-          "bbox": [
-            4.771,
-            57.9585,
-            30.1345,
-            70.9914
-          ]
-        },
-        {
-          "id": "friluftsliv/kulturlandskap-verdifulle",
-          "title": "Kulturlandskap - verdifulle \u2013 kulturlandskap_verdifulle",
-          "bbox": [
-            4.501,
-            58.025,
-            31.0359,
-            71.1126
-          ]
-        },
-        {
           "id": "friluftsliv/friluftsliv-kartlagt-status",
           "title": "Friluftslivsomr\u00e5der - kartlagte og verdsatte \u2013 friluftsliv_kartlagt_status",
           "bbox": [
@@ -49753,6 +49819,16 @@
             57.759,
             31.7615,
             71.3849
+          ]
+        },
+        {
+          "id": "friluftsliv/friluftsliv-statlig-sikra",
+          "title": "Friluftslivsomr\u00e5der - statlig sikra \u2013 friluftsliv_statlig_sikra",
+          "bbox": [
+            4.771,
+            57.9585,
+            30.1345,
+            70.9914
           ]
         },
         {
@@ -49766,13 +49842,13 @@
           ]
         },
         {
-          "id": "inngrepsfri/fjordkatalogen-omrade",
-          "title": "Fjordkatalogen \u2013 fjordkatalogen_omrade",
+          "id": "friluftsliv/kulturlandskap-verdifulle",
+          "title": "Kulturlandskap - verdifulle \u2013 kulturlandskap_verdifulle",
           "bbox": [
-            4.4988,
-            57.9582,
-            31.1686,
-            71.1856
+            4.501,
+            58.025,
+            31.0359,
+            71.1126
           ]
         },
         {
@@ -49783,6 +49859,16 @@
             57.9839,
             31.0092,
             71.1177
+          ]
+        },
+        {
+          "id": "inngrepsfri/fjordkatalogen-omrade",
+          "title": "Fjordkatalogen \u2013 fjordkatalogen_omrade",
+          "bbox": [
+            4.4988,
+            57.9582,
+            31.1686,
+            71.1856
           ]
         },
         {
@@ -49806,16 +49892,6 @@
           ]
         },
         {
-          "id": "laksefisk/vandringshinder-laks",
-          "title": "Anadrome laksefisk \u2013 Vandringshinder \u2013 anadrome_vandringshinder_laks",
-          "bbox": [
-            5.234,
-            58.0392,
-            30.8775,
-            70.8403
-          ]
-        },
-        {
           "id": "laksefisk/forvaltningsregioner",
           "title": "Anadrome laksefisk \u2013 Forvaltningsregioner \u2013 anadrome_forvaltningsregioner",
           "bbox": [
@@ -49836,23 +49912,13 @@
           ]
         },
         {
-          "id": "naturtyper/naturtyper-marine-alegras",
-          "title": "Marine naturtyper (HB19) \u2013 naturtype_marin_hb19_alegras",
+          "id": "laksefisk/vandringshinder-laks",
+          "title": "Anadrome laksefisk \u2013 Vandringshinder \u2013 anadrome_vandringshinder_laks",
           "bbox": [
-            4.595,
-            57.9784,
-            29.5192,
-            70.9251
-          ]
-        },
-        {
-          "id": "naturtyper/naturtyper-marine-tare",
-          "title": "Marine naturtyper (HB19) \u2013 naturtype_marin_hb19_tare",
-          "bbox": [
-            4.4685,
-            57.9457,
-            31.134,
-            71.1863
+            5.234,
+            58.0392,
+            30.8775,
+            70.8403
           ]
         },
         {
@@ -49886,6 +49952,26 @@
           ]
         },
         {
+          "id": "naturtyper/naturtyper-marine-alegras",
+          "title": "Marine naturtyper (HB19) \u2013 naturtype_marin_hb19_alegras",
+          "bbox": [
+            4.595,
+            57.9784,
+            29.5192,
+            70.9251
+          ]
+        },
+        {
+          "id": "naturtyper/naturtyper-marine-tare",
+          "title": "Marine naturtyper (HB19) \u2013 naturtype_marin_hb19_tare",
+          "bbox": [
+            4.4685,
+            57.9457,
+            31.134,
+            71.1863
+          ]
+        },
+        {
           "id": "naturtyper/naturtyper-nin-dekningskart",
           "title": "Naturtyper p\u00e5 land (NiN) \u2013 dekningskart_naturtyper_nin",
           "bbox": [
@@ -49893,16 +49979,6 @@
             57.9601,
             31.0508,
             71.1036
-          ]
-        },
-        {
-          "id": "naturvern/restriksjon-ferdselsforbud",
-          "title": "Restriksjonsomr\u00e5der - Naturvern \u2013 ferdselsforbud",
-          "bbox": [
-            4.4997,
-            57.9603,
-            31.1685,
-            80.3713
           ]
         },
         {
@@ -49923,6 +49999,16 @@
             58.0527,
             29.2969,
             78.9545
+          ]
+        },
+        {
+          "id": "naturvern/restriksjon-ferdselsforbud",
+          "title": "Restriksjonsomr\u00e5der - Naturvern \u2013 ferdselsforbud",
+          "bbox": [
+            4.4997,
+            57.9603,
+            31.1685,
+            80.3713
           ]
         },
         {
@@ -50699,9 +50785,19 @@
           "id": "buildings",
           "title": "Buildings",
           "bbox": [
-            -178.2944,
+            173.1597,
             14.534,
-            179.2717,
+            180.0,
+            83.0941
+          ]
+        },
+        {
+          "id": "buildings",
+          "title": "Buildings",
+          "bbox": [
+            -180.0,
+            14.534,
+            -52.6213,
             83.0941
           ]
         },
@@ -50709,9 +50805,19 @@
           "id": "roads",
           "title": "Roads and Paths",
           "bbox": [
-            -178.2962,
+            173.1012,
             14.5347,
-            179.3901,
+            180.0,
+            82.5255
+          ]
+        },
+        {
+          "id": "roads",
+          "title": "Roads and Paths",
+          "bbox": [
+            -180.0,
+            14.5347,
+            -52.6206,
             82.5255
           ]
         },
@@ -50721,7 +50827,7 @@
           "bbox": [
             -166.7347,
             14.6722,
-            -52.7005,
+            -52.7004,
             65.2191
           ]
         },
@@ -50729,9 +50835,19 @@
           "id": "waterways",
           "title": "Waterways",
           "bbox": [
-            -179.1402,
+            172.4583,
             14.5311,
-            179.6725,
+            180.0,
+            83.1262
+          ]
+        },
+        {
+          "id": "waterways",
+          "title": "Waterways",
+          "bbox": [
+            -180.0,
+            14.5311,
+            -52.6326,
             83.1262
           ]
         },
@@ -50739,9 +50855,19 @@
           "id": "water",
           "title": "Water Bodies",
           "bbox": [
-            -179.1391,
+            172.4928,
             14.5301,
-            179.6584,
+            180.0,
+            83.1034
+          ]
+        },
+        {
+          "id": "water",
+          "title": "Water Bodies",
+          "bbox": [
+            -180.0,
+            14.5301,
+            -52.6338,
             83.1034
           ]
         },
@@ -50749,9 +50875,19 @@
           "id": "landuse",
           "title": "Land Use",
           "bbox": [
-            -177.2015,
+            173.1449,
             14.5344,
-            179.2925,
+            180.0,
+            82.5287
+          ]
+        },
+        {
+          "id": "landuse",
+          "title": "Land Use",
+          "bbox": [
+            -180.0,
+            14.5344,
+            -52.6575,
             82.5287
           ]
         },
@@ -50759,9 +50895,19 @@
           "id": "natural_areas",
           "title": "Natural Areas",
           "bbox": [
-            -179.1501,
+            172.4284,
             14.5315,
-            179.7754,
+            180.0,
+            83.1898
+          ]
+        },
+        {
+          "id": "natural_areas",
+          "title": "Natural Areas",
+          "bbox": [
+            -180.0,
+            14.5315,
+            -52.6189,
             83.1898
           ]
         },
@@ -50769,9 +50915,19 @@
           "id": "natural_features",
           "title": "Natural Point Features",
           "bbox": [
-            -179.1413,
+            172.4375,
             14.551,
-            179.7732,
+            180.0,
+            83.1507
+          ]
+        },
+        {
+          "id": "natural_features",
+          "title": "Natural Point Features",
+          "bbox": [
+            -180.0,
+            14.551,
+            -52.6198,
             83.1507
           ]
         },
@@ -50779,9 +50935,19 @@
           "id": "places",
           "title": "Place Names",
           "bbox": [
-            -179.1387,
+            172.4362,
             14.5358,
-            179.7732,
+            180.0,
+            83.0996
+          ]
+        },
+        {
+          "id": "places",
+          "title": "Place Names",
+          "bbox": [
+            -180.0,
+            14.5358,
+            -52.6375,
             83.0996
           ]
         },
@@ -50789,9 +50955,19 @@
           "id": "boundaries",
           "title": "Administrative Boundaries",
           "bbox": [
-            -179.2313,
+            172.3478,
             14.5311,
-            179.8599,
+            180.0,
+            83.3363
+          ]
+        },
+        {
+          "id": "boundaries",
+          "title": "Administrative Boundaries",
+          "bbox": [
+            -180.0,
+            14.5311,
+            -52.3237,
             83.3363
           ]
         },
@@ -50799,9 +50975,19 @@
           "id": "pois",
           "title": "Points of Interest",
           "bbox": [
-            -177.3683,
+            172.4286,
             14.6168,
-            172.429,
+            180.0,
+            82.5246
+          ]
+        },
+        {
+          "id": "pois",
+          "title": "Points of Interest",
+          "bbox": [
+            -180.0,
+            14.6168,
+            -52.6205,
             82.5246
           ]
         },
@@ -50809,9 +50995,19 @@
           "id": "amenities_polygons",
           "title": "Points of Interest (Areas)",
           "bbox": [
-            -179.148,
+            172.4361,
             14.5249,
-            179.7732,
+            180.0,
+            82.4998
+          ]
+        },
+        {
+          "id": "amenities_polygons",
+          "title": "Points of Interest (Areas)",
+          "bbox": [
+            -180.0,
+            14.5249,
+            -52.6193,
             82.4998
           ]
         },
@@ -50819,7 +51015,7 @@
           "id": "power",
           "title": "Power Infrastructure",
           "bbox": [
-            -176.6604,
+            -176.6605,
             14.5543,
             -52.6322,
             82.5249
@@ -50829,9 +51025,19 @@
           "id": "aeroways",
           "title": "Aeroways",
           "bbox": [
-            -178.6642,
+            173.1489,
             14.6357,
-            179.3154,
+            180.0,
+            83.0925
+          ]
+        },
+        {
+          "id": "aeroways",
+          "title": "Aeroways",
+          "bbox": [
+            -180.0,
+            14.6357,
+            -52.6879,
             83.0925
           ]
         },
@@ -50849,7 +51055,7 @@
           "id": "public_transport",
           "title": "Public Transport Stops",
           "bbox": [
-            -166.5275,
+            -166.5276,
             14.7383,
             -52.6235,
             71.2991
@@ -52957,8 +53163,128 @@
     },
     {
       "id": "planet-disasterdata",
-      "collection_count": 33,
+      "collection_count": 40,
       "collections": [
+        {
+          "id": "post-event-pelican-2026-10-11",
+          "title": "Santiago de Veraguas and eastern Herrera, 11 Oct (Pelican) \u2014 Post-event Imagery",
+          "bbox": [
+            -80.9977,
+            7.9371,
+            -80.3532,
+            8.1365
+          ]
+        },
+        {
+          "id": "post-event-planetscope-2026-10-11",
+          "title": "Western Veraguas, 11 Oct (PlanetScope) \u2014 Post-event Imagery",
+          "bbox": [
+            -81.3283,
+            7.6647,
+            -80.8724,
+            8.4965
+          ]
+        },
+        {
+          "id": "post-event-skysat-2026-10-14",
+          "title": "Coast west of Tonos\u00ed to the Gulf of Montijo, 14 Oct (SkySat) \u2014 Post-event Imagery",
+          "bbox": [
+            -81.7338,
+            7.5098,
+            -80.8046,
+            8.0086
+          ]
+        },
+        {
+          "id": "post-event-skysat-2026-10-15",
+          "title": "Southern Azuero Peninsula around Tonos\u00ed, 15 Oct (SkySat) \u2014 Post-event Imagery",
+          "bbox": [
+            -80.933,
+            7.208,
+            -80.2456,
+            7.6439
+          ]
+        },
+        {
+          "id": "pre-event-basemap-2026q3",
+          "title": "Central Panama and the Azuero Peninsula, Jul\u2013Sep 2026 (Planet Basemap) \u2014 Pre-event Imagery",
+          "bbox": [
+            -81.9141,
+            7.0137,
+            -79.8047,
+            8.7548
+          ]
+        },
+        {
+          "id": "post-event-pelican-2026-10-15",
+          "title": "Upper Budhi Gandaki / Chamar, 15 Oct (Pelican) \u2014 Post-event Imagery",
+          "bbox": [
+            84.8573,
+            28.4337,
+            85.0073,
+            28.5616
+          ]
+        },
+        {
+          "id": "post-event-pelican-2026-08-27",
+          "title": "Syabrubesi to Rasuwagadhi (Pelican) \u2014 Post-event Imagery",
+          "bbox": [
+            85.2807,
+            28.0787,
+            85.4341,
+            28.3512
+          ]
+        },
+        {
+          "id": "post-event-pelican-2026-09-01",
+          "title": "Syabrubesi to Rasuwagadhi, five-day repeat (Pelican) \u2014 Post-event Imagery",
+          "bbox": [
+            85.2847,
+            28.1043,
+            85.4365,
+            28.351
+          ]
+        },
+        {
+          "id": "post-event-planetscope-2026-08-26",
+          "title": "Flood corridor, same-day coverage \u2014 Post-event Imagery",
+          "bbox": [
+            84.8943,
+            27.8293,
+            85.648,
+            28.6595
+          ]
+        },
+        {
+          "id": "post-event-planetscope-2026-08-28",
+          "title": "Corridor and lower Trishuli, two days after \u2014 Post-event Imagery",
+          "bbox": [
+            84.9106,
+            27.7107,
+            85.5768,
+            28.5115
+          ]
+        },
+        {
+          "id": "post-event-skysat-2026-08-27",
+          "title": "Rasuwagadhi and Syabrubesi (SkySat) \u2014 Post-event Imagery",
+          "bbox": [
+            85.2787,
+            28.0822,
+            85.4428,
+            28.3661
+          ]
+        },
+        {
+          "id": "post-event-skysat-2026-08-31",
+          "title": "Betrawati to Trishuli Bazaar (SkySat) \u2014 Post-event Imagery",
+          "bbox": [
+            85.0854,
+            27.792,
+            85.2315,
+            28.0297
+          ]
+        },
         {
           "id": "post-event-pelican-2026-09-29",
           "title": "pelican-2026-09-29 \u2014 Post-event Imagery",
@@ -52967,6 +53293,16 @@
             28.253,
             85.5881,
             28.3573
+          ]
+        },
+        {
+          "id": "post-event-pelican-2026-10-12",
+          "title": "East of the Rasuwa corridor, 12 Oct (Pelican) \u2014 Post-event Imagery",
+          "bbox": [
+            85.4492,
+            28.2533,
+            85.5936,
+            28.3714
           ]
         },
         {
@@ -53037,66 +53373,6 @@
             28.2474,
             85.5823,
             28.4136
-          ]
-        },
-        {
-          "id": "post-event-pelican-2026-08-27",
-          "title": "Syabrubesi to Rasuwagadhi (Pelican) \u2014 Post-event Imagery",
-          "bbox": [
-            85.2807,
-            28.0787,
-            85.4341,
-            28.3512
-          ]
-        },
-        {
-          "id": "post-event-pelican-2026-09-01",
-          "title": "Syabrubesi to Rasuwagadhi, five-day repeat (Pelican) \u2014 Post-event Imagery",
-          "bbox": [
-            85.2847,
-            28.1043,
-            85.4365,
-            28.351
-          ]
-        },
-        {
-          "id": "post-event-planetscope-2026-08-26",
-          "title": "Flood corridor, same-day coverage \u2014 Post-event Imagery",
-          "bbox": [
-            84.8943,
-            27.8293,
-            85.648,
-            28.6595
-          ]
-        },
-        {
-          "id": "post-event-planetscope-2026-08-28",
-          "title": "Corridor and lower Trishuli, two days after \u2014 Post-event Imagery",
-          "bbox": [
-            84.9106,
-            27.7107,
-            85.5768,
-            28.5115
-          ]
-        },
-        {
-          "id": "post-event-skysat-2026-08-27",
-          "title": "Rasuwagadhi and Syabrubesi (SkySat) \u2014 Post-event Imagery",
-          "bbox": [
-            85.2787,
-            28.0822,
-            85.4428,
-            28.3661
-          ]
-        },
-        {
-          "id": "post-event-skysat-2026-08-31",
-          "title": "Betrawati to Trishuli Bazaar (SkySat) \u2014 Post-event Imagery",
-          "bbox": [
-            85.0854,
-            27.792,
-            85.2315,
-            28.0297
           ]
         },
         {
@@ -53778,6 +54054,16 @@
           ]
         },
         {
+          "id": "metropolitni-plan/lokality",
+          "title": "MPP - Lokality",
+          "bbox": [
+            14.2244,
+            49.9419,
+            14.7068,
+            50.1774
+          ]
+        },
+        {
           "id": "metropolitni-plan/transformacni-rozvojove-plochy",
           "title": "MPP - Transforma\u010dn\u00ed a rozvojov\u00e9 plochy",
           "bbox": [
@@ -53805,16 +54091,6 @@
             49.9434,
             14.6915,
             50.1724
-          ]
-        },
-        {
-          "id": "metropolitni-plan/lokality",
-          "title": "MPP - Lokality",
-          "bbox": [
-            14.2244,
-            49.9419,
-            14.7068,
-            50.1774
           ]
         },
         {
@@ -53888,16 +54164,6 @@
           ]
         },
         {
-          "id": "uzemni-plan/stavebni-uzavery",
-          "title": "Stavebn\u00ed uz\u00e1v\u011bry",
-          "bbox": [
-            14.2891,
-            50.0052,
-            14.5418,
-            50.1472
-          ]
-        },
-        {
           "id": "uzemni-plan/podmerecne-plochy-plovouci",
           "title": "Pl\u00e1n vyu\u017eit\u00ed ploch - podm\u011bre\u010dn\u00e9 funk\u010dn\u00ed plochy (plovouc\u00ed) - body (\u00fazemn\u00ed pl\u00e1n)",
           "bbox": [
@@ -53915,6 +54181,16 @@
             49.961,
             14.6687,
             50.1734
+          ]
+        },
+        {
+          "id": "uzemni-plan/stavebni-uzavery",
+          "title": "Stavebn\u00ed uz\u00e1v\u011bry",
+          "bbox": [
+            14.2891,
+            50.0052,
+            14.5418,
+            50.1472
           ]
         },
         {
@@ -53938,23 +54214,13 @@
           ]
         },
         {
-          "id": "zelen/vegetacni-prvky-body",
-          "title": "Sd\u00edlen\u00e1 data o zeleni - vegeta\u010dn\u00ed prvky - body",
+          "id": "zastavba/soucasny-stav-vyuziti-uzemi",
+          "title": "Sou\u010dasn\u00fd stav vyu\u017eit\u00ed \u00fazem\u00ed",
           "bbox": [
-            8.816,
-            49.943,
-            14.681,
-            53.0327
-          ]
-        },
-        {
-          "id": "zelen/zakladni-plochy-zelene",
-          "title": "Sd\u00edlen\u00e1 data o zeleni - z\u00e1kladn\u00ed plochy zelen\u011b",
-          "bbox": [
-            14.258,
-            49.9429,
-            14.7,
-            50.1748
+            14.2191,
+            49.9419,
+            14.7068,
+            50.1938
           ]
         },
         {
@@ -53978,6 +54244,26 @@
           ]
         },
         {
+          "id": "zelen/vegetacni-prvky-body",
+          "title": "Sd\u00edlen\u00e1 data o zeleni - vegeta\u010dn\u00ed prvky - body",
+          "bbox": [
+            8.816,
+            49.943,
+            14.681,
+            53.0327
+          ]
+        },
+        {
+          "id": "zelen/zakladni-plochy-zelene",
+          "title": "Sd\u00edlen\u00e1 data o zeleni - z\u00e1kladn\u00ed plochy zelen\u011b",
+          "bbox": [
+            14.258,
+            49.9429,
+            14.7,
+            50.1748
+          ]
+        },
+        {
           "id": "zivotni-prostredi/hlukova-mapa-den",
           "title": "Hlukov\u00e1 mapa - den",
           "bbox": [
@@ -53998,6 +54284,16 @@
           ]
         },
         {
+          "id": "zivotni-prostredi/voda-spojita",
+          "title": "Voda spojit\u00e1",
+          "bbox": [
+            14.2562,
+            49.942,
+            14.6757,
+            50.1696
+          ]
+        },
+        {
           "id": "zivotni-prostredi/zaplavove-uzemi-drobne-toky",
           "title": "Z\u00e1plavov\u00e9 \u00fazem\u00ed ( drobn\u00e9 vodn\u00ed toky )",
           "bbox": [
@@ -54015,26 +54311,6 @@
             49.9419,
             14.4772,
             50.1479
-          ]
-        },
-        {
-          "id": "zivotni-prostredi/voda-spojita",
-          "title": "Voda spojit\u00e1",
-          "bbox": [
-            14.2562,
-            49.942,
-            14.6757,
-            50.1696
-          ]
-        },
-        {
-          "id": "zastavba/soucasny-stav-vyuziti-uzemi",
-          "title": "Sou\u010dasn\u00fd stav vyu\u017eit\u00ed \u00fazem\u00ed",
-          "bbox": [
-            14.2191,
-            49.9419,
-            14.7068,
-            50.1938
           ]
         }
       ]
@@ -56796,6 +57072,322 @@
       ]
     },
     {
+      "id": "us-census-tiger",
+      "collection_count": 19,
+      "collections": [
+        {
+          "id": "cd120",
+          "title": "Congressional Districts (120th Congress), 2026",
+          "bbox": [
+            144.5632,
+            -14.6018,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "cd120",
+          "title": "Congressional Districts (120th Congress), 2026",
+          "bbox": [
+            -180.0,
+            -14.6018,
+            -64.5126,
+            71.4399
+          ]
+        },
+        {
+          "id": "sldu",
+          "title": "State Legislative Districts, Upper Chamber, 2026",
+          "bbox": [
+            172.3478,
+            17.8315,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "sldu",
+          "title": "State Legislative Districts, Upper Chamber, 2026",
+          "bbox": [
+            -180.0,
+            17.8315,
+            -65.1684,
+            71.4399
+          ]
+        },
+        {
+          "id": "sldl",
+          "title": "State Legislative Districts, Lower Chamber, 2026",
+          "bbox": [
+            172.3478,
+            17.8315,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "sldl",
+          "title": "State Legislative Districts, Lower Chamber, 2026",
+          "bbox": [
+            -180.0,
+            17.8315,
+            -65.1684,
+            71.4399
+          ]
+        },
+        {
+          "id": "state",
+          "title": "States and equivalent entities, 2026",
+          "bbox": [
+            144.5632,
+            -14.6018,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "state",
+          "title": "States and equivalent entities, 2026",
+          "bbox": [
+            -180.0,
+            -14.6018,
+            -64.5126,
+            71.4399
+          ]
+        },
+        {
+          "id": "county",
+          "title": "Counties and equivalent entities, 2026",
+          "bbox": [
+            144.5632,
+            -14.6018,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "county",
+          "title": "Counties and equivalent entities, 2026",
+          "bbox": [
+            -180.0,
+            -14.6018,
+            -64.5126,
+            71.4399
+          ]
+        },
+        {
+          "id": "place",
+          "title": "Places: incorporated places and census designated places, 2026",
+          "bbox": [
+            144.6179,
+            -14.42,
+            180.0,
+            71.3403
+          ]
+        },
+        {
+          "id": "place",
+          "title": "Places: incorporated places and census designated places, 2026",
+          "bbox": [
+            -180.0,
+            -14.42,
+            -64.6956,
+            71.3403
+          ]
+        },
+        {
+          "id": "concity",
+          "title": "Consolidated cities, 2026",
+          "bbox": [
+            -113.0857,
+            33.2271,
+            -72.9789,
+            46.1853
+          ]
+        },
+        {
+          "id": "cousub",
+          "title": "County subdivisions, 2026",
+          "bbox": [
+            144.5632,
+            -14.6018,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "cousub",
+          "title": "County subdivisions, 2026",
+          "bbox": [
+            -180.0,
+            -14.6018,
+            -64.5126,
+            71.4399
+          ]
+        },
+        {
+          "id": "tract",
+          "title": "Census tracts, 2026",
+          "bbox": [
+            144.5632,
+            -14.6018,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "tract",
+          "title": "Census tracts, 2026",
+          "bbox": [
+            -180.0,
+            -14.6018,
+            -64.5126,
+            71.4399
+          ]
+        },
+        {
+          "id": "bg",
+          "title": "Census block groups, 2026",
+          "bbox": [
+            144.5632,
+            -14.6018,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "bg",
+          "title": "Census block groups, 2026",
+          "bbox": [
+            -180.0,
+            -14.6018,
+            -64.5126,
+            71.4399
+          ]
+        },
+        {
+          "id": "cbsa",
+          "title": "Core based statistical areas: metropolitan and micropolitan, 2026",
+          "bbox": [
+            -178.4438,
+            17.8315,
+            -65.4226,
+            65.4536
+          ]
+        },
+        {
+          "id": "csa",
+          "title": "Combined statistical areas, 2026",
+          "bbox": [
+            -124.7037,
+            17.8315,
+            -65.4226,
+            49.0008
+          ]
+        },
+        {
+          "id": "metdiv",
+          "title": "Metropolitan divisions, 2026",
+          "bbox": [
+            -123.174,
+            25.1374,
+            -70.3224,
+            48.299
+          ]
+        },
+        {
+          "id": "uac20",
+          "title": "2020 Census urban areas, 2026",
+          "bbox": [
+            144.641,
+            -14.3654,
+            180.0,
+            64.929
+          ]
+        },
+        {
+          "id": "uac20",
+          "title": "2020 Census urban areas, 2026",
+          "bbox": [
+            -180.0,
+            -14.3654,
+            -64.5854,
+            64.929
+          ]
+        },
+        {
+          "id": "zcta520",
+          "title": "2020 Census ZIP Code Tabulation Areas (ZCTA5), 2026",
+          "bbox": [
+            144.6179,
+            -14.3738,
+            180.0,
+            71.3414
+          ]
+        },
+        {
+          "id": "zcta520",
+          "title": "2020 Census ZIP Code Tabulation Areas (ZCTA5), 2026",
+          "bbox": [
+            -180.0,
+            -14.3738,
+            -64.5651,
+            71.3414
+          ]
+        },
+        {
+          "id": "unsd",
+          "title": "Unified school districts, 2026",
+          "bbox": [
+            144.5632,
+            -14.6018,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "unsd",
+          "title": "Unified school districts, 2026",
+          "bbox": [
+            -180.0,
+            -14.6018,
+            -64.5126,
+            71.4399
+          ]
+        },
+        {
+          "id": "elsd",
+          "title": "Elementary school districts, 2026",
+          "bbox": [
+            -124.313,
+            29.4017,
+            -67.0196,
+            49.0012
+          ]
+        },
+        {
+          "id": "scsd",
+          "title": "Secondary school districts, 2026",
+          "bbox": [
+            -124.313,
+            29.4017,
+            -67.3887,
+            49.0012
+          ]
+        },
+        {
+          "id": "sdadm",
+          "title": "School district administrative areas (Vermont), 2026",
+          "bbox": [
+            -73.438,
+            42.7269,
+            -71.4649,
+            45.0167
+          ]
+        }
+      ]
+    },
+    {
       "id": "vlaanderen-open-data",
       "collection_count": 34,
       "collections": [
@@ -57216,26 +57808,6 @@
           ]
         },
         {
-          "id": "flood/flood-risk-areas",
-          "title": "Flood Risk Areas (Cycle 1)",
-          "bbox": [
-            -4.0236,
-            51.4589,
-            -2.9839,
-            51.8184
-          ]
-        },
-        {
-          "id": "flood/recorded-flood-extents",
-          "title": "Recorded Flood Extents",
-          "bbox": [
-            -5.2958,
-            51.3996,
-            -2.6502,
-            53.3761
-          ]
-        },
-        {
           "id": "flood/areas-benefiting-from-flood-defences",
           "title": "Areas Benefiting from Flood Defences",
           "bbox": [
@@ -57246,6 +57818,16 @@
           ]
         },
         {
+          "id": "flood/flood-risk-areas",
+          "title": "Flood Risk Areas (Cycle 1)",
+          "bbox": [
+            -4.0236,
+            51.4589,
+            -2.9839,
+            51.8184
+          ]
+        },
+        {
           "id": "flood/flood-storage-areas",
           "title": "Flood Storage Areas",
           "bbox": [
@@ -57253,6 +57835,16 @@
             51.4106,
             -3.0079,
             53.295
+          ]
+        },
+        {
+          "id": "flood/recorded-flood-extents",
+          "title": "Recorded Flood Extents",
+          "bbox": [
+            -5.2958,
+            51.3996,
+            -2.6502,
+            53.3761
           ]
         },
         {
@@ -57316,6 +57908,16 @@
           ]
         },
         {
+          "id": "historic-environment/listed-buildings",
+          "title": "Listed Buildings",
+          "bbox": [
+            -5.6699,
+            51.3757,
+            -2.6617,
+            53.4235
+          ]
+        },
+        {
           "id": "historic-environment/maritime-sites",
           "title": "National Monuments Record of Wales - Heritage Assets (Maritime)",
           "bbox": [
@@ -57356,6 +57958,16 @@
           ]
         },
         {
+          "id": "historic-environment/scheduled-monuments",
+          "title": "Scheduled Monuments",
+          "bbox": [
+            -5.3163,
+            51.3752,
+            -2.6656,
+            53.4301
+          ]
+        },
+        {
           "id": "historic-environment/world-heritage-site-essential-setting",
           "title": "World Heritage Sites in Wales - WHS - Essential Setting",
           "bbox": [
@@ -57373,26 +57985,6 @@
             51.7464,
             -3.0295,
             53.2828
-          ]
-        },
-        {
-          "id": "historic-environment/listed-buildings",
-          "title": "Listed Buildings",
-          "bbox": [
-            -5.6699,
-            51.3757,
-            -2.6617,
-            53.4235
-          ]
-        },
-        {
-          "id": "historic-environment/scheduled-monuments",
-          "title": "Scheduled Monuments",
-          "bbox": [
-            -5.3163,
-            51.3752,
-            -2.6656,
-            53.4301
           ]
         },
         {
@@ -57426,16 +58018,6 @@
           ]
         },
         {
-          "id": "landscape/landmap-landscape-habitats",
-          "title": "Landmap Landscape Habitats",
-          "bbox": [
-            -5.3536,
-            51.3742,
-            -2.6498,
-            53.4357
-          ]
-        },
-        {
           "id": "landscape/landmap-historic-landscape",
           "title": "Landmap Historic Landscape",
           "bbox": [
@@ -57446,6 +58028,16 @@
           ]
         },
         {
+          "id": "landscape/landmap-landscape-habitats",
+          "title": "Landmap Landscape Habitats",
+          "bbox": [
+            -5.3536,
+            51.3742,
+            -2.6498,
+            53.4357
+          ]
+        },
+        {
           "id": "landscape/landmap-visual-sensory",
           "title": "Landmap Visual Sensory",
           "bbox": [
@@ -57453,6 +58045,16 @@
             51.3725,
             -2.6498,
             53.4301
+          ]
+        },
+        {
+          "id": "statistics/lower-layer-super-output-areas-2011",
+          "title": "Lower Super Output Areas (LSOAs) - Wales - 2011",
+          "bbox": [
+            -5.6701,
+            51.375,
+            -2.6498,
+            53.4357
           ]
         },
         {
@@ -57476,28 +58078,18 @@
           ]
         },
         {
-          "id": "statistics/welsh-language-2021",
-          "title": "Welsh Language Percentage of people aged three years or older able to speak Welsh by LSOA 2021",
-          "bbox": [
-            -5.6701,
-            51.375,
-            -2.6498,
-            53.4357
-          ]
-        },
-        {
-          "id": "statistics/lower-layer-super-output-areas-2011",
-          "title": "Lower Super Output Areas (LSOAs) - Wales - 2011",
-          "bbox": [
-            -5.6701,
-            51.375,
-            -2.6498,
-            53.4357
-          ]
-        },
-        {
           "id": "statistics/welsh-index-of-multiple-deprivation-2019",
           "title": "Welsh Index of Multiple Deprivation (WIMD) 2019 - Overall",
+          "bbox": [
+            -5.6701,
+            51.375,
+            -2.6498,
+            53.4357
+          ]
+        },
+        {
+          "id": "statistics/welsh-language-2021",
+          "title": "Welsh Language Percentage of people aged three years or older able to speak Welsh by LSOA 2021",
           "bbox": [
             -5.6701,
             51.375,

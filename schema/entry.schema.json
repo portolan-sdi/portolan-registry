@@ -1,11 +1,25 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://www.portolan-sdi.org/registry/schema/entry.schema.json",
-  "title": "Portolan Registry Catalog Entry",
-  "description": "Schema for registering STAC catalogs. Submitters provide the catalog URL and a contact address; every other field is auto-extracted from the catalog.",
+  "title": "Portolan registry catalog entry",
+  "description": "Provide a catalog URL and contact email address to register a STAC catalog. You can also set deprecation fields. The registry fills in the remaining metadata.",
   "type": "object",
   "required": ["url", "submitter_email"],
   "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "anyOf": [
+          { "required": ["superseded_by"] },
+          { "required": ["deprecated_reason"] }
+        ]
+      },
+      "then": {
+        "required": ["deprecated"],
+        "properties": { "deprecated": { "const": true } }
+      }
+    }
+  ],
   "properties": {
     "url": {
       "type": "string",
@@ -17,6 +31,21 @@
       "type": "string",
       "format": "email",
       "description": "Address of the party answerable for this registration, used to report validation failures. This is a registry field, separate from the maintainer contact the Portolan spec requires on a collection's host provider: a catalog may satisfy that requirement with a URL and no address, and the two parties need not be the same."
+    },
+    "deprecated": {
+      "type": "boolean",
+      "description": "Set `deprecated` to true to mark the catalog as deprecated. This change requires a maintainer's approval. The catalog stays in the export with `portolan_registry:deprecated` set to true. After 30 days of failed nightly checks, its status changes to `removed`. Its entry and export link remain. The deprecation date comes from Git history. If you omit this field, it defaults to false."
+    },
+    "superseded_by": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "If `deprecated` is true, you can use this field to identify the replacement catalog by its registry ID. The replacement must have an entry file in `catalogs/`. It cannot be this catalog, and the chain of replacements cannot form a cycle."
+    },
+    "deprecated_reason": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 300,
+      "description": "If `deprecated` is true, you can provide a plain-text reason of 1 to 300 characters. The export publishes this value as `portolan_registry:deprecated_reason`. If the reason contains # or a colon followed by a space, put the YAML value in quotes."
     },
     "title": {
       "type": ["string", "null"],

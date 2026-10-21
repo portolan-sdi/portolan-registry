@@ -2,7 +2,16 @@
 
 from __future__ import annotations
 
-from registry.entries import entry_paths, load_entries, load_entry, normalize_url
+import pytest
+
+from registry.entries import (
+    Deprecation,
+    deprecation,
+    entry_paths,
+    load_entries,
+    load_entry,
+    normalize_url,
+)
 
 
 class TestNormalizeUrl:
@@ -69,3 +78,24 @@ class TestRealCatalogDir:
             norm = normalize_url(entry["url"])
             assert norm not in seen, f"{cid} duplicates {seen.get(norm)}"
             seen[norm] = cid
+
+
+class TestDeprecation:
+    def test_an_entry_without_the_flag_is_not_deprecated(self):
+        assert deprecation({"url": "u"}) == Deprecation(deprecated=False)
+
+    def test_the_flag_alone_deprecates(self):
+        assert deprecation({"deprecated": True}) == Deprecation(deprecated=True)
+
+    def test_reads_the_successor_and_the_reason(self):
+        entry = {"deprecated": True, "superseded_by": "next", "deprecated_reason": "Moved."}
+        assert deprecation(entry) == Deprecation(True, superseded_by="next", reason="Moved.")
+
+    @pytest.mark.parametrize("flag", [False, "true", 1, None])
+    def test_only_boolean_true_deprecates(self, flag):
+        entry = {"deprecated": flag, "superseded_by": "next", "deprecated_reason": "x"}
+        assert deprecation(entry) == Deprecation(deprecated=False)
+
+    def test_an_empty_or_odd_value_reads_as_none(self):
+        entry = {"deprecated": True, "superseded_by": "", "deprecated_reason": 5}
+        assert deprecation(entry) == Deprecation(deprecated=True)

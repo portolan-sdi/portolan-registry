@@ -1,4 +1,6 @@
-# Mails the submitter of a catalog when someone files feedback against it.
+# Email the catalog's submitter when someone reports a problem or requests
+# removal. Each issue form applies its own label: `catalog-feedback`
+# or `catalog-removal`.
 #
 # It runs on `labeled` alone. Applying the label is the trigger, and the issue
 # form applies it at creation, so a filed report fires exactly once. Adding
@@ -8,7 +10,7 @@
 #
 # The issue body is attacker-controlled text. It reaches the script through
 # `env:` and never through a `run:` string.
-name: Notify on Catalog Feedback
+name: Notify the catalog submitter
 
 on:
   issues:
@@ -18,12 +20,14 @@ permissions:
   contents: read
 
 concurrency:
-  group: catalog-feedback-${{ github.event.issue.number }}
+  group: catalog-notice-${{ github.event.issue.number }}
   cancel-in-progress: false
 
 jobs:
   notify:
-    if: github.event.label.name == 'catalog-feedback'
+    if: >-
+      github.event.label.name == 'catalog-feedback' ||
+      github.event.label.name == 'catalog-removal'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
@@ -36,7 +40,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup uv
-        uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
 
       # The script prints a comment only when it could not resolve the
       # catalog. A resolved report says nothing on the issue: the mail went
@@ -47,9 +51,15 @@ jobs:
           ISSUE_BODY: ${{ github.event.issue.body }}
           ISSUE_TITLE: ${{ github.event.issue.title }}
           ISSUE_URL: ${{ github.event.issue.html_url }}
+          ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
+          LABEL: ${{ github.event.label.name }}
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
         run: |
-          uv run --frozen scripts/notify_feedback.py > comment.md
+          form=feedback
+          if [ "$LABEL" = "catalog-removal" ]; then
+            form=removal
+          fi
+          uv run --frozen scripts/notify_feedback.py --form "$form" > comment.md
           if [ -s comment.md ]; then
             echo "comment=true" >> "$GITHUB_OUTPUT"
           fi

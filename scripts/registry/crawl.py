@@ -20,6 +20,7 @@ from urllib.parse import urlsplit
 from registry.bbox import collection_bbox, union_bboxes
 from registry.fetch import Fetcher, resolve_url
 from registry.logo import catalog_logo
+from registry.provenance import catalog_kind, collection_kind, parties
 from registry.report import log
 
 # The Portolan profile defines no fields, so the versioned schema URI in
@@ -92,6 +93,10 @@ class CollectionSummary:
     # them one by one. The crawler does not page, so this collection's items
     # cannot be counted without a request per page.
     items_unenumerable: bool = False
+    # The collection's own `providers`, unmodified. The spec asks every
+    # Collection for them and asks nothing of a Catalog, so this is where
+    # official-vs-mirror is decided (registry/provenance.py).
+    providers: list[Any] | None = None
 
 
 class CrawlResult(TypedDict, total=False):
@@ -111,6 +116,13 @@ class CrawlResult(TypedDict, total=False):
     spec_version_mixed: bool
     updated: str | None
     providers: list[Any] | None
+    # Derived from every collection's providers, per portolan-spec core.md
+    # (Source Provenance). Read them off the outermost result: a nested call
+    # sees only its own subtree.
+    kind: str | None
+    producers: list[dict[str, str]]
+    processors: list[dict[str, str]]
+    host: dict[str, str] | None
     keywords: list[Any] | None
     logo: dict[str, str] | None
     bbox: list[float] | None
@@ -157,6 +169,11 @@ def _empty_result(catalog_url: str, catalog: Mapping[str, Any], now: datetime) -
         # (core.md, Mirrors), and the registry has no reason to reformat it.
         "updated": catalog.get("updated"),
         "providers": catalog.get("providers"),
+        # Filled in by crawl_catalog, which has the collections to derive from.
+        "kind": None,
+        "producers": [],
+        "processors": [],
+        "host": None,
         "keywords": catalog.get("keywords"),
         # Filled in by crawl_catalog, which has the fetcher needed to check the
         # image is really there.
@@ -191,6 +208,7 @@ def _summarize_collection(url: str, collection: Mapping[str, Any]) -> Collection
         license=collection.get("license"),
         spec_version=declared_version(collection),
         row_count=collection.get("table:row_count") or 0,
+        providers=collection.get("providers"),
     )
 
     extent = collection.get("extent") or {}
@@ -434,4 +452,16 @@ def crawl_catalog(
             log(f"  Warning: Failed to fetch {child_url}: {e}")
 
     _settle_totals(result, bboxes, temporal_extents, versions)
+
+    # Official or mirror, and the parties the answer rests on. Derived over
+    # the merged collection list for the same reason the license mix is, so a
+    # nested catalog is read whole rather than one level at a time.
+    #
+    # Collections only. The spec makes the collection-level declaration
+    # authoritative, and rashid derives the kind from collections alone. A
+    # catalog's own `providers`, at the root or below, take no part.
+    provider_lists = [c.providers for c in result["collections"]]
+    result["kind"] = catalog_kind(collection_kind(providers) for providers in provider_lists)
+    result["producers"], result["processors"], result["host"] = parties(provider_lists)
+
     return result

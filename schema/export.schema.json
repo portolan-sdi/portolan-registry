@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/main/schema/export.schema.json",
-  "title": "Portolan Registry Export",
+  "title": "Portolan registry export",
   "description": "exports/catalogs.json: a STAC Catalog whose child links are the registered Portolan catalogs.",
   "type": "object",
   "required": ["type", "stac_version", "id", "title", "generated", "count", "links"],
@@ -21,6 +21,20 @@
     }
   },
   "$defs": {
+    "party": {
+      "description": "One organization a catalog names, trimmed to what identifies it. The provider's own description is left in the catalog.",
+      "type": "object",
+      "required": ["name"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "url": {
+          "description": "The party's own URL, as the catalog declares it. Absent when it declares none, which the specification permits for a producer.",
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
     "bbox": {
       "description": "WGS84 bounding box, [west, south, east, north] or [west, south, min_alt, east, north, max_alt]. Range and ordering rules beyond arity are checked in the test suite.",
       "type": "array",
@@ -51,7 +65,15 @@
               "portolan_registry:status",
               "portolan_registry:collection_count",
               "portolan_registry:has_agents_md",
-              "portolan_registry:has_readme"
+              "portolan_registry:has_readme",
+              "portolan_registry:deprecated",
+              "portolan_registry:deprecated_since",
+              "portolan_registry:deprecated_reason",
+              "portolan_registry:superseded_by",
+              "portolan_registry:kind",
+              "portolan_registry:producers",
+              "portolan_registry:processors",
+              "portolan_registry:host"
             ],
             "description": "Closed on purpose. The export is the registry's published contract and its sole store of validation state, so a field the crawler stopped writing, or one a carried-forward link never gained, has to fail this check rather than ride along unnoticed. An allOf branch reads its own properties only, so the STAC link fields are declared again here.",
             "additionalProperties": false,
@@ -117,6 +139,25 @@
                 "description": "When the entry file was added to this registry, RFC 3339.",
                 "type": ["string", "null"]
               },
+              "portolan_registry:kind": {
+                "description": "Whether this catalog is the canonical home of its data or a cloud-native copy of a source maintained elsewhere. Derived, never declared: the specification defines the kind as a reading of a collection's providers and gives it no property of its own (portolan-spec core.md, Source Provenance). The registry applies rashid's rule to each collection: official when a producer carries the host's name, compared without case, and a mirror otherwise. A catalog reads as official when every collection that has a kind is official, and as a mirror when any is a mirror. A catalog's own providers take no part, because the specification makes the collection-level declaration authoritative. Null when no collection names a producer and exactly one named host, so the registry cannot say.",
+                "type": ["string", "null"],
+                "enum": ["official", "mirror", null]
+              },
+              "portolan_registry:producers": {
+                "description": "Who made the data, from the providers of every collection, in crawl order. Repeats are dropped, compared on the name without case. Two organizations that share a URL host both stay on the list. Empty when no collection names a producer.",
+                "type": "array",
+                "items": {"$ref": "#/$defs/party"}
+              },
+              "portolan_registry:processors": {
+                "description": "Who derived this copy from the source, from the providers of every collection, in crawl order. Repeats are dropped, compared on the name without case. On a mirror this is usually the party that built the mirror. Empty when no collection names a processor.",
+                "type": "array",
+                "items": {"$ref": "#/$defs/party"}
+              },
+              "portolan_registry:host": {
+                "description": "Who serves this copy, and the party a reader contacts about it. The first host the crawl reads among the collections, since the specification allows one host per collection. Null when no collection names one.",
+                "oneOf": [{"$ref": "#/$defs/party"}, {"type": "null"}]
+              },
               "portolan_registry:collection_count": {"type": "integer", "minimum": 0},
               "portolan_registry:feature_count": {"type": "integer", "minimum": 0},
               "portolan_registry:item_count": {
@@ -139,11 +180,28 @@
               "portolan_registry:stale_since": {"type": ["string", "null"]},
               "portolan_registry:failure_reason": {"type": ["string", "null"]},
               "portolan_registry:stac_valid": {
-                "description": "True when rashid (Portolan profile and STAC structure, no data checks) and stac-node-validator (STAC core and extension schemas) report no error on the catalog's metadata tree, and every linked catalog, collection, and item fetched. False when either validator reports an error or a document did not fetch. Null when the validators did not run or could not finish. The value does not change portolan_registry:status.",
+                "description": "True when `rashid` and `stac-node-validator` report no errors and the registry fetches every linked catalog, collection, and item. These validators check metadata, not data assets. False when either validator reports an error or the registry cannot fetch a document. Null when no validation result is available. A run with no result preserves the previously published value. Validation failures affect `portolan_registry:status` only for deprecated catalogs.",
                 "type": ["boolean", "null"]
               },
               "portolan_registry:has_agents_md": {"type": "boolean"},
-              "portolan_registry:has_readme": {"type": "boolean"}
+              "portolan_registry:has_readme": {"type": "boolean"},
+              "portolan_registry:deprecated": {
+                "description": "True when the entry file sets `deprecated` to true. The catalog stays in the export. If nightly checks keep failing for 30 days, its status changes to `removed`. Its entry and export link remain. A check fails if the registry cannot fetch the root catalog or the validators report an error. If the catalog is reachable but the validators return no result, its status stays unchanged. You can use this flag to label or filter deprecated catalogs.",
+                "type": "boolean"
+              },
+              "portolan_registry:deprecated_since": {
+                "description": "The deprecation date in RFC 3339 format, from the commit that set `deprecated` to true. If Git history is unavailable, the registry keeps the previously published date. Null when the catalog is not deprecated or no date is available.",
+                "type": ["string", "null"]
+              },
+              "portolan_registry:deprecated_reason": {
+                "description": "The plain-text reason for deprecation from the entry file. Null when the catalog is not deprecated or the entry provides no reason.",
+                "type": ["string", "null"]
+              },
+              "portolan_registry:superseded_by": {
+                "description": "The replacement catalog's registry ID. To find its export link, match this value to `portolan_registry:id`. Null when the catalog is not deprecated or the entry names no replacement.",
+                "type": ["string", "null"],
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+              }
             }
           }
         }

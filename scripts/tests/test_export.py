@@ -9,11 +9,13 @@ from datetime import timedelta
 import pytest
 from conftest import FIXTURES, FROZEN
 
+from registry import export as export_module
 from registry.crawl import crawl_catalog
 from registry.export import (
     RETIRED_FIELDS,
     TIMESTAMP_REFRESH_DAYS,
     ExportRefused,
+    apply_entry_fields,
     build_export,
     check_export_safe,
     child_link,
@@ -114,6 +116,45 @@ class TestChildLink:
         """Issue #200: the export once said true for every catalog."""
         link = child_link({"id": "x", "url": ROOT, "validation": {"has_readme": True}})
         assert link["portolan_registry:stac_valid"] is None
+
+    def test_carries_the_provenance(self):
+        link = child_link(
+            {
+                "id": "x",
+                "url": ROOT,
+                "kind": "mirror",
+                "producers": [{"name": "TriMet", "url": "https://trimet.org"}],
+                "host": {"name": "Chris Holmes"},
+            }
+        )
+        assert link["portolan_registry:kind"] == "mirror"
+        assert link["portolan_registry:producers"] == [
+            {"name": "TriMet", "url": "https://trimet.org"}
+        ]
+        assert link["portolan_registry:host"] == {"name": "Chris Holmes"}
+
+    def test_carries_the_processor_apart_from_the_producer(self):
+        # catalog-1781203130384 names its converter under `processor` and a
+        # storage platform under `host`.
+        link = child_link(
+            {
+                "id": "x",
+                "url": ROOT,
+                "producers": [{"name": "Instituto Geográfico Nacional"}],
+                "processors": [{"name": "Nissim Lebovits"}],
+                "host": {"name": "Source Cooperative"},
+            }
+        )
+        assert link["portolan_registry:processors"] == [{"name": "Nissim Lebovits"}]
+
+    def test_a_catalog_whose_providers_say_nothing_reports_no_kind(self):
+        # jrc-glofas declares no providers. Null is the registry declining to
+        # guess, and an empty list is not a claim that nobody made the data.
+        link = child_link({"id": "x", "url": ROOT})
+        assert link["portolan_registry:kind"] is None
+        assert link["portolan_registry:producers"] == []
+        assert link["portolan_registry:processors"] == []
+        assert link["portolan_registry:host"] is None
 
 
 class TestBuildExport:
@@ -237,6 +278,32 @@ class TestRetiredFields:
         link = load_links(path)["a"]
         assert link["portolan_registry:has_agents_md"] is False
         assert link["portolan_registry:has_readme"] is False
+        # The schema requires the kind on every child link, and a carried
+        # link has no providers the registry has read.
+        assert link["portolan_registry:kind"] is None
+        assert link["portolan_registry:producers"] == []
+        assert link["portolan_registry:processors"] == []
+        assert link["portolan_registry:host"] is None
+
+    def test_keeps_a_provenance_a_carried_link_already_carries(self, tmp_path):
+        path = self.written(
+            tmp_path,
+            {
+                "portolan_registry:id": "a",
+                "portolan_registry:kind": "official",
+                "portolan_registry:producers": [{"name": "TriMet"}],
+            },
+        )
+        link = load_links(path)["a"]
+        assert link["portolan_registry:kind"] == "official"
+        assert link["portolan_registry:producers"] == [{"name": "TriMet"}]
+
+    def test_backfills_the_deprecation_fields(self, tmp_path):
+        link = load_links(self.written(tmp_path, {"portolan_registry:id": "a"}))["a"]
+        assert link["portolan_registry:deprecated"] is False
+        assert link["portolan_registry:deprecated_since"] is None
+        assert link["portolan_registry:deprecated_reason"] is None
+        assert link["portolan_registry:superseded_by"] is None
 
     def test_keeps_a_value_the_link_already_carries(self, tmp_path):
         path = self.written(
@@ -445,3 +512,102 @@ class TestCommittedExport:
         """`portolan:` belongs to the specification. Registry-only fields
         answer to `portolan_registry:` so a reader can tell which is which."""
         assert '"portolan:' not in EXPORT.read_text()
+
+
+DEPRECATION_FIELDS = (
+    "portolan_registry:deprecated",
+    "portolan_registry:deprecated_since",
+    "portolan_registry:deprecated_reason",
+    "portolan_registry:superseded_by",
+)
+
+
+class TestApplyEntryFields:
+    """Deprecation fields come from entry files, including after failed crawls (#234)."""
+
+    @pytest.fixture(autouse=True)
+    def no_git(self, monkeypatch):
+        """Set the date Git returns, or `None` if no date is available."""
+        self.since = None
+        monkeypatch.setattr(export_module, "deprecated_since", lambda path: self.since)
+
+    def entries(self, tmp_path, **files):
+        catalogs = tmp_path / "catalogs"
+        catalogs.mkdir(exist_ok=True)
+        for stem, body in files.items():
+            (catalogs / f"{stem}.yaml").write_text(f"url: {ROOT}\n{body}")
+        return catalogs
+
+    def export_of(self, *links):
+        return build_export(
+            [], extra_links=[{"rel": "child", "href": ROOT, **link} for link in links]
+        )
+
+    def child(self, export, catalog_id):
+        return next(
+            link for link in export["links"] if link.get("portolan_registry:id") == catalog_id
+        )
+
+    def test_child_link_writes_the_defaults(self):
+        link = child_link({"id": "x", "url": ROOT})
+        assert link["portolan_registry:deprecated"] is False
+        assert all(link[k] is None for k in DEPRECATION_FIELDS[1:])
+
+    def test_writes_the_entry_fields_onto_a_carried_link(self, tmp_path):
+        """Publish deprecation changes even when the crawl fails."""
+        self.since = "2026-10-16T09:12:00+00:00"
+        catalogs = self.entries(
+            tmp_path,
+            old="deprecated: true\nsuperseded_by: new\ndeprecated_reason: Replaced.\n",
+        )
+        export = self.export_of(
+            {"portolan_registry:id": "old", "portolan_registry:status": "valid"}
+        )
+        apply_entry_fields(export, catalogs, {})
+        link = self.child(export, "old")
+        assert link["portolan_registry:deprecated"] is True
+        assert link["portolan_registry:deprecated_since"] == "2026-10-16T09:12:00+00:00"
+        assert link["portolan_registry:deprecated_reason"] == "Replaced."
+        assert link["portolan_registry:superseded_by"] == "new"
+
+    def test_the_flag_alone_publishes_nulls_for_the_rest(self, tmp_path):
+        catalogs = self.entries(tmp_path, old="deprecated: true\n")
+        export = self.export_of({"portolan_registry:id": "old"})
+        apply_entry_fields(export, catalogs, {})
+        link = self.child(export, "old")
+        assert link["portolan_registry:deprecated"] is True
+        assert link["portolan_registry:deprecated_reason"] is None
+        assert link["portolan_registry:superseded_by"] is None
+
+    def test_an_un_deprecation_clears_a_carried_flag(self, tmp_path):
+        catalogs = self.entries(tmp_path, old="")
+        export = self.export_of(
+            {
+                "portolan_registry:id": "old",
+                "portolan_registry:deprecated": True,
+                "portolan_registry:deprecated_since": "2026-10-16T09:12:00+00:00",
+                "portolan_registry:deprecated_reason": "Replaced.",
+                "portolan_registry:superseded_by": "new",
+            }
+        )
+        apply_entry_fields(export, catalogs, {})
+        link = self.child(export, "old")
+        assert link["portolan_registry:deprecated"] is False
+        assert all(link[k] is None for k in DEPRECATION_FIELDS[1:])
+
+    def test_a_shallow_clone_keeps_the_published_date(self, tmp_path):
+        catalogs = self.entries(tmp_path, old="deprecated: true\n")
+        export = self.export_of({"portolan_registry:id": "old"})
+        previous = {"old": {"portolan_registry:deprecated_since": "2026-10-16T09:12:00+00:00"}}
+        apply_entry_fields(export, catalogs, previous)
+        assert (
+            self.child(export, "old")["portolan_registry:deprecated_since"]
+            == "2026-10-16T09:12:00+00:00"
+        )
+
+    def test_root_and_self_links_are_left_alone(self, tmp_path):
+        catalogs = self.entries(tmp_path, old="deprecated: true\n")
+        export = self.export_of({"portolan_registry:id": "old"})
+        apply_entry_fields(export, catalogs, {})
+        for link in export["links"][:2]:
+            assert not any(k in link for k in DEPRECATION_FIELDS)

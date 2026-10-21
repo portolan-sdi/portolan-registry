@@ -1,4 +1,4 @@
-"""Reading an entry's registration date out of git.
+"""Reading an entry's registration date and its deletions out of git.
 
 These build a throwaway repository rather than reading the registry's own
 history, which changes with every commit.
@@ -11,7 +11,15 @@ import subprocess
 
 import pytest
 
-from registry.history import _canonical, first_registered
+from registry.history import (
+    Deletion,
+    _canonical,
+    deletions,
+    deprecated_since,
+    entry_at,
+    first_registered,
+    url_at,
+)
 
 
 def git(*args, cwd):
@@ -86,3 +94,240 @@ def test_returns_none_outside_a_repository(tmp_path):
     loose = tmp_path / "example.yaml"
     loose.write_text("url: https://ex.org/catalog.json\n")
     assert first_registered(loose) is None
+
+
+def commit_all(repo, message):
+    git("add", "-A", cwd=repo)
+    git("commit", "-q", "-m", message, cwd=repo)
+
+
+def head(repo):
+    out = subprocess.run(
+        ["git", "rev-parse", "HEAD"], cwd=repo, check=True, capture_output=True, text=True
+    )
+    return out.stdout.strip()
+
+
+class TestUrlAt:
+    def test_reads_the_url_at_a_ref(self, repo):
+        entry = repo / "catalogs" / "example.yaml"
+        base = head(repo)
+        entry.write_text("url: https://ex.org/moved/catalog.json\n")
+        commit_all(repo, "move example")
+        assert url_at(base, entry) == "https://ex.org/catalog.json"
+        assert url_at("HEAD", entry) == "https://ex.org/moved/catalog.json"
+
+    def test_a_file_absent_at_the_ref_has_none(self, repo):
+        assert url_at("HEAD", repo / "catalogs" / "unseen.yaml") is None
+
+
+class TestDeletions:
+    def catalogs(self, repo):
+        return repo / "catalogs"
+
+    def test_a_history_without_deletions_is_empty(self, repo):
+        assert deletions("HEAD", self.catalogs(repo)) == []
+
+    def test_reads_the_url_the_deleted_file_held(self, repo):
+        (repo / "catalogs" / "example.yaml").unlink()
+        commit_all(repo, "remove example")
+        assert deletions("HEAD", self.catalogs(repo)) == [
+            Deletion(stem="example", commit=head(repo), url="https://ex.org/catalog.json")
+        ]
+
+    def test_lists_the_newest_deletion_first(self, repo):
+        entry = repo / "catalogs" / "example.yaml"
+        entry.unlink()
+        commit_all(repo, "remove example")
+        first = head(repo)
+        entry.write_text("url: https://ex.org/second/catalog.json\n")
+        commit_all(repo, "add example again")
+        entry.unlink()
+        commit_all(repo, "remove example again")
+        found = deletions("HEAD", self.catalogs(repo))
+        assert [(d.commit, d.url) for d in found] == [
+            (head(repo), "https://ex.org/second/catalog.json"),
+            (first, "https://ex.org/catalog.json"),
+        ]
+
+    def test_a_rename_counts_as_a_deletion_of_the_old_name(self, repo):
+        """No --follow. The ID is the filename."""
+        git("mv", "catalogs/example.yaml", "catalogs/renamed.yaml", cwd=repo)
+        commit_all(repo, "rename example")
+        assert [d.stem for d in deletions("HEAD", self.catalogs(repo))] == ["example"]
+
+    def test_a_deleted_file_that_does_not_parse_has_no_url(self, repo):
+        entry = repo / "catalogs" / "example.yaml"
+        entry.write_text("url: [unclosed\n")
+        commit_all(repo, "break example")
+        entry.unlink()
+        commit_all(repo, "remove example")
+        assert deletions("HEAD", self.catalogs(repo))[0].url is None
+
+    def test_only_entry_files_count(self, repo):
+        nested = repo / "catalogs" / "drafts" / "nested.yaml"
+        nested.parent.mkdir()
+        nested.write_text("url: https://ex.org/nested/catalog.json\n")
+        (repo / "catalogs" / "notes.md").write_text("notes\n")
+        commit_all(repo, "add a nested file and notes")
+        nested.unlink()
+        (repo / "catalogs" / "notes.md").unlink()
+        commit_all(repo, "remove them")
+        assert deletions("HEAD", self.catalogs(repo)) == []
+
+    def test_reads_only_the_history_of_the_ref(self, repo):
+        """A deletion on another branch is not in the history of HEAD."""
+        base = head(repo)
+        git("switch", "-q", "-c", "side", cwd=repo)
+        (repo / "catalogs" / "example.yaml").unlink()
+        commit_all(repo, "remove example on side")
+        assert deletions(base, self.catalogs(repo)) == []
+        assert len(deletions("side", self.catalogs(repo))) == 1
+
+    def test_finds_a_deletion_behind_a_merge_that_kept_the_file(self, repo):
+        """A branch keeps a file that its base deleted, then merges the base.
+
+        Git's default history simplification follows the branch side of the
+        merge, where the file never changed, and hides the deletion.
+        """
+        git("branch", "-M", "main", cwd=repo)
+        git("switch", "-q", "-c", "keeper", cwd=repo)
+        entry = repo / "catalogs" / "example.yaml"
+        entry.write_text("url: https://other.org/catalog.json\n")
+        commit_all(repo, "point example at another catalog")
+        git("switch", "-q", "main", cwd=repo)
+        entry.unlink()
+        commit_all(repo, "remove example")
+        deleted_on_main = head(repo)
+        git("switch", "-q", "keeper", cwd=repo)
+        subprocess.run(["git", "merge", "-q", "main"], cwd=repo, capture_output=True)
+        git("add", "catalogs/example.yaml", cwd=repo)
+        git("commit", "-q", "--no-edit", cwd=repo)
+
+        simplified = subprocess.run(
+            ["git", "log", "--diff-filter=D", "--format=%H", "--", "example.yaml"],
+            cwd=repo / "catalogs",
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        assert simplified.stdout.strip() == ""
+        assert [d.commit for d in deletions("HEAD", self.catalogs(repo))] == [deleted_on_main]
+
+    def test_returns_empty_outside_a_repository(self, tmp_path):
+        assert deletions("HEAD", tmp_path) == []
+
+
+def commit_at(repo, message, stamp):
+    git("add", "-A", cwd=repo)
+    subprocess.run(
+        ["git", "commit", "-q", "-m", message],
+        cwd=repo,
+        check=True,
+        capture_output=True,
+        env={**os.environ, "GIT_AUTHOR_DATE": stamp, "GIT_COMMITTER_DATE": stamp},
+    )
+
+
+class TestEntryAt:
+    def test_reads_the_whole_entry_at_a_ref(self, repo):
+        assert entry_at("HEAD", repo / "catalogs" / "example.yaml") == {
+            "url": "https://ex.org/catalog.json"
+        }
+
+    def test_an_entry_that_does_not_parse_is_none(self, repo):
+        entry = repo / "catalogs" / "example.yaml"
+        entry.write_text("url: [unclosed\n")
+        commit_all(repo, "break example")
+        assert entry_at("HEAD", entry) is None
+
+
+class TestDeprecatedSince:
+    """Read deprecation dates from Git history (#234)."""
+
+    URL = "url: https://ex.org/catalog.json\n"
+
+    def test_a_comment_on_the_line_does_not_move_the_date(self, repo):
+        """Review finding: a text match on the line moved the date."""
+        entry = repo / "catalogs" / "example.yaml"
+        entry.write_text(self.URL + "deprecated: true\n")
+        commit_at(repo, "deprecate", "2026-10-01T09:00:00+00:00")
+        entry.write_text(self.URL + "deprecated: true  # replaced by geoconnex\n")
+        commit_at(repo, "add a comment", "2026-10-20T09:00:00+00:00")
+        assert deprecated_since(entry) == "2026-10-01T09:00:00+00:00"
+
+    def test_a_quoted_key_gives_a_date(self, repo):
+        """Review finding: `"deprecated": true` is valid YAML and gave none."""
+        entry = repo / "catalogs" / "example.yaml"
+        entry.write_text(self.URL + '"deprecated": true\n')
+        commit_at(repo, "deprecate", "2026-10-16T09:12:00+00:00")
+        assert deprecated_since(entry) == "2026-10-16T09:12:00+00:00"
+
+    def test_a_flip_from_false_takes_the_date_of_the_flip(self, repo):
+        entry = repo / "catalogs" / "example.yaml"
+        entry.write_text(self.URL + "deprecated: false\n")
+        commit_at(repo, "say false", "2026-10-10T09:00:00+00:00")
+        entry.write_text(self.URL + "deprecated: true\n")
+        commit_at(repo, "deprecate", "2026-10-12T09:00:00+00:00")
+        assert deprecated_since(entry) == "2026-10-12T09:00:00+00:00"
+
+    def test_an_unrelated_edit_does_not_move_the_date(self, repo):
+        entry = repo / "catalogs" / "example.yaml"
+        entry.write_text(self.URL + "deprecated: true\n")
+        commit_at(repo, "deprecate", "2026-10-12T09:00:00+00:00")
+        entry.write_text(self.URL + "submitter_email: new@example.org\ndeprecated: true\n")
+        commit_at(repo, "new contact", "2026-10-15T09:00:00+00:00")
+        assert deprecated_since(entry) == "2026-10-12T09:00:00+00:00"
+
+    def test_a_merged_side_branch_takes_the_date_of_the_merge(self, repo):
+        """The date is when the deprecation reached the branch, not when a
+        side branch drafted it."""
+        git("branch", "-M", "main", cwd=repo)
+        git("switch", "-q", "-c", "draft", cwd=repo)
+        entry = repo / "catalogs" / "example.yaml"
+        entry.write_text(self.URL + "deprecated: true\n")
+        commit_at(repo, "deprecate on a side branch", "2026-10-01T09:00:00+00:00")
+        git("switch", "-q", "main", cwd=repo)
+        stamp = "2026-10-20T09:00:00+00:00"
+        subprocess.run(
+            ["git", "merge", "-q", "--no-ff", "-m", "merge the deprecation", "draft"],
+            cwd=repo,
+            check=True,
+            capture_output=True,
+            env={**os.environ, "GIT_AUTHOR_DATE": stamp, "GIT_COMMITTER_DATE": stamp},
+        )
+        assert deprecated_since(entry) == stamp
+
+    def test_reads_the_commit_that_deprecated_the_entry(self, repo):
+        entry = repo / "catalogs" / "example.yaml"
+        entry.write_text(self.URL + "deprecated: true\n")
+        commit_at(repo, "deprecate example", "2026-10-16T09:12:00+00:00")
+        assert deprecated_since(entry) == "2026-10-16T09:12:00+00:00"
+
+    def test_an_edit_of_the_reason_does_not_move_the_date(self, repo):
+        entry = repo / "catalogs" / "example.yaml"
+        entry.write_text(self.URL + "deprecated: true\ndeprecated_reason: First.\n")
+        commit_at(repo, "deprecate example", "2026-10-16T09:12:00+00:00")
+        entry.write_text(self.URL + "deprecated: true\ndeprecated_reason: Second.\n")
+        commit_at(repo, "reword the reason", "2026-10-18T09:12:00+00:00")
+        assert deprecated_since(entry) == "2026-10-16T09:12:00+00:00"
+
+    def test_a_second_deprecation_takes_its_own_date(self, repo):
+        entry = repo / "catalogs" / "example.yaml"
+        entry.write_text(self.URL + "deprecated: true\n")
+        commit_at(repo, "deprecate", "2026-10-16T09:12:00+00:00")
+        entry.write_text(self.URL)
+        commit_at(repo, "un-deprecate", "2026-10-17T09:12:00+00:00")
+        entry.write_text(self.URL + "deprecated: true\n")
+        commit_at(repo, "deprecate again", "2026-10-19T09:12:00+00:00")
+        assert deprecated_since(entry) == "2026-10-19T09:12:00+00:00"
+
+    def test_an_uncommitted_deprecation_has_no_date(self, repo):
+        entry = repo / "catalogs" / "example.yaml"
+        entry.write_text(self.URL + "deprecated: true\n")
+        assert deprecated_since(entry) is None
+
+    def test_returns_none_outside_a_repository(self, tmp_path):
+        loose = tmp_path / "example.yaml"
+        loose.write_text(self.URL + "deprecated: true\n")
+        assert deprecated_since(loose) is None

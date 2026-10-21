@@ -7,12 +7,15 @@ catalog becomes a rel="child" link.
 
 from __future__ import annotations
 
+import copy
 import json
 from collections.abc import Mapping, Sequence
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
+from registry.entries import deprecation, load_entry
+from registry.history import deprecated_since
 from registry.status import parse_timestamp
 
 EXPORT_PATH = Path("exports/catalogs.json")
@@ -56,6 +59,17 @@ RETIRED_FIELDS = frozenset(
 CARRIED_DEFAULTS: dict[str, object] = {
     PREFIX + "has_agents_md": False,
     PREFIX + "has_readme": False,
+    PREFIX + "deprecated": False,
+    PREFIX + "deprecated_since": None,
+    PREFIX + "deprecated_reason": None,
+    PREFIX + "superseded_by": None,
+    # Null and empty are what child_link writes for a catalog whose providers
+    # say nothing, and a link older than these fields is in the same position:
+    # the registry has not read the providers it would need.
+    PREFIX + "kind": None,
+    PREFIX + "producers": [],
+    PREFIX + "processors": [],
+    PREFIX + "host": None,
 }
 
 
@@ -76,7 +90,8 @@ def _child_links(export: Mapping[str, Any]) -> list[dict[str, Any]]:
         for retired in RETIRED_FIELDS:
             current.pop(retired, None)
         for name, default in CARRIED_DEFAULTS.items():
-            current.setdefault(name, default)
+            # A copy, so no two links share one mutable default.
+            current.setdefault(name, copy.copy(default))
         links.append(current)
     return links
 
@@ -162,6 +177,25 @@ def child_link(catalog: Mapping[str, Any]) -> dict[str, Any]:
             "portolan_registry:logo": catalog.get("logo"),
             "portolan_registry:updated": catalog.get("updated"),
             "portolan_registry:first_registered": catalog.get("first_registered"),
+            # "official", "mirror", or null. Derived from the providers of
+            # every collection beneath the catalog, never declared: the
+            # specification defines the kind as a reading of the providers and
+            # gives it no field of its own (portolan-spec core.md, Source
+            # Provenance). Null when no collection names both a producer and a
+            # host, which is the registry declining to guess.
+            "portolan_registry:kind": catalog.get("kind"),
+            # The evidence for the field above, trimmed to {name, url}: who
+            # made the data, and who serves this copy. Published so a consumer
+            # can show the parties, and re-derive the kind if it reads the
+            # providers differently. Empty and null when the catalog names
+            # none.
+            "portolan_registry:producers": catalog.get("producers") or [],
+            # Who derived this copy from the source. On a mirror this is
+            # usually the party that built it, and it is the only place some
+            # catalogs name that party: seven of the fourteen mirrors put a
+            # storage vendor in the host field, which core.md forbids.
+            "portolan_registry:processors": catalog.get("processors") or [],
+            "portolan_registry:host": catalog.get("host"),
             # SPDX id -> how many collections declare it. The registry
             # publishes the mix rather than a single label, so a consumer can
             # see a catalog is mostly ODbL-1.0 with two CC-BY-4.0 collections
@@ -193,9 +227,48 @@ def child_link(catalog: Mapping[str, Any]) -> dict[str, Any]:
             # specification requires of it, AGENTS.md and README.md.
             "portolan_registry:has_agents_md": validation.get("has_agents_md", False),
             "portolan_registry:has_readme": validation.get("has_readme", False),
+            # apply_entry_fields replaces these defaults with entry file values.
+            "portolan_registry:deprecated": False,
+            "portolan_registry:deprecated_since": None,
+            "portolan_registry:deprecated_reason": None,
+            "portolan_registry:superseded_by": None,
         }
     )
     return link
+
+
+def apply_entry_fields(
+    export: Mapping[str, Any],
+    catalog_dir: Path,
+    previous_links: Mapping[str, Mapping[str, Any]],
+) -> None:
+    """Copy deprecation fields from entry files to every child link.
+
+    Read the entry files even for catalogs that were not crawled, so the
+    export reflects deprecation changes for unreachable and removed catalogs.
+
+    If Git cannot find the deprecation commit, keep the previously published
+    date.
+    """
+    for link in export.get("links", []):
+        if link.get("rel") != "child":
+            continue
+        catalog_id = link["portolan_registry:id"]
+        path = catalog_dir / f"{catalog_id}.yaml"
+        state = deprecation(load_entry(path)) if path.exists() else deprecation({})
+        since = None
+        if state.deprecated:
+            since = deprecated_since(path) or previous_links.get(catalog_id, {}).get(
+                "portolan_registry:deprecated_since"
+            )
+        link.update(
+            {
+                "portolan_registry:deprecated": state.deprecated,
+                "portolan_registry:deprecated_since": since,
+                "portolan_registry:deprecated_reason": state.reason,
+                "portolan_registry:superseded_by": state.superseded_by,
+            }
+        )
 
 
 def build_export(

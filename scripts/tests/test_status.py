@@ -4,7 +4,9 @@ from __future__ import annotations
 
 from datetime import UTC, datetime
 
-from registry.status import STALE_THRESHOLD_DAYS, update_status
+import pytest
+
+from registry.status import STALE_THRESHOLD_DAYS, passes, update_status
 
 JAN1 = datetime(2026, 1, 1, tzinfo=UTC)
 
@@ -91,3 +93,21 @@ class TestMalformedState:
     def test_empty_state_is_treated_as_valid(self):
         out = update_status({}, passed=False, now=at(5))
         assert out["status"] == "stale"
+
+
+class TestPasses:
+    """Issue #234: a deprecated catalog also fails on a validator error."""
+
+    @pytest.mark.parametrize("stac_valid", [True, False, None])
+    def test_a_catalog_that_is_not_deprecated_passes_when_it_answers(self, stac_valid):
+        assert passes(deprecated=False, stac_valid=stac_valid) is True
+
+    def test_a_deprecated_catalog_fails_on_a_validator_error(self):
+        assert passes(deprecated=True, stac_valid=False) is False
+
+    def test_a_deprecated_catalog_that_validates_passes(self):
+        assert passes(deprecated=True, stac_valid=True) is True
+
+    def test_validators_that_did_not_finish_give_no_verdict(self):
+        """Neither a pass nor a failure: the caller keeps the state."""
+        assert passes(deprecated=True, stac_valid=None) is None

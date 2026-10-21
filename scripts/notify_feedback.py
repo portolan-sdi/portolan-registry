@@ -1,16 +1,19 @@
 #!/usr/bin/env python3
-"""Mail the submitter of a catalog someone filed feedback against.
+"""Email a catalog's submitter about feedback or a removal request.
 
-Reads the issue from the environment, so nothing an issue author writes ever
-reaches a shell. Resolves the catalog id it names against `catalogs/`, and
-mails the address on that entry file.
+Use `--form feedback` (the default) for a catalog feedback report or
+`--form removal` for a catalog removal request.
 
-Whatever it cannot resolve it says on the issue instead: the script prints a
-comment to stdout, and the workflow posts it when the output is non-empty.
-Progress goes to stderr. The exit code is always 0, because a report that
-names the wrong catalog is still a report worth keeping.
+The script reads issue details from environment variables, looks up the
+catalog ID in `catalogs/`, and emails the address in the entry file. Issue
+content never reaches the shell.
+
+If the script cannot find the catalog, it prints a comment to stdout for the
+workflow to post on the issue. Progress messages go to stderr. The script
+returns exit code 0 even if the catalog ID is invalid.
 
     ISSUE_BODY="$(cat body.md)" uv run --frozen scripts/notify_feedback.py
+    ISSUE_BODY="$(cat body.md)" uv run --frozen scripts/notify_feedback.py --form removal
 """
 
 from __future__ import annotations
@@ -23,7 +26,7 @@ from pathlib import Path
 from registry.contacts import validate_submitter_email
 from registry.entries import CATALOG_DIR, entry_paths, load_entry
 from registry.export import EXPORT_PATH, load_links
-from registry.notify import send_feedback_notification
+from registry.notify import send_feedback_notification, send_removal_request_notification
 from registry.report import log
 
 HEADING_RE = re.compile(r"^\s{0,3}#{1,6}\s+(.+?)\s*#*\s*$")
@@ -37,7 +40,17 @@ NO_RESPONSE = "_No response_"
 ID_RE = re.compile(r"^[A-Za-z0-9._-]+$")
 
 CATALOG_FIELD = "catalog id"
-KIND_FIELD = "kind of problem"
+# Two forms apply the catalog-feedback label, and each labels the kind of
+# problem in its own words: catalog-feedback.yml and the synced
+# dataset-problem.yml.
+KIND_FIELDS = ("kind of problem", "what kind of problem is it?")
+# The removal request form, .github/ISSUE_TEMPLATE/catalog-removal.yml.
+ACTION_FIELD = "action"
+RELATIONSHIP_FIELD = "relationship"
+REASON_FIELD = "why"
+
+# Each form applies its own label. Reapply the label to resend the email.
+LABELS = {"feedback": "catalog-feedback", "removal": "catalog-removal"}
 
 
 def parse_sections(body: str) -> dict[str, str]:
@@ -77,19 +90,21 @@ def parse_catalog_id(body: str) -> str | None:
     return value if ID_RE.match(value) else None
 
 
-def unknown_catalog_comment(catalog_id: str | None, known: list[str]) -> str:
-    """What to say on an issue whose catalog we could not resolve."""
+def unknown_catalog_comment(
+    catalog_id: str | None, known: list[str], label: str = LABELS["feedback"]
+) -> str:
+    """Explain how to correct an issue with an unrecognized catalog ID."""
     named = f"`{catalog_id}`" if catalog_id else "no catalog"
     ids = ", ".join(f"`{i}`" for i in known) or "none yet"
     return (
-        f"This report names {named}, which is not registered here, so nobody "
-        "was notified.\n\n"
-        f"Registered ids: {ids}\n\n"
-        "Correct the **Catalog ID** section, then a maintainer can re-apply "
-        "the `catalog-feedback` label to send the notification. If the "
-        "catalog is not in the registry at all, "
-        "[register it first](https://github.com/portolan-sdi/portolan-registry"
-        "#submit-a-catalog)."
+        f"This issue names {named}. The registry could not find a matching "
+        "entry and did not send a notification.\n\n"
+        f"Registered IDs: {ids}\n\n"
+        "If the catalog is registered, correct the **Catalog ID** section "
+        f"and ask a maintainer to reapply the `{label}` label to send the "
+        "notification. If the catalog is not registered, "
+        "[submit the catalog](https://github.com/portolan-sdi/portolan-registry"
+        "#quickstart)."
     )
 
 
@@ -97,6 +112,12 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--catalog-dir", default=str(CATALOG_DIR))
     parser.add_argument("--export", default=str(EXPORT_PATH))
+    parser.add_argument(
+        "--form",
+        choices=sorted(LABELS),
+        default="feedback",
+        help="Select the issue form to read (default: feedback).",
+    )
     parser.add_argument(
         "--no-notify",
         action="store_true",
@@ -107,6 +128,7 @@ def main(argv: list[str] | None = None) -> int:
     body = os.environ.get("ISSUE_BODY", "")
     issue_url = os.environ.get("ISSUE_URL", "")
     issue_title = os.environ.get("ISSUE_TITLE", "")
+    issue_author = os.environ.get("ISSUE_AUTHOR", "")
 
     catalog_dir = Path(args.catalog_dir)
     catalog_id = parse_catalog_id(body)
@@ -114,10 +136,10 @@ def main(argv: list[str] | None = None) -> int:
 
     if catalog_id is None or catalog_id not in known:
         log(f"No registered catalog for {catalog_id!r}; commenting instead")
-        print(unknown_catalog_comment(catalog_id, known))
+        print(unknown_catalog_comment(catalog_id, known, LABELS[args.form]))
         return 0
 
-    log(f"=== Feedback on {catalog_id} ===")
+    log(f"=== {'Removal request' if args.form == 'removal' else 'Feedback'} on {catalog_id} ===")
     entry = load_entry(catalog_dir / f"{catalog_id}.yaml")
 
     try:
@@ -132,13 +154,33 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     link = load_links(Path(args.export)).get(catalog_id, {})
+    sections = parse_sections(body)
+
+    if args.form == "removal":
+        send_removal_request_notification(
+            catalog_id,
+            submitter_email=address,
+            issue_url=issue_url,
+            issue_title=issue_title,
+            requester=issue_author or "unknown",
+            relationship=sections.get(RELATIONSHIP_FIELD, "not stated"),
+            reason=sections.get(REASON_FIELD, "not stated"),
+            title=link.get("title"),
+            # Default to removal for older forms without an action field
+            # and for unrecognized answers.
+            action="deprecate"
+            if sections.get(ACTION_FIELD, "").casefold() == "deprecate"
+            else "remove",
+            enabled=not args.no_notify,
+        )
+        return 0
 
     send_feedback_notification(
         catalog_id,
         submitter_email=address,
         issue_url=issue_url,
         issue_title=issue_title,
-        kind=parse_sections(body).get(KIND_FIELD, "unspecified"),
+        kind=next((sections[f] for f in KIND_FIELDS if f in sections), "unspecified"),
         title=link.get("title"),
         enabled=not args.no_notify,
     )

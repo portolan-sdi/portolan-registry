@@ -1,0 +1,97 @@
+name: Catalog removal or deprecation request
+description: Ask to remove a catalog from the registry or mark it as deprecated
+# The catalog-removal label triggers an email to the submitter through
+# .github/workflows/notify-feedback.yml.
+labels: [catalog-removal]
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        You can request removal or deprecation even if someone else registered
+        the catalog. The registry emails your request to that person, and a
+        maintainer reviews it. If someone else registered the catalog, the
+        maintainer allows 14 days for that person to object before approving
+        the change. Requests involving spam or legal concerns do not require
+        this waiting period. Your request and GitHub username are public.
+        The catalog's ID remains reserved after removal.
+  # notify_feedback.py reads the answers under these headings. Keep the
+  # labels "Catalog ID", "Action", "Relationship", and "Why".
+  - type: input
+    id: catalog-id
+    attributes:
+      label: Catalog ID
+      description: >-
+        Enter the catalog's filename in `catalogs/` without `.yaml`.
+        You can also find the ID in the `portolan_registry:id` field of the
+        catalog's link in the
+        [JSON registry export](https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json).
+      placeholder: geoconnex-geoparquet
+    validations:
+      required: true
+  - type: dropdown
+    id: action
+    attributes:
+      label: Action
+      description: >-
+        Choose **Remove** to take the catalog out of the registry, or
+        **Deprecate** to keep it listed as deprecated. If a deprecated catalog
+        keeps failing nightly checks for 30 days, its status changes to
+        `removed`. Its entry and export link remain.
+      options:
+        - Remove
+        - Deprecate
+    validations:
+      required: true
+  - type: dropdown
+    id: relationship
+    attributes:
+      label: Relationship
+      description: Select your relationship to the catalog. A maintainer may ask you to confirm it.
+      options:
+        - I registered this catalog
+        - I work for the publisher, and someone else registered it
+        - I maintain this registry
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why
+      description: >-
+        Explain why you want to remove or deprecate the catalog. For example, the
+        publisher may have registered a replacement catalog.
+    validations:
+      required: true
+  - type: input
+    id: successor
+    attributes:
+      label: Replacement catalog ID
+      description: >-
+        If you chose **Deprecate**, you can enter the registry ID of the
+        replacement catalog. It must already be registered or be registered
+        in the same pull request.
+      placeholder: geoconnex
+    validations:
+      required: false
+  - type: input
+    id: contact
+    attributes:
+      label: Contact address
+      description: >-
+        If you want a maintainer to contact you outside GitHub, enter an
+        email address. This address is public. If you leave this field blank,
+        the maintainer can contact you through this issue.
+    validations:
+      required: false
+  - type: dropdown
+    id: url-online
+    attributes:
+      label: Will the catalog remain online?
+      description: If you know, indicate whether the catalog's URL will remain accessible after removal or deprecation.
+      options:
+        - "Yes"
+        - "No"
+        - I do not know
+    validations:
+      required: false

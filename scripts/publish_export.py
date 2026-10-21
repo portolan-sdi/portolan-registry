@@ -27,10 +27,11 @@ from registry.coverage import (
     write_coverage,
 )
 from registry.crawl import CrawlResult
-from registry.entries import CATALOG_DIR, entry_paths, load_entry
+from registry.entries import CATALOG_DIR, deprecation, entry_paths, load_entry
 from registry.export import (
     EXPORT_PATH,
     ExportRefused,
+    apply_entry_fields,
     build_export,
     check_export_safe,
     export_changed,
@@ -41,6 +42,7 @@ from registry.export import (
 from registry.fetch import HttpFetcher
 from registry.history import first_registered
 from registry.report import log
+from registry.status import passes
 from registry.validators import crawl_and_validate, log_validation, settle_stac_valid
 
 MAX_WORKERS = 4
@@ -48,8 +50,12 @@ MAX_WORKERS = 4
 
 def process_entry(
     path: Path, now: datetime, previous_links: dict[str, dict[str, Any]]
-) -> CrawlResult | None:
-    """Crawl one registry entry. Returns None if it could not be crawled."""
+) -> tuple[CrawlResult, bool | None] | None:
+    """Crawl one registry entry. Returns None if it could not be crawled.
+
+    Also returns this run's validator answer, `report.passed`. The result's
+    `stac_valid` may hold an earlier answer after `settle_stac_valid`.
+    """
     log(f"\n=== Processing {path} ===")
     entry = load_entry(path)
 
@@ -75,7 +81,7 @@ def process_entry(
         "portolan_registry:first_registered"
     )
     log(f"  OK: {result['title']} ({result['collection_count']} collections)")
-    return result
+    return result, report.passed
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -104,22 +110,37 @@ def main(argv: list[str] | None = None) -> int:
     previous_links = load_links(EXPORT_PATH)
 
     catalogs: list[CrawlResult] = []
+    answers: dict[str, bool | None] = {}
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
         futures = {executor.submit(process_entry, p, now, previous_links): p for p in paths}
         for future in as_completed(futures):
-            result = future.result()
-            if result:
+            crawled_entry = future.result()
+            if crawled_entry:
+                result, answer = crawled_entry
                 catalogs.append(result)
+                answers[result["id"]] = answer
 
     catalogs.sort(key=lambda c: c["id"])
 
     previous_state = load_state(EXPORT_PATH)
     for catalog in catalogs:
-        previous = previous_state.get(catalog["id"], {}).get("status")
-        if previous in ("stale", "removed"):
-            log(f"  Restoring {catalog['id']} from {previous} to valid")
-        # A catalog we just crawled is valid by definition. This is what
-        # brings a re-submitted catalog back out of removed.
+        previous = previous_state.get(catalog["id"], {})
+        deprecated = deprecation(load_entry(catalog_dir / f"{catalog['id']}.yaml")).deprecated
+        if not passes(deprecated=deprecated, stac_valid=answers.get(catalog["id"])):
+            # Preserve the status so the nightly run can detect the first
+            # failure and email the submitter. Removed catalogs that still
+            # fail validation keep their removed status.
+            log(
+                f"  {catalog['id']}: deprecated catalog did not pass validation; keeping its current status"
+            )
+            catalog["status"] = previous.get("status", "valid")
+            catalog["last_validated"] = previous.get("last_validated")
+            catalog["stale_since"] = previous.get("stale_since")
+            catalog["failure_reason"] = previous.get("failure_reason")
+            continue
+        if previous.get("status") in ("stale", "removed"):
+            log(f"  Restoring {catalog['id']} from {previous['status']} to valid")
+        # A passing check also restores a catalog previously marked as removed.
         catalog["status"] = "valid"
         catalog["last_validated"] = now.isoformat()
         catalog["stale_since"] = None
@@ -137,6 +158,7 @@ def main(argv: list[str] | None = None) -> int:
         log(f"  Carrying forward {link['portolan_registry:id']}: not crawled this run")
 
     export = build_export(catalogs, now=now, extra_links=carried)
+    apply_entry_fields(export, catalog_dir, previous_links)
 
     crawled_coverage = {catalog["id"] for catalog in catalogs}
     carried_coverage = [
