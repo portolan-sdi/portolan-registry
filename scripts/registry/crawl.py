@@ -22,6 +22,7 @@ from registry.fetch import Fetcher, resolve_url
 from registry.logo import catalog_logo
 from registry.provenance import catalog_kind, collection_kind, parties
 from registry.report import log
+from registry.status import parse_timestamp
 
 # The Portolan profile defines no fields, so the versioned schema URI in
 # `stac_extensions` is the only signal of which specification version an object
@@ -32,6 +33,12 @@ PORTOLAN_SCHEMA = re.compile(
     r"^https://schemas\.portolan-sdi\.org/portolan/v(\d+(?:\.\d+)*)/schema\.json$"
 )
 
+# An RFC 3339 date-time with a time zone, the form STAC requires of a temporal
+# interval. The export schema asserts `format: date-time`, so a value outside
+# this form must not reach the export. This pattern accepts a subset of what
+# ajv-formats accepts.
+RFC3339 = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$")
+
 
 def declared_version(obj: Mapping[str, Any]) -> str | None:
     """The Portolan specification version an object claims, or None."""
@@ -40,6 +47,62 @@ def declared_version(obj: Mapping[str, Any]) -> str | None:
         if match:
             return match.group(1)
     return None
+
+
+def _declared_interval(collection: Mapping[str, Any]) -> Any:
+    """The first temporal interval as the collection wrote it, unchecked."""
+    extent = collection.get("extent") or {}
+    intervals = (extent.get("temporal") or {}).get("interval") or []
+    return intervals[0] if intervals else None
+
+
+def _temporal_interval(collection: Mapping[str, Any]) -> list[str | None] | None:
+    """The first temporal interval a collection declares, or None.
+
+    STAC makes the first interval the overall extent. A null endpoint is an
+    open end and stays null. The whole interval is None when an endpoint is
+    not an RFC 3339 date-time, because a guess at one end would misstate it.
+
+    [null, null] is also None. STAC permits it as an interval open at both
+    ends, but most registered catalogs write it on collections whose period
+    is unknown. As an open interval it would erase the dates that the other
+    collections in the same catalog declare.
+    """
+    first = _declared_interval(collection)
+    if not isinstance(first, list) or len(first) != 2 or first == [None, None]:
+        return None
+    for value in first:
+        if value is None:
+            continue
+        if not isinstance(value, str) or not RFC3339.match(value) or not parse_timestamp(value):
+            return None
+    return list(first)
+
+
+def _merge_intervals(intervals: list[list[str | None]]) -> list[str | None] | None:
+    """The earliest start and the latest end, or None for no interval.
+
+    An open end on any interval leaves that end of the result open, since the
+    union of an open interval with a closed one is open. Values are compared
+    as instants, so offsets order correctly. Each endpoint keeps the string
+    its collection declared.
+    """
+    if not intervals:
+        return None
+    starts = [t[0] for t in intervals]
+    ends = [t[1] for t in intervals]
+    return [
+        None if None in starts else min(starts, key=_instant),
+        None if None in ends else max(ends, key=_instant),
+    ]
+
+
+def _instant(value: str | None) -> datetime:
+    # _temporal_interval admits only values that parse.
+    parsed = parse_timestamp(value)
+    if parsed is None:
+        raise ValueError(f"unparsable temporal endpoint: {value!r}")
+    return parsed
 
 
 def _links_to_markdown_file(obj: Mapping[str, Any], rel: str, filename: str) -> bool:
@@ -209,12 +272,8 @@ def _summarize_collection(url: str, collection: Mapping[str, Any]) -> Collection
         spec_version=declared_version(collection),
         row_count=collection.get("table:row_count") or 0,
         providers=collection.get("providers"),
+        temporal=_temporal_interval(collection),
     )
-
-    extent = collection.get("extent") or {}
-    temporal = (extent.get("temporal") or {}).get("interval") or []
-    if temporal and temporal[0] and len(temporal[0]) >= 2:
-        summary.temporal = list(temporal[0])
 
     for asset in (collection.get("assets") or {}).values():
         summary.asset_count += 1
@@ -274,6 +333,8 @@ def _add_collection(
         log(f"  Warning: discarding invalid bbox on {child_url}")
     if summary.temporal:
         temporal_extents.append(summary.temporal)
+    elif _declared_interval(child) not in (None, [None, None]):
+        log(f"  Warning: discarding invalid temporal extent on {child_url}")
     if summary.spec_version:
         versions.add(summary.spec_version)
         # A collection that declares nothing is a conformance
@@ -345,13 +406,7 @@ def _settle_totals(
     # picking a winner.
     result["spec_version_mixed"] = len(versions) > 1
 
-    if temporal_extents:
-        starts = [t[0] for t in temporal_extents if t[0]]
-        ends = [t[1] for t in temporal_extents if t[1]]
-        result["temporal_extent"] = [
-            min(starts) if starts else None,
-            max(ends) if ends else None,
-        ]
+    result["temporal_extent"] = _merge_intervals(temporal_extents)
 
     # The whole mix, weighted, rather than one license standing in for the
     # rest. A catalog of 190 ODbL-1.0 collections and 2 CC-BY-4.0 ones has a

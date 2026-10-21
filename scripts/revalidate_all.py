@@ -262,6 +262,8 @@ def main(argv: list[str] | None = None) -> int:
                 "portolan_registry:item_count": None,
                 "portolan_registry:total_size_bytes": None,
                 "portolan_registry:counts_partial": True,
+                # Never crawled, so no collection's interval was read.
+                "portolan_registry:temporal_extent": None,
                 # Never crawled, so nothing read its links either. False is
                 # what the export publishes for an unmeasured document
                 # signal. Null is what it publishes for a validation that

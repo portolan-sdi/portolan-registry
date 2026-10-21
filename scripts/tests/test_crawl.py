@@ -345,6 +345,113 @@ class TestDegenerateCollections:
             crawl_catalog(ROOT, FakeFetcher(), now=FROZEN)
 
 
+def interval(start, end):
+    return collection(extent={"temporal": {"interval": [[start, end]]}})
+
+
+def two_collections(a, b):
+    return FakeFetcher(
+        docs={
+            ROOT: catalog("./a/collection.json", "./b/collection.json"),
+            "https://ex.org/a/collection.json": a,
+            "https://ex.org/b/collection.json": b,
+        }
+    )
+
+
+class TestTemporalExtent:
+    def test_an_open_end_stays_open_beside_a_closed_one(self):
+        # TriMet's district-boundary declares [2013-01-09, null]. A closed
+        # sibling must not close it.
+        f = two_collections(
+            interval("2013-01-09T00:00:00Z", None),
+            interval("2020-01-01T00:00:00Z", "2023-06-30T00:00:00Z"),
+        )
+        assert crawl_catalog(ROOT, f, now=FROZEN)["temporal_extent"] == [
+            "2013-01-09T00:00:00Z",
+            None,
+        ]
+
+    def test_an_open_start_stays_open_beside_a_closed_one(self):
+        f = two_collections(
+            interval(None, "2020-01-01T00:00:00Z"),
+            interval("2015-01-01T00:00:00Z", "2023-06-30T00:00:00Z"),
+        )
+        assert crawl_catalog(ROOT, f, now=FROZEN)["temporal_extent"] == [
+            None,
+            "2023-06-30T00:00:00Z",
+        ]
+
+    def test_endpoints_compare_as_instants_and_keep_their_spelling(self):
+        # 2020-01-01T01:00:00+02:00 is 2019-12-31T23:00:00Z, so it starts
+        # earlier, although it sorts later as a string.
+        f = two_collections(
+            interval("2020-01-01T01:00:00+02:00", "2021-01-01T00:00:00Z"),
+            interval("2019-12-31T23:30:00Z", "2021-01-01T00:30:00+01:00"),
+        )
+        assert crawl_catalog(ROOT, f, now=FROZEN)["temporal_extent"] == [
+            "2020-01-01T01:00:00+02:00",
+            "2021-01-01T00:00:00Z",
+        ]
+
+    @pytest.mark.parametrize(
+        "bad",
+        [
+            ["2020-01-01", "2021-01-01T00:00:00Z"],
+            ["2020-01-01T00:00:00", "2021-01-01T00:00:00Z"],
+            ["2020-13-01T00:00:00Z", "2021-01-01T00:00:00Z"],
+            ["2020-01-01T00:00:00Z"],
+            [2020, 2021],
+        ],
+    )
+    def test_an_invalid_interval_takes_no_part(self, bad, capsys):
+        f = two_collections(
+            collection(extent={"temporal": {"interval": [bad]}}),
+            interval("2015-01-01T00:00:00Z", "2016-01-01T00:00:00Z"),
+        )
+        r = crawl_catalog(ROOT, f, now=FROZEN)
+        assert r["collection_count"] == 2
+        assert r["temporal_extent"] == ["2015-01-01T00:00:00Z", "2016-01-01T00:00:00Z"]
+        assert "discarding invalid temporal extent" in capsys.readouterr().err
+
+    def test_a_null_null_interval_takes_no_part(self, capsys):
+        # berlin-geoportal writes [null, null] on 370 of 371 collections. As
+        # an open interval it would hide the one collection's 1990 dates.
+        f = two_collections(
+            interval(None, None),
+            interval("1990-01-01T00:00:00Z", "1990-12-31T23:59:59Z"),
+        )
+        assert crawl_catalog(ROOT, f, now=FROZEN)["temporal_extent"] == [
+            "1990-01-01T00:00:00Z",
+            "1990-12-31T23:59:59Z",
+        ]
+        assert "temporal extent" not in capsys.readouterr().err
+
+    def test_null_when_every_interval_is_null_null(self):
+        f = two_collections(interval(None, None), interval(None, None))
+        assert crawl_catalog(ROOT, f, now=FROZEN)["temporal_extent"] is None
+
+    def test_null_when_no_collection_declares_an_interval(self):
+        f = two_collections(collection(), collection(extent={"temporal": {}}))
+        assert crawl_catalog(ROOT, f, now=FROZEN)["temporal_extent"] is None
+
+    def test_a_sub_catalogs_open_end_reaches_the_root(self):
+        f = FakeFetcher(
+            docs={
+                ROOT: catalog("./sub/catalog.json", "./a/collection.json"),
+                "https://ex.org/sub/catalog.json": catalog("./b/collection.json"),
+                "https://ex.org/sub/b/collection.json": interval("2018-01-01T00:00:00Z", None),
+                "https://ex.org/a/collection.json": interval(
+                    "2010-01-01T00:00:00Z", "2012-01-01T00:00:00Z"
+                ),
+            }
+        )
+        assert crawl_catalog(ROOT, f, now=FROZEN)["temporal_extent"] == [
+            "2010-01-01T00:00:00Z",
+            None,
+        ]
+
+
 class TestCycles:
     def test_subcatalog_linking_back_to_root_terminates(self):
         sub = "https://ex.org/s/catalog.json"
