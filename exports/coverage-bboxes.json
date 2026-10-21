@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-21T11:13:40.007683+00:00",
+  "generated": "2026-10-21T18:00:06.870049+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-10-21T11:13:40.007683+00:00",
+  "registry_generated": "2026-10-21T18:00:06.870049+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -42017,7 +42017,7 @@
     },
     {
       "id": "ghsl",
-      "collection_count": 12,
+      "collection_count": 11,
       "collections": [
         {
           "id": "pop-1975",
@@ -42092,16 +42092,6 @@
         {
           "id": "pop-2010",
           "title": "Population 2010 (100 m, Mollweide)",
-          "bbox": [
-            -179.9872,
-            -61.2994,
-            179.9869,
-            89.0914
-          ]
-        },
-        {
-          "id": "pop-2015",
-          "title": "Population 2015 (100 m, Mollweide)",
           "bbox": [
             -179.9872,
             -61.2994,
@@ -44489,6 +44479,62 @@
             17.8826,
             -73.6176,
             18.647
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hydroatlas-mirror",
+      "collection_count": 5,
+      "collections": [
+        {
+          "id": "hydroatlas/basinatlas",
+          "title": "BasinATLAS",
+          "bbox": [
+            -180.0,
+            -55.9875,
+            180.0,
+            83.6256
+          ]
+        },
+        {
+          "id": "hydroatlas/lakeatlas",
+          "title": "LakeATLAS",
+          "bbox": [
+            -180.0,
+            -55.8651,
+            180.0,
+            83.576
+          ]
+        },
+        {
+          "id": "hydroatlas/lakeatlas/lakeatlas-pour-points",
+          "title": "LakeATLAS Pour Points",
+          "bbox": [
+            -179.9925,
+            -55.8609,
+            179.9988,
+            83.5712
+          ]
+        },
+        {
+          "id": "hydroatlas/riveratlas",
+          "title": "RiverATLAS",
+          "bbox": [
+            -179.9979,
+            -55.8771,
+            179.9979,
+            83.5896
+          ]
+        },
+        {
+          "id": "hydroatlas/basinatlas-pour-points",
+          "title": "BasinATLAS Pour Points",
+          "bbox": [
+            -179.9979,
+            -55.9854,
+            179.9979,
+            83.6229
           ]
         }
       ]
