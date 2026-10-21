@@ -230,7 +230,7 @@ class TestDeprecationRequest:
 
 
 class TestValidationFailureNotification:
-    """The email for a catalog that starts to fail the validators (#252)."""
+    """Weekly emails report catalog validation errors (#252)."""
 
     def test_lists_each_failing_rule(self, post):
         assert validation_failure() is True
@@ -238,10 +238,10 @@ class TestValidationFailureNotification:
         assert mail["to"] == ["you@example.org"]
         assert mail["subject"] == "[Portolan Registry] Catalog validation failed: Example Catalog"
         assert "<code>PTL-PRV-002</code> (22 findings): a mirror needs a via link" in mail["html"]
-        assert "<li>and 21 more</li>" in mail["html"]
-        assert "its status stays <code>valid</code>" in mail["html"]
-        assert "<strong>Failing since:</strong> 2026-10-19" in mail["html"]
-        assert "each Monday while a catalog fails" in mail["html"]
+        assert "<li>21 additional findings</li>" in mail["html"]
+        assert "listed with status\n        <code>valid</code>" in mail["html"]
+        assert "<strong>Failure first detected:</strong> 2026-10-19" in mail["html"]
+        assert "Each Monday, the registry sends you one email" in mail["html"]
 
     def test_one_email_covers_several_catalogs(self, post):
         validation_failure(failing("a", "A"), failing("b", "B"))

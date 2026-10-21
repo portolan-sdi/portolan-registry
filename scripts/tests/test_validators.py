@@ -376,7 +376,7 @@ class TestSettleStacValid:
 
 
 class TestSettleStacInvalidSince:
-    """The date that the current validation failure started (#252)."""
+    """Record the first detection of the current validation failure (#252)."""
 
     SINCE = "2026-01-01T00:00:00+00:00"
     FAILING = {"href": ROOT, "portolan_registry:stac_invalid_since": SINCE}
@@ -391,7 +391,7 @@ class TestSettleStacInvalidSince:
         assert self.settle(False, self.PASSING) == (FROZEN.isoformat(), True)
 
     def test_a_failure_with_no_published_date_starts_now(self):
-        """A link older than the field fails once when the change ships."""
+        """Record a timestamp when an older link first fails validation with this field present."""
         assert self.settle(False, {"href": ROOT}) == (FROZEN.isoformat(), True)
         assert self.settle(False, None) == (FROZEN.isoformat(), True)
 

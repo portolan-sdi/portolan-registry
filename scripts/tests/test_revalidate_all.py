@@ -1,6 +1,6 @@
 """Nightly checks update statuses, send emails, and publish deprecations (#234).
 
-They also flag a catalog that starts to fail the validators (#252).
+Checks also record validation failures and send weekly emails (#252).
 
 The crawler reads the `nested` fixtures. Test doubles replace the validators
 and email sender.
@@ -35,7 +35,7 @@ def mailed(monkeypatch):
 
 @pytest.fixture
 def flagged(monkeypatch):
-    """Each validation failure email, as (address, catalog ids)."""
+    """Capture validation emails as (address, catalog IDs) pairs."""
     calls = []
     monkeypatch.setattr(
         revalidate_all,
@@ -173,11 +173,11 @@ class TestCatalogThatIsNotDeprecated:
 
 
 class TestValidationFailureFlag:
-    """Date each validation failure, and email the failing catalogs weekly (#252)."""
+    """Record failure timestamps and send weekly validation emails (#252)."""
 
     @pytest.fixture
     def digest_day(self, monkeypatch):
-        """Make today the digest day, or not."""
+        """Set the email schedule to include or exclude the current day."""
 
         def set_to(on: bool):
             today = datetime.now(UTC).weekday()
@@ -196,7 +196,7 @@ class TestValidationFailureFlag:
         assert link["portolan_registry:stac_valid"] is False
         assert link["portolan_registry:stac_invalid_since"] is not None
         log = capsys.readouterr().err
-        assert "1 catalog(s) started to fail validation" in log
+        assert "New validation failures: 1" in log
         assert "cat: rashid PTL-CNF-001" in log
         assert mailed == []
 
@@ -219,12 +219,12 @@ class TestValidationFailureFlag:
         registry.fail_validation()
         run()
         assert flagged == []
-        assert "started to fail validation" in capsys.readouterr().err
+        assert "New validation failures: 1" in capsys.readouterr().err
 
     def test_a_catalog_that_already_fails_is_dated_when_this_ships(
         self, registry, mailed, flagged, digest_day
     ):
-        """A link older than the field has stac_valid false and no date."""
+        """Older exports can record `stac_valid: false` without a failure timestamp."""
         registry.entry("cat")
         registry.published("cat", stac_valid=False)
         registry.fail_validation()
@@ -245,7 +245,7 @@ class TestValidationFailureFlag:
         assert flagged == [("submitter@example.com", ["cat"])]
 
     def test_a_carried_failure_is_not_emailed(self, registry, mailed, flagged, digest_day):
-        """settle_stac_valid carries false forward. The email reads this run's answer."""
+        """Use the current validation result for emails, even when the export retains an earlier result."""
         registry.entry("cat")
         registry.published("cat", stac_valid=False)
         registry.validators_answer = False
@@ -256,7 +256,7 @@ class TestValidationFailureFlag:
         assert flagged == []
 
     def test_one_email_for_each_submitter(self, registry, mailed, flagged, digest_day):
-        """A new rashid release can fail many catalogs in one night."""
+        """Group catalogs by submitter when several fail validation in the same run."""
         for catalog_id, submitter in [
             ("a", "one@ex.org"),
             ("b", "one@ex.org"),

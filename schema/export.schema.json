@@ -185,7 +185,7 @@
                 "type": ["boolean", "null"]
               },
               "portolan_registry:stac_invalid_since": {
-                "description": "When the current validation failure started, RFC 3339. This is the first registry run that found the failure. A failure that started before this field existed carries the date of the first run after it. Null when `portolan_registry:stac_valid` is true or null. A run with no validation result preserves the previously published date.",
+                "description": "RFC 3339 timestamp of the first registry run that detected the current validation failure. For failures that predate this field, the timestamp identifies the first run that detects the failure after the field was introduced. Null when no failure timestamp is available or a later check passed. A run with no validation result preserves the previously published timestamp.",
                 "type": ["string", "null"]
               },
               "portolan_registry:has_agents_md": {"type": "boolean"},

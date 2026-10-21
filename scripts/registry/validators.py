@@ -274,10 +274,7 @@ def settle_stac_valid(
 
 
 def _same_catalog(url: str, previous_link: Mapping[str, Any] | None) -> Mapping[str, Any] | None:
-    """The previous link if it names `url`, or None.
-
-    A link that names another URL is about another catalog.
-    """
+    """Return the previous link if its normalized URL matches `url`, or `None`."""
     href = (previous_link or {}).get("href")
     if not href or normalize_url(href) != normalize_url(url):
         return None
@@ -292,18 +289,16 @@ def settle_stac_invalid_since(
     *,
     now: datetime,
 ) -> bool:
-    """Set the date that the current validation failure started.
+    """Record when the registry first detected the current validation failure.
 
-    `passed` is `report.passed` from this run. Do not use the settled
-    `stac_valid`. A result that `settle_stac_valid` carries forward is not a
-    new answer.
+    Pass this run's `report.passed` as `passed`. The settled `stac_valid`
+    can contain an earlier result when this run has no validation result.
 
-    A pass clears the date. A run with no answer keeps the published date.
-    A failure keeps the published date. If no date is published, the failure
-    is new and the date becomes `now`.
+    A pass clears the timestamp. Otherwise, keep the published timestamp.
+    If validation fails and no timestamp exists, use `now`.
 
-    The published date applies only when the previous link names the same
-    URL. Return True when this run starts a failure.
+    Reuse a timestamp only when the previous link has the same normalized
+    URL. Return `True` when this run records a new failure timestamp.
     """
     link = _same_catalog(url, previous_link) or {}
     previous = link.get("portolan_registry:stac_invalid_since")
@@ -321,7 +316,8 @@ def settle_stac_invalid_since(
 def log_validation(report: ValidationReport) -> None:
     """Report what the validators found.
 
-    Status depends on it only for deprecated catalogs (`registry.status.passes`).
+    Validation errors affect status only for deprecated catalogs. See
+    `registry.status.passes`.
     """
     if report.error:
         log(f"  Validators could not run: {report.error}")

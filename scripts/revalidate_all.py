@@ -6,10 +6,11 @@ a passing check. A passing check restores `valid`. Checks fail when a catalog
 cannot be fetched. For deprecated catalogs, validator errors also count as
 failures. See `registry.status.passes`.
 
-A validator failure leaves the status of a catalog that is not deprecated
-unchanged. The run publishes the start of the failure as
-`portolan_registry:stac_invalid_since` and logs each new failure. On
-`DIGEST_WEEKDAY`, it emails each submitter a list of their failing catalogs.
+For catalogs that are not deprecated, validation errors leave the status
+unchanged. The run records the first detection of each failure in
+`portolan_registry:stac_invalid_since` and logs new failures. On
+`DIGEST_WEEKDAY`, each submitter receives one email listing their catalogs
+with validation errors.
 
     uv run --frozen scripts/revalidate_all.py
     uv run --frozen scripts/revalidate_all.py --no-notify --output -
@@ -73,6 +74,17 @@ def validation_failure(report: ValidationReport) -> str:
     """
     rules = ", ".join(f"{g.tool} {g.rule_id}" for g in report.groups)
     return f"Deprecated catalog failed validation: {rules}"
+
+
+def send_validation_digest(
+    failing: list[tuple[str | None, FailingCatalog]], *, enabled: bool
+) -> None:
+    """Group catalogs by submitter and send one validation email to each."""
+    by_submitter: dict[str | None, list[FailingCatalog]] = {}
+    for submitter_email, catalog in failing:
+        by_submitter.setdefault(submitter_email, []).append(catalog)
+    for submitter_email, failing_catalogs in by_submitter.items():
+        send_validation_failure_notification(submitter_email, failing_catalogs, enabled=enabled)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -157,7 +169,7 @@ def main(argv: list[str] | None = None) -> int:
         ):
             rules = ", ".join(f"{g.tool} {g.rule_id}" for g in report.groups)
             newly_failing.append(f"{catalog_id}: {rules}")
-        # A deprecated catalog that fails goes stale, and the stale email says so.
+        # Deprecated catalogs receive a stale notification instead.
         if report.passed is False and not state_of_entry.deprecated:
             failing.append(
                 (
@@ -207,19 +219,13 @@ def main(argv: list[str] | None = None) -> int:
             )
 
     if newly_failing:
-        log(f"\n=== {len(newly_failing)} catalog(s) started to fail validation ===")
+        log(f"\n=== New validation failures: {len(newly_failing)} ===")
         for line in newly_failing:
             log(f"  {line}")
 
     if failing and now.weekday() == DIGEST_WEEKDAY:
-        log(f"\n=== Weekly validation email for {len(failing)} failing catalog(s) ===")
-        by_submitter: dict[str | None, list[FailingCatalog]] = {}
-        for submitter_email, catalog in failing:
-            by_submitter.setdefault(submitter_email, []).append(catalog)
-        for submitter_email, catalogs in by_submitter.items():
-            send_validation_failure_notification(
-                submitter_email, catalogs, enabled=not args.no_notify
-            )
+        log(f"\n=== Weekly validation emails: {len(failing)} catalogs with errors ===")
+        send_validation_digest(failing, enabled=not args.no_notify)
 
     catalogs = []
     for catalog_id, result in crawled.items():

@@ -98,7 +98,7 @@ class TestCatalogThatIsNotDeprecated:
 
 
 class TestValidationFailureDate:
-    """Publishing dates a validation failure as the nightly run does (#252)."""
+    """Publishing records failure timestamps consistently with nightly checks (#252)."""
 
     SINCE = "2026-01-01T00:00:00+00:00"
 
