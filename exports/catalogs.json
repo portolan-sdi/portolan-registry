@@ -4,7 +4,7 @@
   "id": "portolan-registry",
   "title": "Portolan Registry",
   "description": "A unified registry of Portolan catalogs. Each child link points to a registered cloud-native STAC catalog.",
-  "generated": "2026-10-20T17:07:48.057967+00:00",
+  "generated": "2026-10-21T11:13:40.007683+00:00",
   "count": 85,
   "links": [
     {
@@ -38,10 +38,27 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-09-19T15:07:48Z",
       "portolan_registry:first_registered": "2026-09-19T15:58:57+00:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Agenzia delle Entrate",
+          "url": "https://www.agenziaentrate.gov.it/"
+        },
+        {
+          "name": "Istat",
+          "url": "https://www.istat.it/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "anncsu-open",
+          "url": "https://github.com/anncsu-open/anncsu-viewer"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "Geobeyond",
+        "url": "https://geobeyond.it/"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 3
       },
@@ -51,8 +68,8 @@
       "portolan_registry:asset_count": 7,
       "portolan_registry:total_size_bytes": 1393694428,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -87,10 +104,39 @@
       },
       "portolan_registry:updated": "2026-09-21T12:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "MobiData BW, NVBW \u2013 Nahverkehrsgesellschaft Baden-W\u00fcrttemberg mbH",
+          "url": "https://www.mobidata-bw.de"
+        },
+        {
+          "name": "Ministerium f\u00fcr Verkehr Baden-W\u00fcrttemberg",
+          "url": "https://vm.baden-wuerttemberg.de"
+        },
+        {
+          "name": "Landesamt f\u00fcr Geoinformation und Landentwicklung Baden-W\u00fcrttemberg",
+          "url": "https://www.lgl-bw.de"
+        },
+        {
+          "name": "Forstliche Versuchs- und Forschungsanstalt Baden-W\u00fcrttemberg",
+          "url": "https://www.fva-bw.de"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        },
+        {
+          "name": "MobiData BW, NVBW \u2013 Nahverkehrsgesellschaft Baden-W\u00fcrttemberg mbH",
+          "url": "https://www.mobidata-bw.de"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "DL-DE-BY-2.0": 25,
         "DL-DE-ZERO-2.0": 1
@@ -101,8 +147,8 @@
       "portolan_registry:asset_count": 154,
       "portolan_registry:total_size_bytes": 651530553,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -133,10 +179,23 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-09-20T00:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Ajuntament de Barcelona",
+          "url": "https://opendata-ajuntament.barcelona.cat/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 30
       },
@@ -146,8 +205,8 @@
       "portolan_registry:asset_count": 177,
       "portolan_registry:total_size_bytes": 118689455,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -182,10 +241,75 @@
       },
       "portolan_registry:updated": "2026-09-21T12:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Kanton Basel-Stadt \u2013 Grundbuch- und Vermessungsamt",
+          "url": "https://data.bs.ch/explore/dataset/100477/"
+        },
+        {
+          "name": "Kanton Basel-Stadt \u2013 Nomenklaturkommission",
+          "url": "https://data.bs.ch/explore/dataset/100189/"
+        },
+        {
+          "name": "Kanton Basel-Stadt \u2013 Kantons- und Stadtentwicklung",
+          "url": "https://data.bs.ch/explore/dataset/100026/"
+        },
+        {
+          "name": "Kanton Basel-Stadt \u2013 Tiefbauamt",
+          "url": "https://data.bs.ch/explore/dataset/100031/"
+        },
+        {
+          "name": "Kanton Basel-Stadt \u2013 Stadtg\u00e4rtnerei",
+          "url": "https://data.bs.ch/explore/dataset/100463/"
+        },
+        {
+          "name": "Kanton Basel-Stadt \u2013 Jugend, Familie und Sport",
+          "url": "https://data.bs.ch/explore/dataset/100151/"
+        },
+        {
+          "name": "Kanton Basel-Stadt \u2013 St\u00e4dtebau & Architektur",
+          "url": "https://data.bs.ch/explore/dataset/100234/"
+        },
+        {
+          "name": "Kanton Basel-Stadt \u2013 Einwohnergemeinde Bettingen",
+          "url": "https://data.bs.ch/explore/dataset/100257/"
+        },
+        {
+          "name": "Kanton Basel-Stadt \u2013 Einwohnergemeinde Riehen",
+          "url": "https://data.bs.ch/explore/dataset/100256/"
+        },
+        {
+          "name": "Kanton Basel-Stadt \u2013 Amt f\u00fcr Mobilit\u00e4t",
+          "url": "https://data.bs.ch/explore/dataset/100063/"
+        },
+        {
+          "name": "Kanton Basel-Stadt \u2013 Statistisches Amt",
+          "url": "https://data.bs.ch/explore/dataset/100039/"
+        },
+        {
+          "name": "Kanton Basel-Stadt \u2013 Staatskanzlei",
+          "url": "https://data.bs.ch/explore/dataset/100025/"
+        },
+        {
+          "name": "Kanton Basel-Stadt \u2013 Amt f\u00fcr Umwelt und Energie",
+          "url": "https://data.bs.ch/explore/dataset/100291/"
+        },
+        {
+          "name": "Kanton Basel-Stadt \u2013 Parkh\u00e4user Basel-Stadt",
+          "url": "https://data.bs.ch/explore/dataset/100044/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 37,
         "CC0-1.0": 1
@@ -196,8 +320,8 @@
       "portolan_registry:asset_count": 242,
       "portolan_registry:total_size_bytes": 76677330,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -232,10 +356,27 @@
       },
       "portolan_registry:updated": "2026-09-21T12:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Bayerisches Landesamt f\u00fcr Umwelt (LfU)",
+          "url": "https://www.lfu.bayern.de/"
+        },
+        {
+          "name": "Landesamt f\u00fcr Digitalisierung, Breitband und Vermessung (LDBV)",
+          "url": "https://www.ldbv.bayern.de/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 26
       },
@@ -245,8 +386,8 @@
       "portolan_registry:asset_count": 175,
       "portolan_registry:total_size_bytes": 1695881187,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -277,10 +418,127 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-09-19T15:07:59Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Amt f\u00fcr Statistik Berlin-Brandenburg",
+          "url": "https://gdi.berlin.de/"
+        },
+        {
+          "name": "Senatsverwaltung f\u00fcr Stadtentwicklung, Bauen und Wohnen Berlin",
+          "url": "https://gdi.berlin.de/"
+        },
+        {
+          "name": "Senatsverwaltung f\u00fcr Mobilit\u00e4t, Verkehr, Klimaschutz und Umwelt Berlin",
+          "url": "https://www.berlin.de/sen/uvk/natur-und-gruen/stadtgruen/stadtbaeume/strassen-und-parkbaeume/"
+        },
+        {
+          "name": "Senatsverwaltung f\u00fcr Bildung, Jugend und Familie Berlin",
+          "url": "https://gdi.berlin.de/"
+        },
+        {
+          "name": "Berliner B\u00e4derbetriebe",
+          "url": "https://gdi.berlin.de/"
+        },
+        {
+          "name": "Senatsverwaltung f\u00fcr Inneres und Sport Berlin",
+          "url": "https://gdi.berlin.de/"
+        },
+        {
+          "name": "Landesdenkmalamt Berlin",
+          "url": "https://gdi.berlin.de/"
+        },
+        {
+          "name": "Forum f\u00fcr Geschichte und Gegenwart e.V.",
+          "url": "https://gdi.berlin.de/"
+        },
+        {
+          "name": "Senatsverwaltung f\u00fcr Wirtschaft, Energie und Betriebe Berlin",
+          "url": "https://gdi.berlin.de/"
+        },
+        {
+          "name": "Landesamt f\u00fcr Arbeitsschutz, Gesundheitsschutz und technische Sicherheit Berlin",
+          "url": "https://gdi.berlin.de/"
+        },
+        {
+          "name": "Berliner Forsten",
+          "url": "https://gdi.berlin.de/"
+        },
+        {
+          "name": "Bezirksamt Pankow von Berlin",
+          "url": "https://gdi.berlin.de/"
+        },
+        {
+          "name": "Senatsverwaltung f\u00fcr Wissenschaft, Gesundheit, Pflege und Gleichstellung Berlin",
+          "url": "https://gdi.berlin.de/"
+        },
+        {
+          "name": "Senatsverwaltung f\u00fcr Wissenschaft, Gesundheit, Pflege und Gleichstellung",
+          "url": "https://gdi.berlin.de/"
+        },
+        {
+          "name": "Senatsverwaltung f\u00fcr Wissenschaft, Gesundheit und Pflege Berlin",
+          "url": "https://gdi.berlin.de/"
+        },
+        {
+          "name": "Senatsverwaltung f\u00fcr Wissenschaft, Gesundheit und Pflege",
+          "url": "https://gdi.berlin.de/"
+        },
+        {
+          "name": "Senatsverwaltung f\u00fcr Mobilit\u00e4t, Verkehr, Klimaschutz und Umwelt, Fischereiamt Berlin",
+          "url": "https://gdi.berlin.de/"
+        },
+        {
+          "name": "Senatsverwaltung f\u00fcr Mobilit\u00e4t, Verkehr, Klimaschutz und Umwelt",
+          "url": "https://gdi.berlin.de/"
+        },
+        {
+          "name": "Berliner Wasserbetriebe",
+          "url": "https://gdi.berlin.de/"
+        },
+        {
+          "name": "GB infraVelo GmbH",
+          "url": "https://gdi.berlin.de/"
+        },
+        {
+          "name": "Berliner Verkehrsbetriebe",
+          "url": "https://gdi.berlin.de/"
+        },
+        {
+          "name": "Berliner Feuerwehr",
+          "url": "https://gdi.berlin.de/"
+        },
+        {
+          "name": "Polizei Berlin",
+          "url": "https://gdi.berlin.de/"
+        },
+        {
+          "name": "Landesamt f\u00fcr Fl\u00fcchtlingsangelegenheiten",
+          "url": "https://gdi.berlin.de/"
+        },
+        {
+          "name": "Arbeitsstelle Gewaltpr\u00e4vention i.A. der Landeskommission Berlin gegen Gewalt, Senatsverwaltung f\u00fcr Inneres und Sport",
+          "url": "https://gdi.berlin.de/"
+        },
+        {
+          "name": "Senatsverwaltung f\u00fcr Wirtschaft, Energie und Betriebe",
+          "url": "https://solarrechner.berlin.de/"
+        },
+        {
+          "name": "IHK Berlin",
+          "url": "https://gdi.berlin.de/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "DL-DE-ZERO-2.0": 371
       },
@@ -290,8 +548,8 @@
       "portolan_registry:asset_count": 2262,
       "portolan_registry:total_size_bytes": 4514877156,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -326,21 +584,34 @@
       },
       "portolan_registry:updated": "2026-10-16T12:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Comune di Bologna",
+          "url": "https://opendata.comune.bologna.it/explore/dataset/aree-ortive/information/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 36
       },
       "portolan_registry:collection_count": 36,
-      "portolan_registry:feature_count": 410088,
+      "portolan_registry:feature_count": 410095,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 226,
-      "portolan_registry:total_size_bytes": 115362298,
+      "portolan_registry:total_size_bytes": 115373894,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -371,10 +642,18 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": null,
       "portolan_registry:first_registered": "2026-08-21T13:12:57+02:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
+      "portolan_registry:kind": "official",
+      "portolan_registry:producers": [
+        {
+          "name": "Back-on-Track Europe AISBL",
+          "url": "https://back-on-track.eu"
+        }
+      ],
       "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:host": {
+        "name": "Back-on-Track Europe AISBL",
+        "url": "https://back-on-track.eu"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 1,
         "ODbL-1.0": 2
@@ -385,8 +664,8 @@
       "portolan_registry:asset_count": 21,
       "portolan_registry:total_size_bytes": 2082170,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -421,23 +700,44 @@
       },
       "portolan_registry:updated": "2026-09-20T01:30:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "perspective.brussels",
+          "url": "https://perspective.brussels/fr"
+        },
+        {
+          "name": "Paradigm (Centre d'Informatique pour la R\u00e9gion Bruxelloise, CIRB)",
+          "url": "https://paradigm.brussels"
+        },
+        {
+          "name": "parking.brussels",
+          "url": "https://parking.brussels/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 10,
         "CC0-1.0": 14,
         "other": 5
       },
       "portolan_registry:collection_count": 29,
-      "portolan_registry:feature_count": 1768998,
+      "portolan_registry:feature_count": 1768994,
       "portolan_registry:item_count": 0,
-      "portolan_registry:asset_count": 172,
-      "portolan_registry:total_size_bytes": 877147447,
+      "portolan_registry:asset_count": 173,
+      "portolan_registry:total_size_bytes": 876715666,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -468,10 +768,31 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-08-02T14:20:14Z",
       "portolan_registry:first_registered": "2026-08-20T12:39:43+00:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Servi\u00e7o Florestal Brasileiro",
+          "url": "https://www.gov.br/florestal/"
+        },
+        {
+          "name": "Servicio Nacional de Catastro",
+          "url": "https://www.catastro.gov.py/"
+        },
+        {
+          "name": "Direcci\u00f3n Nacional de Catastro",
+          "url": "https://www.gub.uy/ministerio-economia-finanzas/direccion-nacional-catastro"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "Tristan Grupp",
+          "url": "https://source.coop/tristangruppwri/cadastral"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "Tristan Grupp",
+        "url": "https://source.coop/tristangruppwri/cadastral"
+      },
       "portolan_registry:licenses": {
         "other": 3
       },
@@ -481,8 +802,8 @@
       "portolan_registry:asset_count": 7,
       "portolan_registry:total_size_bytes": 3633452958,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -499,9 +820,9 @@
       "type": "application/json",
       "title": "CARTO Data Observatory",
       "bbox": [
-        -179.99938,
+        -180.0,
         -88.480537,
-        179.999811,
+        180.0,
         82.531759
       ],
       "portolan_registry:id": "carto-do",
@@ -517,10 +838,59 @@
       },
       "portolan_registry:updated": null,
       "portolan_registry:first_registered": "2026-08-30T22:19:59+02:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/data-observatory"
+        },
+        {
+          "name": "WorldPop",
+          "url": "https://www.worldpop.org"
+        },
+        {
+          "name": "Overture Maps Foundation",
+          "url": "https://overturemaps.org"
+        },
+        {
+          "name": "NASA / METI ASTER GDEM",
+          "url": "https://asterweb.jpl.nasa.gov/gdem.asp"
+        },
+        {
+          "name": "WorldClim",
+          "url": "https://www.worldclim.org"
+        },
+        {
+          "name": "Earth Observation Group (VIIRS Nighttime Lights)",
+          "url": "https://eogdata.mines.edu"
+        },
+        {
+          "name": "OpenCellID",
+          "url": "https://www.opencellid.org"
+        },
+        {
+          "name": "Kontur",
+          "url": "https://www.kontur.io/portfolio/population-dataset/"
+        },
+        {
+          "name": "NASA FIRMS",
+          "url": "https://firms.modaps.eosdis.nasa.gov"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/data-observatory"
+        },
+        {
+          "name": "CARTO Data Observatory",
+          "url": "https://carto.com/data-observatory"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 8,
         "CC-BY-SA-4.0": 1
@@ -531,8 +901,8 @@
       "portolan_registry:asset_count": 45,
       "portolan_registry:total_size_bytes": 8998691326,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -547,7 +917,7 @@
       "rel": "child",
       "href": "https://utrecht.blob.core.windows.net/catalog/catalog.json",
       "type": "application/json",
-      "title": "Catalog",
+      "title": "Clone of https://utrecht.blob.core.windows.net/catalog",
       "bbox": [
         3.38095749915828,
         50.7550499950085,
@@ -557,27 +927,35 @@
       "portolan_registry:id": "catalog",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.1.2",
-      "portolan_registry:spec_version_mixed": false,
+      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version_mixed": true,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": null,
       "portolan_registry:updated": null,
       "portolan_registry:first_registered": "2026-08-21T10:29:53+00:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
+      "portolan_registry:kind": "official",
+      "portolan_registry:producers": [
+        {
+          "name": "Gemeente Utrecht",
+          "url": "https://www.utrecht.nl"
+        }
+      ],
       "portolan_registry:processors": [],
-      "portolan_registry:host": null,
-      "portolan_registry:licenses": {
-        "CC-BY-4.0": 997
+      "portolan_registry:host": {
+        "name": "Gemeente Utrecht",
+        "url": "https://www.utrecht.nl"
       },
-      "portolan_registry:collection_count": 997,
-      "portolan_registry:feature_count": 6705935,
+      "portolan_registry:licenses": {
+        "CC-BY-4.0": 991
+      },
+      "portolan_registry:collection_count": 991,
+      "portolan_registry:feature_count": 6204875,
       "portolan_registry:item_count": 0,
-      "portolan_registry:asset_count": 2471,
-      "portolan_registry:total_size_bytes": 2145960022,
+      "portolan_registry:asset_count": 3920,
+      "portolan_registry:total_size_bytes": 2612875166,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
@@ -612,10 +990,23 @@
       },
       "portolan_registry:updated": "2026-08-25T16:10:53Z",
       "portolan_registry:first_registered": "2026-06-11T18:39:07+00:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Instituto Geogr\u00e1fico Nacional (Argentina)",
+          "url": "https://www.ign.gob.ar/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "Nissim Lebovits",
+          "url": "https://radiant.earth/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "Source Cooperative",
+        "url": "https://source.coop/"
+      },
       "portolan_registry:licenses": {
         "other": 191
       },
@@ -625,8 +1016,8 @@
       "portolan_registry:asset_count": 764,
       "portolan_registry:total_size_bytes": 1807383186,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -657,10 +1048,23 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-09-24T14:38:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Institut Cartogr\u00e0fic i Geol\u00f2gic de Catalunya (ICGC)",
+          "url": "https://www.icgc.cat/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 39
       },
@@ -670,8 +1074,8 @@
       "portolan_registry:asset_count": 227,
       "portolan_registry:total_size_bytes": 121439178049,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -706,10 +1110,23 @@
       },
       "portolan_registry:updated": "2026-09-21T00:20:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "\u010cesk\u00fd \u00fa\u0159ad zem\u011bm\u011b\u0159ick\u00fd a katastr\u00e1ln\u00ed",
+          "url": "https://www.cuzk.gov.cz/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 19
       },
@@ -719,8 +1136,8 @@
       "portolan_registry:asset_count": 120,
       "portolan_registry:total_size_bytes": 3890715042,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -751,10 +1168,23 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-09-17T00:00:00Z",
       "portolan_registry:first_registered": "2026-09-18T20:54:11+00:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Comunidad de Madrid",
+          "url": "https://www.comunidad.madrid/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 1964
       },
@@ -764,8 +1194,8 @@
       "portolan_registry:asset_count": 3941,
       "portolan_registry:total_size_bytes": 3405034591,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -800,10 +1230,23 @@
       },
       "portolan_registry:updated": "2026-10-13T13:56:05Z",
       "portolan_registry:first_registered": "2026-10-12T17:55:03+00:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "European Environment Agency (EEA), Copernicus Land Monitoring Service",
+          "url": "https://land.copernicus.eu/en/products/corine-land-cover/clc2018"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "Geomermaids",
+          "url": "https://geoparquet.geomermaids.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "Geomermaids",
+        "url": "https://geoparquet.geomermaids.com/"
+      },
       "portolan_registry:licenses": {
         "other": 1
       },
@@ -813,8 +1256,8 @@
       "portolan_registry:asset_count": 55,
       "portolan_registry:total_size_bytes": 7738698759,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -849,10 +1292,27 @@
       },
       "portolan_registry:updated": "2026-09-21T12:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Danmarks Milj\u00f8portal",
+          "url": "https://arealdata.miljoeportal.dk/datasets"
+        },
+        {
+          "name": "Klimadatastyrelsen",
+          "url": "https://dawadocs.dataforsyningen.dk/dok/api/kommune"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 15,
         "CC0-1.0": 19
@@ -863,8 +1323,8 @@
       "portolan_registry:asset_count": 215,
       "portolan_registry:total_size_bytes": 1291486516,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -881,9 +1341,9 @@
       "type": "application/json",
       "title": "Forest Typology (ForTy) 2020 v1",
       "bbox": [
-        -174.386472,
+        -180.0,
         -59.597257,
-        174.422144,
+        180.0,
         82.84396
       ],
       "portolan_registry:id": "epoch-forest-typology-2020",
@@ -895,10 +1355,17 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-06-30T13:03:50Z",
       "portolan_registry:first_registered": "2026-10-12T06:45:07-06:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Nature Trace"
+        }
+      ],
       "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:host": {
+        "name": "Epoch",
+        "url": "https://epoch.blue"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 111
       },
@@ -908,8 +1375,8 @@
       "portolan_registry:asset_count": 444,
       "portolan_registry:total_size_bytes": 42319425,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -940,10 +1407,20 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-06-16T17:22:03Z",
       "portolan_registry:first_registered": "2026-10-12T06:45:07-06:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "World Resources Institute (WRI)"
+        },
+        {
+          "name": "Google DeepMind"
+        }
+      ],
       "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:host": {
+        "name": "Epoch",
+        "url": "https://epoch.blue"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 1
       },
@@ -953,8 +1430,8 @@
       "portolan_registry:asset_count": 3,
       "portolan_registry:total_size_bytes": 603779290,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -985,10 +1462,22 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-06-18T12:18:21Z",
       "portolan_registry:first_registered": "2026-10-12T06:45:07-06:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Xiao Yuelong"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "Epoch",
+          "url": "https://epoch.blue"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "Epoch",
+        "url": "https://epoch.blue"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 1
       },
@@ -998,8 +1487,8 @@
       "portolan_registry:asset_count": 4,
       "portolan_registry:total_size_bytes": 5284315,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -1030,10 +1519,18 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-10-08T10:44:03Z",
       "portolan_registry:first_registered": "2026-10-12T06:45:07-06:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "European Commission, Joint Research Centre (JRC)",
+          "url": "https://joint-research-centre.ec.europa.eu"
+        }
+      ],
       "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:host": {
+        "name": "Epoch",
+        "url": "https://epoch.blue"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 2
       },
@@ -1043,8 +1540,8 @@
       "portolan_registry:asset_count": 5,
       "portolan_registry:total_size_bytes": 122242360115,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -1075,10 +1572,17 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-07-13T14:54:48Z",
       "portolan_registry:first_registered": "2026-10-12T06:45:07-06:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "European Commission, Joint Research Centre (JRC)"
+        }
+      ],
       "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:host": {
+        "name": "Epoch",
+        "url": "https://epoch.blue"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 1
       },
@@ -1088,8 +1592,8 @@
       "portolan_registry:asset_count": 3,
       "portolan_registry:total_size_bytes": 158416452088,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -1120,10 +1624,23 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-06-24T20:04:20Z",
       "portolan_registry:first_registered": "2026-10-12T06:45:07-06:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "European Commission, Joint Research Centre (JRC)",
+          "url": "https://forobs.jrc.ec.europa.eu/TMF"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "Epoch",
+          "url": "https://epoch.blue"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "Epoch",
+        "url": "https://epoch.blue"
+      },
       "portolan_registry:licenses": {
         "other": 6
       },
@@ -1133,8 +1650,8 @@
       "portolan_registry:asset_count": 24,
       "portolan_registry:total_size_bytes": 6429048,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -1169,10 +1686,23 @@
       },
       "portolan_registry:updated": "2026-09-19T00:30:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Republic of Estonia Land and Spatial Development Board",
+          "url": "https://geoportaal.maaamet.ee/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "other": 38
       },
@@ -1182,8 +1712,8 @@
       "portolan_registry:asset_count": 287,
       "portolan_registry:total_size_bytes": 10919321558,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -1218,10 +1748,71 @@
       },
       "portolan_registry:updated": "2026-09-20T09:14:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Uraren Euskal Agentzia",
+          "url": "https://www.geo.euskadi.eus/"
+        },
+        {
+          "name": "Osasun Saila",
+          "url": "https://www.geo.euskadi.eus/"
+        },
+        {
+          "name": "Eusko Jaurlaritza. Herri Administrazio eta Justizia Saila. Justizia Administrazioko Zuzendaritza.",
+          "url": "https://www.geo.euskadi.eus/"
+        },
+        {
+          "name": "Eusko Jaurlaritza. Osasun saila. Plangintza, Antolamendu eta Ebaluazio Sanitarioko Zuzendaritza",
+          "url": "https://www.geo.euskadi.eus/"
+        },
+        {
+          "name": "Eusko Jaurlaritza. Lurralde Plangintza eta Hiri Agendaren Zuzendaritza.",
+          "url": "https://www.geo.euskadi.eus/"
+        },
+        {
+          "name": "Ingurumen, Lurralde Plangintza eta Etxebizitza Saila. Ingurumen Sailburuordetza. Eusko Jaurlaritza",
+          "url": "https://www.geo.euskadi.eus/"
+        },
+        {
+          "name": "Eusko Jaurlaritza. Ingurumen Sailburuordetza.",
+          "url": "https://www.geo.euskadi.eus/"
+        },
+        {
+          "name": "Eusko Jaurlaritza. Ingurumen, Lurralde Plangintza eta Etxebizitza Saila",
+          "url": "https://www.geo.euskadi.eus/"
+        },
+        {
+          "name": "Ingurumen Jasangarritasuneko Sailburuordetza. Ingurumen Kalitatearen eta Ekonomia Zirkularraren Zuzendaritza eta IHOBE",
+          "url": "https://www.geo.euskadi.eus/"
+        },
+        {
+          "name": "Lurralde Plangintzaren Zuzendaritza. Eusko Jaurlaritza",
+          "url": "https://www.geo.euskadi.eus/"
+        },
+        {
+          "name": "Eusko Jaurlaritza. Lurralde Plangintzaren eta Hirigintzaren Zuzendaritza. Lurralde Informazio Zerbitzua",
+          "url": "https://www.geo.euskadi.eus/"
+        },
+        {
+          "name": "Eusko Jaurlaritza. Nekazaritza, Arrantza eta Elikagai Politika",
+          "url": "https://www.geo.euskadi.eus/"
+        },
+        {
+          "name": "Euskadiko Nekazaritzako, Arrantzako eta Elikagai Politikako Sailburuordetza",
+          "url": "https://www.geo.euskadi.eus/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "CC-BY-3.0": 22
       },
@@ -1231,8 +1822,8 @@
       "portolan_registry:asset_count": 159,
       "portolan_registry:total_size_bytes": 127116094,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -1265,23 +1856,36 @@
         "type": "image/png",
         "title": "Geomermaids"
       },
-      "portolan_registry:updated": "2026-10-20T15:50:22Z",
+      "portolan_registry:updated": "2026-10-21T10:34:03Z",
       "portolan_registry:first_registered": "2026-10-01T12:19:08+00:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Federal Emergency Management Agency (FEMA)",
+          "url": "https://msc.fema.gov/portal/home"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "Geomermaids",
+          "url": "https://geoparquet.geomermaids.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "Geomermaids",
+        "url": "https://geoparquet.geomermaids.com/"
+      },
       "portolan_registry:licenses": {
         "CC-PDM-1.0": 1
       },
       "portolan_registry:collection_count": 1,
-      "portolan_registry:feature_count": 95596719,
+      "portolan_registry:feature_count": 95596851,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 2,
-      "portolan_registry:total_size_bytes": 533861,
+      "portolan_registry:total_size_bytes": 533858,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -1316,10 +1920,23 @@
       },
       "portolan_registry:updated": "2026-09-09T13:53:39Z",
       "portolan_registry:first_registered": "2026-09-01T10:09:50+00:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Maanmittauslaitos",
+          "url": "https://www.maanmittauslaitos.fi/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 4
       },
@@ -1329,8 +1946,8 @@
       "portolan_registry:asset_count": 27,
       "portolan_registry:total_size_bytes": 1676036593,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -1365,10 +1982,23 @@
       },
       "portolan_registry:updated": "2026-09-01T11:45:02Z",
       "portolan_registry:first_registered": "2026-09-01T10:09:50+00:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Maanmittauslaitos",
+          "url": "https://www.maanmittauslaitos.fi/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 117
       },
@@ -1378,8 +2008,8 @@
       "portolan_registry:asset_count": 590,
       "portolan_registry:total_size_bytes": 54370739486,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -1414,10 +2044,23 @@
       },
       "portolan_registry:updated": null,
       "portolan_registry:first_registered": "2026-10-03T08:06:17-05:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "official",
+      "portolan_registry:producers": [
+        {
+          "name": "Taylor Geospatial",
+          "url": "https://taylorgeospatial.org/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "Taylor Geospatial",
+          "url": "https://taylorgeospatial.org/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "Taylor Geospatial",
+        "url": "https://taylorgeospatial.org/"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 18
       },
@@ -1427,8 +2070,8 @@
       "portolan_registry:asset_count": 126,
       "portolan_registry:total_size_bytes": 286752920371,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
@@ -1463,10 +2106,23 @@
       },
       "portolan_registry:updated": "2026-10-12T14:27:54Z",
       "portolan_registry:first_registered": "2026-09-27T18:09:55+00:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Food and Agriculture Organization of the United Nations (FAO)",
+          "url": "https://data.apps.fao.org/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "Geomermaids",
+          "url": "https://geoparquet.geomermaids.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "Geomermaids",
+        "url": "https://geoparquet.geomermaids.com/"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 3
       },
@@ -1476,8 +2132,8 @@
       "portolan_registry:asset_count": 810,
       "portolan_registry:total_size_bytes": 2183847799,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -1512,10 +2168,26 @@
       },
       "portolan_registry:updated": null,
       "portolan_registry:first_registered": "2026-10-20T11:18:02-04:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "official",
+      "portolan_registry:producers": [
+        {
+          "name": "Internet of Water Coalition"
+        },
+        {
+          "name": "U.S. Geological Survey",
+          "url": "https://www.usgs.gov/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "Colton Loftus",
+          "url": "https://cgsearth.org/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "Internet of Water Coalition",
+        "url": "https://geoconnex.us"
+      },
       "portolan_registry:licenses": {
         "CC0-1.0": 38
       },
@@ -1525,8 +2197,8 @@
       "portolan_registry:asset_count": 150,
       "portolan_registry:total_size_bytes": 13317526569,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -1557,10 +2229,23 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-08-18T06:57:31Z",
       "portolan_registry:first_registered": "2026-08-18T08:10:52+00:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "European Commission, Joint Research Centre",
+          "url": "https://human-settlement.emergency.copernicus.eu/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "Nissim Lebovits",
+          "url": "https://github.com/nlebovits/ghsl"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "Nissim Lebovits",
+        "url": "https://github.com/nlebovits/ghsl"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 12
       },
@@ -1570,8 +2255,8 @@
       "portolan_registry:asset_count": 48,
       "portolan_registry:total_size_bytes": 23514972,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -1606,10 +2291,51 @@
       },
       "portolan_registry:updated": "2026-07-28T16:34:06Z",
       "portolan_registry:first_registered": "2026-08-11T17:41:15+00:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "official",
+      "portolan_registry:producers": [
+        {
+          "name": "Microsoft AI for Good Research Lab",
+          "url": "https://www.microsoft.com/en-us/research/group/ai-for-good-research-lab/"
+        },
+        {
+          "name": "Arizona State University",
+          "url": "https://www.asu.edu/"
+        },
+        {
+          "name": "Washington University in St. Louis",
+          "url": "https://wustl.edu/"
+        },
+        {
+          "name": "Oregon State University",
+          "url": "https://oregonstate.edu/"
+        },
+        {
+          "name": "Clark University",
+          "url": "https://www.clarku.edu/"
+        },
+        {
+          "name": "Taylor Geospatial",
+          "url": "https://taylorgeospatial.org/"
+        },
+        {
+          "name": "European Space Agency / Copernicus",
+          "url": "https://sentinels.copernicus.eu/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "Microsoft AI for Good Research Lab",
+          "url": "https://www.microsoft.com/en-us/research/group/ai-for-good-research-lab/"
+        },
+        {
+          "name": "Taylor Geospatial",
+          "url": "https://taylorgeospatial.org/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "Taylor Geospatial",
+        "url": "https://taylorgeospatial.org/"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 11
       },
@@ -1619,8 +2345,8 @@
       "portolan_registry:asset_count": 72,
       "portolan_registry:total_size_bytes": 345312485304,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
@@ -1655,10 +2381,55 @@
       },
       "portolan_registry:updated": "2026-10-11T15:08:27Z",
       "portolan_registry:first_registered": "2026-09-27T18:07:05+00:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "OpenStreetMap contributors",
+          "url": "https://www.openstreetmap.org/"
+        },
+        {
+          "name": "U.S. Energy Information Administration (EIA)",
+          "url": "https://www.eia.gov/electricity/data/eia860m/"
+        },
+        {
+          "name": "U.S. Geological Survey and Lawrence Berkeley National Laboratory",
+          "url": "https://energy.usgs.gov/uspvdb/"
+        },
+        {
+          "name": "U.S. Geological Survey, American Clean Power Association and Lawrence Berkeley National Laboratory",
+          "url": "https://energy.usgs.gov/uswtdb/"
+        },
+        {
+          "name": "Federal Communications Commission (FCC)",
+          "url": "https://www.fcc.gov/uls/transactions/daily-weekly"
+        },
+        {
+          "name": "Bureau of Safety and Environmental Enforcement and Bureau of Ocean Energy Management",
+          "url": "https://www.data.bsee.gov/"
+        },
+        {
+          "name": "Agence ORE",
+          "url": "https://opendata.agenceore.fr/"
+        },
+        {
+          "name": "Environmental Defense Fund and MethaneSAT, LLC",
+          "url": "https://doi.org/10.5281/zenodo.22835235"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "Geofabrik GmbH",
+          "url": "https://download.geofabrik.de/"
+        },
+        {
+          "name": "Geomermaids",
+          "url": "https://geoparquet.geomermaids.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "Geomermaids",
+        "url": "https://geoparquet.geomermaids.com/"
+      },
       "portolan_registry:licenses": {
         "ODbL-1.0": 27
       },
@@ -1668,8 +2439,8 @@
       "portolan_registry:asset_count": 54,
       "portolan_registry:total_size_bytes": 2353924407,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -1704,10 +2475,75 @@
       },
       "portolan_registry:updated": "2026-09-20T00:30:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "M\u00e9tropole de Lyon \u2013 Direction Innovation Num\u00e9rique et Syst\u00e8mes d'Information",
+          "url": "https://data.grandlyon.com/"
+        },
+        {
+          "name": "M\u00e9tropole de Lyon \u2013 Direction Am\u00e9lioration du cadre de vie",
+          "url": "https://data.grandlyon.com/"
+        },
+        {
+          "name": "M\u00e9tropole de Lyon \u2013 Direction Environnement, \u00e9cologie, \u00e9nergie",
+          "url": "https://data.grandlyon.com/"
+        },
+        {
+          "name": "M\u00e9tropole de Lyon \u2013 D\u00e9l\u00e9gation Urbanisme et mobilit\u00e9s / Direction ressources",
+          "url": "https://data.grandlyon.com/"
+        },
+        {
+          "name": "M\u00e9tropole de Lyon \u2013 Direction Culture et vie associative",
+          "url": "https://data.grandlyon.com/"
+        },
+        {
+          "name": "M\u00e9tropole de Lyon \u2013 Direction Sant\u00e9 protection maternelle et infantile",
+          "url": "https://data.grandlyon.com/"
+        },
+        {
+          "name": "M\u00e9tropole de Lyon \u2013 Agence des Mobilit\u00e9s",
+          "url": "https://data.grandlyon.com/"
+        },
+        {
+          "name": "M\u00e9tropole de Lyon",
+          "url": "https://data.grandlyon.com/"
+        },
+        {
+          "name": "M\u00e9tropole de Lyon \u2013 Direction Mobilit\u00e9s",
+          "url": "https://data.grandlyon.com/"
+        },
+        {
+          "name": "M\u00e9tropole de Lyon \u2013 Direction Valorisation et modernisation de l'action publique",
+          "url": "https://data.grandlyon.com/"
+        },
+        {
+          "name": "M\u00e9tropole de Lyon \u2013 Direction Planification et strat\u00e9gies territoriales",
+          "url": "https://data.grandlyon.com/"
+        },
+        {
+          "name": "M\u00e9tropole de Lyon \u2013 Direction Pilotage urbain",
+          "url": "https://data.grandlyon.com/"
+        },
+        {
+          "name": "SYTRAL Mobilit\u00e9s",
+          "url": "https://www.sytral.fr/"
+        },
+        {
+          "name": "SYTRAL Mobilit\u00e9s \u2013 TCL",
+          "url": "https://www.sytral.fr/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "etalab-2.0": 43
       },
@@ -1717,8 +2553,8 @@
       "portolan_registry:asset_count": 278,
       "portolan_registry:total_size_bytes": 499683024,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -1753,10 +2589,55 @@
       },
       "portolan_registry:updated": "2026-09-19T20:30:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Beh\u00f6rde f\u00fcr Schule, Familie und Berufsbildung",
+          "url": "https://suche.transparenz.hamburg.de/dataset/kita-einrichtungen-hamburg31"
+        },
+        {
+          "name": "Bezirks\u00e4mter",
+          "url": "https://suche.transparenz.hamburg.de/dataset/stammdaten-hamburger-sportstaetten15"
+        },
+        {
+          "name": "Beh\u00f6rde f\u00fcr Kultur und Medien (BKM)",
+          "url": "https://suche.transparenz.hamburg.de/dataset/denkmalkartierung-baudenkmale-hamburg3"
+        },
+        {
+          "name": "Beh\u00f6rde f\u00fcr Umwelt, Klima, Energie und Agrarwirtschaft (BUKEA)",
+          "url": "https://suche.transparenz.hamburg.de/dataset/digitaler-gruenplan-kataster-der-oeffentlichen-gruenanlagen18"
+        },
+        {
+          "name": "Beh\u00f6rde f\u00fcr Verkehr und Mobilit\u00e4tswende (BVM)",
+          "url": "https://suche.transparenz.hamburg.de/dataset/einzugsbereiche-von-hvv-haltestellen-hamburg9"
+        },
+        {
+          "name": "Beh\u00f6rde f\u00fcr Stadtentwicklung und Wohnen (BSW)",
+          "url": "https://suche.transparenz.hamburg.de/dataset/bebauungsplaene-hamburg16"
+        },
+        {
+          "name": "Landesbetrieb Verkehr (LBV)",
+          "url": "https://suche.transparenz.hamburg.de/dataset/bewohnerparkgebiete-hamburg16"
+        },
+        {
+          "name": "Landesbetrieb Geoinformation und Vermessung",
+          "url": "https://suche.transparenz.hamburg.de/dataset/alkis-verwaltungsgrenzen-hamburg31"
+        },
+        {
+          "name": "Statistisches Amt f\u00fcr Hamburg und Schleswig-Holstein",
+          "url": "https://suche.transparenz.hamburg.de/dataset/statistische-gebiete-in-hamburg28"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "DL-DE-BY-2.0": 40
       },
@@ -1766,8 +2647,8 @@
       "portolan_registry:asset_count": 240,
       "portolan_registry:total_size_bytes": 133454011,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -1784,9 +2665,9 @@
       "type": "application/json",
       "title": "Harmonized Field Boundary Data",
       "bbox": [
-        -127.82213224381233,
+        122.946031194,
         -46.33133504768494,
-        178.87507346627325,
+        32.873483439125884,
         69.98920405095586
       ],
       "portolan_registry:id": "harmonized-field-data",
@@ -1802,10 +2683,323 @@
       },
       "portolan_registry:updated": "2026-10-15T10:33:36Z",
       "portolan_registry:first_registered": "2026-10-06T18:13:12+00:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Agrarmarkt Austria",
+          "url": "https://geometadatensuche.inspire.gv.at/metadatensuche/inspire/api/records/9db8a0c3-e92a-4df4-9d55-8210e326a7ed"
+        },
+        {
+          "name": "Joint Research Centre, European Commission",
+          "url": "https://data.jrc.ec.europa.eu/dataset/b9fb9e67-78a9-4327-9d59-39a928d812d3"
+        },
+        {
+          "name": "Agentschap Landbouw & Zeevisserij (Government)",
+          "url": "https://landbouwcijfers.vlaanderen.be/open-geodata-landbouwgebruikspercelen"
+        },
+        {
+          "name": "Ministry of Agriculture and Food",
+          "url": "https://www.mzh.government.bg"
+        },
+        {
+          "name": "Conab",
+          "url": "https://portaldeinformacoes.conab.gov.br/mapeamentos-agricolas-downloads.html"
+        },
+        {
+          "name": "Kanton Aargau, via geodienste.ch",
+          "url": "https://www.geodienste.ch/services/lwb_nutzungsflaechen"
+        },
+        {
+          "name": "Kanton Appenzell Innerrhoden, via geodienste.ch",
+          "url": "https://www.geodienste.ch/services/lwb_nutzungsflaechen"
+        },
+        {
+          "name": "Kanton Appenzell Ausserrhoden, via geodienste.ch",
+          "url": "https://www.geodienste.ch/services/lwb_nutzungsflaechen"
+        },
+        {
+          "name": "Kanton Bern, via geodienste.ch",
+          "url": "https://www.geodienste.ch/services/lwb_nutzungsflaechen"
+        },
+        {
+          "name": "Kanton Basel-Landschaft, via geodienste.ch",
+          "url": "https://www.geodienste.ch/services/lwb_nutzungsflaechen"
+        },
+        {
+          "name": "Kanton Fribourg, via geodienste.ch",
+          "url": "https://www.geodienste.ch/services/lwb_nutzungsflaechen"
+        },
+        {
+          "name": "\u00c9tat de Gen\u00e8ve, Office cantonal de l'agriculture et de la nature",
+          "url": "https://ge.ch/sitg/"
+        },
+        {
+          "name": "Kanton Glarus, via geodienste.ch",
+          "url": "https://www.geodienste.ch/services/lwb_nutzungsflaechen"
+        },
+        {
+          "name": "Kanton Graub\u00fcnden, via geodienste.ch",
+          "url": "https://www.geodienste.ch/services/lwb_nutzungsflaechen"
+        },
+        {
+          "name": "Kanton Jura, via geodienste.ch",
+          "url": "https://www.geodienste.ch/services/lwb_nutzungsflaechen"
+        },
+        {
+          "name": "Kanton Luzern, via geodienste.ch",
+          "url": "https://www.geodienste.ch/services/lwb_nutzungsflaechen"
+        },
+        {
+          "name": "Kanton St. Gallen, via geodienste.ch",
+          "url": "https://www.geodienste.ch/services/lwb_nutzungsflaechen"
+        },
+        {
+          "name": "Kanton Schaffhausen, via geodienste.ch",
+          "url": "https://www.geodienste.ch/services/lwb_nutzungsflaechen"
+        },
+        {
+          "name": "Kanton Solothurn, via geodienste.ch",
+          "url": "https://www.geodienste.ch/services/lwb_nutzungsflaechen"
+        },
+        {
+          "name": "Kanton Schwyz, Amt f\u00fcr Landwirtschaft",
+          "url": "https://www.sz.ch/landwirtschaft"
+        },
+        {
+          "name": "Kanton Thurgau, via geodienste.ch",
+          "url": "https://www.geodienste.ch/services/lwb_nutzungsflaechen"
+        },
+        {
+          "name": "Kanton Uri, via geodienste.ch",
+          "url": "https://www.geodienste.ch/services/lwb_nutzungsflaechen"
+        },
+        {
+          "name": "Kanton Valais, via geodienste.ch",
+          "url": "https://www.geodienste.ch/services/lwb_nutzungsflaechen"
+        },
+        {
+          "name": "Kanton Zug, via geodienste.ch",
+          "url": "https://www.geodienste.ch/services/lwb_nutzungsflaechen"
+        },
+        {
+          "name": "Kanton Z\u00fcrich, Amt f\u00fcr Landschaft und Natur",
+          "url": "https://www.zh.ch/de/umwelt-tiere/landwirtschaft.html"
+        },
+        {
+          "name": "Czech Ministry of Agriculture (Ministr Zem\u011bd\u011blstv\u00ed)",
+          "url": "https://mze.gov.cz/public/portal/mze/farmar/LPIS"
+        },
+        {
+          "name": "Land Brandenburg",
+          "url": "https://geobroker.geobasis-bb.de/gbss.php?MODE=GetProductInformation&PRODUCTID=9e95f21f-4ecf-4682-9a44-e5f7609f6fa0"
+        },
+        {
+          "name": "Ministerium f\u00fcr L\u00e4ndlichen Raum und Verbraucherschutz Baden-W\u00fcrttemberg",
+          "url": "https://mlr.baden-wuerttemberg.de"
+        },
+        {
+          "name": "Bayerische Vermessungsverwaltung",
+          "url": "https://www.ldbv.bayern.de"
+        },
+        {
+          "name": "Bayerisches Staatsministerium f\u00fcr Ern\u00e4hrung, Landwirtschaft, Forsten und Tourismus",
+          "url": "https://www.stmelf.bayern.de"
+        },
+        {
+          "name": "Land Hessen",
+          "url": "https://www.geoportal.hessen.de/spatial-objects/886"
+        },
+        {
+          "name": "Ministerium f\u00fcr Landwirtschaft und Umwelt M-V",
+          "url": "https://www.geodaten-mv.de/dienste/feldblock_atom?type=dataset&id=f18122c4-2585-4c22-9c48-9e960e8dhd34"
+        },
+        {
+          "name": "ML/SLA Niedersachsen",
+          "url": "https://sla.niedersachsen.de/landentwicklung/LEA/"
+        },
+        {
+          "name": "Land Nordrhein-Westfalen / Open.NRW",
+          "url": "https://www.opengeodata.nrw.de/produkte/umwelt_klima/bodennutzung/landwirtschaft/"
+        },
+        {
+          "name": "S\u00e4chsisches Landesamt f\u00fcr Umwelt, Landwirtschaft und Geologie",
+          "url": "https://geoportal.sachsen.de"
+        },
+        {
+          "name": "Land Schleswig-Holstein",
+          "url": "https://sh-mis.gdi-sh.de/catalog/#/datasets/iso/21f67269-780f-4f3c-8f66-03dde27acfe7"
+        },
+        {
+          "name": "Ministerium f\u00fcr Umwelt, Klima, Mobilit\u00e4t, Agrar und Verbraucherschutz",
+          "url": "https://geoportal.saarland.de"
+        },
+        {
+          "name": "Ministerium f\u00fcr Wirtschaft, Tourismus, Landwirtschaft und Forsten (MWL) Sachsen-Anhalt",
+          "url": "https://mwl.sachsen-anhalt.de"
+        },
+        {
+          "name": "Th\u00fcringer Landesamt f\u00fcr Landwirtschaft und L\u00e4ndlichen Raum",
+          "url": "https://geomis.geoportal-th.de/geonetwork/srv/ger/catalog.search#/metadata/D872F2D6-60BC-11D6-B67D-00E0290F5BA0"
+        },
+        {
+          "name": "Danish Agricultural Agency",
+          "url": "https://lbst.dk/"
+        },
+        {
+          "name": "Construction Sector Development Agency",
+          "url": "https://www.geoportal.lt/geoportal/nacionaline-mokejimo-agentura-prie-zemes-ukio-ministerijos#savedSearchId={56542726-DC0B-461E-A32C-3E9A4A693E27}&collapsed=true>, EuroCrops <https://github.com/maja601/EuroCrops"
+        },
+        {
+          "name": "Lauku atbalsta dienests",
+          "url": "https://www.lad.gov.lv/lv/lauku-registra-dati>, EuroCrops <https://github.com/maja601/EuroCrops"
+        },
+        {
+          "name": "Ministry of Regional Development and Public Administration",
+          "url": "http://spatial.mdrap.ro>, EuroCrops <https://github.com/maja601/EuroCrops"
+        },
+        {
+          "name": "Ministrstvo za kmetijstvo, gozdarstvo in prehrano",
+          "url": "https://rkg.gov.si/vstop/>, EuroCrops <https://github.com/maja601/EuroCrops"
+        },
+        {
+          "name": "P\u00f5llumajanduse Registrite ja Informatsiooni Amet",
+          "url": "http://data.europa.eu/88u/dataset/pria-pollud"
+        },
+        {
+          "name": "Fondo Espa\u00f1ol de Garant\u00eda Agraria (FEGA)",
+          "url": "https://www.fega.gob.es"
+        },
+        {
+          "name": "Junta de Andaluc\u00eda",
+          "url": "https://www.juntadeandalucia.es"
+        },
+        {
+          "name": "Gobierno de Aragon",
+          "url": "https://www.aragon.es"
+        },
+        {
+          "name": "Catalonia Department of Agriculture, Livestock, Fisheries and Food",
+          "url": "https://agricultura.gencat.cat/ca/ambits/desenvolupament-rural/sigpac/mapa-cultius/"
+        },
+        {
+          "name": "Gobierno de Cantabria",
+          "url": "https://mapas.cantabria.es"
+        },
+        {
+          "name": "Junta de Castilla y Le\u00f3n",
+          "url": "https://datos.jcyl.es/web/jcyl/set/es/sector-publico/sigpac/1284212629849"
+        },
+        {
+          "name": "Unidad de Cartograf\u00eda. Secretar\u00eda General. Consejer\u00eda de Agricultura, Ganader\u00eda y Desarrollo Rural.",
+          "url": "https://datosabiertos.castillalamancha.es"
+        },
+        {
+          "name": "Gobierno de Canarias - Consejer\u00eda de Agricultura, Ganader\u00eda, Pesca y Soberan\u00eda Alimentaria",
+          "url": "https://www.gobiernodecanarias.org/agpsa/"
+        },
+        {
+          "name": "Virtual Office for Rural Environment",
+          "url": "https://ovmediorural.xunta.gal/es/consultas-publicas/sixpac"
+        },
+        {
+          "name": "Govern de les Illes Balears",
+          "url": "https://www.caib.es"
+        },
+        {
+          "name": "Comunidad de Madrid",
+          "url": "https://www.comunidad.madrid"
+        },
+        {
+          "name": "Gobierno Vasco",
+          "url": "https://www.euskadi.eus/web01-tramite/es/contenidos/tramite_servicio/datos_geograficos_sigpac/es_def/index.shtml"
+        },
+        {
+          "name": "Spanish Agricultural Guarantee Fund (FEGA) of the Ministry of Agriculture, Fisheries and Food",
+          "url": "https://www.fega.gob.es/es/PwfGcp/es/el_fega/index.jsp"
+        },
+        {
+          "name": "Finnish Food Authority",
+          "url": "https://www.ruokavirasto.fi/en/about-us/open-information/spatial-data-sets/"
+        },
+        {
+          "name": "Anstitut National de l'Information G\u00e9ographique et Foresti\u00e8re",
+          "url": "https://www.data.gouv.fr/en/datasets/registre-parcellaire-graphique-rpg-contours-des-parcelles-et-ilots-culturaux-et-leur-groupe-de-cultures-majoritaire/"
+        },
+        {
+          "name": "Agencija za pla\u0107anja u poljoprivredi, ribarstvu i ruralnom razvoju",
+          "url": "https://www.apprrr.hr/prostorni-podaci-servisi/"
+        },
+        {
+          "name": "Department of Agriculture, Food and the Marine",
+          "url": "https://www.gov.ie/en/organisation/department-of-agriculture-food-and-the-marine/"
+        },
+        {
+          "name": "Autonome Provinz Bozen - S\u00fcdtirol",
+          "url": "https://agricoltura.provincia.bz.it/it/home"
+        },
+        {
+          "name": "Japanese Ministry of Agriculture, Forestry and Fisheries (MAFF, \u8fb2\u6797\u6c34\u7523\u7701)",
+          "url": "https://download.fude.maff.go.jp/"
+        },
+        {
+          "name": "Nacionalin\u0117 mok\u0117jimo agent\u016bra prie \u017dem\u0117s \u016bkio ministerijos",
+          "url": "https://www.nma.lt>, Europe-LAND HE Project <https://doi.org/10.5281/zenodo.14230620"
+        },
+        {
+          "name": "Administration des services techniques de l'agriculture",
+          "url": "https://asta.etat.lu/en"
+        },
+        {
+          "name": "Rural Support Service Republic of Latvia (Lauku atbalsta dienests)",
+          "url": "https://www.lad.gov.lv/lv/lauku-registra-dati"
+        },
+        {
+          "name": "RVO / PDOK",
+          "url": "https://www.pdok.nl/introductie/-/article/basisregistratie-gewaspercelen-brp-"
+        },
+        {
+          "name": "Aqualinc Research Limited",
+          "url": "https://environment.govt.nz/publications/national-irrigated-land-spatial-dataset-2020-update"
+        },
+        {
+          "name": "Agencja Restrukturyzacji i Modernizacji Rolnictwa",
+          "url": "https://geoportal.arimr.gov.pl/mapy/apps/sites/#/portal"
+        },
+        {
+          "name": "IPAP - Instituto de Financiamento da Agricultura e Pescas",
+          "url": "https://www.ifap.pt/isip/ows/"
+        },
+        {
+          "name": "Jordbruksverket (The Swedish Board of Agriculture)",
+          "url": "https://jordbruksverket.se"
+        },
+        {
+          "name": "Ministry of Agriculture, Forestry and Food (Ministrstvo za kmetijstvo, gozdarstvo in prehrano)",
+          "url": "https://www.gov.si/drzavni-organi/ministrstva/ministrstvo-za-kmetijstvo-gozdarstvo-in-prehrano/"
+        },
+        {
+          "name": "P\u00f4dohospod\u00e1rska platobn\u00e1 agent\u00fara",
+          "url": "https://www.apa.sk"
+        },
+        {
+          "name": "California Department of Water Resources",
+          "url": "https://data.cnra.ca.gov/dataset/statewide-crop-mapping"
+        },
+        {
+          "name": "United States Department of Agriculture",
+          "url": "https://www.nass.usda.gov"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "Fields of the World",
+          "url": "https://fieldsofthe.world"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "Fields of the World",
+        "url": "https://fieldsofthe.world"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 26,
         "CC-BY-NC-4.0": 1,
@@ -1822,8 +3016,8 @@
       "portolan_registry:asset_count": 358,
       "portolan_registry:total_size_bytes": 78867379905,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
@@ -1858,10 +3052,27 @@
       },
       "portolan_registry:updated": "2026-09-19T18:30:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Helsingin kaupunkiymp\u00e4rist\u00f6n toimiala",
+          "url": "https://hri.fi/data/fi/dataset/paakaupunkiseudun-aanestysaluejako"
+        },
+        {
+          "name": "Helsingin kasvatuksen ja koulutuksen toimiala",
+          "url": "https://hri.fi/data/fi/dataset/helsingin-kaupungin-peruskoulujen-oppilaaksiottoaluerajat"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 40
       },
@@ -1871,8 +3082,8 @@
       "portolan_registry:asset_count": 256,
       "portolan_registry:total_size_bytes": 230339585,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -1907,10 +3118,31 @@
       },
       "portolan_registry:updated": "2026-09-23T00:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Microsoft AI for Good Lab",
+          "url": "https://data.humdata.org/organization/microsoft-ai4g-lab"
+        },
+        {
+          "name": "OCHA Field Information Services Section (FISS) / Jamaica Social Development Commission",
+          "url": "https://data.humdata.org/dataset/cod-ab-jam"
+        },
+        {
+          "name": "Planetary Response Network",
+          "url": "https://data.humdata.org/organization/planetary-response-network"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 3
       },
@@ -1920,8 +3152,8 @@
       "portolan_registry:asset_count": 23,
       "portolan_registry:total_size_bytes": 7988809,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -1956,21 +3188,34 @@
       },
       "portolan_registry:updated": "2026-09-20T14:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Infrabel",
+          "url": "https://infrabel.be"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "CC0-1.0": 10
       },
       "portolan_registry:collection_count": 10,
-      "portolan_registry:feature_count": 28816,
+      "portolan_registry:feature_count": 28627,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 61,
-      "portolan_registry:total_size_bytes": 48899718,
+      "portolan_registry:total_size_bytes": 49117135,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -2005,10 +3250,35 @@
       },
       "portolan_registry:updated": "2026-09-20T16:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Tailte \u00c9ireann",
+          "url": "https://www.tailte.ie/"
+        },
+        {
+          "name": "Environmental Protection Agency (EPA)",
+          "url": "https://www.epa.ie/"
+        },
+        {
+          "name": "National Parks and Wildlife Service (NPWS), Department of Housing, Local Government and Heritage",
+          "url": "https://www.npws.ie/"
+        },
+        {
+          "name": "Central Statistics Office (CSO)",
+          "url": "https://www.cso.ie/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 34
       },
@@ -2018,8 +3288,8 @@
       "portolan_registry:asset_count": 220,
       "portolan_registry:total_size_bytes": 942275387,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -2063,8 +3333,8 @@
       "portolan_registry:asset_count": 0,
       "portolan_registry:total_size_bytes": null,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
@@ -2108,8 +3378,8 @@
       "portolan_registry:asset_count": 29,
       "portolan_registry:total_size_bytes": null,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
@@ -2144,10 +3414,23 @@
       },
       "portolan_registry:updated": "2026-09-20T12:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "K\u00f8benhavns Kommune \u2013 Bydata",
+          "url": "https://www.opendata.dk/city-of-copenhagen/kobenhavn-adresser"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 34,
         "CC0-1.0": 1
@@ -2158,8 +3441,8 @@
       "portolan_registry:asset_count": 227,
       "portolan_registry:total_size_bytes": 46007841,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -2194,10 +3477,75 @@
       },
       "portolan_registry:updated": "2026-09-20T01:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Stadt K\u00f6ln \u2013 Amt f\u00fcr Stadtentwicklung und Statistik, Raumbezogene Statistik",
+          "url": "https://www.stadt-koeln.de/service/adressen/amt-fuer-stadtentwicklung-und-statistik"
+        },
+        {
+          "name": "Stadt K\u00f6ln \u2013 Amt f\u00fcr Denkmalschutz und Denkmalpflege",
+          "url": "https://www.stadt-koeln.de/service/adressen/amt-fuer-denkmalschutz-und-denkmalpflege"
+        },
+        {
+          "name": "Stadt K\u00f6ln \u2013 Geoportal Stadt K\u00f6ln",
+          "url": "https://www.stadt-koeln.de/politik-und-verwaltung/geoportal"
+        },
+        {
+          "name": "Stadt K\u00f6ln \u2013 Amt f\u00fcr Landschaftspflege und Gr\u00fcnfl\u00e4chen",
+          "url": "https://www.stadt-koeln.de/service/adressen/amt-fuer-landschaftspflege-und-gruenflaechen"
+        },
+        {
+          "name": "Stadt K\u00f6ln \u2013 Amt f\u00fcr Liegenschaften, Vermessung und Kataster",
+          "url": "https://www.stadt-koeln.de/service/adressen/amt-fuer-liegenschaften-vermessung-und-kataster"
+        },
+        {
+          "name": "Stadt K\u00f6ln \u2013 Amt f\u00fcr Kinder, Jugend und Familie",
+          "url": "https://www.stadt-koeln.de/service/adressen/amt-fuer-kinder-jugend-und-familie"
+        },
+        {
+          "name": "Stadt K\u00f6ln \u2013 Amt f\u00fcr Umwelt- und Verbraucherschutz",
+          "url": "https://www.stadt-koeln.de/service/adressen/umwelt-und-verbraucherschutzamt"
+        },
+        {
+          "name": "Stadt K\u00f6ln \u2013 Stadtplanungsamt",
+          "url": "https://www.stadt-koeln.de/service/adressen/stadtplanungsamt"
+        },
+        {
+          "name": "Stadt K\u00f6ln \u2013 Amt f\u00fcr Stadtentwicklung und Statistik",
+          "url": "https://www.stadt-koeln.de/service/adressen/amt-fuer-stadtentwicklung-und-statistik"
+        },
+        {
+          "name": "Stadt K\u00f6ln \u2013 Amt f\u00fcr Verkehrsmanagement",
+          "url": "https://www.stadt-koeln.de/service/adressen/amt-fuer-verkehrsmanagement"
+        },
+        {
+          "name": "K\u00f6lner Verkehrs-Betriebe AG (KVB)",
+          "url": "https://www.kvb.koeln/service/open_data.html"
+        },
+        {
+          "name": "Stadt K\u00f6ln \u2013 Amt f\u00fcr nachhaltige Mobilit\u00e4tsentwicklung",
+          "url": "https://www.stadt-koeln.de/service/adressen/amt-fuer-nachhaltige-mobilitaetsentwicklung"
+        },
+        {
+          "name": "Stadt K\u00f6ln \u2013 Amt f\u00fcr Stra\u00dfen und Radwegebau",
+          "url": "https://www.stadt-koeln.de/service/adressen/amt-fuer-strassen-und-radwegebau"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        },
+        {
+          "name": "Stadt K\u00f6ln \u2013 Geoportal Stadt K\u00f6ln",
+          "url": "https://www.stadt-koeln.de/politik-und-verwaltung/geoportal"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "DL-DE-BY-2.0": 2,
         "DL-DE-ZERO-2.0": 35
@@ -2208,8 +3556,8 @@
       "portolan_registry:asset_count": 256,
       "portolan_registry:total_size_bytes": 402696578,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -2244,10 +3592,23 @@
       },
       "portolan_registry:updated": "2026-09-21T00:40:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "C\u00e2mara Municipal de Lisboa",
+          "url": "https://www.lisboa.pt/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "CC0-1.0": 35
       },
@@ -2257,8 +3618,8 @@
       "portolan_registry:asset_count": 253,
       "portolan_registry:total_size_bytes": 196401220,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -2293,10 +3654,23 @@
       },
       "portolan_registry:updated": "2026-09-21T12:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Regione Lombardia",
+          "url": "https://www.geoportale.regione.lombardia.it/metadati?p_p_id=detailSheetMetadata_WAR_gptmetadataportlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&_detailSheetMetadata_WAR_gptmetadataportlet_identifier=r_lombar%3A443b3df8-5034-4516-a9b9-11b33785dd91&_detailSheetMetadata_WAR_gptmetadataportlet_rid=local"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 39
       },
@@ -2306,8 +3680,8 @@
       "portolan_registry:asset_count": 259,
       "portolan_registry:total_size_bytes": 863460389,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -2342,10 +3716,23 @@
       },
       "portolan_registry:updated": "2026-09-19T01:03:47Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Administration du cadastre et de la topographie",
+          "url": "https://act.public.lu/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 6,
         "CC0-1.0": 11
@@ -2356,8 +3743,8 @@
       "portolan_registry:asset_count": 105,
       "portolan_registry:total_size_bytes": 1749703088,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -2392,10 +3779,163 @@
       },
       "portolan_registry:updated": "2026-10-12T18:15:00Z",
       "portolan_registry:first_registered": "2026-09-01T10:09:50+00:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Direcci\u00f3n General de Gesti\u00f3n del Agua y Zonas Verdes",
+          "url": "https://www.madrid.es"
+        },
+        {
+          "name": "Direcci\u00f3n General de Atenci\u00f3n a la Ciudadan\u00eda",
+          "url": "https://www.madrid.es"
+        },
+        {
+          "name": "Direcci\u00f3n General de Comercio y Hosteler\u00eda",
+          "url": "https://www.madrid.es"
+        },
+        {
+          "name": "Direcci\u00f3n General de Coordinaci\u00f3n Territorial y Desconcentraci\u00f3n",
+          "url": "https://www.madrid.es"
+        },
+        {
+          "name": "Direcci\u00f3n General de Contrataci\u00f3n y Servicios - Subdirecci\u00f3n General de Estad\u00edstica",
+          "url": "https://www.madrid.es"
+        },
+        {
+          "name": "Direcci\u00f3n General de Servicios de Limpieza y Residuos",
+          "url": "https://www.madrid.es"
+        },
+        {
+          "name": "Ayuntamiento de Madrid",
+          "url": "https://www.madrid.es"
+        },
+        {
+          "name": "Direcci\u00f3n General de Bibliotecas, Archivos y Museos",
+          "url": "https://www.madrid.es"
+        },
+        {
+          "name": "Direcci\u00f3n General de Patrimonio Cultural y Paisaje Urbano",
+          "url": "https://www.madrid.es"
+        },
+        {
+          "name": "Direcci\u00f3n General de Deporte",
+          "url": "https://www.madrid.es"
+        },
+        {
+          "name": "Direcci\u00f3n General de Emprendimiento",
+          "url": "https://www.madrid.es"
+        },
+        {
+          "name": "Direcci\u00f3n General de Educaci\u00f3n, Juventud y Voluntariado",
+          "url": "https://www.madrid.es"
+        },
+        {
+          "name": "Direcci\u00f3n General de Planificaci\u00f3n de Recursos Humanos",
+          "url": "https://www.madrid.es"
+        },
+        {
+          "name": "Agencia para el Empleo",
+          "url": "https://www.madrid.es"
+        },
+        {
+          "name": "Direcci\u00f3n General de Sostenibilidad y Control Ambiental",
+          "url": "https://www.madrid.es"
+        },
+        {
+          "name": "Madrid Calle 30, S.A.",
+          "url": "https://www.madrid.es"
+        },
+        {
+          "name": "Agencia Tributaria de Madrid",
+          "url": "https://www.madrid.es"
+        },
+        {
+          "name": "Direcci\u00f3n General de Contrataci\u00f3n y Servicios",
+          "url": "https://www.madrid.es"
+        },
+        {
+          "name": "Direcci\u00f3n General de Gesti\u00f3n del Patrimonio",
+          "url": "https://www.madrid.es"
+        },
+        {
+          "name": "Direcci\u00f3n General de Conservaci\u00f3n de V\u00edas P\u00fablicas",
+          "url": "https://www.madrid.es"
+        },
+        {
+          "name": "Direcci\u00f3n General de Transparencia y Calidad",
+          "url": "https://www.madrid.es"
+        },
+        {
+          "name": "Madrid Salud",
+          "url": "https://www.madrid.es"
+        },
+        {
+          "name": "Direcci\u00f3n General de Presupuestos",
+          "url": "https://www.madrid.es"
+        },
+        {
+          "name": "Direcci\u00f3n General de Samur-Protecci\u00f3n Civil",
+          "url": "https://www.madrid.es"
+        },
+        {
+          "name": "Direcci\u00f3n General de Bomberos",
+          "url": "https://www.madrid.es"
+        },
+        {
+          "name": "Direcci\u00f3n General de la Polic\u00eda Municipal",
+          "url": "https://www.madrid.es"
+        },
+        {
+          "name": "Direcci\u00f3n General de Inclusi\u00f3n Social y Cooperaci\u00f3n al Desarrollo",
+          "url": "https://www.madrid.es"
+        },
+        {
+          "name": "Direcci\u00f3n General de Servicios Sociales y Atenci\u00f3n a la Discapacidad",
+          "url": "https://www.madrid.es"
+        },
+        {
+          "name": "Direcci\u00f3n General de Gesti\u00f3n y Vigilancia de la Circulaci\u00f3n",
+          "url": "https://www.madrid.es"
+        },
+        {
+          "name": "Direcci\u00f3n de Tecnolog\u00eda e Innovaci\u00f3n de EMT MADRID",
+          "url": "https://datos.emtmadrid.es/"
+        },
+        {
+          "name": "Empresa Municipal de Transportes, S.A.",
+          "url": "https://www.madrid.es"
+        },
+        {
+          "name": "Direcci\u00f3n General de Planificaci\u00f3n e Infraestructuras de Movilidad",
+          "url": "https://www.madrid.es"
+        },
+        {
+          "name": "Direcci\u00f3n General de Planificaci\u00f3n Estrat\u00e9gica",
+          "url": "https://www.madrid.es"
+        },
+        {
+          "name": "Direcci\u00f3n General de Edificaci\u00f3n, Agencia de Actividades, Direcci\u00f3n General de Coordinaci\u00f3n Territorial y Desconcentraci\u00f3n",
+          "url": "https://www.madrid.es"
+        },
+        {
+          "name": "Empresa Municipal de la Vivienda y el Suelo (EMVS)",
+          "url": "https://www.madrid.es"
+        },
+        {
+          "name": "Agencia de Actividades",
+          "url": "https://www.madrid.es"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 133
       },
@@ -2405,8 +3945,8 @@
       "portolan_registry:asset_count": 332,
       "portolan_registry:total_size_bytes": 197992234,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -2437,10 +3977,22 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-08-14T00:00:00Z",
       "portolan_registry:first_registered": "2026-08-14T15:00:50+00:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Microsoft",
+          "url": "https://github.com/microsoft/RoadDetections"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "Nissim Lebovits"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "Radiant Earth",
+        "url": "https://radiant.earth"
+      },
       "portolan_registry:licenses": {
         "ODbL-1.0": 1
       },
@@ -2450,8 +4002,8 @@
       "portolan_registry:asset_count": 6,
       "portolan_registry:total_size_bytes": 2808813790,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -2486,10 +4038,18 @@
       },
       "portolan_registry:updated": "2026-08-16T00:00:00Z",
       "portolan_registry:first_registered": "2026-08-17T11:42:58+00:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Agen\u021bia Geodezie, Cartografie \u0219i Cadastru (AGCC)",
+          "url": "https://geodata.gov.md/"
+        }
+      ],
       "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:host": {
+        "name": "Source Cooperative",
+        "url": "https://source.coop/nlebovits/moldova-geodata"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 75
       },
@@ -2499,8 +4059,8 @@
       "portolan_registry:asset_count": 346,
       "portolan_registry:total_size_bytes": 3639226729,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
@@ -2535,10 +4095,43 @@
       },
       "portolan_registry:updated": "2026-09-20T07:15:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Landeshauptstadt M\u00fcnchen, Referat f\u00fcr Klima- und Umweltschutz",
+          "url": "https://opendata.muenchen.de/organization/referat-fuer-klima-und-umweltschutz"
+        },
+        {
+          "name": "Landeshauptstadt M\u00fcnchen, Kommunalreferat \u2013 GeodatenService M\u00fcnchen",
+          "url": "https://opendata.muenchen.de/organization/geodatenservice-muenchen"
+        },
+        {
+          "name": "Landeshauptstadt M\u00fcnchen, Baureferat",
+          "url": "https://opendata.muenchen.de/organization/baureferat"
+        },
+        {
+          "name": "Landeshauptstadt M\u00fcnchen, Mobilit\u00e4tsreferat",
+          "url": "https://opendata.muenchen.de/organization/mobilitaetsreferat"
+        },
+        {
+          "name": "Landeshauptstadt M\u00fcnchen, Sozialreferat",
+          "url": "https://opendata.muenchen.de/organization/sozialreferat"
+        },
+        {
+          "name": "Landeshauptstadt M\u00fcnchen, Kreisverwaltungsreferat",
+          "url": "https://opendata.muenchen.de/organization/kreisverwaltungsreferat"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "DL-DE-BY-2.0": 34
       },
@@ -2548,8 +4141,8 @@
       "portolan_registry:asset_count": 211,
       "portolan_registry:total_size_bytes": 28020407,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -2580,10 +4173,23 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-09-23T14:30:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "NOAA National Hurricane Center",
+          "url": "https://www.nhc.noaa.gov/gis/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "other": 43
       },
@@ -2593,8 +4199,8 @@
       "portolan_registry:asset_count": 338,
       "portolan_registry:total_size_bytes": 1931536519,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -2629,10 +4235,43 @@
       },
       "portolan_registry:updated": "2026-09-20T12:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Milj\u00f8direktoratet",
+          "url": "https://www.miljodirektoratet.no/"
+        },
+        {
+          "name": "Landbruksdirektoratet",
+          "url": "https://www.landbruksdirektoratet.no/"
+        },
+        {
+          "name": "Norges vassdrags- og energidirektorat (NVE)",
+          "url": "https://www.nve.no/"
+        },
+        {
+          "name": "Norges geologiske unders\u00f8kelse (NGU)",
+          "url": "https://www.ngu.no/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        },
+        {
+          "name": "Milj\u00f8direktoratet",
+          "url": "https://www.miljodirektoratet.no/"
+        },
+        {
+          "name": "Norges vassdrags- og energidirektorat (NVE)",
+          "url": "https://www.nve.no/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "CC-BY-3.0": 1,
         "NLOD-1.0": 13,
@@ -2644,8 +4283,8 @@
       "portolan_registry:asset_count": 220,
       "portolan_registry:total_size_bytes": 1048315163,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -2680,10 +4319,59 @@
       },
       "portolan_registry:updated": "2026-09-20T12:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Ministerium f\u00fcr Kinder, Jugend, Familie, Gleichstellung, Flucht und Integration des Landes Nordrhein-Westfalen",
+          "url": "https://www.mkjfgfi.nrw/"
+        },
+        {
+          "name": "Ministerium f\u00fcr Arbeit, Gesundheit und Soziales des Landes Nordrhein-Westfalen",
+          "url": "https://www.mags.nrw/"
+        },
+        {
+          "name": "Ministerium f\u00fcr Schule und Bildung des Landes Nordrhein-Westfalen",
+          "url": "https://www.schulministerium.nrw/"
+        },
+        {
+          "name": "Bezirksregierung Arnsberg",
+          "url": "https://www.bra.nrw.de/"
+        },
+        {
+          "name": "Geobasis NRW",
+          "url": "https://www.bezreg-koeln.nrw.de/geobasis-nrw"
+        },
+        {
+          "name": "Landesamt f\u00fcr Natur, Umwelt und Klima Nordrhein-Westfalen",
+          "url": "https://www.lanuk.nrw.de/"
+        },
+        {
+          "name": "Der Obere Gutachterausschuss f\u00fcr Grundst\u00fcckswerte im Land Nordrhein-Westfalen c/o Bezirksregierung K\u00f6ln",
+          "url": "https://www.boris.nrw.de/"
+        },
+        {
+          "name": "Landesbetrieb Stra\u00dfenbau NRW",
+          "url": "https://www.strassen.nrw.de/"
+        },
+        {
+          "name": "Landesbetrieb Wald und Holz Nordrhein-Westfalen",
+          "url": "https://www.wald-und-holz.nrw.de/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "Information und Technik Nordrhein-Westfalen (IT.NRW)",
+          "url": "https://www.it.nrw/"
+        },
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "DL-DE-BY-2.0": 5,
         "DL-DE-ZERO-2.0": 19
@@ -2694,8 +4382,8 @@
       "portolan_registry:asset_count": 151,
       "portolan_registry:total_size_bytes": 813074815,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -2726,10 +4414,23 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-10-06T17:48:03Z",
       "portolan_registry:first_registered": "2026-10-06T22:54:29+00:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "OpenAerialMap contributors",
+          "url": "https://imagery.hotosm.org/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "Humanitarian OpenStreetMap Team (HOT)",
+          "url": "https://www.hotosm.org/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "Jeff",
+        "url": "https://source.coop/geospatialjeff/oam-portolan"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 1,
         "CC-BY-NC-4.0": 1,
@@ -2741,8 +4442,8 @@
       "portolan_registry:asset_count": 6,
       "portolan_registry:total_size_bytes": 13028813,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
@@ -2777,10 +4478,35 @@
       },
       "portolan_registry:updated": "2026-09-23T14:35:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Jamaica Social Development Commission",
+          "url": "https://sdc.gov.jm/"
+        },
+        {
+          "name": "Statistical Institute of Jamaica (STATIN)",
+          "url": "https://statinja.gov.jm/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "OCHA Field Information Services Section (FISS)",
+          "url": "https://data.humdata.org/organization/ocha-fiss"
+        },
+        {
+          "name": "OCHA Regional Office for Latin America and the Caribbean (ROLAC)",
+          "url": "https://data.humdata.org/organization/ocha-rolac"
+        },
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "CC-BY-3.0-IGO": 3
       },
@@ -2790,8 +4516,8 @@
       "portolan_registry:asset_count": 16,
       "portolan_registry:total_size_bytes": 4282630,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -2826,10 +4552,23 @@
       },
       "portolan_registry:updated": "2026-09-21T12:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Bundesamt f\u00fcr Eich- und Vermessungswesen (BEV)",
+          "url": "https://www.bev.gv.at/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 31
       },
@@ -2839,8 +4578,8 @@
       "portolan_registry:asset_count": 223,
       "portolan_registry:total_size_bytes": 3863129698,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -2857,7 +4596,7 @@
       "type": "application/json",
       "title": "OpenStreetMap for North America",
       "bbox": [
-        -177.2002,
+        172.3478,
         14.52491,
         -52.3237,
         83.336297
@@ -2873,23 +4612,40 @@
         "type": "image/png",
         "title": "Geomermaids"
       },
-      "portolan_registry:updated": "2026-10-20T10:02:23Z",
+      "portolan_registry:updated": "2026-10-21T10:03:18Z",
       "portolan_registry:first_registered": "2026-09-22T17:28:55-04:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "OpenStreetMap contributors",
+          "url": "https://www.openstreetmap.org/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "Geofabrik GmbH",
+          "url": "https://download.geofabrik.de/"
+        },
+        {
+          "name": "Geomermaids",
+          "url": "https://geoparquet.geomermaids.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "Geomermaids",
+        "url": "https://geoparquet.geomermaids.com/"
+      },
       "portolan_registry:licenses": {
         "ODbL-1.0": 16
       },
       "portolan_registry:collection_count": 16,
-      "portolan_registry:feature_count": 240407050,
+      "portolan_registry:feature_count": 240481440,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 1581,
-      "portolan_registry:total_size_bytes": 27656313710,
+      "portolan_registry:total_size_bytes": 27655818015,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -2920,10 +4676,18 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-08-19T00:00:00Z",
       "portolan_registry:first_registered": "2026-08-27T19:10:37+02:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Overture Maps Foundation",
+          "url": "https://overturemaps.org/"
+        }
+      ],
       "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:host": {
+        "name": "Amazon Web Services",
+        "url": "https://registry.opendata.aws/"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 1,
         "CC0-1.0": 1,
@@ -2936,8 +4700,8 @@
       "portolan_registry:asset_count": 76,
       "portolan_registry:total_size_bytes": null,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -2968,10 +4732,69 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-08-14T21:21:48Z",
       "portolan_registry:first_registered": "2026-06-09T10:27:10+00:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Municipalidad de Pergamino",
+          "url": "https://pergamino.ar/servicios/ide-pergamino/"
+        },
+        {
+          "name": "Agencia de Recaudaci\u00f3n de la Provincia de Buenos Aires (ARBA)",
+          "url": "https://carto.arba.gov.ar/"
+        },
+        {
+          "name": "Instituto Geogr\u00e1fico Nacional (IGN)",
+          "url": "https://www.ign.gob.ar/"
+        },
+        {
+          "name": "Universidad Nacional del Noroeste de la Provincia de Buenos Aires",
+          "url": "https://unnoba.edu.ar/"
+        },
+        {
+          "name": "IDECOM - Ente Nacional de Comunicaciones (ENACOM)",
+          "url": "https://www.enacom.gob.ar/"
+        },
+        {
+          "name": "Provincia de Buenos Aires"
+        },
+        {
+          "name": "Instituto Nacional de Estad\u00edstica y Censos (INDEC)",
+          "url": "https://www.indec.gob.ar/"
+        },
+        {
+          "name": "Consejo Nacional de Investigaciones Cient\u00edficas y T\u00e9cnicas (CONICET)",
+          "url": "https://www.conicet.gov.ar/"
+        },
+        {
+          "name": "UTE IATASA - ABS S.A."
+        },
+        {
+          "name": "Instituto Nacional de Tecnolog\u00eda Agropecuaria (INTA)",
+          "url": "https://www.argentina.gob.ar/inta"
+        },
+        {
+          "name": "Instituto Nacional del Agua (INA)",
+          "url": "https://www.argentina.gob.ar/ina"
+        },
+        {
+          "name": "Correo Oficial de la Rep\u00fablica Argentina",
+          "url": "https://www.correoargentino.com.ar/"
+        },
+        {
+          "name": "Base de Asentamientos Humanos de la Rep\u00fablica Argentina (BAHRA)",
+          "url": "http://www.bahra.gob.ar/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "Municipalidad de Pergamino",
+          "url": "https://pergamino.ar/servicios/ide-pergamino/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "Source Cooperative",
+        "url": "https://source.coop/nlebovits/pergamino-ide"
+      },
       "portolan_registry:licenses": {
         "CC-BY-SA-4.0": 183
       },
@@ -2981,8 +4804,8 @@
       "portolan_registry:asset_count": 1010,
       "portolan_registry:total_size_bytes": 388636712,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -3013,10 +4836,22 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-08-26T00:00:00Z",
       "portolan_registry:first_registered": "2026-08-27T06:08:48+00:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "City of Philadelphia",
+          "url": "https://opendataphilly.org/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "Nissim Lebovits"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "Source Cooperative",
+        "url": "https://source.coop/"
+      },
       "portolan_registry:licenses": {
         "other": 10
       },
@@ -3026,8 +4861,8 @@
       "portolan_registry:asset_count": 61,
       "portolan_registry:total_size_bytes": 947523727,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
@@ -3062,10 +4897,23 @@
       },
       "portolan_registry:updated": null,
       "portolan_registry:first_registered": "2026-08-20T11:53:52+02:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Planet Labs PBC",
+          "url": "https://www.planet.com/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "Planet Labs PBC",
+          "url": "https://www.planet.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "Planet Crisis Response Program",
+        "url": "https://www.planet.com/disasterdata/"
+      },
       "portolan_registry:licenses": {
         "CC-BY-NC-4.0": 40
       },
@@ -3075,8 +4923,8 @@
       "portolan_registry:asset_count": 80,
       "portolan_registry:total_size_bytes": 20686314,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
@@ -3107,10 +4955,23 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-09-21T00:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "G\u0142\u00f3wny Urz\u0105d Geodezji i Kartografii (GUGiK)",
+          "url": "http://www.gugik.gov.pl/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 6
       },
@@ -3120,8 +4981,8 @@
       "portolan_registry:asset_count": 40,
       "portolan_registry:total_size_bytes": 940593841,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -3156,10 +5017,55 @@
       },
       "portolan_registry:updated": "2026-08-01T20:56:42Z",
       "portolan_registry:first_registered": "2026-06-09T10:55:36+02:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Rijkswaterstaat",
+          "url": "https://www.rijkswaterstaat.nl/"
+        },
+        {
+          "name": "Het Kadaster",
+          "url": "https://www.kadaster.nl/"
+        },
+        {
+          "name": "Centraal Bureau voor de Statistiek",
+          "url": "https://www.cbs.nl/"
+        },
+        {
+          "name": "Rijksdienst voor Ondernemend Nederland",
+          "url": "https://www.rvo.nl/"
+        },
+        {
+          "name": "Rijksdienst voor het Cultureel Erfgoed",
+          "url": "https://www.cultureelerfgoed.nl/"
+        },
+        {
+          "name": "Beeldmateriaal Nederland",
+          "url": "https://www.beeldmateriaal.nl/"
+        },
+        {
+          "name": "3D Geoinformation Research Group, TU Delft",
+          "url": "https://3d.bk.tudelft.nl/"
+        },
+        {
+          "name": "3DGI",
+          "url": "https://3dgi.xyz/"
+        },
+        {
+          "name": "Ministerie van Volkshuisvesting en Ruimtelijke Ordening",
+          "url": "https://www.rijksoverheid.nl/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "GeoTiles (TU Delft)",
+          "url": "https://geotiles.citg.tudelft.nl/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "Source Cooperative",
+        "url": "https://source.coop/cholmes/portolan-nl"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 6,
         "CC0-1.0": 21,
@@ -3171,8 +5077,8 @@
       "portolan_registry:asset_count": 269,
       "portolan_registry:total_size_bytes": null,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
@@ -3207,10 +5113,39 @@
       },
       "portolan_registry:updated": "2026-09-19T15:30:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Institut pl\u00e1nov\u00e1n\u00ed a rozvoje hlavn\u00edho m\u011bsta Prahy (IPR Praha)",
+          "url": "https://geoportalpraha.cz/"
+        },
+        {
+          "name": "ROPID (Region\u00e1ln\u00ed organiz\u00e1tor Pra\u017esk\u00e9 integrovan\u00e9 dopravy)",
+          "url": "https://pid.cz/"
+        },
+        {
+          "name": "Technick\u00e1 spr\u00e1va komunikac\u00ed hl. m. Prahy, a.s. (TSK)",
+          "url": "https://www.tsk-praha.cz/"
+        },
+        {
+          "name": "Magistr\u00e1t hlavn\u00edho m\u011bsta Prahy (MHMP)",
+          "url": "https://www.praha.eu/"
+        },
+        {
+          "name": "EKOLA group, spol. s r.o.",
+          "url": "https://www.ekolagroup.cz/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 33
       },
@@ -3220,8 +5155,8 @@
       "portolan_registry:asset_count": 185,
       "portolan_registry:total_size_bytes": 559439571,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -3256,10 +5191,23 @@
       },
       "portolan_registry:updated": "2026-08-20T12:05:00Z",
       "portolan_registry:first_registered": "2026-08-20T12:06:35+02:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Rijkswaterstaat",
+          "url": "https://www.rijkswaterstaat.nl"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "Studio Bereikbaar",
+          "url": "https://www.studiobereikbaar.nl"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "Studio Bereikbaar",
+        "url": "https://www.studiobereikbaar.nl"
+      },
       "portolan_registry:licenses": {
         "CC0-1.0": 3
       },
@@ -3269,8 +5217,8 @@
       "portolan_registry:asset_count": 23,
       "portolan_registry:total_size_bytes": 1553059955,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
@@ -3301,10 +5249,27 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-09-20T15:40:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "NatureScot",
+          "url": "https://www.nature.scot/"
+        },
+        {
+          "name": "Scottish Forestry",
+          "url": "https://www.forestry.gov.scot/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "other": 20
       },
@@ -3314,8 +5279,8 @@
       "portolan_registry:asset_count": 138,
       "portolan_registry:total_size_bytes": 907416600,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -3346,10 +5311,43 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": null,
       "portolan_registry:first_registered": "2026-08-20T12:40:16+00:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "official",
+      "portolan_registry:producers": [
+        {
+          "name": "CONAB",
+          "url": "https://www.conab.gov.br/"
+        },
+        {
+          "name": "MAPA",
+          "url": "https://www.gov.br/agricultura/"
+        },
+        {
+          "name": "ANP",
+          "url": "https://www.gov.br/anp/"
+        },
+        {
+          "name": "IBGE",
+          "url": "https://www.ibge.gov.br/"
+        },
+        {
+          "name": "Trase",
+          "url": "https://trase.earth/"
+        },
+        {
+          "name": "World Resources Institute",
+          "url": "https://github.com/wri/rural-land"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "World Resources Institute",
+          "url": "https://github.com/wri/rural-land"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "World Resources Institute",
+        "url": "https://github.com/wri/rural-land"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 1
       },
@@ -3359,8 +5357,8 @@
       "portolan_registry:asset_count": 10,
       "portolan_registry:total_size_bytes": 13844607,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -3395,10 +5393,23 @@
       },
       "portolan_registry:updated": "2026-09-03T15:44:10Z",
       "portolan_registry:first_registered": "2026-09-05T03:26:16+02:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Provincia Autonoma di Bolzano \u2013 Alto Adige / Autonome Provinz Bozen \u2013 S\u00fcdtirol",
+          "url": "https://geoservices1.civis.bz.it/geoserver/ows"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "Cayetano Benavent \u2014 community mirror for the OGC Metadata Summit 2026 (not the Province)",
+          "url": "https://github.com/portolan-sdi"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "Cayetano Benavent \u2014 community mirror for the OGC Metadata Summit 2026 (not the Province)",
+        "url": "https://github.com/portolan-sdi"
+      },
       "portolan_registry:licenses": {
         "CC0-1.0": 69
       },
@@ -3408,8 +5419,8 @@
       "portolan_registry:asset_count": 414,
       "portolan_registry:total_size_bytes": 149277573,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -3444,10 +5455,106 @@
       },
       "portolan_registry:updated": "2026-08-14T12:21:16+00:00",
       "portolan_registry:first_registered": "2026-08-11T15:36:02+00:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "City of St. Louis \u2014 Assessor's Office",
+          "url": "https://www.stlouis-mo.gov/data/datasets/dataset.cfm?id=82"
+        },
+        {
+          "name": "City of St. Louis \u2014 Planning and Urban Design",
+          "url": "https://www.stlouis-mo.gov/data/datasets/dataset.cfm?id=78"
+        },
+        {
+          "name": "City of St. Louis \u2014 St. Louis Development Corporation",
+          "url": "https://www.stlouis-mo.gov/data/datasets/dataset.cfm?id=55"
+        },
+        {
+          "name": "City of St. Louis \u2014 Information Technology Services Agency",
+          "url": "https://www.stlouis-mo.gov/data/datasets/dataset.cfm?id=67"
+        },
+        {
+          "name": "Overture Maps Foundation",
+          "url": "https://overturemaps.org/"
+        },
+        {
+          "name": "City of St. Louis \u2014 Board of Election Commissioners",
+          "url": "https://www.stlouis-mo.gov/data/datasets/dataset.cfm?id=124"
+        },
+        {
+          "name": "City of St. Louis \u2014 Neighborhood Stabilization / CSB",
+          "url": "https://www.stlouis-mo.gov/data/datasets/dataset.cfm?id=5"
+        },
+        {
+          "name": "City of St. Louis \u2014 Community Development Administration",
+          "url": "https://stlcity.maps.arcgis.com/home/item.html?id=e71e3ebca1f345a4b7db134d30c5d9ff"
+        },
+        {
+          "name": "City of St. Louis \u2014 Building Commissioner",
+          "url": "https://www.stlouis-mo.gov/data/datasets/dataset.cfm?id=51"
+        },
+        {
+          "name": "City of St. Louis \u2014 Streets - Director's Office",
+          "url": "https://www.stlouis-mo.gov/data/datasets/dataset.cfm?id=68"
+        },
+        {
+          "name": "City of St. Louis \u2014 Streets - Street Division",
+          "url": "https://www.stlouis-mo.gov/data/datasets/dataset.cfm?id=17"
+        },
+        {
+          "name": "City of St. Louis \u2014 Police Department",
+          "url": "https://www.stlouis-mo.gov/data/datasets/dataset.cfm?id=83"
+        },
+        {
+          "name": "City of St. Louis \u2014 Metropolitan Police Department",
+          "url": "https://www.stlouis-mo.gov/data/datasets/dataset.cfm?id=69"
+        },
+        {
+          "name": "City of St. Louis \u2014 City Emergency Management Agency",
+          "url": "https://www.stlouis-mo.gov/data/datasets/dataset.cfm?id=132"
+        },
+        {
+          "name": "City of St. Louis \u2014 Board of Public Service",
+          "url": "https://stlcity.maps.arcgis.com/home/item.html?id=4a08499ad4054caca42215e4c51aac0e"
+        },
+        {
+          "name": "City of St. Louis \u2014 Forestry",
+          "url": "https://www.stlouis-mo.gov/data/datasets/dataset.cfm?id=121"
+        },
+        {
+          "name": "City of St. Louis \u2014 Parks",
+          "url": "https://www.stlouis-mo.gov/data/datasets/dataset.cfm?id=46"
+        },
+        {
+          "name": "City of St. Louis \u2014 Environmental Health Services",
+          "url": "https://www.stlouis-mo.gov/data/datasets/dataset.cfm?id=130"
+        },
+        {
+          "name": "City of St. Louis \u2014 Water Division",
+          "url": "https://stlcity.maps.arcgis.com/home/item.html?id=80c69343cc2d418fb1796a342a863aac"
+        },
+        {
+          "name": "U.S. Census Bureau",
+          "url": "https://www.census.gov/programs-surveys/acs.html"
+        },
+        {
+          "name": "U.S. Census Bureau \u2014 Longitudinal Employer-Household Dynamics",
+          "url": "https://lehd.ces.census.gov/"
+        },
+        {
+          "name": "Mapping Inequality, Digital Scholarship Lab, University of Richmond",
+          "url": "https://dsl.richmond.edu/panorama/redlining/"
+        },
+        {
+          "name": "Centers for Disease Control and Prevention",
+          "url": "https://www.cdc.gov/places/"
+        }
+      ],
       "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:host": {
+        "name": "TGE Labs",
+        "url": "https://github.com/cholmes/portolan-catalog-stlouis"
+      },
       "portolan_registry:licenses": {
         "CC-BY-NC-SA-4.0": 1,
         "ODbL-1.0": 8,
@@ -3459,8 +5566,8 @@
       "portolan_registry:asset_count": 509,
       "portolan_registry:total_size_bytes": 1327349941582,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
@@ -3483,7 +5590,7 @@
         83.62564277629315
       ],
       "portolan_registry:id": "staging",
-      "portolan_registry:status": "valid",
+      "portolan_registry:status": "stale",
       "portolan_registry:api_type": "static",
       "portolan_registry:spec_version": "0.2.0",
       "portolan_registry:spec_version_mixed": false,
@@ -3505,9 +5612,9 @@
       "portolan_registry:total_size_bytes": 52954370343,
       "portolan_registry:counts_partial": false,
       "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:stale_since": null,
-      "portolan_registry:failure_reason": null,
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:stale_since": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:failure_reason": "403 Client Error: Forbidden for url: https://portolan-hydroatlas-mirror.s3.us-east-2.amazonaws.com/catalog.json",
       "portolan_registry:stac_valid": false,
       "portolan_registry:has_agents_md": true,
       "portolan_registry:has_readme": true,
@@ -3536,10 +5643,23 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-10-06T20:29:15Z",
       "portolan_registry:first_registered": "2026-10-09T23:26:45-06:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "District of Summerland",
+          "url": "https://www.summerland.ca/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "James Banting",
+          "url": "https://source.coop/jbants"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "Source Cooperative",
+        "url": "https://source.coop/jbants/summerland-open-data"
+      },
       "portolan_registry:licenses": {
         "other": 49
       },
@@ -3549,8 +5669,8 @@
       "portolan_registry:asset_count": 195,
       "portolan_registry:total_size_bytes": 31590275,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -3585,10 +5705,27 @@
       },
       "portolan_registry:updated": "2026-09-21T12:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Naturv\u00e5rdsverket",
+          "url": "https://www.naturvardsverket.se/"
+        },
+        {
+          "name": "Statistiska centralbyr\u00e5n (SCB)",
+          "url": "https://www.scb.se/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "CC0-1.0": 37
       },
@@ -3598,8 +5735,8 @@
       "portolan_registry:asset_count": 251,
       "portolan_registry:total_size_bytes": 1690141453,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -3630,10 +5767,22 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": null,
       "portolan_registry:first_registered": "2026-09-14T17:30:21+00:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
+      "portolan_registry:kind": "official",
+      "portolan_registry:producers": [
+        {
+          "name": "Arizona State University",
+          "url": "https://www.asu.edu"
+        },
+        {
+          "name": "World Resources Institute",
+          "url": "https://www.wri.org"
+        }
+      ],
       "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:host": {
+        "name": "World Resources Institute",
+        "url": "https://www.wri.org"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 7
       },
@@ -3643,8 +5792,8 @@
       "portolan_registry:asset_count": 99,
       "portolan_registry:total_size_bytes": 59127700260,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -3679,10 +5828,18 @@
       },
       "portolan_registry:updated": "2026-08-02T18:02:50Z",
       "portolan_registry:first_registered": "2026-08-03T02:36:57+00:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "TriMet",
+          "url": "https://developer.trimet.org/gis/"
+        }
+      ],
       "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:host": {
+        "name": "Chris Holmes",
+        "url": "https://github.com/cholmes/portolan-catalog-trimet"
+      },
       "portolan_registry:licenses": {
         "other": 8
       },
@@ -3692,8 +5849,8 @@
       "portolan_registry:asset_count": 74,
       "portolan_registry:total_size_bytes": 34230556,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
@@ -3724,10 +5881,27 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-09-23T00:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "UNICEF Data and Analytics (HQ)",
+          "url": "https://data.unicef.org/resources/childrens-climate-risk-report-2026/"
+        },
+        {
+          "name": "Natural Earth",
+          "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 3
       },
@@ -3737,8 +5911,8 @@
       "portolan_registry:asset_count": 12,
       "portolan_registry:total_size_bytes": 28545549,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -3755,7 +5929,7 @@
       "type": "application/json",
       "title": "US Census Bureau TIGER/Line",
       "bbox": [
-        -178.4438,
+        144.5632,
         -14.601828,
         -64.5126,
         71.439857
@@ -3773,10 +5947,23 @@
       },
       "portolan_registry:updated": "2026-10-13T16:36:11Z",
       "portolan_registry:first_registered": "2026-10-12T16:29:46+00:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "U.S. Census Bureau, Geography Division",
+          "url": "https://www.census.gov/geographies/mapping-files.html"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "Geomermaids",
+          "url": "https://geoparquet.geomermaids.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "Geomermaids",
+        "url": "https://geoparquet.geomermaids.com/"
+      },
       "portolan_registry:licenses": {
         "other": 19
       },
@@ -3786,8 +5973,8 @@
       "portolan_registry:asset_count": 95,
       "portolan_registry:total_size_bytes": 2579493469,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -3822,10 +6009,47 @@
       },
       "portolan_registry:updated": "2026-09-20T12:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Onroerend Erfgoed",
+          "url": "https://www.onroerenderfgoed.be/"
+        },
+        {
+          "name": "agentschap Digitaal Vlaanderen",
+          "url": "https://www.vlaanderen.be/digitaal-vlaanderen"
+        },
+        {
+          "name": "Departement Omgeving",
+          "url": "https://omgeving.vlaanderen.be/"
+        },
+        {
+          "name": "Agentschap voor Natuur en Bos",
+          "url": "https://www.natuurenbos.be/"
+        },
+        {
+          "name": "Departement Mobiliteit en Openbare Werken, Afdeling Beleid",
+          "url": "https://www.vlaanderen.be/departement-mobiliteit-en-openbare-werken"
+        },
+        {
+          "name": "Agentschap Wegen en Verkeer",
+          "url": "https://wegenenverkeer.be/"
+        },
+        {
+          "name": "Vlaamse Milieumaatschappij",
+          "url": "https://www.vmm.be/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "other": 34
       },
@@ -3835,8 +6059,8 @@
       "portolan_registry:asset_count": 211,
       "portolan_registry:total_size_bytes": 354390228,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -3871,10 +6095,47 @@
       },
       "portolan_registry:updated": "2026-09-21T00:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Welsh Government (Llywodraeth Cymru)",
+          "url": "https://datamap.gov.wales/"
+        },
+        {
+          "name": "Natural Resources Wales / Cyfoeth Naturiol Cymru",
+          "url": "https://naturalresources.wales/?lang=en"
+        },
+        {
+          "name": "Democracy and Boundary Commission Cymru",
+          "url": "https://dbcc.gov.wales/"
+        },
+        {
+          "name": "Office for National Statistics",
+          "url": "https://www.ons.gov.uk/"
+        },
+        {
+          "name": "Royal Commission on the Ancient and Historical Monuments of Wales (RCAHMW)",
+          "url": "https://rcahmw.gov.uk/"
+        },
+        {
+          "name": "Cadw, the Welsh Government's historic environment service",
+          "url": "https://cadw.gov.wales/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        },
+        {
+          "name": "Welsh Government DataMapWales (Map Data Cymru)",
+          "url": "https://datamap.gov.wales/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "OGL-UK-3.0": 40
       },
@@ -3884,8 +6145,8 @@
       "portolan_registry:asset_count": 245,
       "portolan_registry:total_size_bytes": 836295864,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -3916,10 +6177,23 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-10-12T00:00:00Z",
       "portolan_registry:first_registered": "2026-10-12T15:26:20+02:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "CSIRO",
+          "url": "https://www.csiro.au/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CSIRO",
+          "url": "https://www.csiro.au/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "Portolan Mirrors",
+        "url": "https://source.coop/portolan-mirrors/wb-fwi"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 3
       },
@@ -3929,8 +6203,8 @@
       "portolan_registry:asset_count": 12,
       "portolan_registry:total_size_bytes": 6947155,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -3965,10 +6239,47 @@
       },
       "portolan_registry:updated": "2026-09-19T14:30:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Stadt Wien",
+          "url": "https://digitales.wien.gv.at/open-data/"
+        },
+        {
+          "name": "Stadt Wien \u2013 Magistratsabteilung 41 (Stadtvermessung)",
+          "url": "https://www.wien.gv.at/stadtentwicklung/stadtvermessung/geodaten/fmzk/"
+        },
+        {
+          "name": "Stadt Wien \u2013 Magistratsabteilung 42 (Wiener Stadtg\u00e4rten)",
+          "url": "https://www.wien.gv.at/umwelt/parks/"
+        },
+        {
+          "name": "Stadt Wien \u2013 Magistratsabteilung 48 (Abfallwirtschaft, Stra\u00dfenreinigung und Fuhrpark)",
+          "url": "https://www.wien.gv.at/umwelt/ma48/"
+        },
+        {
+          "name": "Stadt Wien \u2013 Magistratsabteilung 21 A (Stadtteilplanung und Fl\u00e4chenwidmung Innen-S\u00fcdwest)",
+          "url": "https://www.wien.gv.at/kontakte/ma21a/index.html"
+        },
+        {
+          "name": "Stadt Wien \u2013 Magistratsabteilung 59 (Marktamt)",
+          "url": "https://www.wien.gv.at/freizeit/einkaufen/maerkte/"
+        },
+        {
+          "name": "Stadt Wien \u2013 Magistratsabteilung 18 (Stadtentwicklung und Stadtplanung)",
+          "url": "https://www.wien.gv.at/stadtentwicklung/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 41
       },
@@ -3978,8 +6289,8 @@
       "portolan_registry:asset_count": 261,
       "portolan_registry:total_size_bytes": 323293582,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -4014,10 +6325,23 @@
       },
       "portolan_registry:updated": "2026-09-23T14:40:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "WorldPop, University of Southampton",
+          "url": "https://hub.worldpop.org/geodata/summary?id=50206"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "CC-BY-4.0": 7
       },
@@ -4027,8 +6351,8 @@
       "portolan_registry:asset_count": 23,
       "portolan_registry:total_size_bytes": 16515165,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -4063,10 +6387,87 @@
       },
       "portolan_registry:updated": "2026-09-19T15:30:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
-      "portolan_registry:kind": null,
-      "portolan_registry:producers": [],
-      "portolan_registry:processors": [],
-      "portolan_registry:host": null,
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "GIS-Zentrum, Geomatik + Vermessung, Tiefbau- und Entsorgungsdepartement",
+          "url": "https://data.stadt-zuerich.ch/dataset/geo_adressen_stadt_zuerich"
+        },
+        {
+          "name": "Kataster, Geomatik + Vermessung, Tiefbau- und Entsorgungsdepartement",
+          "url": "https://data.stadt-zuerich.ch/dataset/geo_strassennamenverzeichnis"
+        },
+        {
+          "name": "Schulraumplanung, Schulamt, Schul- und Sportdepartement",
+          "url": "https://data.stadt-zuerich.ch/dataset/geo_schulanlagen"
+        },
+        {
+          "name": "Fr\u00fche Kindheit, Departementssekretariat SD, Sozialdepartement",
+          "url": "https://data.stadt-zuerich.ch/dataset/geo_kindertagesstaette"
+        },
+        {
+          "name": "Arch\u00e4ologie & Denkmalpflege, Amt f\u00fcr St\u00e4dtebau, Hochbaudepartement",
+          "url": "https://data.stadt-zuerich.ch/dataset/geo_denkmalpflege_inventar"
+        },
+        {
+          "name": "Angebot, Statistik Stadt Z\u00fcrich, Pr\u00e4sidialdepartement",
+          "url": "https://data.stadt-zuerich.ch/dataset/geo_gebaeude__und_wohnungsregister_der_stadt_zuerich__gwz__gemaess_gwr_datenmodell"
+        },
+        {
+          "name": "Region Nord, Gr\u00fcn Stadt Z\u00fcrich, Tiefbau- und Entsorgungsdepartement",
+          "url": "https://data.stadt-zuerich.ch/dataset/geo_baumkataster"
+        },
+        {
+          "name": "Produkteverantw.  & Unterst\u00fctzungsfunk., Gr\u00fcn Stadt Z\u00fcrich, Tiefbau- und Entsorgungsdepartement",
+          "url": "https://data.stadt-zuerich.ch/dataset/geo_gruenflaechen"
+        },
+        {
+          "name": "Park- und Gr\u00fcnanlagen, Gr\u00fcn Stadt Z\u00fcrich, Tiefbau- und Entsorgungsdepartement",
+          "url": "https://data.stadt-zuerich.ch/dataset/geo_park"
+        },
+        {
+          "name": "L\u00e4rmschutz, Umwelt- und Gesundheitsschutz, Gesundheits- und Umweltdepartement",
+          "url": "https://data.stadt-zuerich.ch/dataset/geo_laermbelastungskataster_fuer_haupt__und_uebrige_strassen"
+        },
+        {
+          "name": "Artenf\u00f6rderung und Schutzgebiete, Gr\u00fcn Stadt Z\u00fcrich, Tiefbau- und Entsorgungsdepartement",
+          "url": "https://data.stadt-zuerich.ch/dataset/geo_inventar_der_natur__und_landschaftsschutzobjekte_von_kommunaler_bedeutung"
+        },
+        {
+          "name": "Raumentwicklung & Architektur, Amt f\u00fcr St\u00e4dtebau, Hochbaudepartement",
+          "url": "https://data.stadt-zuerich.ch/dataset/geo_nutzungsplanung___kommunale_bau__und_zonenordnung__bzo_"
+        },
+        {
+          "name": "Co-Leitung Direktion Statistik, Statistik Stadt Z\u00fcrich, Pr\u00e4sidialdepartement",
+          "url": "https://data.stadt-zuerich.ch/dataset/geo_statistische_quartiere"
+        },
+        {
+          "name": "GIS, Wasserversorgung, Departement der Industriellen Betriebe",
+          "url": "https://data.stadt-zuerich.ch/dataset/geo_brunnen"
+        },
+        {
+          "name": "Stab, Tiefbauamt, Tiefbau- und Entsorgungsdepartement",
+          "url": "https://data.stadt-zuerich.ch/dataset/geo_fuss__und_velowegnetz"
+        },
+        {
+          "name": "Grundlagen + Strategien, Tiefbauamt, Tiefbau- und Entsorgungsdepartement",
+          "url": "https://data.stadt-zuerich.ch/dataset/geo_oeffentlich_zugaengliche_parkhaeuser"
+        },
+        {
+          "name": "Dienstabteilung Verkehr, Sicherheitsdepartement",
+          "url": "https://data.stadt-zuerich.ch/dataset/geo_signalisierte_geschwindigkeiten"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "CARTO",
+          "url": "https://carto.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "CARTO",
+        "url": "https://carto.com/"
+      },
       "portolan_registry:licenses": {
         "CC0-1.0": 33
       },
@@ -4076,8 +6477,8 @@
       "portolan_registry:asset_count": 209,
       "portolan_registry:total_size_bytes": 159860799,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:last_crawled": "2026-10-20T17:07:48.057967+00:00",
-      "portolan_registry:last_validated": "2026-10-20T17:07:48.057967+00:00",
+      "portolan_registry:last_crawled": "2026-10-21T11:13:40.007683+00:00",
+      "portolan_registry:last_validated": "2026-10-21T11:13:40.007683+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
