@@ -19,6 +19,7 @@ so the answer is assembled per collection and then aggregated. See
 from __future__ import annotations
 
 from collections.abc import Iterable, Mapping, Sequence
+from typing import Any
 from urllib.parse import urlsplit
 
 PRODUCER = "producer"
@@ -34,7 +35,7 @@ def _netloc(url: object) -> str:
     return host.removeprefix("www.")
 
 
-def _identities(provider: Mapping) -> set[str]:
+def _identities(provider: Mapping[str, Any]) -> set[str]:
     """Every handle by which this provider entry names one organization.
 
     Two entries are the same organization when these sets intersect, so a URL
@@ -66,12 +67,12 @@ def _identities(provider: Mapping) -> set[str]:
     return handles
 
 
-def _roles_of(provider: Mapping) -> list:
+def _roles_of(provider: Mapping[str, Any]) -> list[Any]:
     roles = provider.get("roles")
     return roles if isinstance(roles, list) else []
 
 
-def _entries(providers: object) -> list[Mapping]:
+def _entries(providers: object) -> list[Mapping[str, Any]]:
     """The well-formed provider entries in a `providers` value."""
     if not isinstance(providers, Sequence) or isinstance(providers, str):
         return []
@@ -79,7 +80,7 @@ def _entries(providers: object) -> list[Mapping]:
 
 
 def collection_kind(providers: object) -> str | None:
-    """"official", "mirror", or None when the providers do not say.
+    """ "official", "mirror", or None when the providers do not say.
 
     None is the honest answer for a collection that names no producer or no
     host. Two registered catalogs are in that position today, and guessing
@@ -124,7 +125,7 @@ def catalog_kind(kinds: Iterable[str | None]) -> str | None:
     return "official" if seen == {"official"} else "mirror"
 
 
-def _party(provider: Mapping) -> dict:
+def _party(provider: Mapping[str, Any]) -> dict[str, str]:
     """A provider trimmed to what names it. Descriptions can run long."""
     party = {"name": (provider.get("name") or "").strip()}
     url = provider.get("url")
@@ -135,7 +136,7 @@ def _party(provider: Mapping) -> dict:
 
 def parties(
     provider_lists: Iterable[object],
-) -> tuple[list[dict], list[dict], dict | None]:
+) -> tuple[list[dict[str, str]], list[dict[str, str]], dict[str, str] | None]:
     """The producers, the processors, and the host of a catalog.
 
     Three roles, three answers. The producer made the data. The processor
@@ -156,11 +157,11 @@ def parties(
     made the data. Crediting one organization twice under two names is the
     lesser fault, and the catalog chose to write both.
     """
-    producers: list[dict] = []
-    processors: list[dict] = []
+    producers: list[dict[str, str]] = []
+    processors: list[dict[str, str]] = []
     seen_producer: set[str] = set()
     seen_processor: set[str] = set()
-    host: dict | None = None
+    host: dict[str, str] | None = None
 
     for providers in provider_lists:
         for provider in _entries(providers):

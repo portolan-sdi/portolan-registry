@@ -179,9 +179,7 @@ class TestCollectionKind:
     def test_no_producer_says_nothing(self):
         """The `catalog` entry declares a host and a placeholder name."""
         assert (
-            collection_kind(
-                [{"name": "TODO: Add value", "roles": ["host"], "email": "TODO"}]
-            )
+            collection_kind([{"name": "TODO: Add value", "roles": ["host"], "email": "TODO"}])
             is None
         )
 
@@ -241,9 +239,7 @@ class TestParties:
                 ]
             ]
         )
-        assert producers == [
-            {"name": "TriMet", "url": "https://developer.trimet.org/gis/"}
-        ]
+        assert producers == [{"name": "TriMet", "url": "https://developer.trimet.org/gis/"}]
         assert host == {
             "name": "Chris Holmes",
             "url": "https://github.com/cholmes/portolan-catalog-trimet",
@@ -283,9 +279,7 @@ class TestParties:
 
     def test_names_one_producer_once_across_many_collections(self):
         """portolan-nl repeats Source Cooperative on every collection."""
-        one = [
-            {"name": "Het Kadaster", "roles": ["producer"], "url": "https://kadaster.nl"}
-        ]
+        one = [{"name": "Het Kadaster", "roles": ["producer"], "url": "https://kadaster.nl"}]
         producers, _, _ = parties([one, one, one])
         assert producers == [{"name": "Het Kadaster", "url": "https://kadaster.nl"}]
 
@@ -355,12 +349,8 @@ class TestParties:
                 ]
             ]
         )
-        assert [p["name"] for p in producers] == [
-            "Instituto Geográfico Nacional (Argentina)"
-        ]
-        assert processors == [
-            {"name": "Nissim Lebovits", "url": "https://radiant.earth/"}
-        ]
+        assert [p["name"] for p in producers] == ["Instituto Geográfico Nacional (Argentina)"]
+        assert processors == [{"name": "Nissim Lebovits", "url": "https://radiant.earth/"}]
         assert host == {"name": "Source Cooperative", "url": "https://source.coop/"}
 
     def test_one_party_can_hold_the_processor_and_the_host_role(self):

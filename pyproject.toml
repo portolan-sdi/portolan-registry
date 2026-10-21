@@ -87,3 +87,7 @@ exclude = [".venv", "scripts/tests", ".claude"]
 source = ["scripts"]
 # pip_audit_ignores.py is a copy of the portolan-ops template, and ops tests it.
 omit = ["scripts/tests/*", "scripts/pip_audit_ignores.py"]
+
+[tool.codespell]
+# TGE Labs hosts st-louis-open-data-mirror. The test suite names it.
+ignore-words-list = "tge"

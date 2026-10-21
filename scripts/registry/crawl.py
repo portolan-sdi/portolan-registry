@@ -96,7 +96,7 @@ class CollectionSummary:
     # The collection's own `providers`, unmodified. The spec asks every
     # Collection for them and asks nothing of a Catalog, so this is where
     # official-vs-mirror is decided (registry/provenance.py).
-    providers: list | None = None
+    providers: list[Any] | None = None
 
 
 class CrawlResult(TypedDict, total=False):
@@ -120,9 +120,9 @@ class CrawlResult(TypedDict, total=False):
     # portolan-spec core.md (Source Provenance). Read them off the outermost
     # result: a nested call sees only its own subtree.
     kind: str | None
-    producers: list[dict]
-    processors: list[dict]
-    host: dict | None
+    producers: list[dict[str, str]]
+    processors: list[dict[str, str]]
+    host: dict[str, str] | None
     keywords: list[Any] | None
     logo: dict[str, str] | None
     bbox: list[float] | None
@@ -461,13 +461,9 @@ def crawl_catalog(
     # sub-catalog's are skipped, as its logo and document signals already are:
     # the spec puts this requirement on collections, and the export publishes
     # one answer per registered catalog rather than one per level.
-    provider_lists = [result["providers"]] if result["providers"] else []
+    provider_lists: list[list[Any] | None] = [result["providers"]] if result["providers"] else []
     provider_lists += [c.providers for c in result["collections"]]
-    result["kind"] = catalog_kind(
-        collection_kind(providers) for providers in provider_lists
-    )
-    result["producers"], result["processors"], result["host"] = parties(
-        provider_lists
-    )
+    result["kind"] = catalog_kind(collection_kind(providers) for providers in provider_lists)
+    result["producers"], result["processors"], result["host"] = parties(provider_lists)
 
     return result
