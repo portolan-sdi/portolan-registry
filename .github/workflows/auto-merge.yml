@@ -30,12 +30,45 @@ jobs:
               repo: context.repo.repo,
               run_id: context.payload.workflow_run.id
             });
-            const prs = run.data.pull_requests;
-            if (!prs || prs.length === 0) {
+            // GitHub leaves `pull_requests` empty when the head branch is on
+            // a fork. Then find the pull request from the head repository,
+            // the head branch, and the head commit. GitHub sets these fields.
+            // The fork controls the artifact that Validate Catalogs uploads,
+            // so this lookup does not read it. A fork merges into the default
+            // branch only.
+            const findNumber = async () => {
+              const prs = run.data.pull_requests;
+              if (prs && prs.length > 0) {
+                return prs[0].number;
+              }
+              const head = run.data.head_repository;
+              if (!head) {
+                console.log('The run names no head repository; nothing to merge');
+                return null;
+              }
+              const open = await github.paginate(github.rest.pulls.list, {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                state: 'open',
+                head: `${head.owner.login}:${run.data.head_branch}`,
+                base: context.payload.repository.default_branch
+              });
+              const matches = open.filter(
+                p => p.head.repo
+                  && p.head.repo.full_name === head.full_name
+                  && p.head.sha === run.data.head_sha
+              );
+              if (matches.length !== 1) {
+                console.log(`${matches.length} open pull requests match ${head.full_name}:${run.data.head_branch} at ${run.data.head_sha}; nothing to merge`);
+                return null;
+              }
+              return matches[0].number;
+            };
+            const number = await findNumber();
+            if (number === null) {
               core.setOutput('decision', 'none');
               return;
             }
-            const number = prs[0].number;
             core.setOutput('number', String(number));
             const { data: pr } = await github.rest.pulls.get({
               owner: context.repo.owner,
