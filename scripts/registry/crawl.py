@@ -116,9 +116,9 @@ class CrawlResult(TypedDict, total=False):
     spec_version_mixed: bool
     updated: str | None
     providers: list[Any] | None
-    # Derived from the providers above and every collection's, per
-    # portolan-spec core.md (Source Provenance). Read them off the outermost
-    # result: a nested call sees only its own subtree.
+    # Derived from every collection's providers, per portolan-spec core.md
+    # (Source Provenance). Read them off the outermost result: a nested call
+    # sees only its own subtree.
     kind: str | None
     producers: list[dict[str, str]]
     processors: list[dict[str, str]]
@@ -457,12 +457,10 @@ def crawl_catalog(
     # the merged collection list for the same reason the license mix is, so a
     # nested catalog is read whole rather than one level at a time.
     #
-    # The registered root's own `providers` lead, where it declares any. A
-    # sub-catalog's are skipped, as its logo and document signals already are:
-    # the spec puts this requirement on collections, and the export publishes
-    # one answer per registered catalog rather than one per level.
-    provider_lists: list[list[Any] | None] = [result["providers"]] if result["providers"] else []
-    provider_lists += [c.providers for c in result["collections"]]
+    # Collections only. The spec makes the collection-level declaration
+    # authoritative, and rashid derives the kind from collections alone. A
+    # catalog's own `providers`, at the root or below, take no part.
+    provider_lists = [c.providers for c in result["collections"]]
     result["kind"] = catalog_kind(collection_kind(providers) for providers in provider_lists)
     result["producers"], result["processors"], result["host"] = parties(provider_lists)
 

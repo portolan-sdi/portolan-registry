@@ -38,6 +38,10 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-09-19T15:07:48Z",
       "portolan_registry:first_registered": "2026-09-19T15:58:57+00:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 3
       },
@@ -83,6 +87,10 @@
       },
       "portolan_registry:updated": "2026-09-21T12:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "DL-DE-BY-2.0": 25,
         "DL-DE-ZERO-2.0": 1
@@ -125,6 +133,10 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-09-20T00:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 30
       },
@@ -170,6 +182,10 @@
       },
       "portolan_registry:updated": "2026-09-21T12:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 37,
         "CC0-1.0": 1
@@ -216,6 +232,10 @@
       },
       "portolan_registry:updated": "2026-09-21T12:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 26
       },
@@ -257,6 +277,10 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-09-19T15:07:59Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "DL-DE-ZERO-2.0": 371
       },
@@ -302,6 +326,10 @@
       },
       "portolan_registry:updated": "2026-10-16T12:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 36
       },
@@ -343,6 +371,10 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": null,
       "portolan_registry:first_registered": "2026-08-21T13:12:57+02:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 1,
         "ODbL-1.0": 2
@@ -389,6 +421,10 @@
       },
       "portolan_registry:updated": "2026-09-20T01:30:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 10,
         "CC0-1.0": 14,
@@ -432,6 +468,10 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-08-02T14:20:14Z",
       "portolan_registry:first_registered": "2026-08-20T12:39:43+00:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "other": 3
       },
@@ -477,6 +517,10 @@
       },
       "portolan_registry:updated": null,
       "portolan_registry:first_registered": "2026-08-30T22:19:59+02:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 8,
         "CC-BY-SA-4.0": 1
@@ -519,6 +563,10 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": null,
       "portolan_registry:first_registered": "2026-08-21T10:29:53+00:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 997
       },
@@ -564,6 +612,10 @@
       },
       "portolan_registry:updated": "2026-08-25T16:10:53Z",
       "portolan_registry:first_registered": "2026-06-11T18:39:07+00:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "other": 191
       },
@@ -605,6 +657,10 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-09-24T14:38:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 39
       },
@@ -650,6 +706,10 @@
       },
       "portolan_registry:updated": "2026-09-21T00:20:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 19
       },
@@ -691,6 +751,10 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-09-17T00:00:00Z",
       "portolan_registry:first_registered": "2026-09-18T20:54:11+00:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 1964
       },
@@ -736,6 +800,10 @@
       },
       "portolan_registry:updated": "2026-10-13T13:56:05Z",
       "portolan_registry:first_registered": "2026-10-12T17:55:03+00:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "other": 1
       },
@@ -781,6 +849,10 @@
       },
       "portolan_registry:updated": "2026-09-21T12:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 15,
         "CC0-1.0": 19
@@ -823,6 +895,10 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-06-30T13:03:50Z",
       "portolan_registry:first_registered": "2026-10-12T06:45:07-06:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 111
       },
@@ -864,6 +940,10 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-06-16T17:22:03Z",
       "portolan_registry:first_registered": "2026-10-12T06:45:07-06:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 1
       },
@@ -905,6 +985,10 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-06-18T12:18:21Z",
       "portolan_registry:first_registered": "2026-10-12T06:45:07-06:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 1
       },
@@ -946,6 +1030,10 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-10-08T10:44:03Z",
       "portolan_registry:first_registered": "2026-10-12T06:45:07-06:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 2
       },
@@ -987,6 +1075,10 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-07-13T14:54:48Z",
       "portolan_registry:first_registered": "2026-10-12T06:45:07-06:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 1
       },
@@ -1028,6 +1120,10 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-06-24T20:04:20Z",
       "portolan_registry:first_registered": "2026-10-12T06:45:07-06:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "other": 6
       },
@@ -1073,6 +1169,10 @@
       },
       "portolan_registry:updated": "2026-09-19T00:30:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "other": 38
       },
@@ -1118,6 +1218,10 @@
       },
       "portolan_registry:updated": "2026-09-20T09:14:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-3.0": 22
       },
@@ -1163,6 +1267,10 @@
       },
       "portolan_registry:updated": "2026-10-20T15:50:22Z",
       "portolan_registry:first_registered": "2026-10-01T12:19:08+00:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-PDM-1.0": 1
       },
@@ -1208,6 +1316,10 @@
       },
       "portolan_registry:updated": "2026-09-09T13:53:39Z",
       "portolan_registry:first_registered": "2026-09-01T10:09:50+00:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 4
       },
@@ -1253,6 +1365,10 @@
       },
       "portolan_registry:updated": "2026-09-01T11:45:02Z",
       "portolan_registry:first_registered": "2026-09-01T10:09:50+00:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 117
       },
@@ -1298,6 +1414,10 @@
       },
       "portolan_registry:updated": null,
       "portolan_registry:first_registered": "2026-10-03T08:06:17-05:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 18
       },
@@ -1343,6 +1463,10 @@
       },
       "portolan_registry:updated": "2026-10-12T14:27:54Z",
       "portolan_registry:first_registered": "2026-09-27T18:09:55+00:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 3
       },
@@ -1388,6 +1512,10 @@
       },
       "portolan_registry:updated": null,
       "portolan_registry:first_registered": "2026-10-20T11:18:02-04:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC0-1.0": 38
       },
@@ -1429,6 +1557,10 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-08-18T06:57:31Z",
       "portolan_registry:first_registered": "2026-08-18T08:10:52+00:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 12
       },
@@ -1474,6 +1606,10 @@
       },
       "portolan_registry:updated": "2026-07-28T16:34:06Z",
       "portolan_registry:first_registered": "2026-08-11T17:41:15+00:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 11
       },
@@ -1519,6 +1655,10 @@
       },
       "portolan_registry:updated": "2026-10-11T15:08:27Z",
       "portolan_registry:first_registered": "2026-09-27T18:07:05+00:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "ODbL-1.0": 27
       },
@@ -1564,6 +1704,10 @@
       },
       "portolan_registry:updated": "2026-09-20T00:30:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "etalab-2.0": 43
       },
@@ -1609,6 +1753,10 @@
       },
       "portolan_registry:updated": "2026-09-19T20:30:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "DL-DE-BY-2.0": 40
       },
@@ -1654,6 +1802,10 @@
       },
       "portolan_registry:updated": "2026-10-15T10:33:36Z",
       "portolan_registry:first_registered": "2026-10-06T18:13:12+00:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 26,
         "CC-BY-NC-4.0": 1,
@@ -1706,6 +1858,10 @@
       },
       "portolan_registry:updated": "2026-09-19T18:30:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 40
       },
@@ -1751,6 +1907,10 @@
       },
       "portolan_registry:updated": "2026-09-23T00:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 3
       },
@@ -1796,6 +1956,10 @@
       },
       "portolan_registry:updated": "2026-09-20T14:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC0-1.0": 10
       },
@@ -1841,6 +2005,10 @@
       },
       "portolan_registry:updated": "2026-09-20T16:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 34
       },
@@ -1882,6 +2050,10 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": null,
       "portolan_registry:first_registered": "2026-06-17T10:12:23+00:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "proprietary": 16
       },
@@ -1923,6 +2095,10 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": null,
       "portolan_registry:first_registered": "2026-09-10T06:20:30+00:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 8
       },
@@ -1968,6 +2144,10 @@
       },
       "portolan_registry:updated": "2026-09-20T12:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 34,
         "CC0-1.0": 1
@@ -2014,6 +2194,10 @@
       },
       "portolan_registry:updated": "2026-09-20T01:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "DL-DE-BY-2.0": 2,
         "DL-DE-ZERO-2.0": 35
@@ -2060,6 +2244,10 @@
       },
       "portolan_registry:updated": "2026-09-21T00:40:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC0-1.0": 35
       },
@@ -2105,6 +2293,10 @@
       },
       "portolan_registry:updated": "2026-09-21T12:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 39
       },
@@ -2150,6 +2342,10 @@
       },
       "portolan_registry:updated": "2026-09-19T01:03:47Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 6,
         "CC0-1.0": 11
@@ -2196,6 +2392,10 @@
       },
       "portolan_registry:updated": "2026-10-12T18:15:00Z",
       "portolan_registry:first_registered": "2026-09-01T10:09:50+00:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 133
       },
@@ -2237,6 +2437,10 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-08-14T00:00:00Z",
       "portolan_registry:first_registered": "2026-08-14T15:00:50+00:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "ODbL-1.0": 1
       },
@@ -2282,6 +2486,10 @@
       },
       "portolan_registry:updated": "2026-08-16T00:00:00Z",
       "portolan_registry:first_registered": "2026-08-17T11:42:58+00:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 75
       },
@@ -2327,6 +2535,10 @@
       },
       "portolan_registry:updated": "2026-09-20T07:15:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "DL-DE-BY-2.0": 34
       },
@@ -2368,6 +2580,10 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-09-23T14:30:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "other": 43
       },
@@ -2413,6 +2629,10 @@
       },
       "portolan_registry:updated": "2026-09-20T12:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-3.0": 1,
         "NLOD-1.0": 13,
@@ -2460,6 +2680,10 @@
       },
       "portolan_registry:updated": "2026-09-20T12:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "DL-DE-BY-2.0": 5,
         "DL-DE-ZERO-2.0": 19
@@ -2502,6 +2726,10 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-10-06T17:48:03Z",
       "portolan_registry:first_registered": "2026-10-06T22:54:29+00:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 1,
         "CC-BY-NC-4.0": 1,
@@ -2549,6 +2777,10 @@
       },
       "portolan_registry:updated": "2026-09-23T14:35:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-3.0-IGO": 3
       },
@@ -2594,6 +2826,10 @@
       },
       "portolan_registry:updated": "2026-09-21T12:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 31
       },
@@ -2639,6 +2875,10 @@
       },
       "portolan_registry:updated": "2026-10-20T10:02:23Z",
       "portolan_registry:first_registered": "2026-09-22T17:28:55-04:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "ODbL-1.0": 16
       },
@@ -2680,6 +2920,10 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-08-19T00:00:00Z",
       "portolan_registry:first_registered": "2026-08-27T19:10:37+02:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 1,
         "CC0-1.0": 1,
@@ -2724,6 +2968,10 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-08-14T21:21:48Z",
       "portolan_registry:first_registered": "2026-06-09T10:27:10+00:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-SA-4.0": 183
       },
@@ -2765,6 +3013,10 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-08-26T00:00:00Z",
       "portolan_registry:first_registered": "2026-08-27T06:08:48+00:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "other": 10
       },
@@ -2810,6 +3062,10 @@
       },
       "portolan_registry:updated": null,
       "portolan_registry:first_registered": "2026-08-20T11:53:52+02:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-NC-4.0": 40
       },
@@ -2851,6 +3107,10 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-09-21T00:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 6
       },
@@ -2896,6 +3156,10 @@
       },
       "portolan_registry:updated": "2026-08-01T20:56:42Z",
       "portolan_registry:first_registered": "2026-06-09T10:55:36+02:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 6,
         "CC0-1.0": 21,
@@ -2943,6 +3207,10 @@
       },
       "portolan_registry:updated": "2026-09-19T15:30:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 33
       },
@@ -2988,6 +3256,10 @@
       },
       "portolan_registry:updated": "2026-08-20T12:05:00Z",
       "portolan_registry:first_registered": "2026-08-20T12:06:35+02:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC0-1.0": 3
       },
@@ -3029,6 +3301,10 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-09-20T15:40:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "other": 20
       },
@@ -3070,6 +3346,10 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": null,
       "portolan_registry:first_registered": "2026-08-20T12:40:16+00:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 1
       },
@@ -3115,6 +3395,10 @@
       },
       "portolan_registry:updated": "2026-09-03T15:44:10Z",
       "portolan_registry:first_registered": "2026-09-05T03:26:16+02:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC0-1.0": 69
       },
@@ -3160,6 +3444,10 @@
       },
       "portolan_registry:updated": "2026-08-14T12:21:16+00:00",
       "portolan_registry:first_registered": "2026-08-11T15:36:02+00:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-NC-SA-4.0": 1,
         "ODbL-1.0": 8,
@@ -3203,6 +3491,10 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-10-09T16:51:24Z",
       "portolan_registry:first_registered": "2026-09-27T17:03:02+00:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 5
       },
@@ -3244,6 +3536,10 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-10-06T20:29:15Z",
       "portolan_registry:first_registered": "2026-10-09T23:26:45-06:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "other": 49
       },
@@ -3289,6 +3585,10 @@
       },
       "portolan_registry:updated": "2026-09-21T12:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC0-1.0": 37
       },
@@ -3330,6 +3630,10 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": null,
       "portolan_registry:first_registered": "2026-09-14T17:30:21+00:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 7
       },
@@ -3375,6 +3679,10 @@
       },
       "portolan_registry:updated": "2026-08-02T18:02:50Z",
       "portolan_registry:first_registered": "2026-08-03T02:36:57+00:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "other": 8
       },
@@ -3416,6 +3724,10 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-09-23T00:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 3
       },
@@ -3461,6 +3773,10 @@
       },
       "portolan_registry:updated": "2026-10-13T16:36:11Z",
       "portolan_registry:first_registered": "2026-10-12T16:29:46+00:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "other": 19
       },
@@ -3506,6 +3822,10 @@
       },
       "portolan_registry:updated": "2026-09-20T12:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "other": 34
       },
@@ -3551,6 +3871,10 @@
       },
       "portolan_registry:updated": "2026-09-21T00:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "OGL-UK-3.0": 40
       },
@@ -3592,6 +3916,10 @@
       "portolan_registry:logo": null,
       "portolan_registry:updated": "2026-10-12T00:00:00Z",
       "portolan_registry:first_registered": "2026-10-12T15:26:20+02:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 3
       },
@@ -3637,6 +3965,10 @@
       },
       "portolan_registry:updated": "2026-09-19T14:30:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 41
       },
@@ -3682,6 +4014,10 @@
       },
       "portolan_registry:updated": "2026-09-23T14:40:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC-BY-4.0": 7
       },
@@ -3727,6 +4063,10 @@
       },
       "portolan_registry:updated": "2026-09-19T15:30:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
+      "portolan_registry:kind": null,
+      "portolan_registry:producers": [],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": null,
       "portolan_registry:licenses": {
         "CC0-1.0": 33
       },

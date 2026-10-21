@@ -7,6 +7,7 @@ catalog becomes a rel="child" link.
 
 from __future__ import annotations
 
+import copy
 import json
 from collections.abc import Mapping, Sequence
 from datetime import UTC, datetime, timedelta
@@ -89,7 +90,8 @@ def _child_links(export: Mapping[str, Any]) -> list[dict[str, Any]]:
         for retired in RETIRED_FIELDS:
             current.pop(retired, None)
         for name, default in CARRIED_DEFAULTS.items():
-            current.setdefault(name, default)
+            # A copy, so no two links share one mutable default.
+            current.setdefault(name, copy.copy(default))
         links.append(current)
     return links
 

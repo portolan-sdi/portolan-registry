@@ -45,11 +45,12 @@ class TestCollectionKind:
             == "mirror"
         )
 
-    def test_one_organization_under_two_names_is_official(self):
+    def test_two_names_on_one_url_host_are_a_mirror(self):
         """planet-disasterdata writes the producer and the host differently.
 
-        Both sit on planet.com. Comparing the names alone reports a mirror,
-        which is what made this case worth a test.
+        Both sit on planet.com. rashid compares names alone and reports every
+        collection here as a mirror with no `via` link. The export must give
+        the answer the registry's own validator gives.
         """
         assert (
             collection_kind(
@@ -66,55 +67,21 @@ class TestCollectionKind:
                     },
                 ]
             )
-            == "official"
-        )
-
-    def test_a_shared_public_suffix_is_not_a_shared_organization(self):
-        # cadastral: a Brazilian agency produces, Source Cooperative serves.
-        # Comparing registrable domains would read gov.br and source.coop as
-        # co.uk-style suffixes and match nothing; comparing hosts is what
-        # keeps these two apart.
-        assert (
-            collection_kind(
-                [
-                    {
-                        "name": "Serviço Florestal Brasileiro",
-                        "roles": ["producer"],
-                        "url": "https://www.gov.br/florestal/",
-                    },
-                    {
-                        "name": "Tristan Grupp",
-                        "roles": ["processor", "host"],
-                        "url": "https://source.coop/tristangruppwri/cadastral",
-                    },
-                ]
-            )
             == "mirror"
         )
 
-    def test_two_agencies_on_one_government_host_read_as_one(self):
-        # A documented limitation, not a goal. One organization per host is an
-        # assumption, and gov.br gives every agency a path on the same host.
-        # No registered catalog declares its producer and its host this way.
+    def test_names_compare_without_case_or_outer_spaces(self):
         assert (
             collection_kind(
                 [
-                    {
-                        "name": "Serviço Florestal Brasileiro",
-                        "roles": ["producer"],
-                        "url": "https://www.gov.br/florestal/",
-                    },
-                    {
-                        "name": "Instituto Nacional de Colonização",
-                        "roles": ["host"],
-                        "url": "https://www.gov.br/incra/",
-                    },
+                    {"name": "  carto ", "roles": ["producer"]},
+                    {"name": "CARTO", "roles": ["host"], "url": "https://carto.com"},
                 ]
             )
             == "official"
         )
 
-    def test_a_matching_name_stands_in_for_a_missing_url(self):
+    def test_a_matching_name_needs_no_url(self):
         # The specification lets a producer declare a name and no URL.
         assert (
             collection_kind(
@@ -196,6 +163,32 @@ class TestCollectionKind:
 
     def test_an_unnamed_anonymous_provider_says_nothing(self):
         assert collection_kind([{"roles": ["producer"]}, {"roles": ["host"]}]) is None
+
+    def test_two_hosts_say_nothing(self):
+        # rashid reports PTL-PRV-002 and derives no kind. Neither does this.
+        assert (
+            collection_kind(
+                [
+                    {"name": "Acme", "roles": ["producer", "host"]},
+                    {"name": "Other", "roles": ["host"]},
+                ]
+            )
+            is None
+        )
+
+    def test_a_name_that_is_not_text_says_nothing(self):
+        # STAC requires a string. A number or an object here once crashed the
+        # crawl of the whole catalog.
+        assert collection_kind([{"name": 7, "roles": ["producer", "host"]}]) is None
+        assert (
+            collection_kind(
+                [
+                    {"name": {"en": "Acme"}, "roles": ["producer"]},
+                    {"name": "Acme", "roles": ["host"]},
+                ]
+            )
+            == "mirror"
+        )
 
 
 class TestCatalogKind:
@@ -314,12 +307,12 @@ class TestParties:
     def test_takes_the_first_host_it_reads(self):
         producers, _, host = parties(
             [
-                [{"name": "Root Host", "roles": ["host"]}],
-                [{"name": "Collection Host", "roles": ["host"]}],
+                [{"name": "First Host", "roles": ["host"]}],
+                [{"name": "Second Host", "roles": ["host"]}],
             ]
         )
         assert producers == []
-        assert host == {"name": "Root Host"}
+        assert host == {"name": "First Host"}
 
     def test_names_the_processor_apart_from_the_producer_and_the_host(self):
         """catalog-1781203130384: three parties, three roles.
@@ -390,3 +383,15 @@ class TestParties:
     def test_reports_nothing_when_no_provider_is_named(self):
         assert parties([]) == ([], [], None)
         assert parties([None, [], "nonsense"]) == ([], [], None)
+
+    def test_skips_a_name_that_is_not_text(self):
+        assert parties([[{"name": 7, "roles": ["producer", "host"]}]]) == ([], [], None)
+
+    def test_names_one_producer_once_whatever_its_case(self):
+        producers, _, _ = parties(
+            [
+                [{"name": "TriMet", "roles": ["producer"]}],
+                [{"name": "trimet ", "roles": ["producer"]}],
+            ]
+        )
+        assert producers == [{"name": "TriMet"}]

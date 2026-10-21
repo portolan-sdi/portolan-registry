@@ -133,6 +133,21 @@ class TestProvenance:
             "url": "https://host.example/",
         }
 
+    def test_ignores_the_providers_of_the_root_catalog(self, tree):
+        # The spec makes the collection-level declaration authoritative, and
+        # rashid reads collections alone. A root that claims to produce and
+        # host everything changes nothing.
+        tree.docs[ROOT]["providers"] = [
+            {"name": "Root Claimant", "roles": ["producer", "host"], "url": "https://root.example/"}
+        ]
+        result = crawl_catalog(ROOT, tree)
+        assert result["kind"] == "mirror"
+        assert [p["name"] for p in result["producers"]] == [
+            "Coastal Authority",
+            "Inland Agency",
+        ]
+        assert result["host"] == {"name": "Example Host", "url": "https://host.example/"}
+
     def test_a_catalog_declaring_no_providers_reports_no_kind(self, unmeasured):
         result = crawl_catalog(ROOT, unmeasured)
         assert result["kind"] is None

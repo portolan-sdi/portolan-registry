@@ -216,6 +216,12 @@ def main(argv: list[str] | None = None) -> int:
                 "portolan_registry:stac_valid": None,
                 "portolan_registry:has_agents_md": False,
                 "portolan_registry:has_readme": False,
+                # Never crawled, so no providers were read. Null and empty
+                # are what the export publishes when providers say nothing.
+                "portolan_registry:kind": None,
+                "portolan_registry:producers": [],
+                "portolan_registry:processors": [],
+                "portolan_registry:host": None,
             }
         link["portolan_registry:status"] = catalog_state.get("status", "removed")
         link["portolan_registry:last_validated"] = catalog_state.get("last_validated")
