@@ -28,6 +28,7 @@ from registry.validators import (
     group_findings,
     run_rashid,
     run_stac_node_validator,
+    settle_stac_invalid_since,
     settle_stac_valid,
 )
 
@@ -372,6 +373,42 @@ class TestSettleStacValid:
         assert result["validation"]["stac_valid"] is None
         settle_stac_valid(result, ROOT, None)
         assert result["validation"]["stac_valid"] is None
+
+
+class TestSettleStacInvalidSince:
+    """The date that the current validation failure started (#252)."""
+
+    SINCE = "2026-01-01T00:00:00+00:00"
+    FAILING = {"href": ROOT, "portolan_registry:stac_invalid_since": SINCE}
+    PASSING = {"href": ROOT, "portolan_registry:stac_invalid_since": None}
+
+    def settle(self, passed, link, *, url=ROOT, now=FROZEN):
+        result = answered(passed)
+        started = settle_stac_invalid_since(result, passed, url, link, now=now)
+        return result["validation"]["stac_invalid_since"], started
+
+    def test_a_new_failure_starts_now(self):
+        assert self.settle(False, self.PASSING) == (FROZEN.isoformat(), True)
+
+    def test_a_failure_with_no_published_date_starts_now(self):
+        """A link older than the field fails once when the change ships."""
+        assert self.settle(False, {"href": ROOT}) == (FROZEN.isoformat(), True)
+        assert self.settle(False, None) == (FROZEN.isoformat(), True)
+
+    def test_a_continued_failure_keeps_its_date(self):
+        assert self.settle(False, self.FAILING) == (self.SINCE, False)
+
+    def test_a_pass_clears_the_date(self):
+        assert self.settle(True, self.FAILING) == (None, False)
+
+    def test_no_answer_keeps_the_published_date(self):
+        assert self.settle(None, self.FAILING) == (self.SINCE, False)
+        assert self.settle(None, self.PASSING) == (None, False)
+
+    def test_a_new_url_does_not_inherit_the_old_date(self):
+        other = "https://other.org/catalog.json"
+        assert self.settle(False, self.FAILING, url=other) == (FROZEN.isoformat(), True)
+        assert self.settle(None, self.FAILING, url=other) == (None, False)
 
 
 TOOLS = (

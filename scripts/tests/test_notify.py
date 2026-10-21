@@ -11,6 +11,7 @@ from __future__ import annotations
 import pytest
 
 from registry import notify
+from registry.validators import RuleGroup
 
 
 class Recorder:
@@ -44,6 +45,19 @@ def stale(**kwargs):
         "title": "Example Catalog",
     }
     return notify.send_stale_notification("example", **{**args, **kwargs})
+
+
+def failing(catalog_id="example", title="Example Catalog"):
+    group = RuleGroup("rashid", "PTL-PRV-002", "a mirror needs a via link", 22, ["c.json: m"])
+    return notify.FailingCatalog(
+        catalog_id, "https://ex.org/catalog.json", [group], "2026-10-19T06:00:00+00:00", title
+    )
+
+
+def validation_failure(*catalogs, submitter_email="you@example.org"):
+    return notify.send_validation_failure_notification(
+        submitter_email, list(catalogs) or [failing()]
+    )
 
 
 def feedback(**kwargs):
@@ -213,3 +227,39 @@ class TestDeprecationRequest:
     def test_an_unknown_action_reads_as_a_removal(self, post):
         removal(action="explode")
         assert "Request to remove your catalog" in post.calls[0]["json"]["subject"]
+
+
+class TestValidationFailureNotification:
+    """The email for a catalog that starts to fail the validators (#252)."""
+
+    def test_lists_each_failing_rule(self, post):
+        assert validation_failure() is True
+        mail = post.calls[0]["json"]
+        assert mail["to"] == ["you@example.org"]
+        assert mail["subject"] == "[Portolan Registry] Catalog validation failed: Example Catalog"
+        assert "<code>PTL-PRV-002</code> (22 findings): a mirror needs a via link" in mail["html"]
+        assert "<li>and 21 more</li>" in mail["html"]
+        assert "its status stays <code>valid</code>" in mail["html"]
+        assert "<strong>Failing since:</strong> 2026-10-19" in mail["html"]
+        assert "each Monday while a catalog fails" in mail["html"]
+
+    def test_one_email_covers_several_catalogs(self, post):
+        validation_failure(failing("a", "A"), failing("b", "B"))
+        mail = post.calls[0]["json"]
+        assert len(post.calls) == 1
+        assert mail["subject"] == "[Portolan Registry] Validation failed for 2 catalogs"
+        assert "<h3>A</h3>" in mail["html"]
+        assert "<h3>B</h3>" in mail["html"]
+
+    def test_escapes_catalog_text(self, post):
+        group = RuleGroup("rashid", "R", "d", 1, ["<img src=x>"])
+        catalog = notify.FailingCatalog("x", "https://ex.org/c.json", [group], "2026", "<b>T</b>")
+        validation_failure(catalog)
+        body = post.calls[0]["json"]["html"]
+        assert "<img" not in body
+        assert "<b>T</b>" not in body
+        assert "&lt;img src=x&gt;" in body
+
+    def test_no_address_sends_nothing(self, post):
+        assert validation_failure(submitter_email=None) is False
+        assert post.calls == []

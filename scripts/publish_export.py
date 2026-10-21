@@ -43,7 +43,12 @@ from registry.fetch import HttpFetcher
 from registry.history import first_registered
 from registry.report import log
 from registry.status import passes
-from registry.validators import crawl_and_validate, log_validation, settle_stac_valid
+from registry.validators import (
+    crawl_and_validate,
+    log_validation,
+    settle_stac_invalid_since,
+    settle_stac_valid,
+)
 
 MAX_WORKERS = 4
 
@@ -73,6 +78,7 @@ def process_entry(
         return None
     log_validation(report)
     settle_stac_valid(result, url, previous_links.get(path.stem))
+    settle_stac_invalid_since(result, report.passed, url, previous_links.get(path.stem), now=now)
 
     result["id"] = path.stem
     # A shallow clone cannot see the add commit. Keep the date already

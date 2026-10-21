@@ -264,19 +264,65 @@ def settle_stac_valid(
     entry now names another URL, because the old answer is about another
     catalog.
     """
-    if result["validation"]["stac_valid"] is not None or not previous_link:
+    link = _same_catalog(url, previous_link)
+    if result["validation"]["stac_valid"] is not None or link is None:
         return
-    href = previous_link.get("href")
-    if not href or normalize_url(href) != normalize_url(url):
-        return
-    previous = previous_link.get("portolan_registry:stac_valid")
+    previous = link.get("portolan_registry:stac_valid")
     if isinstance(previous, bool):
         log(f"  Note: no validator answer this run, so stac_valid stays {previous}")
         result["validation"]["stac_valid"] = previous
 
 
+def _same_catalog(url: str, previous_link: Mapping[str, Any] | None) -> Mapping[str, Any] | None:
+    """The previous link if it names `url`, or None.
+
+    A link that names another URL is about another catalog.
+    """
+    href = (previous_link or {}).get("href")
+    if not href or normalize_url(href) != normalize_url(url):
+        return None
+    return previous_link
+
+
+def settle_stac_invalid_since(
+    result: CrawlResult,
+    passed: bool | None,
+    url: str,
+    previous_link: Mapping[str, Any] | None,
+    *,
+    now: datetime,
+) -> bool:
+    """Set the date that the current validation failure started.
+
+    `passed` is `report.passed` from this run. Do not use the settled
+    `stac_valid`. A result that `settle_stac_valid` carries forward is not a
+    new answer.
+
+    A pass clears the date. A run with no answer keeps the published date.
+    A failure keeps the published date. If no date is published, the failure
+    is new and the date becomes `now`.
+
+    The published date applies only when the previous link names the same
+    URL. Return True when this run starts a failure.
+    """
+    link = _same_catalog(url, previous_link) or {}
+    previous = link.get("portolan_registry:stac_invalid_since")
+    started = passed is False and previous is None
+    if passed is True:
+        since = None
+    elif started:
+        since = now.isoformat()
+    else:
+        since = previous
+    result["validation"]["stac_invalid_since"] = since
+    return started
+
+
 def log_validation(report: ValidationReport) -> None:
-    """Report what the validators found. Status does not depend on it yet."""
+    """Report what the validators found.
+
+    Status depends on it only for deprecated catalogs (`registry.status.passes`).
+    """
     if report.error:
         log(f"  Validators could not run: {report.error}")
     elif report.groups:

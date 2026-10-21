@@ -48,9 +48,14 @@ class Registry:
     def fail_validation(self) -> None:
         self.findings.append(Finding("rashid", "PTL-CNF-001", "d", "catalog.json", "m"))
 
-    def entry(self, catalog_id: str, extra: str = "") -> None:
+    def pass_validation(self) -> None:
+        self.findings.clear()
+
+    def entry(
+        self, catalog_id: str, extra: str = "", submitter: str = "submitter@example.com"
+    ) -> None:
         (self.catalogs / f"{catalog_id}.yaml").write_text(
-            f"url: {ROOT}\nsubmitter_email: submitter@example.com\n{extra}"
+            f"url: {ROOT}\nsubmitter_email: {submitter}\n{extra}"
         )
 
     def published(
@@ -59,6 +64,7 @@ class Registry:
         status: str = "valid",
         stale_days: int | None = None,
         stac_valid: bool | None = None,
+        stac_invalid_since: str | None = None,
     ):
         """Add a child link and its validation status to the previous export."""
         stale_since = None
@@ -77,6 +83,7 @@ class Registry:
                 "portolan_registry:stale_since": stale_since,
                 "portolan_registry:failure_reason": "earlier failure" if stale_since else None,
                 "portolan_registry:stac_valid": stac_valid,
+                "portolan_registry:stac_invalid_since": stac_invalid_since,
                 "portolan_registry:has_agents_md": False,
                 "portolan_registry:has_readme": False,
             }

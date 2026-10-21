@@ -95,3 +95,31 @@ class TestCatalogThatIsNotDeprecated:
         link = registry.link("cat")
         assert link["portolan_registry:status"] == "valid"
         assert link["portolan_registry:stale_since"] is None
+
+
+class TestValidationFailureDate:
+    """Publishing dates a validation failure as the nightly run does (#252)."""
+
+    SINCE = "2026-01-01T00:00:00+00:00"
+
+    def test_a_new_failure_is_dated(self, registry):
+        registry.entry("cat")
+        registry.published("cat", stac_valid=True)
+        registry.fail_validation()
+        run()
+        link = registry.link("cat")
+        assert link["portolan_registry:stac_valid"] is False
+        assert link["portolan_registry:stac_invalid_since"] is not None
+
+    def test_a_continued_failure_keeps_its_date(self, registry):
+        registry.entry("cat")
+        registry.published("cat", stac_valid=False, stac_invalid_since=self.SINCE)
+        registry.fail_validation()
+        run()
+        assert registry.link("cat")["portolan_registry:stac_invalid_since"] == self.SINCE
+
+    def test_a_pass_clears_the_date(self, registry):
+        registry.entry("cat")
+        registry.published("cat", stac_valid=False, stac_invalid_since=self.SINCE)
+        run()
+        assert registry.link("cat")["portolan_registry:stac_invalid_since"] is None

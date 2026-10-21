@@ -6,6 +6,11 @@ a passing check. A passing check restores `valid`. Checks fail when a catalog
 cannot be fetched. For deprecated catalogs, validator errors also count as
 failures. See `registry.status.passes`.
 
+A validator failure leaves the status of a catalog that is not deprecated
+unchanged. The run publishes the start of the failure as
+`portolan_registry:stac_invalid_since` and logs each new failure. On
+`DIGEST_WEEKDAY`, it emails each submitter a list of their failing catalogs.
+
     uv run --frozen scripts/revalidate_all.py
     uv run --frozen scripts/revalidate_all.py --no-notify --output -
 """
@@ -43,13 +48,19 @@ from registry.export import (
 )
 from registry.fetch import HttpFetcher
 from registry.history import first_registered
-from registry.notify import send_stale_notification
+from registry.notify import (
+    DIGEST_WEEKDAY,
+    FailingCatalog,
+    send_stale_notification,
+    send_validation_failure_notification,
+)
 from registry.report import log
 from registry.status import passes, update_status
 from registry.validators import (
     ValidationReport,
     crawl_and_validate,
     log_validation,
+    settle_stac_invalid_since,
     settle_stac_valid,
 )
 
@@ -87,6 +98,8 @@ def main(argv: list[str] | None = None) -> int:
     previous_links = load_links(EXPORT_PATH)
 
     newly_stale: list[tuple[str, dict[str, Any], str, Deprecation]] = []
+    failing: list[tuple[str | None, FailingCatalog]] = []
+    newly_failing: list[str] = []
     crawled: dict[str, CrawlResult] = {}
 
     for path in paths:
@@ -139,6 +152,25 @@ def main(argv: list[str] | None = None) -> int:
 
         log_validation(report)
         settle_stac_valid(result, url, previous_links.get(catalog_id))
+        if settle_stac_invalid_since(
+            result, report.passed, url, previous_links.get(catalog_id), now=now
+        ):
+            rules = ", ".join(f"{g.tool} {g.rule_id}" for g in report.groups)
+            newly_failing.append(f"{catalog_id}: {rules}")
+        # A deprecated catalog that fails goes stale, and the stale email says so.
+        if report.passed is False and not state_of_entry.deprecated:
+            failing.append(
+                (
+                    entry.get("submitter_email"),
+                    FailingCatalog(
+                        catalog_id,
+                        url,
+                        report.groups,
+                        result["validation"]["stac_invalid_since"],
+                        result.get("title"),
+                    ),
+                )
+            )
         result["id"] = catalog_id
         # A shallow clone cannot see the add commit. Keep the date already
         # published rather than moving the catalog's registration to today.
@@ -172,6 +204,21 @@ def main(argv: list[str] | None = None) -> int:
                 deprecated=state_of_entry.deprecated,
                 superseded_by=state_of_entry.superseded_by,
                 enabled=not args.no_notify,
+            )
+
+    if newly_failing:
+        log(f"\n=== {len(newly_failing)} catalog(s) started to fail validation ===")
+        for line in newly_failing:
+            log(f"  {line}")
+
+    if failing and now.weekday() == DIGEST_WEEKDAY:
+        log(f"\n=== Weekly validation email for {len(failing)} failing catalog(s) ===")
+        by_submitter: dict[str | None, list[FailingCatalog]] = {}
+        for submitter_email, catalog in failing:
+            by_submitter.setdefault(submitter_email, []).append(catalog)
+        for submitter_email, catalogs in by_submitter.items():
+            send_validation_failure_notification(
+                submitter_email, catalogs, enabled=not args.no_notify
             )
 
     catalogs = []
@@ -214,6 +261,7 @@ def main(argv: list[str] | None = None) -> int:
                 # signal. Null is what it publishes for a validation that
                 # never ran.
                 "portolan_registry:stac_valid": None,
+                "portolan_registry:stac_invalid_since": None,
                 "portolan_registry:has_agents_md": False,
                 "portolan_registry:has_readme": False,
                 # Never crawled, so no providers were read. Null and empty
