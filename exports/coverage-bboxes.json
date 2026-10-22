@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-21T18:00:06.870049+00:00",
+  "generated": "2026-10-22T12:03:26.908696+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-10-21T18:00:06.870049+00:00",
+  "registry_generated": "2026-10-22T12:03:26.908696+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -38262,6 +38262,392 @@
       ]
     },
     {
+      "id": "east-hampton-catalog",
+      "collection_count": 38,
+      "collections": [
+        {
+          "id": "base-layers/fire-districts",
+          "title": "Fire Districts",
+          "bbox": [
+            -72.2852,
+            40.9238,
+            -71.8561,
+            41.1248
+          ]
+        },
+        {
+          "id": "base-layers/gardiners-island",
+          "title": "Gardiners Island Boundary",
+          "bbox": [
+            -72.1426,
+            41.0306,
+            -72.0765,
+            41.1248
+          ]
+        },
+        {
+          "id": "base-layers/historic-districts",
+          "title": "Historic Districts",
+          "bbox": [
+            -72.16,
+            40.9646,
+            -71.9008,
+            41.047
+          ]
+        },
+        {
+          "id": "base-layers/municipal-boundary-lines",
+          "title": "Municipal Boundary Lines",
+          "bbox": [
+            -72.3548,
+            40.9237,
+            -72.245,
+            41.0739
+          ]
+        },
+        {
+          "id": "base-layers/school-districts",
+          "title": "School Districts",
+          "bbox": [
+            -72.2852,
+            40.9238,
+            -71.8561,
+            41.0856
+          ]
+        },
+        {
+          "id": "base-layers/town-boundary",
+          "title": "Town Boundary",
+          "bbox": [
+            -72.296,
+            40.9237,
+            -71.8561,
+            41.0856
+          ]
+        },
+        {
+          "id": "base-layers/villages",
+          "title": "Villages",
+          "bbox": [
+            -72.296,
+            40.9301,
+            -72.1561,
+            41.0054
+          ]
+        },
+        {
+          "id": "base-layers/waterbodies",
+          "title": "Waterbodies",
+          "bbox": [
+            -72.2704,
+            40.9266,
+            -71.8585,
+            41.1144
+          ]
+        },
+        {
+          "id": "coastal/ceha-line",
+          "title": "Coastal Erosion Hazard Area Line",
+          "bbox": [
+            -72.266,
+            40.9242,
+            -71.8565,
+            41.1098
+          ]
+        },
+        {
+          "id": "coastal/coastal-erosion-overlay",
+          "title": "Coastal Erosion Overlay District Zones",
+          "bbox": [
+            -72.2707,
+            40.9238,
+            -71.8561,
+            41.1248
+          ]
+        },
+        {
+          "id": "coastal/ecological-complexes",
+          "title": "Ecological Complexes",
+          "bbox": [
+            -72.2797,
+            40.9218,
+            -71.8404,
+            41.131
+          ]
+        },
+        {
+          "id": "coastal/lwrp-reaches",
+          "title": "LWRP Reach Boundaries",
+          "bbox": [
+            -72.2726,
+            40.9238,
+            -71.8561,
+            41.1239
+          ]
+        },
+        {
+          "id": "coastal/scfwh-coastal-boundary",
+          "title": "SCFWH Coastal Boundary",
+          "bbox": [
+            -72.2724,
+            40.9239,
+            -72.1025,
+            41.0497
+          ]
+        },
+        {
+          "id": "coastal/significant-coastal-habitats",
+          "title": "Significant Coastal Fish and Wildlife Habitats",
+          "bbox": [
+            -72.3132,
+            40.9266,
+            -71.7891,
+            41.1346
+          ]
+        },
+        {
+          "id": "conservation/pep-boundary",
+          "title": "Peconic Estuary Boundary",
+          "bbox": [
+            -72.8858,
+            40.8615,
+            -71.8561,
+            41.1897
+          ]
+        },
+        {
+          "id": "conservation/pep-cnras",
+          "title": "Peconic Estuary Critical Natural Resource Areas",
+          "bbox": [
+            -72.8857,
+            40.8561,
+            -71.8258,
+            41.2076
+          ]
+        },
+        {
+          "id": "conservation/protected-vegetation-buffers",
+          "title": "Protected Vegetation Buffer Areas",
+          "bbox": [
+            -72.2737,
+            40.9391,
+            -71.9175,
+            41.0507
+          ]
+        },
+        {
+          "id": "conservation/scenic-conservation-easements",
+          "title": "Scenic and Conservation Easements",
+          "bbox": [
+            -72.2846,
+            40.9246,
+            -71.874,
+            41.0748
+          ]
+        },
+        {
+          "id": "conservation/soils",
+          "title": "Soils",
+          "bbox": [
+            -72.2807,
+            40.9225,
+            -71.8595,
+            41.107
+          ]
+        },
+        {
+          "id": "conservation/trails",
+          "title": "Trails",
+          "bbox": [
+            -72.2851,
+            40.9512,
+            -71.8563,
+            41.0822
+          ]
+        },
+        {
+          "id": "fema-dfirm-2009/cbrs-units",
+          "title": "Coastal Barrier Resources System Units",
+          "bbox": [
+            -73.7358,
+            40.5668,
+            -71.8503,
+            41.2726
+          ]
+        },
+        {
+          "id": "fema-dfirm-2009/flood-zones",
+          "title": "FEMA Flood Zones, 2009",
+          "bbox": [
+            -73.4986,
+            40.6086,
+            -71.8544,
+            41.293
+          ]
+        },
+        {
+          "id": "fema-dfirm-2009/limwa",
+          "title": "Limit of Moderate Wave Action, 2009",
+          "bbox": [
+            -73.4954,
+            40.6108,
+            -71.8624,
+            41.1605
+          ]
+        },
+        {
+          "id": "fema-dfirm-2009/shoreline",
+          "title": "FIRM Shoreline, 2009",
+          "bbox": [
+            -73.497,
+            40.6097,
+            -71.8562,
+            41.2924
+          ]
+        },
+        {
+          "id": "wetlands/dec-freshwater-wetlands",
+          "title": "NYSDEC Freshwater Wetlands",
+          "bbox": [
+            -72.2777,
+            40.9262,
+            -71.8566,
+            41.1096
+          ]
+        },
+        {
+          "id": "wetlands/dec-tidal-wetlands",
+          "title": "NYSDEC Tidal Wetlands",
+          "bbox": [
+            -72.3017,
+            40.9077,
+            -71.8527,
+            41.1398
+          ]
+        },
+        {
+          "id": "wetlands/nwi-wetlands",
+          "title": "National Wetlands Inventory",
+          "bbox": [
+            -72.3745,
+            40.8751,
+            -71.7495,
+            41.1251
+          ]
+        },
+        {
+          "id": "wetlands/town-wetlands",
+          "title": "Town Surveyed Wetlands",
+          "bbox": [
+            -72.2659,
+            40.926,
+            -71.8698,
+            41.075
+          ]
+        },
+        {
+          "id": "wetlands/upland-areas",
+          "title": "Upland Areas",
+          "bbox": [
+            -72.2411,
+            40.9891,
+            -71.9071,
+            41.0453
+          ]
+        },
+        {
+          "id": "wetlands/watercourses",
+          "title": "Watercourses",
+          "bbox": [
+            -72.2516,
+            40.9845,
+            -71.9028,
+            41.0684
+          ]
+        },
+        {
+          "id": "zoning/agricultural-overlay",
+          "title": "Agricultural Overlay District",
+          "bbox": [
+            -72.2624,
+            40.9246,
+            -71.8937,
+            41.0557
+          ]
+        },
+        {
+          "id": "zoning/critical-environmental-areas",
+          "title": "Critical Environmental Areas",
+          "bbox": [
+            -72.7419,
+            40.8936,
+            -71.8054,
+            41.3108
+          ]
+        },
+        {
+          "id": "zoning/groundwater-zone-v",
+          "title": "Hydrogeologic Zone V",
+          "bbox": [
+            -72.2883,
+            40.9318,
+            -72.1704,
+            41.0267
+          ]
+        },
+        {
+          "id": "zoning/harbor-protection-overlay",
+          "title": "Harbor Protection Overlay District",
+          "bbox": [
+            -72.2726,
+            40.9254,
+            -71.9056,
+            41.078
+          ]
+        },
+        {
+          "id": "zoning/recreational-overlay",
+          "title": "Recreational Overlay District",
+          "bbox": [
+            -72.243,
+            40.9602,
+            -72.2383,
+            40.9644
+          ]
+        },
+        {
+          "id": "zoning/special-groundwater-protection-areas",
+          "title": "Special Groundwater Protection Areas",
+          "bbox": [
+            -72.4048,
+            40.8976,
+            -71.9722,
+            41.0487
+          ]
+        },
+        {
+          "id": "zoning/water-recharge-overlay",
+          "title": "Water Recharge Overlay District",
+          "bbox": [
+            -72.2851,
+            40.9505,
+            -71.9332,
+            41.0674
+          ]
+        },
+        {
+          "id": "zoning/zoning-districts",
+          "title": "Zoning Districts",
+          "bbox": [
+            -72.2852,
+            40.9238,
+            -71.8561,
+            41.1248
+          ]
+        }
+      ]
+    },
+    {
       "id": "epoch-forest-typology-2020",
       "collection_count": 111,
       "collections": [
@@ -42017,7 +42403,7 @@
     },
     {
       "id": "ghsl",
-      "collection_count": 11,
+      "collection_count": 12,
       "collections": [
         {
           "id": "pop-1975",
@@ -42092,6 +42478,16 @@
         {
           "id": "pop-2010",
           "title": "Population 2010 (100 m, Mollweide)",
+          "bbox": [
+            -179.9872,
+            -61.2994,
+            179.9869,
+            89.0914
+          ]
+        },
+        {
+          "id": "pop-2015",
+          "title": "Population 2015 (100 m, Mollweide)",
           "bbox": [
             -179.9872,
             -61.2994,
@@ -42721,7 +43117,7 @@
           "id": "mobilite/bornes-recharge-vehicules-electriques",
           "title": "Stations et points de recharges pour v\u00e9hicules \u00e9lectriques",
           "bbox": [
-            4.7046,
+            4.7152,
             45.5806,
             5.0769,
             45.9148
@@ -55927,62 +56323,6 @@
             38.532,
             -90.1667,
             38.7743
-          ]
-        }
-      ]
-    },
-    {
-      "id": "staging",
-      "collection_count": 5,
-      "collections": [
-        {
-          "id": "hydroatlas/basinatlas",
-          "title": "BasinATLAS",
-          "bbox": [
-            -180.0,
-            -55.9875,
-            180.0,
-            83.6256
-          ]
-        },
-        {
-          "id": "hydroatlas/lakeatlas",
-          "title": "LakeATLAS",
-          "bbox": [
-            -180.0,
-            -55.8651,
-            180.0,
-            83.576
-          ]
-        },
-        {
-          "id": "hydroatlas/lakeatlas/lakeatlas-pour-points",
-          "title": "LakeATLAS Pour Points",
-          "bbox": [
-            -179.9925,
-            -55.8609,
-            179.9988,
-            83.5712
-          ]
-        },
-        {
-          "id": "hydroatlas/riveratlas",
-          "title": "RiverATLAS",
-          "bbox": [
-            -179.9979,
-            -55.8771,
-            179.9979,
-            83.5896
-          ]
-        },
-        {
-          "id": "hydroatlas/basinatlas-pour-points",
-          "title": "BasinATLAS Pour Points",
-          "bbox": [
-            -179.9979,
-            -55.9854,
-            179.9979,
-            83.6229
           ]
         }
       ]
