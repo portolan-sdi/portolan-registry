@@ -321,12 +321,12 @@ class TestIndex:
 
     def test_says_when_no_release_is_published(self, root):
         out, _ = build(root)
-        assert "No release is published yet." in (out / "index.html").read_text()
+        assert "The registry has no releases yet." in (out / "index.html").read_text()
 
     def test_lists_the_release_line_before_next(self, root):
         release(root)
         out, _ = build(root)
         page = (out / "index.html").read_text()
-        assert "No release is published yet." not in page
+        assert "The registry has no releases yet." not in page
         assert page.index("<code>v0.1/</code>") < page.index("<code>next/</code>")
         assert 'href="schemas/v0.1.0/extension.json"' in page

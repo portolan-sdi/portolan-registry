@@ -74,7 +74,7 @@ INDEX_HTML = """<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Portolan registry</title>
-<meta name="description" content="The Portolan registry as a versioned contract for tools.">
+<meta name="description" content="Download Portolan catalog metadata as JSON or GeoParquet, with collection bounding boxes.">
 <link rel="icon" href="portolan-logomark-4163cc.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -85,22 +85,22 @@ INDEX_HTML = """<!doctype html>
 <body>
 <div class="page">
 <header>
-<a href="https://www.portolan-sdi.org/"><img src="portolan-logo-horizontal-light.svg" alt="Portolan" width="143" height="32"></a>
+<a href="https://www.portolan-sdi.org/"><img src="portolan-logo-horizontal-light.svg" alt="Portolan home" width="143" height="32"></a>
 </header>
 <main>
 <p class="kicker">registry.portolan-sdi.org</p>
 <h1>Portolan registry</h1>
-<p class="lede">This site publishes the registry of Portolan catalogs for tools to read.
-It serves a versioned contract: a STAC Catalog, a GeoParquet file, and the coverage of each catalog.
-To browse the catalogs, open the <a href="https://www.portolan-sdi.org/registry">registry page</a>.</p>
+<p class="lede">Download metadata for registered Portolan catalogs as JSON or GeoParquet.
+Coverage files list the bounding boxes of each catalog's collections.
+You can also <a href="https://www.portolan-sdi.org/registry">browse and search registered catalogs</a>.</p>
 <dl class="stats">
 <div><dt>Catalogs</dt><dd>{count}</dd></div>
 <div><dt>Updated</dt><dd><time datetime="{generated}">{updated}</time></dd></div>
 </dl>
-<h2>Release lines</h2>
+<h2>Registry data</h2>
 <div class="table-wrap">
 <table>
-<thead><tr><th>Path</th><th>Contract</th><th>Files</th></tr></thead>
+<thead><tr><th>Path</th><th>Schema version</th><th>Files</th></tr></thead>
 <tbody>
 {trees}</tbody>
 </table>
@@ -113,14 +113,14 @@ To browse the catalogs, open the <a href="https://www.portolan-sdi.org/registry"
 {schemas}</tbody>
 </table>
 </div>
-<p class="note">A released schema never changes.
-Read the rules for each version step in the
+<p class="note">The site keeps every released schema unchanged.
+For versioning rules and release history, see the
 <a href="https://github.com/portolan-sdi/portolan-registry/blob/main/schema/CHANGELOG.md">contract changelog</a>.</p>
 </main>
 <footer>
-<p>Read how to use the contract in the
-<a href="https://github.com/portolan-sdi/portolan-registry#registry-contract">registry README</a>.
-The source is on <a href="https://github.com/portolan-sdi/portolan-registry">GitHub</a>.</p>
+<p>For file formats and compatibility rules, see the
+<a href="https://github.com/portolan-sdi/portolan-registry#registry-contract">registry documentation</a>.
+<a href="https://github.com/portolan-sdi/portolan-registry">View the source on GitHub</a>.</p>
 </footer>
 </div>
 </body>
@@ -130,8 +130,9 @@ The source is on <a href="https://github.com/portolan-sdi/portolan-registry">Git
 TREE_FILES = ("catalogs.json", "catalogs.parquet", "coverage/index.json")
 
 NO_RELEASE_NOTE = (
-    '<p class="note">No release is published yet. '
-    "<code>next/</code> follows <code>main</code> and makes no stability promise.</p>\n"
+    '<p class="note">The registry has no releases yet. '
+    "Files under <code>next/</code> reflect changes on <code>main</code> "
+    "and can change without notice.</p>\n"
 )
 
 
@@ -263,7 +264,7 @@ def copy_schemas(out: Path, *, root: Path) -> None:
 
 
 def copy_assets(out: Path, *, root: Path) -> None:
-    """Copy the static files of the landing page to the site root."""
+    """Copy the landing page's static assets to the site root."""
     for path in sorted((root / ASSETS_DIR).iterdir()):
         if path.is_file():
             shutil.copyfile(path, out / path.name)
@@ -275,7 +276,7 @@ def _file_list(base: str, names: Iterable[str]) -> str:
 
 
 def render_index(trees: list[Tree], releases: list[Version], export: Mapping[str, Any]) -> str:
-    """The landing page. It lists the published trees and every schema."""
+    """Render the landing page with data downloads and schema links."""
     rows = []
     # The released line first, because a tool pins it. `next/` is last.
     for tree in sorted(trees, key=lambda t: t.version is None):
