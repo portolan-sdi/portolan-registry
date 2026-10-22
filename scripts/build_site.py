@@ -123,7 +123,7 @@ For release history, see the
 </main>
 <footer>
 <p>For file formats and compatibility rules, see the
-<a href="https://github.com/portolan-sdi/portolan-registry#registry-contract">registry documentation</a>.
+<a href="https://github.com/portolan-sdi/portolan-registry#use-registry-data-in-your-tools">registry documentation</a>.
 <a href="https://github.com/portolan-sdi/portolan-registry">View source code on GitHub</a>.</p>
 </footer>
 </div>
