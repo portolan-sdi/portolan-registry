@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-22T11:07:56.792306+00:00",
+  "generated": "2026-10-22T12:03:26.908696+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-10-22T11:07:56.792306+00:00",
+  "registry_generated": "2026-10-22T12:03:26.908696+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -56323,62 +56323,6 @@
             38.532,
             -90.1667,
             38.7743
-          ]
-        }
-      ]
-    },
-    {
-      "id": "staging",
-      "collection_count": 5,
-      "collections": [
-        {
-          "id": "hydroatlas/basinatlas",
-          "title": "BasinATLAS",
-          "bbox": [
-            -180.0,
-            -55.9875,
-            180.0,
-            83.6256
-          ]
-        },
-        {
-          "id": "hydroatlas/lakeatlas",
-          "title": "LakeATLAS",
-          "bbox": [
-            -180.0,
-            -55.8651,
-            180.0,
-            83.576
-          ]
-        },
-        {
-          "id": "hydroatlas/lakeatlas/lakeatlas-pour-points",
-          "title": "LakeATLAS Pour Points",
-          "bbox": [
-            -179.9925,
-            -55.8609,
-            179.9988,
-            83.5712
-          ]
-        },
-        {
-          "id": "hydroatlas/riveratlas",
-          "title": "RiverATLAS",
-          "bbox": [
-            -179.9979,
-            -55.8771,
-            179.9979,
-            83.5896
-          ]
-        },
-        {
-          "id": "hydroatlas/basinatlas-pour-points",
-          "title": "BasinATLAS Pour Points",
-          "bbox": [
-            -179.9979,
-            -55.9854,
-            179.9979,
-            83.6229
           ]
         }
       ]
