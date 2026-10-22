@@ -31,13 +31,14 @@ import traceback
 from collections.abc import Callable, Mapping
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlsplit
 
 import requests
 
 from registry.contacts import validate_submitter_email
 from registry.entries import CATALOG_DIR, deprecation, load_entries, load_entry, normalize_url
 from registry.export import EXPORT_PATH, load_links, load_state
-from registry.fetch import HttpFetcher
+from registry.fetch import HttpFetcher, NotJson
 from registry.history import Deletion, deletions, entry_at, url_at
 from registry.mirror import MirrorSource
 from registry.report import log
@@ -58,6 +59,34 @@ REASON_MAX = 300
 # The filename without its extension is the registry ID. IDs cannot change
 # or be reused for another catalog (#242).
 STEM_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
+
+# A STAC Browser route that loads a catalog from another host, such as
+# `#/external/<host>/<path>`. A tool route can come before it.
+BROWSER_EXTERNAL_RE = re.compile(r"^/(?:(?:search|validation|management/[\w-]+)/)?external/(.+)$")
+
+
+def fragment_error(url: str) -> str | None:
+    """Return the error for a URL with a `#` fragment, or None if it has none.
+
+    A server never receives the fragment, so such a URL cannot name a catalog
+    file. A STAC Browser link puts the catalog address in the fragment. For
+    that link, the error names the direct URL.
+    """
+    if "#" not in url:
+        return None
+    fragment = urlsplit(url).fragment.split("?", 1)[0]
+    match = BROWSER_EXTERNAL_RE.match(fragment)
+    if match:
+        target = match.group(1)
+        direct = target if target.startswith(("http://", "https://")) else f"https://{target}"
+        return (
+            f"'url' is a STAC Browser link, not the catalog file. Set 'url' to {direct}. "
+            "A server never receives the part after '#', so the link returns the browser page."
+        )
+    return (
+        "'url' contains '#'. Remove '#' and the text after it. "
+        "A server never receives that part, so the URL cannot name a catalog file."
+    )
 
 
 def read_paths(listing: Path) -> list[Path]:
@@ -414,6 +443,9 @@ def check_entry(
     url = entry.get("url")
     if not url:
         return [f"{path}: Missing 'url' field"]
+    fragment = fragment_error(url)
+    if fragment:
+        return [f"{path}: {fragment}"]
     if not url.endswith("catalog.json"):
         return [f"{path}: URL must end with 'catalog.json'"]
 
@@ -451,6 +483,18 @@ def check_entry(
             )
             return []
         return [f"{path}: Failed to fetch catalog: {e}"]
+    except NotJson as e:
+        # The crawl catches a child that fails, so this is the root.
+        if not gated:
+            log(
+                f"  Could not read the catalog ({e}). Its registered URL has not changed, so this does not block the pull request."
+            )
+            return []
+        if "json" in e.content_type:
+            return [f"{path}: {e}. Fix the JSON in the catalog file."]
+        return [
+            f"{path}: {e}. Set 'url' to the catalog.json file itself, not a page that shows it."
+        ]
     except Exception as e:
         if not gated:
             log(

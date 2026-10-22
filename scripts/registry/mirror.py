@@ -71,7 +71,11 @@ class MirrorSource(Fetcher, Protocol):
     """A Fetcher that can also return a document's raw bytes."""
 
     def get_bytes(self, url: str, timeout: float = 30) -> bytes:
-        """Fetch a document. Raises NotFound on 404 or 410."""
+        """Fetch a document. Raises NotFound for a missing file.
+
+        HttpFetcher raises NotFound on 404, on 410, and on an S3 403
+        AccessDenied. See `registry.fetch.NotFound`.
+        """
         ...
 
 
