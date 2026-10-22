@@ -4,7 +4,7 @@
 
 The Portolan registry brings independently hosted [Portolan](https://github.com/portolan-sdi/portolan-spec) catalogs into one searchable network. Catalog owners keep their data in their own storage. Submit your Portolan catalog to help other users find and search it.
 
-**[Browse registered catalogs](https://www.portolan-sdi.org/registry)**, explore the [registry QGIS plugin](https://plugins.qgis.org/plugins/portolan_registry_qgis/), or read the [JSON registry](./exports/catalogs.json) from your own tools.
+**[Browse registered catalogs](https://www.portolan-sdi.org/registry)**, explore the [registry QGIS plugin](https://plugins.qgis.org/plugins/portolan_registry_qgis/), or read the registry from your own tools at [registry.portolan-sdi.org](https://registry.portolan-sdi.org/).
 
 ## Quickstart
 
@@ -63,7 +63,7 @@ For problems with a registered catalog's data or documentation, use [catalog fee
 
 ## Registry contract
 
-Tools read the registry from `https://registry.portolan-sdi.org`. The site publishes a versioned contract, so a tool can pin one release line and keep working while the registry adds fields. The contract is pre-1.0.
+[registry.portolan-sdi.org](https://registry.portolan-sdi.org/) publishes the registry for tools. It serves a versioned contract, so a tool can pin one release line and keep working while the registry adds fields. The contract is pre-1.0. The site rebuilds on each push to `main` that changes the export, the schemas, or the site files.
 
 | Path | Contents |
 |---|---|
@@ -79,7 +79,7 @@ A breaking change starts a new line in a new path, such as `v0.2/`. The previous
 
 Before 1.0.0, each minor version starts a line. From 1.0.0 on, each major version does. The [contract changelog](./schema/CHANGELOG.md) lists each release and the rules for each version step.
 
-The first release, 0.1.0, is pending. Until it publishes, existing tools keep reading [`exports/catalogs.json`](./exports/catalogs.json) on `main`.
+The site is live and serves `next/`. The first release, 0.1.0, is pending, so `v0.1/` and `schemas/v0.1.0/` do not exist yet. Until 0.1.0 publishes, read [`exports/catalogs.json`](./exports/catalogs.json) on `main` if your tool needs a stable shape.
 
 ## Schemas
 

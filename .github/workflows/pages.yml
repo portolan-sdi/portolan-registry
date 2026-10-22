@@ -13,6 +13,7 @@ on:
       - 'exports/**'
       - 'schema/**'
       - 'schemas/**'
+      - 'site/**'
       - 'scripts/**'
       - 'pyproject.toml'
       - 'uv.lock'
