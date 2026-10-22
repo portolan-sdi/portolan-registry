@@ -22,8 +22,10 @@ dev = [
     "pytest-cov>=7.1.0",
     "pytest-xdist>=3.8.0",
     "responses>=0.25",
+    "types-jsonschema>=4.26",
     "types-pyyaml>=6.0.12.20260906",
     "types-requests>=2.33.0.20261006",
+    "types-shapely>=2.1",
     "vulture>=2.16",
     "xenon>=0.9.3",
 ]
@@ -34,6 +36,14 @@ dev = [
 # pulls in rasterio and pyarrow. Install with `--group validators`.
 validators = [
     "rashid==0.3.0",
+]
+# What scripts/build_site.py needs to build and check the Pages site: the
+# GeoParquet writer and the JSON Schema check of each published file. Install
+# with `--group site`.
+site = [
+    "jsonschema>=4.26",
+    "pyarrow>=26",
+    "shapely>=2.2",
 ]
 
 # Dependencies only. There is nothing to build or install, so uv skips the
@@ -72,6 +82,11 @@ python_version = "3.11"
 files = ["scripts"]
 exclude = ["^scripts/tests/"]
 
+# pyarrow ships no type information and has no stub package.
+[[tool.mypy.overrides]]
+module = ["pyarrow", "pyarrow.*"]
+ignore_missing_imports = true
+
 [tool.vulture]
 paths = ["scripts"]
 min_confidence = 80
@@ -82,6 +97,9 @@ exclude_dirs = ["scripts/tests", ".venv"]
 [tool.deptry]
 known_first_party = ["registry"]
 exclude = [".venv", "scripts/tests", ".claude"]
+# deptry reads every dependency group as a dev group. The `site` group is the
+# runtime of scripts/build_site.py, which the Pages workflow runs.
+per_rule_ignores = { DEP004 = ["jsonschema", "pyarrow", "shapely"] }
 
 [tool.coverage.run]
 source = ["scripts"]

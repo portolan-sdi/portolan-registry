@@ -87,6 +87,20 @@ def _union_longitudes(spans: Sequence[tuple[float, float]]) -> tuple[float, floa
     return west, east
 
 
+def split_antimeridian(bbox: Sequence[float]) -> list[list[float]]:
+    """Return a cleaned bbox as one or two 2D rectangles that do not cross ±180.
+
+    A bbox with west > east crosses the antimeridian. It becomes
+    [west, south, 180, north] and [-180, south, east, north]. A 6-element bbox
+    loses its altitudes.
+    """
+    half = len(bbox) // 2
+    west, south, east, north = (bbox[i] for i in (0, 1, half, half + 1))
+    if west <= east:
+        return [[west, south, east, north]]
+    return [[west, south, _LON_LIMIT, north], [-_LON_LIMIT, south, east, north]]
+
+
 def union_bboxes(bboxes: Sequence[Sequence[float]]) -> list[float] | None:
     """Union cleaned bboxes.
 

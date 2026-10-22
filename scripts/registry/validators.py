@@ -208,9 +208,19 @@ def _snv_description(schema: str) -> str:
     return "the extension schema rejects the object"
 
 
-def run_stac_node_validator(mirror_dir: Path, *, run: Runner = subprocess.run) -> list[Finding]:
-    """Every stac-node-validator error, keyed by the schema that raised it."""
-    proc = _run([*SNV, str(mirror_dir)], run)
+def run_stac_node_validator(
+    mirror_dir: Path,
+    *,
+    run: Runner = subprocess.run,
+    schema_map: Mapping[str, Path] | None = None,
+) -> list[Finding]:
+    """Every stac-node-validator error, keyed by the schema that raised it.
+
+    `schema_map` maps a schema URI to a local file, so a document can name a
+    schema that is not published yet.
+    """
+    maps = [f"{uri}={path}" for uri, path in (schema_map or {}).items()]
+    proc = _run([*SNV, str(mirror_dir), *maps], run)
     if proc.returncode != 0:
         detail = (proc.stderr or proc.stdout or "").strip()[-500:]
         raise ValidatorError(f"stac-node-validator exited {proc.returncode}: {detail}")

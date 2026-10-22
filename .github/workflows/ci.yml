@@ -51,8 +51,9 @@ jobs:
       # Install rashid, so pip-audit also reads rashid and its rasterio and
       # pyarrow stack. The tests that run the real validators also need
       # stac-node-validator on Node 22.12. They skip here and run in
-      # `test` below.
-      sync-args: "--group validators"
+      # `test` below. The `site` group holds what the site build tests
+      # import.
+      sync-args: "--group validators --group site"
       # Flat layout: the code and its tests live in scripts/.
       coverage-target: scripts
       bandit-target: scripts
@@ -148,7 +149,7 @@ jobs:
       # Discovery and import paths come from pyproject.toml, so this runs
       # from the repository root. Tests marked `network` are deselected.
       - name: Run tests
-        run: uv run --frozen --group dev --group validators pytest -v
+        run: uv run --frozen --group dev --group validators --group site pytest -v
 
   exports-valid:
     name: Validate Exports
@@ -181,3 +182,57 @@ jobs:
           else
             echo "No exports/catalogs.json found (will be created on first publish)"
           fi
+
+  # The registry contract (schema/CHANGELOG.md). Fails when a schema change
+  # needs a larger version step than the CHANGELOG names, or when a branch
+  # changes a released schema under schemas/. No `paths` filter, so the
+  # check reports on every pull request and can be required.
+  contract:
+    name: Contract Version
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # The released-schema check diffs against the base branch.
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Setup uv
+        uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+
+      - name: Check the contract version
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          if [ -n "$BASE_REF" ]; then
+            uv run --frozen scripts/contract_compat.py --base-ref "origin/$BASE_REF"
+          else
+            uv run --frozen scripts/contract_compat.py
+          fi
+
+  # Builds the Pages site from this tree and runs every check that the
+  # deploy runs. An export pull request that would break the published
+  # contract fails here, before it merges.
+  site-build:
+    name: Build Site
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup uv
+        uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '22'
+
+      - name: Install stac-node-validator
+        run: npm ci --prefix scripts/stac-node-validator --no-audit --no-fund
+
+      - name: Build and check the site
+        run: uv run --frozen --group site scripts/build_site.py --out _site

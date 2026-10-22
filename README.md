@@ -57,17 +57,31 @@ For registry problems, open a [bug report](https://github.com/portolan-sdi/porto
 
 For problems with a registered catalog's data or documentation, use [catalog feedback](https://github.com/portolan-sdi/portolan-registry/issues/new?template=catalog-feedback.yml). Include the catalog ID: its filename in `catalogs/` without `.yaml`. The registry emails your feedback to the catalog's submitter.
 
+## Registry contract
+
+Tools read the registry from `https://registry.portolan-sdi.org`. The site publishes a versioned contract, so a tool can pin one major version and keep working while the registry adds fields.
+
+| Path | Contents |
+|---|---|
+| `vN/catalogs.json` | The registry as a STAC Catalog. Each registered catalog is a child link with `portolan_registry:*` fields. |
+| `vN/catalogs.parquet` | The same child links as a GeoParquet file, one row for each catalog. |
+| `vN/coverage/index.json` | The list of coverage files. Each catalog has one file with the bounding box of each collection. |
+| `schemas/v1.0.0/` | The extension schema and the coverage schema of release 1.0.0. Each release has its own directory. CI rejects a pull request that edits a released file. |
+| `next/` | The unreleased shape of `main`. It makes no stability promise. |
+
+The schema URL appears in `stac_extensions` of each `catalogs.json` and in `$schema` of each coverage file. Minor releases only add fields. The schemas accept fields that they do not define, so a tool that validates against an older minor version still works. For a breaking change, the registry publishes a new major path such as `v2/`. It also writes the previous path on each crawl for 6 months after that release. The [contract changelog](./schema/CHANGELOG.md) lists each release and the rules for each version step.
+
+The first release, 1.0.0, is pending. Until it publishes, existing tools keep reading [`exports/catalogs.json`](./exports/catalogs.json) on `main`.
+
 ## Schemas
 
-The [entry schema](./schema/entry.schema.json) defines submissions. The [export schema](./schema/export.schema.json) defines the JSON registry that tools consume. The [Portolan specification](https://github.com/portolan-sdi/portolan-spec) sets the requirements for catalogs.
+The [entry schema](./schema/entry.schema.json) defines submissions. The [extension schema](./schema/extension.json) and the [coverage schema](./schema/coverage.json) define the published contract. The [export schema](./schema/export.schema.json) defines the files in `exports/`, where the registry stores its state. The [Portolan specification](https://github.com/portolan-sdi/portolan-spec) sets the requirements for catalogs.
 
 ## Roadmap
 
 We plan to:
 
-- Introduce versions for the registry schemas.
 - Improve the catalog grader integration and its feedback.
-- Add [STAC GeoParquet](https://github.com/stac-utils/stac-geoparquet) support.
 
 Follow the [Portolan planning board](https://github.com/orgs/portolan-sdi/projects/1) for project plans.
 

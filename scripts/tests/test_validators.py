@@ -164,6 +164,12 @@ class TestStacNodeValidator:
         assert run.calls[0][0] == "node"
         assert run.calls[0][1].endswith("stac-node-validator/report.cjs")
 
+    def test_passes_each_schema_map_as_one_argument(self, tmp_path):
+        run = stub(stdout='{"files_checked": 0, "findings": []}')
+        local = tmp_path / "extension.json"
+        run_stac_node_validator(tmp_path, run=run, schema_map={"https://ext/s.json": local})
+        assert run.calls[0][2:] == [str(tmp_path), f"https://ext/s.json={local}"]
+
     def test_a_crash_is_not_a_verdict(self, tmp_path):
         with pytest.raises(ValidatorError, match="exited 1"):
             run_stac_node_validator(tmp_path, run=stub(returncode=1, stderr="boom"))
