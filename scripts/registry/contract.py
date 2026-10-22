@@ -3,18 +3,21 @@
 The git store, exports/catalogs.json, holds the registry state in the shape
 that the crawler writes. This module turns that store into the published
 shape. The published shape follows the extension schema of one contract
-version. `next/` follows the working schema in schema/. Each release line
-has its own tree, which follows the latest released schema of that line.
+version. `next/` follows the working schema in schema/. The newest release
+line has its own tree, which follows the latest released schema of that line.
 
 A release line is the set of versions that are compatible with each other.
 From 1.0.0 on, the major version names the line, and the tree is `v1/`.
 Before 1.0.0, the minor version names the line, and the tree is `v0.1/`.
 This is the rule that Cargo applies to 0.x versions.
+
+The site publishes the newest line only. A breaking release starts a new
+line, and the tree of the previous line stops. Every released schema stays
+published at its own URL.
 """
 
 from __future__ import annotations
 
-import calendar
 import copy
 import json
 import re
@@ -37,10 +40,6 @@ COVERAGE = "coverage.json"
 SCHEMA_FILES = (EXTENSION, COVERAGE)
 
 NEXT = "next"
-
-# After the first release of a new line, the build writes the previous line
-# for this many months. The release date comes from schema/CHANGELOG.md.
-DEPRECATION_MONTHS = 6
 
 Version = tuple[int, int, int]
 
@@ -88,45 +87,38 @@ def line_name(line: Line) -> str:
     return "v" + ".".join(str(part) for part in line)
 
 
-def latest_releases(released_dir: Path = RELEASED_DIR) -> dict[Line, Version]:
-    """The latest released version of each release line."""
-    latest: dict[Line, Version] = {}
-    for version in released_versions(released_dir):
-        latest[line_of(version)] = version
-    return latest
-
-
 _HEADING = re.compile(r"^## \[(\d+\.\d+\.\d+)\] - (.+?)\s*$")
+_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
 UNRELEASED = "Unreleased"
 
 
-def release_dates(changelog: Path = CHANGELOG_PATH) -> dict[Version, date]:
-    """The date of each released version, from the CHANGELOG headings."""
-    dates = {}
-    for line in changelog.read_text().splitlines():
-        match = _HEADING.match(line)
-        if match and match.group(2) != UNRELEASED:
-            dates[parse_version(match.group(1))] = date.fromisoformat(match.group(2))
-    return dates
-
-
-def add_months(day: date, months: int) -> date:
-    """`day` plus `months`, on the last day of the month when it has no such day."""
-    month_index = day.month - 1 + months
-    year, month = day.year + month_index // 12, month_index % 12 + 1
-    return date(year, month, min(day.day, calendar.monthrange(year, month)[1]))
+def _is_released(label: str, line: str, changelog: Path) -> bool:
+    """True for a release date, False for `Unreleased`. Raises ValueError otherwise."""
+    if label == UNRELEASED:
+        return False
+    if _DATE.match(label):
+        try:
+            date.fromisoformat(label)
+        except ValueError:
+            pass
+        else:
+            return True
+    raise ValueError(
+        f"{changelog}: the heading {line!r} must end in '{UNRELEASED}' or a YYYY-MM-DD date"
+    )
 
 
 def changelog_head(changelog: Path = CHANGELOG_PATH) -> tuple[Version, bool]:
     """The version of the top CHANGELOG heading, and whether it is released.
 
-    Raises ValueError when the file has no `## [X.Y.Z] - ...` heading.
+    Raises ValueError when the file has no `## [X.Y.Z] - ...` heading, or when
+    the top heading ends in something other than `Unreleased` or a date.
     """
     for line in changelog.read_text().splitlines():
         match = _HEADING.match(line)
         if match:
-            return parse_version(match.group(1)), match.group(2) != UNRELEASED
+            return parse_version(match.group(1)), _is_released(match.group(2), line, changelog)
     raise ValueError(f"{changelog} has no '## [X.Y.Z] - date' heading")
 
 
@@ -148,28 +140,6 @@ def load_schema(name: str, version: Version | None, *, root: Path = Path(".")) -
     with open(schema_path(name, version, root=root)) as f:
         schema: dict[str, Any] = json.load(f)
     return schema
-
-
-def active_lines(
-    today: date,
-    released_dir: Path = RELEASED_DIR,
-    changelog: Path = CHANGELOG_PATH,
-) -> dict[Line, Version]:
-    """The release lines the build writes today, with their latest version.
-
-    The newest line is always active. An older line stays active until
-    DEPRECATION_MONTHS after the first release of a later line. A line whose
-    successor has no date in the CHANGELOG stays active.
-    """
-    latest = latest_releases(released_dir)
-    dates = release_dates(changelog)
-    active = {}
-    for line, version in latest.items():
-        successors = sorted(v for v in dates if line_of(v) > line)
-        if successors and today > add_months(dates[successors[0]], DEPRECATION_MONTHS):
-            continue
-        active[line] = version
-    return active
 
 
 def child_links(doc: Mapping[str, Any]) -> Iterator[dict[str, Any]]:

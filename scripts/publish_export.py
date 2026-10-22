@@ -185,7 +185,7 @@ def main(argv: list[str] | None = None) -> int:
             expected_ids=expected_ids,
             previous_state=previous_state,
         )
-        check_no_vanished_fields(export, previous_links)
+        check_no_vanished_fields(export, previous_links, crawled=crawled)
         check_coverage_safe(coverage, expected_ids=expected_ids)
     except ExportRefused as e:
         log(f"\n=== REFUSING TO WRITE EXPORT: {e} ===")

@@ -108,8 +108,9 @@
             "$ref": "#/definitions/bbox"
           },
           "portolan_registry:id": {
+            "description": "The registry ID of the catalog, from the name of its entry file. The coverage URL of the catalog uses it as a path segment.",
             "type": "string",
-            "minLength": 1
+            "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
           },
           "portolan_registry:status": {
             "enum": [

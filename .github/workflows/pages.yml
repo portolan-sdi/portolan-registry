@@ -2,8 +2,7 @@ name: Publish Registry Site
 
 # Builds registry.portolan-sdi.org from main and deploys it to GitHub Pages.
 # The site holds the versioned contract: the released schemas, `next/`, and
-# one tree for each active release line, such as `v0.1/`
-# (schema/CHANGELOG.md).
+# the tree of the newest release line, such as `v0.1/` (schema/CHANGELOG.md).
 # The export reaches main through a pull request, so the moment worth
 # publishing is the merge, not the crawl.
 on:
@@ -81,7 +80,9 @@ jobs:
   # Tell portolan-sdi.org about a new export after the deploy ends. A
   # refresh before then would read the previous files. The refresh also runs
   # when the build or the deploy fails, because the site reads the raw export
-  # on main until it moves to v0.1/.
+  # on main until it moves to the release tree. It runs on every push: a
+  # newer push can cancel a queued run, and the newer run must still refresh
+  # for the export that the cancelled run carried.
   refresh:
     name: Refresh Site Cache
     needs: deploy
@@ -89,27 +90,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          fetch-depth: 0
-          persist-credentials: false
-
-      # A push that changes only code or schemas has no new data for the
-      # site. A manual run always refreshes.
-      - name: Check for an export change
-        id: changed
-        env:
-          BEFORE: ${{ github.event.before }}
-        run: |
-          if [ "$GITHUB_EVENT_NAME" != push ] \
-            || ! git diff --quiet "$BEFORE" "$GITHUB_SHA" -- exports/; then
-            echo "export=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "export=false" >> "$GITHUB_OUTPUT"
-          fi
-
       - name: Refresh portolan-sdi.org catalog cache
-        if: steps.changed.outputs.export == 'true'
         continue-on-error: true
         run: |
           curl -fsS -X POST \
@@ -119,7 +100,6 @@ jobs:
           REVALIDATE_SECRET: ${{ secrets.REVALIDATE_SECRET }}
 
       - name: Create site token
-        if: steps.changed.outputs.export == 'true'
         uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
         id: site-token
         with:
@@ -130,7 +110,6 @@ jobs:
           permission-contents: write
 
       - name: Request site coverage bake
-        if: steps.changed.outputs.export == 'true'
         env:
           GH_TOKEN: ${{ steps.site-token.outputs.token }}
         run: |

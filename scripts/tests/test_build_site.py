@@ -38,7 +38,7 @@ def root(tmp_path):
 
 def build(root, **kwargs):
     out = root.parent / "_site"
-    trees = build_site.build_site(out=out, root=root, today=TODAY, stac_validator=False, **kwargs)
+    trees = build_site.build_site(out=out, root=root, stac_validator=False, **kwargs)
     return out, trees
 
 
@@ -53,6 +53,20 @@ def first_child(doc):
 def release(root, version="0.1.0"):
     (root / "schema" / "CHANGELOG.md").write_text(f"## [{version}] - Unreleased\n")
     release_contract.release(version, root=root, today=TODAY)
+
+
+def drop_has_readme(root):
+    """A breaking change: the schema and the store both lose a required field."""
+    path = root / "schema" / "extension.json"
+    schema = read(path)
+    then = schema["definitions"]["link"]["then"]
+    then["required"].remove(PREFIX + "has_readme")
+    del then["properties"][PREFIX + "has_readme"]
+    path.write_text(json.dumps(schema))
+    store = read(root / "exports" / "catalogs.json")
+    for link in store["links"]:
+        link.pop(PREFIX + "has_readme", None)
+    (root / "exports" / "catalogs.json").write_text(json.dumps(store))
 
 
 def store_ids(root):
@@ -98,6 +112,11 @@ class TestBeforeTheFirstRelease:
         assert table.num_rows == len(store_ids(root))
         assert set(table.column("portolan_registry:id").to_pylist()) == store_ids(root)
 
+    def test_parquet_keeps_the_link_type(self, root):
+        out, _ = build(root)
+        types = pq.read_table(out / "next" / "catalogs.parquet").column("type").to_pylist()
+        assert set(types) == {"application/json"}
+
     def test_replaces_an_old_build(self, root):
         out, _ = build(root)
         (out / "stale").mkdir()
@@ -139,14 +158,32 @@ class TestAfterARelease:
         assert PREFIX + "new_field" not in v01_columns
 
     def test_a_breaking_store_change_fails_the_released_tree(self, root):
-        """A field that a release requires and the store drops must stop the deploy."""
+        """A breaking change that merges before its release must stop the deploy."""
         release(root)
-        store = read(root / "exports" / "catalogs.json")
-        for link in store["links"]:
-            link.pop(PREFIX + "has_readme", None)
-        (root / "exports" / "catalogs.json").write_text(json.dumps(store))
+        drop_has_readme(root)
         with pytest.raises(BuildError, match="v0.1/catalogs.json.*has_readme"):
             build(root)
+
+    def test_a_breaking_release_replaces_the_previous_tree(self, root):
+        release(root)
+        drop_has_readme(root)
+        release(root, "0.2.0")
+        out, trees = build(root)
+        assert trees == [Tree("next", None), Tree("v0.2", (0, 2, 0))]
+        assert not (out / "v0.1").exists()
+        assert (out / "schemas" / "v0.1.0" / "extension.json").is_file()
+        assert (out / "schemas" / "v0.2.0" / "extension.json").is_file()
+        index = (out / "index.html").read_text()
+        assert "v0.2/catalogs.json" in index
+        assert "v0.1/catalogs.json" not in index
+
+    def test_an_additive_release_keeps_the_line(self, root):
+        release(root)
+        release(root, "0.1.1")
+        out, trees = build(root)
+        assert trees == [Tree("next", None), Tree("v0.1", (0, 1, 1))]
+        doc = read(out / "v0.1" / "catalogs.json")
+        assert doc["stac_extensions"] == [f"{SITE_URL}/schemas/v0.1.1/extension.json"]
 
 
 class TestChecks:
@@ -164,6 +201,20 @@ class TestChecks:
         with pytest.raises(BuildError, match="no coverage file for"):
             build(root)
 
+    def test_refuses_coverage_without_a_catalog(self, root):
+        coverage = read(root / "exports" / "coverage-bboxes.json")
+        coverage["catalogs"].append({"id": "gone", "collection_count": 0, "collections": []})
+        (root / "exports" / "coverage-bboxes.json").write_text(json.dumps(coverage))
+        with pytest.raises(BuildError, match="no child link for coverage gone"):
+            build(root)
+
+    def test_refuses_a_nested_key_that_parquet_would_drop(self, root):
+        store = read(root / "exports" / "catalogs.json")
+        first_child(store)[PREFIX + "host"] = {"name": "H", "url": "https://h.org", "roles": []}
+        (root / "exports" / "catalogs.json").write_text(json.dumps(store))
+        with pytest.raises(BuildError, match="catalogs.parquet: .*portolan_registry:host.roles"):
+            build(root)
+
     def test_refuses_a_value_with_a_bad_format(self, root):
         coverage = read(root / "exports" / "coverage-bboxes.json")
         coverage["generated"] = "yesterday"
@@ -179,7 +230,7 @@ class TestChecks:
     def test_refuses_to_replace_a_directory_that_is_not_a_build(self, root):
         (root / "keep.txt").write_text("not a build")
         with pytest.raises(BuildError, match="not an earlier site build"):
-            build_site.build_site(out=root, root=root, today=TODAY, stac_validator=False)
+            build_site.build_site(out=root, root=root, stac_validator=False)
         assert (root / "keep.txt").is_file()
 
     def test_writes_into_an_empty_directory(self, root):
@@ -211,7 +262,7 @@ class TestChecks:
             build_site, "run_stac_node_validator", lambda path, schema_map: [finding]
         )
         with pytest.raises(BuildError, match="next/catalogs.json: core: bad link"):
-            build_site.build_site(out=root.parent / "_site", root=root, today=TODAY)
+            build_site.build_site(out=root.parent / "_site", root=root)
 
     def test_maps_the_extension_to_the_local_schema(self, root, monkeypatch):
         seen = {}
@@ -221,7 +272,7 @@ class TestChecks:
             return []
 
         monkeypatch.setattr(build_site, "run_stac_node_validator", fake)
-        build_site.build_site(out=root.parent / "_site", root=root, today=TODAY)
+        build_site.build_site(out=root.parent / "_site", root=root)
         assert seen == {
             f"{SITE_URL}/next/schemas/extension.json": root / "schema" / "extension.json"
         }
@@ -231,4 +282,4 @@ class TestChecks:
 def test_the_built_site_passes_stac_node_validator(root):
     release(root)
     out = root.parent / "_site"
-    build_site.build_site(out=out, root=root, today=TODAY)
+    build_site.build_site(out=out, root=root)

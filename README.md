@@ -69,7 +69,11 @@ Tools read the registry from `https://registry.portolan-sdi.org`. The site publi
 | `schemas/v0.1.0/` | The extension schema and the coverage schema of release 0.1.0. Each release has its own directory. CI rejects a pull request that edits a released file. |
 | `next/` | The unreleased shape of `main`. It makes no stability promise. |
 
-The schema URL appears in `stac_extensions` of each `catalogs.json` and in `$schema` of each coverage file. Releases in one line only add fields. The schemas accept fields that they do not define, so a tool that validates against an older release in its line still works. For a breaking change, the registry starts a new line in a new path, such as `v0.2/`. It also writes the previous path on each crawl for 6 months after that release. Before 1.0.0, each minor version starts a line. From 1.0.0 on, each major version does. The [contract changelog](./schema/CHANGELOG.md) lists each release and the rules for each version step.
+The schema URL appears in `stac_extensions` of each `catalogs.json` and in `$schema` of each coverage file, so a tool can check which release it reads. Releases in one line only add fields. The schemas accept fields that they do not define, so a tool that validates against an older release in its line still works.
+
+A breaking change starts a new line in a new path, such as `v0.2/`. The previous path stops in the same deploy, so a tool pinned to it gets a 404 instead of data in a shape it does not expect. Update the tool to read the new line. Each breaking release is announced in the [Portolan Google Group](https://groups.google.com/g/portolan) and the [Portolan channel](https://cloudnativegeo.slack.com/archives/C0A1JBH9529) before it publishes. Every released schema stays published under `schemas/`.
+
+Before 1.0.0, each minor version starts a line. From 1.0.0 on, each major version does. The [contract changelog](./schema/CHANGELOG.md) lists each release and the rules for each version step.
 
 The first release, 0.1.0, is pending. Until it publishes, existing tools keep reading [`exports/catalogs.json`](./exports/catalogs.json) on `main`.
 

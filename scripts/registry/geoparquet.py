@@ -1,7 +1,8 @@
 """Write the published registry document as a GeoParquet 1.1 file.
 
 The file has one row for each child link. Its columns are the link fields
-with the names that the JSON document uses. The geometry column holds the
+with the names that the JSON document uses. Every row is a child link, so the
+file has no `rel` column. The geometry column holds the
 link bbox as a Polygon, or as a MultiPolygon when the bbox crosses the
 antimeridian. stac-geoparquet stores STAC Items only, and the registry
 publishes child links, so this file is plain GeoParquet.
@@ -72,9 +73,46 @@ FIELD_TYPES: dict[str, pa.DataType] = {
 # STAC link fields that every row carries.
 _LINK_FIELDS: list[tuple[str, pa.DataType]] = [
     ("href", pa.string()),
+    ("type", pa.string()),
     ("title", pa.string()),
     ("bbox", pa.list_(pa.float64())),
 ]
+
+# Link keys that the file leaves out on purpose.
+_NOT_COLUMNS = frozenset({"rel"})
+
+
+def _dropped(value: Any, arrow_type: pa.DataType, path: str) -> set[str]:
+    """Each key under `value` that `arrow_type` has no field for.
+
+    pyarrow drops such a key from a struct without an error, so the parquet
+    file would lose data that the JSON document keeps.
+    """
+    if pa.types.is_struct(arrow_type) and isinstance(value, Mapping):
+        names = {arrow_type.field(i).name for i in range(arrow_type.num_fields)}
+        dropped = {f"{path}.{key}" for key in value if key not in names}
+        for i in range(arrow_type.num_fields):
+            field = arrow_type.field(i)
+            dropped |= _dropped(value.get(field.name), field.type, f"{path}.{field.name}")
+        return dropped
+    if pa.types.is_list(arrow_type) and isinstance(value, list):
+        dropped = set()
+        for item in value:
+            dropped |= _dropped(item, arrow_type.value_type, f"{path}[]")
+        return dropped
+    return set()
+
+
+def _check_columns(links: list[dict[str, Any]], fields: list[tuple[str, pa.DataType]]) -> None:
+    """Raise ValueError when a link holds a key that the parquet schema drops."""
+    types = dict(fields)
+    dropped: set[str] = set()
+    for link in links:
+        dropped |= {key for key in link if key not in types and key not in _NOT_COLUMNS}
+        for name, arrow_type in fields:
+            dropped |= _dropped(link.get(name), arrow_type, name)
+    if dropped:
+        raise ValueError(f"no parquet column or struct field for {', '.join(sorted(dropped))}")
 
 
 def _geometry(bbox: Sequence[float] | None) -> shapely.Polygon | shapely.MultiPolygon | None:
@@ -91,9 +129,11 @@ def build_table(doc: Mapping[str, Any], link_fields: set[str]) -> pa.Table:
     """One row for each child link of `doc`, with the columns `link_fields` names.
 
     Raises KeyError when `link_fields` names a field that has no Arrow type.
+    Raises ValueError when a link holds a key that the columns would drop.
     """
     fields = [*_LINK_FIELDS, *((name, FIELD_TYPES[name]) for name in sorted(link_fields))]
     links = list(child_links(doc))
+    _check_columns(links, fields)
     geometries = [_geometry(link.get("bbox")) for link in links]
     rows = [{name: link.get(name) for name, _ in fields} for link in links]
     table = pa.Table.from_pylist(rows, schema=pa.schema(fields))

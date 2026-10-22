@@ -23,7 +23,16 @@ ANNOTATIONS = frozenset({"description", "title", "$comment", "examples"})
 # Keywords whose keys name fields or definitions.
 _NAMED = frozenset({"properties", "definitions"})
 
+# Keywords whose value is a set. `required` has its own rule in `_walk`.
+_UNORDERED = frozenset({"enum", "type"})
+
 SELF = "<self>"
+
+
+def _as_set(value: Any) -> set[str]:
+    """The items of an `enum` or `type` value. A bare `type` string is a set of one."""
+    items = value if isinstance(value, list) else [value]
+    return {repr(item) for item in items}
 
 
 @dataclass(frozen=True)
@@ -76,8 +85,9 @@ def _walk(old: Any, new: Any, path: str) -> list[Change]:
                     changes.append(Change(MAJOR, f"{path}/properties/{name}", "no longer required"))
                 for name in sorted(set(new[key]) - set(old[key])):
                     changes.append(Change(MINOR, f"{path}/properties/{name}", "now required"))
-            elif key == "enum":
-                if set(map(repr, old[key])) != set(map(repr, new[key])):
+            elif key in _UNORDERED:
+                # The order of these lists has no meaning, so compare them as sets.
+                if _as_set(old[key]) != _as_set(new[key]):
                     changes.append(Change(MAJOR, here, f"{old[key]} -> {new[key]}"))
             else:
                 changes.extend(_walk(old[key], new[key], here))

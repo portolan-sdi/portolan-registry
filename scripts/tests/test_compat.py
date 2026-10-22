@@ -82,6 +82,20 @@ class TestClassify:
         link_fields(new)["portolan_registry:has_readme"]["type"] = ["boolean", "null"]
         assert required_level(classify(extension(), new)) == MAJOR
 
+    def test_the_order_of_a_type_list_is_no_change(self):
+        old = extension()
+        link_fields(old)["portolan_registry:api_type"]["type"] = ["string", "null"]
+        new = copy.deepcopy(old)
+        link_fields(new)["portolan_registry:api_type"]["type"] = ["null", "string"]
+        assert classify(old, new) == []
+
+    def test_a_bare_type_equals_a_list_of_one(self):
+        old = extension()
+        new = copy.deepcopy(old)
+        link_fields(new)["portolan_registry:has_readme"]["type"] = ["boolean"]
+        assert link_fields(old)["portolan_registry:has_readme"]["type"] == "boolean"
+        assert classify(old, new) == []
+
     def test_a_field_that_is_no_longer_required_is_major(self):
         old = extension()
         new = copy.deepcopy(old)
@@ -184,10 +198,38 @@ class TestCheck:
         assert "is breaking, so it needs version 0.2.0 or later" in problem
         assert "portolan_registry:has_readme" in problem
 
-    def test_a_removed_field_under_a_new_minor_passes(self, repo):
+    def test_a_breaking_change_under_an_unreleased_heading_fails(self, repo):
+        """The store has one shape, so a breaking change merges as its release."""
         repo.release()
         repo.changelog("## [0.2.0] - Unreleased", "## [0.1.0] - 2026-10-22")
         repo.edit(lambda s: link_fields(s).pop("portolan_registry:has_readme"))
+        [problem] = repo.check()
+        assert "must merge as that release" in problem
+        assert "release_contract.py" in problem
+        assert "portolan_registry:has_readme" in problem
+
+    def test_a_breaking_change_merged_as_its_release_passes(self, repo):
+        repo.release()
+        repo.changelog("## [0.2.0] - Unreleased", "## [0.1.0] - 2026-10-22")
+        repo.edit(lambda s: link_fields(s).pop("portolan_registry:has_readme"))
+        repo.release("0.2.0")
+        assert repo.check() == []
+
+    def test_a_release_too_small_for_its_change_fails(self, repo):
+        repo.release()
+        repo.changelog("## [0.1.1] - Unreleased", "## [0.1.0] - 2026-10-22")
+        repo.edit(lambda s: link_fields(s).pop("portolan_registry:has_readme"))
+        repo.release("0.1.1")
+        [problem] = repo.check()
+        assert problem.startswith("release 0.1.1: this change is breaking")
+        assert "needs version 0.2.0 or later" in problem
+        assert "portolan_registry:has_readme" in problem
+
+    def test_an_additive_release_passes(self, repo):
+        repo.release()
+        repo.changelog("## [0.1.1] - Unreleased", "## [0.1.0] - 2026-10-22")
+        repo.edit(lambda s: link_fields(s).update({"portolan_registry:new_field": {}}))
+        repo.release("0.1.1")
         assert repo.check() == []
 
     def test_from_1_0_a_breaking_change_needs_a_new_major(self, repo):
@@ -305,3 +347,9 @@ class TestRelease:
         repo.edit(lambda s: link_fields(s).pop("portolan_registry:has_readme"))
         assert contract_compat.main([]) == 1
         assert "FAIL" in capsys.readouterr().err
+
+    def test_compat_cli_reports_a_bad_heading(self, repo, monkeypatch, capsys):
+        monkeypatch.chdir(repo.root)
+        repo.changelog("## [0.1.0] - next week")
+        assert contract_compat.main([]) == 1
+        assert "must end in 'Unreleased'" in capsys.readouterr().err

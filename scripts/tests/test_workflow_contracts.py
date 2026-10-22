@@ -39,11 +39,12 @@ def test_the_site_refreshes_after_the_deploy():
     jobs = yaml.safe_load(Path(".github/workflows/pages.yml").read_text())["jobs"]
     assert jobs["deploy"]["needs"] == "build"
     assert jobs["refresh"]["needs"] == "deploy"
-    # The site reads the raw export until it moves to v1/, so a failed
-    # deploy must not stop the refresh.
+    # The site reads the raw export until it moves to the release tree, so a
+    # failed deploy must not stop the refresh.
     assert jobs["refresh"]["if"] == "${{ !cancelled() }}"
-    gated = [step for step in jobs["refresh"]["steps"] if "Refresh" in step.get("name", "")]
-    assert gated[0]["if"] == "steps.changed.outputs.export == 'true'"
+    # A newer push can cancel a queued run that carried an export, so every
+    # run refreshes. No step may skip on what this one push changed.
+    assert all("if" not in step for step in jobs["refresh"]["steps"])
     assert jobs["deploy"]["permissions"] == {"pages": "write", "id-token": "write"}
 
 
@@ -51,6 +52,16 @@ def test_the_deploy_and_ci_build_the_same_site():
     build = "uv run --frozen --group site scripts/build_site.py --out _site"
     for name, job in (("pages.yml", "build"), ("ci.yml", "site-build")):
         assert any(step.get("run") == build for step in _steps(name, job)), name
+
+
+def test_ci_keeps_the_built_site():
+    """A consumer can try a contract change from the PR run before it deploys."""
+    upload = next(
+        step
+        for step in _steps("ci.yml", "site-build")
+        if step.get("uses", "").startswith("actions/upload-artifact@")
+    )
+    assert upload["with"]["path"] == "_site/"
 
 
 def test_the_contract_check_reads_the_base_branch():

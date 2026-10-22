@@ -29,8 +29,18 @@ Use these rules to choose the version:
 The check cannot detect a changed unit or meaning. Name the breaking version
 for that change yourself.
 
-After the first release of a new line, the registry writes the previous line
-for 6 months. The release dates come from the headings of this file.
+A breaking change merges as its own release. The store has one shape, so a
+breaking change on `main` before its release would break the tree of the
+current line. Put the schema change, the crawler change, the regenerated
+export, and the output of `scripts/release_contract.py` in one pull request.
+The `contract` check fails on a breaking change under an `Unreleased`
+heading. CI uploads the built site as the `registry-site` artifact of each
+run, so a consumer can try the new line before it deploys.
+
+The site publishes the newest line only. When a breaking release deploys,
+the tree of the previous line stops. Every released schema stays under
+`schemas/`. Announce each breaking release in the Portolan Google Group and
+the Portolan Slack channel before it merges.
 
 ## [0.1.0] - Unreleased
 

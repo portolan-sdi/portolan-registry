@@ -3,8 +3,10 @@
 from __future__ import annotations
 
 import json
+import re
 
 import pyarrow.parquet as pq
+import pytest
 import shapely
 
 from registry.export import PREFIX
@@ -38,7 +40,36 @@ def geometries(table):
 def test_one_row_per_child_link():
     table = build_table(doc(link("a", [0, 0, 1, 1]), link("b", [2, 2, 3, 3])), FIELDS)
     assert table.num_rows == 2
-    assert table.column_names == ["href", "title", "bbox", *sorted(FIELDS), "geometry"]
+    assert table.column_names == ["href", "type", "title", "bbox", *sorted(FIELDS), "geometry"]
+
+
+def test_keeps_the_link_type():
+    table = build_table(doc(link("a", type="application/json")), FIELDS)
+    assert table.column("type").to_pylist() == ["application/json"]
+
+
+@pytest.mark.parametrize(
+    ("fields", "dropped"),
+    [
+        ({PREFIX + "licenses": [{"id": "MIT", "count": 1, "url": "u"}]}, "licenses[].url"),
+        ({PREFIX + "host": {"name": "H", "roles": ["host"]}}, "host.roles"),
+        ({PREFIX + "logo": {"href": "h", "type": "image/png", "rel": "icon"}}, "logo.rel"),
+        ({"unprefixed": 1}, "unprefixed"),
+    ],
+)
+def test_refuses_a_key_that_the_columns_would_drop(fields, dropped):
+    """pyarrow drops an unknown struct key without an error."""
+    declared = FIELDS | {PREFIX + "host", PREFIX + "logo"}
+    with pytest.raises(
+        ValueError, match=f"no parquet column or struct field for .*{re.escape(dropped)}"
+    ):
+        build_table(doc(link("a", **fields)), declared)
+
+
+def test_accepts_null_nested_fields():
+    fields = {PREFIX + "host": None, PREFIX + "logo": None, PREFIX + "licenses": []}
+    declared = FIELDS | {PREFIX + "host", PREFIX + "logo"}
+    assert build_table(doc(link("a", **fields)), declared).num_rows == 1
 
 
 def test_a_crossing_bbox_becomes_a_multipolygon():

@@ -6,10 +6,10 @@ Run from the repository root:
     uv run --frozen --group site scripts/build_site.py --out _site
 
 The site holds every released schema, the `next/` tree in the shape of the
-working schemas, and one tree for each active release line, such as `v0.1/`
-or `v1/`. The
-script validates every file it writes and exits 1 when a check fails, so the
-Pages workflow never deploys a tree that breaks its own contract.
+working schemas, and the tree of the newest release line, such as `v0.1/` or
+`v1/`. The script validates every file it writes and exits 1 when a check
+fails, so the Pages workflow never deploys a tree that breaks its own
+contract.
 """
 
 from __future__ import annotations
@@ -19,7 +19,6 @@ import json
 import shutil
 from collections.abc import Mapping
 from dataclasses import dataclass
-from datetime import UTC, date, datetime
 from pathlib import Path
 from typing import Any
 
@@ -27,7 +26,6 @@ import pyarrow.parquet as pq
 from jsonschema import Draft7Validator
 
 from registry.contract import (
-    CHANGELOG_PATH,
     COVERAGE,
     EXTENSION,
     NEXT,
@@ -35,11 +33,11 @@ from registry.contract import (
     SCHEMA_FILES,
     SITE_URL,
     Version,
-    active_lines,
     child_links,
     declared_fields,
     format_version,
     line_name,
+    line_of,
     load_schema,
     project,
     publish,
@@ -160,7 +158,10 @@ def build_tree(
         raise BuildError(
             f"{tree.name}: no parquet type in registry/geoparquet.py for {', '.join(sorted(untyped))}"
         )
-    table = build_table(doc, link_fields)
+    try:
+        table = build_table(doc, link_fields)
+    except ValueError as e:
+        raise BuildError(f"{tree.name}/catalogs.parquet: {e}") from e
     parquet_path = directory / "catalogs.parquet"
     write_table(table, parquet_path)
 
@@ -171,9 +172,13 @@ def build_tree(
         errors += _errors(coverage_validator, record, f"{tree.name}/coverage/{catalog_id}.json")
 
     children = list(child_links(doc))
-    missing = {link["portolan_registry:id"] for link in children} - files.keys()
+    ids = {link["portolan_registry:id"] for link in children}
+    missing = ids - files.keys()
     if missing:
         errors.append(f"{tree.name}: no coverage file for {', '.join(sorted(missing))}")
+    orphans = files.keys() - ids
+    if orphans:
+        errors.append(f"{tree.name}: no child link for coverage {', '.join(sorted(orphans))}")
     rows = pq.read_metadata(parquet_path).num_rows
     if rows != len(children):
         errors.append(f"{tree.name}/catalogs.parquet: {rows} rows for {len(children)} child links")
@@ -237,11 +242,9 @@ def build_site(
     *,
     out: Path,
     root: Path = Path("."),
-    today: date | None = None,
     stac_validator: bool = True,
 ) -> list[Tree]:
     """Build the whole site into `out`. Returns the trees it wrote."""
-    today = today or datetime.now(UTC).date()
     with open(root / EXPORT_PATH) as f:
         export = json.load(f)
     with open(root / COVERAGE_PATH) as f:
@@ -252,11 +255,12 @@ def build_site(
     (out / "CNAME").write_text(DOMAIN + "\n")
     copy_schemas(out, root=root)
 
-    lines = active_lines(today, root / RELEASED_DIR, root / CHANGELOG_PATH)
-    trees = [
-        Tree(NEXT, None),
-        *(Tree(line_name(line), version) for line, version in sorted(lines.items())),
-    ]
+    # Only the newest line has a tree. A breaking release stops the tree of
+    # the previous line, and its schemas stay under schemas/.
+    trees = [Tree(NEXT, None)]
+    releases = released_versions(root / RELEASED_DIR)
+    if releases:
+        trees.append(Tree(line_name(line_of(releases[-1])), releases[-1]))
     catalogs = []
     failures = []
     # Build every tree before failing, so one run reports both a `next/`

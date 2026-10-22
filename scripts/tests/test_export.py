@@ -382,49 +382,66 @@ class TestNoVanishedFields:
     def export(self, links):
         return {"links": [{"rel": "child", **link} for link in links.values()]}
 
+    def check(self, export, previous, crawled=None):
+        """Every catalog in `export` counts as crawled unless `crawled` says otherwise."""
+        if crawled is None:
+            crawled = {link["portolan_registry:id"] for link in export["links"]}
+        check_no_vanished_fields(export, previous, crawled=crawled)
+
     def test_refuses_a_field_that_lost_every_value(self):
         previous = self.links({"href": "x"}, {"href": "y"}, None)
         with pytest.raises(ExportRefused, match="portolan_registry:logo"):
-            check_no_vanished_fields(self.export(self.links(None, None, None)), previous)
+            self.check(self.export(self.links(None, None, None)), previous)
 
     def test_one_catalog_may_drop_its_own_value(self):
         """A refusal never clears, so one publisher change must not cause one."""
         previous = self.links({"href": "x"}, None)
-        check_no_vanished_fields(self.export(self.links(None, None)), previous)
+        self.check(self.export(self.links(None, None)), previous)
 
     def test_accepts_a_field_that_keeps_one_value(self):
         previous = self.links({"href": "x"}, {"href": "y"})
-        check_no_vanished_fields(self.export(self.links(None, {"href": "y"})), previous)
+        self.check(self.export(self.links(None, {"href": "y"})), previous)
 
     def test_an_empty_list_counts_as_no_value(self):
         field = "portolan_registry:producers"
         previous = self.links([{"name": "a"}], [{"name": "b"}], field=field)
         with pytest.raises(ExportRefused, match="producers"):
-            check_no_vanished_fields(self.export(self.links([], [], field=field)), previous)
+            self.check(self.export(self.links([], [], field=field)), previous)
 
     def test_a_missing_field_counts_as_no_value(self):
         field = "portolan_registry:stac_valid"
         previous = self.links(True, False, field=field)
-        check_no_vanished_fields(self.export(self.links(True, None, field=field)), previous)
+        self.check(self.export(self.links(True, None, field=field)), previous)
         bare = {cid: {"portolan_registry:id": cid} for cid in previous}
         with pytest.raises(ExportRefused, match="stac_valid"):
-            check_no_vanished_fields(self.export(bare), previous)
+            self.check(self.export(bare), previous)
 
     @pytest.mark.parametrize("field", sorted(export_module.CLEARING_FIELDS))
     def test_allows_fields_that_clear_on_their_own(self, field):
         previous = self.links("2026-01-01", "2026-01-02", field=field)
-        check_no_vanished_fields(self.export(self.links(None, None, field=field)), previous)
+        self.check(self.export(self.links(None, None, field=field)), previous)
 
     def test_a_removed_catalog_takes_its_values_with_it(self):
         previous = self.links(None, {"href": "x"}, {"href": "y"})
-        check_no_vanished_fields(self.export(self.links(None)), previous)
+        self.check(self.export(self.links(None)), previous)
 
     def test_a_first_export_has_nothing_to_lose(self):
-        check_no_vanished_fields(self.export(self.links(None)), {})
+        self.check(self.export(self.links(None)), {})
+
+    def test_a_catalog_carried_forward_does_not_hide_a_loss(self):
+        """A catalog the run could not crawl keeps its old link and its old values."""
+        previous = self.links({"href": "x"}, {"href": "y"}, {"href": "z"})
+        export = self.export(self.links(None, None, {"href": "z"}))
+        with pytest.raises(ExportRefused, match="portolan_registry:logo"):
+            self.check(export, previous, crawled={"c0", "c1"})
+
+    def test_nothing_crawled_has_nothing_to_compare(self):
+        previous = self.links({"href": "x"}, {"href": "y"})
+        self.check(self.export(self.links(None, None)), previous, crawled=set())
 
     def test_the_committed_export_passes_against_itself(self):
         links = load_links(EXPORT)
-        check_no_vanished_fields(json.loads(EXPORT.read_text()), links)
+        check_no_vanished_fields(json.loads(EXPORT.read_text()), links, crawled=links.keys())
 
 
 class TestExportChanged:

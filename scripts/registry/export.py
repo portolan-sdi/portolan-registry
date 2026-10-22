@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import copy
 import json
-from collections.abc import Mapping, Sequence
+from collections.abc import Collection, Mapping, Sequence
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
@@ -395,21 +395,27 @@ VANISHED_MIN_CATALOGS = 2
 
 
 def check_no_vanished_fields(
-    export: Mapping[str, Any], previous_links: Mapping[str, Mapping[str, Any]]
+    export: Mapping[str, Any],
+    previous_links: Mapping[str, Mapping[str, Any]],
+    *,
+    crawled: Collection[str],
 ) -> None:
-    """Refuse an export in which a field lost its value on every catalog.
+    """Refuse an export in which a field lost its value on every crawled catalog.
 
     A field that had a value on several catalogs and is now empty on all of
     them is a crawler regression, such as a validator that did not run.
     Consumers would read it as a fact about every catalog. Only catalogs in
     both exports count, so a removed entry file takes its values with it.
+    Only catalogs that this run crawled count too. A catalog that the run
+    could not crawl keeps its previous link, so its old values would hide the
+    regression.
     """
     links = {
         link["portolan_registry:id"]: link
         for link in export.get("links", [])
         if link.get("rel") == "child" and link.get("portolan_registry:id")
     }
-    shared = links.keys() & previous_links.keys()
+    shared = links.keys() & previous_links.keys() & set(crawled)
     if not shared:
         return
     holders: dict[str, int] = {}
