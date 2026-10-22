@@ -10,7 +10,7 @@ The [schema guide](./README.md) gives the rules for each version step, and
 the steps to change a schema and to release a version. The `Contract Version`
 check reads the top heading of this file.
 
-## [0.1.0] - Unreleased
+## [0.1.0] - 2026-10-22
 
 ### Added
 
