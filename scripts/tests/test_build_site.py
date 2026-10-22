@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 import shutil
 from datetime import date
 from html.parser import HTMLParser
@@ -14,6 +15,7 @@ import pyarrow.parquet as pq
 import pytest
 import release_contract
 from build_site import BuildError, Tree
+from jsonschema import Draft7Validator
 
 from registry import geoparquet, validators
 from registry.contract import SITE_URL
@@ -196,6 +198,21 @@ class TestAfterARelease:
         assert "v0.2/catalogs.json" in index
         assert "v0.1/catalogs.json" not in index
 
+    def test_a_patch_tree_passes_the_first_release_of_its_line(self, root):
+        """A tool that validates with 0.1.0 keeps working after 0.1.1."""
+        release(root)
+        path = root / "schema" / "extension.json"
+        schema = read(path)
+        schema["description"] += " Edited."
+        path.write_text(json.dumps(schema))
+        release(root, "0.1.1")
+        out, _ = build(root)
+        first = root / "schemas" / "v0.1.0"
+        extension = Draft7Validator(read(first / "extension.json"))
+        assert list(extension.iter_errors(read(out / "v0.1" / "catalogs.json"))) == []
+        coverage = Draft7Validator(read(first / "coverage.json"))
+        assert list(coverage.iter_errors(read(out / "v0.1" / "coverage" / "index.json"))) == []
+
     def test_an_additive_release_keeps_the_line(self, root):
         release(root)
         release(root, "0.1.1")
@@ -319,14 +336,41 @@ class TestIndex:
         assert f"<dd>{store['count']}</dd>" in page
         assert f">{store['generated'][:10]}</time>" in page
 
+    def test_the_datetime_attribute_has_whole_seconds(self, root):
+        path = root / "exports" / "catalogs.json"
+        store = read(path)
+        store["generated"] = "2026-10-22T12:03:26.908696+00:00"
+        path.write_text(json.dumps(store))
+        out, _ = build(root)
+        assert 'datetime="2026-10-22T12:03:26+00:00"' in (out / "index.html").read_text()
+
+    @pytest.mark.parametrize("name", ["CNAME", "index.html"])
+    def test_an_asset_cannot_replace_a_generated_file(self, root, name):
+        (root / "site" / name).write_text("evil.example.com\n")
+        with pytest.raises(BuildError, match=f"the build writes {name} itself"):
+            build(root)
+
+    def test_an_asset_directory_is_refused(self, root):
+        (root / "site" / "img").mkdir()
+        with pytest.raises(BuildError, match="must be files"):
+            build(root)
+
+    def test_style_uses_only_defined_brand_variables(self):
+        """portolan-ops overwrites _brand-vars.css on each sync. A renamed
+        variable would drop a style without an error."""
+        site = REPO / "site"
+        used = set(re.findall(r"var\((--[\w-]+)\)", (site / "style.css").read_text()))
+        defined = set(re.findall(r"(--[\w-]+)\s*:", (site / "_brand-vars.css").read_text()))
+        assert used and used <= defined
+
     def test_says_when_no_release_is_published(self, root):
         out, _ = build(root)
-        assert "The registry has no releases yet." in (out / "index.html").read_text()
+        assert "The registry has not published a release yet." in (out / "index.html").read_text()
 
     def test_lists_the_release_line_before_next(self, root):
         release(root)
         out, _ = build(root)
         page = (out / "index.html").read_text()
-        assert "The registry has no releases yet." not in page
+        assert "The registry has not published a release yet." not in page
         assert page.index("<code>v0.1/</code>") < page.index("<code>next/</code>")
         assert 'href="schemas/v0.1.0/extension.json"' in page
