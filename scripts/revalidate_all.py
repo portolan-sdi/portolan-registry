@@ -42,6 +42,7 @@ from registry.export import (
     apply_entry_fields,
     build_export,
     check_export_safe,
+    check_no_vanished_fields,
     export_changed,
     load_links,
     load_state,
@@ -307,6 +308,7 @@ def main(argv: list[str] | None = None) -> int:
             expected_ids=expected_ids,
             previous_state=load_state(EXPORT_PATH),
         )
+        check_no_vanished_fields(export, previous_links)
         check_coverage_safe(coverage, expected_ids=expected_ids)
     except ExportRefused as e:
         log(f"\n=== REFUSING TO WRITE EXPORT: {e} ===")

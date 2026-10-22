@@ -18,6 +18,7 @@ from registry.export import (
     apply_entry_fields,
     build_export,
     check_export_safe,
+    check_no_vanished_fields,
     child_link,
     export_changed,
     load_links,
@@ -370,6 +371,55 @@ class TestExportSafety:
             expected_ids={"a"},
             previous_state={"gone": {"status": None, "stale_since": None, "failure_reason": None}},
         )
+
+
+class TestNoVanishedFields:
+    """A field empty on every catalog that had a value before is a regression (#203)."""
+
+    def links(self, *values, field="portolan_registry:logo"):
+        return {f"c{i}": {"portolan_registry:id": f"c{i}", field: v} for i, v in enumerate(values)}
+
+    def export(self, links):
+        return {"links": [{"rel": "child", **link} for link in links.values()]}
+
+    def test_refuses_a_field_that_lost_every_value(self):
+        previous = self.links({"href": "x"}, None)
+        with pytest.raises(ExportRefused, match="portolan_registry:logo"):
+            check_no_vanished_fields(self.export(self.links(None, None)), previous)
+
+    def test_accepts_a_field_that_keeps_one_value(self):
+        previous = self.links({"href": "x"}, {"href": "y"})
+        check_no_vanished_fields(self.export(self.links(None, {"href": "y"})), previous)
+
+    def test_an_empty_list_counts_as_no_value(self):
+        field = "portolan_registry:producers"
+        previous = self.links([{"name": "a"}], field=field)
+        with pytest.raises(ExportRefused, match="producers"):
+            check_no_vanished_fields(self.export(self.links([], field=field)), previous)
+
+    def test_a_missing_field_counts_as_no_value(self):
+        previous = self.links(True, field="portolan_registry:stac_valid")
+        check_no_vanished_fields(
+            self.export(self.links(True, field="portolan_registry:stac_valid")), previous
+        )
+        with pytest.raises(ExportRefused, match="stac_valid"):
+            check_no_vanished_fields(self.export({"c0": {"portolan_registry:id": "c0"}}), previous)
+
+    @pytest.mark.parametrize("field", sorted(export_module.CLEARING_FIELDS))
+    def test_allows_fields_that_clear_on_their_own(self, field):
+        previous = self.links("2026-01-01", field=field)
+        check_no_vanished_fields(self.export(self.links(None, field=field)), previous)
+
+    def test_a_removed_catalog_takes_its_values_with_it(self):
+        previous = self.links(None, {"href": "x"})
+        check_no_vanished_fields(self.export(self.links(None)), previous)
+
+    def test_a_first_export_has_nothing_to_lose(self):
+        check_no_vanished_fields(self.export(self.links(None)), {})
+
+    def test_the_committed_export_passes_against_itself(self):
+        links = load_links(EXPORT)
+        check_no_vanished_fields(json.loads(EXPORT.read_text()), links)
 
 
 class TestExportChanged:

@@ -366,6 +366,60 @@ def check_export_safe(
         )
 
 
+# Fields that clear on their own when catalogs heal or leave deprecation. A
+# run in which all of them are null on every link is a healthy registry.
+CLEARING_FIELDS = frozenset(
+    {
+        PREFIX + "stale_since",
+        PREFIX + "failure_reason",
+        PREFIX + "stac_invalid_since",
+        PREFIX + "deprecated_since",
+        PREFIX + "deprecated_reason",
+        PREFIX + "superseded_by",
+    }
+)
+
+
+def _has_value(value: object) -> bool:
+    # An empty list or object is what child_link writes when the registry
+    # read nothing, so it counts as no value too.
+    return value is not None and value != [] and value != {}
+
+
+def check_no_vanished_fields(
+    export: Mapping[str, Any], previous_links: Mapping[str, Mapping[str, Any]]
+) -> None:
+    """Refuse an export in which a field lost its value on every catalog.
+
+    A field that had a value on some catalog and is now empty on all of them
+    is a crawler regression, such as a validator that did not run. Consumers
+    would read it as a fact about every catalog. Only catalogs in both
+    exports count, so a removed entry file takes its values with it.
+    """
+    links = {
+        link["portolan_registry:id"]: link
+        for link in export.get("links", [])
+        if link.get("rel") == "child" and link.get("portolan_registry:id")
+    }
+    shared = links.keys() & previous_links.keys()
+    if not shared:
+        return
+    fields = {
+        name
+        for cid in shared
+        for name, value in previous_links[cid].items()
+        if name.startswith(PREFIX) and name not in CLEARING_FIELDS and _has_value(value)
+    }
+    vanished = sorted(
+        name for name in fields if not any(_has_value(links[cid].get(name)) for cid in shared)
+    )
+    if vanished:
+        raise ExportRefused(
+            f"export has no value on any catalog for {', '.join(vanished)}, "
+            "which the previous export had"
+        )
+
+
 # These three are rewritten on every run, whether or not a catalog moved.
 # The nightly ignores them, so a quiet night writes nothing instead of
 # committing fresh timestamps and pinging the site cache.
