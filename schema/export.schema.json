@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/main/schema/export.schema.json",
   "title": "Portolan registry export",
-  "description": "exports/catalogs.json: a STAC Catalog whose child links are the registered Portolan catalogs.",
+  "description": "exports/catalogs.json: a STAC Catalog whose child links are the registered Portolan catalogs. This is the producer schema of the registry store. It is closed, so CI finds a field that the crawler stops writing. Consumers read the published contract instead, which schema/extension.json defines.",
   "type": "object",
   "required": ["type", "stac_version", "id", "title", "generated", "count", "links"],
   "properties": {

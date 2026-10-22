@@ -2,7 +2,11 @@
 // Validate every STAC JSON file under a directory with stac-node-validator
 // and print the findings as one JSON document on stdout.
 //
-//     node scripts/stac-node-validator/report.cjs MIRROR_DIR
+//     node scripts/stac-node-validator/report.cjs MIRROR_DIR [URI=PATH ...]
+//
+// Each URI=PATH argument maps a schema URI, or a URI prefix, to a local file
+// or directory. The registry build uses it to validate against its own
+// extension before the schema is live.
 //
 // The validator CLI prints a human report and has no JSON mode, so the gate
 // calls the library API instead. The exit code is 0 when the run completed,
@@ -58,10 +62,19 @@ function findingsOf(report, root) {
 }
 
 async function main() {
-  const root = process.argv[2];
+  const [root, ...maps] = process.argv.slice(2);
   if (!root) {
-    console.error('usage: report.cjs MIRROR_DIR');
+    console.error('usage: report.cjs MIRROR_DIR [URI=PATH ...]');
     process.exit(2);
+  }
+  const schemaMap = {};
+  for (const map of maps) {
+    const at = map.indexOf('=');
+    if (at < 1) {
+      console.error(`not a URI=PATH schema map: ${map}`);
+      process.exit(2);
+    }
+    schemaMap[map.slice(0, at)] = path.resolve(map.slice(at + 1));
   }
   const resolved = await resolveFiles([root], -1);
   const failed = Object.entries(resolved.error);
@@ -73,6 +86,7 @@ async function main() {
   if (files.length > 0) {
     const result = await validate(files, {
       loader: nodeLoader,
+      schemaMap,
       schemaVersions: {
         '2019-09': require('ajv/dist/2019'),
         '2020-12': require('ajv/dist/2020'),
