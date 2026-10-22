@@ -2,7 +2,7 @@
 
 The Portolan registry brings independently hosted [Portolan](https://github.com/portolan-sdi/portolan-spec) catalogs into one searchable network. Catalog owners keep their data in their own storage. Submit your Portolan catalog to help other users find and search it.
 
-**[Browse registered catalogs](https://www.portolan-sdi.org/registry)**, explore the [registry QGIS plugin](https://plugins.qgis.org/plugins/portolan_registry_qgis/), or read the registry from your own tools at [registry.portolan-sdi.org](https://registry.portolan-sdi.org/).
+**[Browse registered catalogs](https://www.portolan-sdi.org/registry)**, explore the [registry QGIS plugin](https://plugins.qgis.org/plugins/portolan_registry_qgis/), or [download catalog metadata](https://registry.portolan-sdi.org/) for your own tools.
 
 ## Quickstart
 
@@ -59,27 +59,41 @@ For problems with a registered catalog's data or documentation, use [catalog fee
 
 ## Registry contract
 
-[registry.portolan-sdi.org](https://registry.portolan-sdi.org/) publishes the registry for tools. It serves a versioned contract, so a tool can pin one release line and keep working while the registry adds fields. The contract is pre-1.0. The site rebuilds on each push to `main` that changes the export, the schemas, or the site files.
+The [registry downloads](https://registry.portolan-sdi.org/) include catalog metadata as JSON and GeoParquet, plus collection bounding boxes. The registry contract defines the fields in these files and how they can change between versions.
+
+The first release, 0.1.0, is pending. Until it is available, use [`exports/catalogs.json`](./exports/catalogs.json) on `main` for existing integrations. Files under `next/` reflect unreleased changes and can change without notice.
+
+Release 0.1.0 uses these paths:
 
 | Path | Contents |
 |---|---|
-| `v0.1/catalogs.json` | The registry as a STAC Catalog. Each registered catalog is a child link with `portolan_registry:*` fields. |
-| `v0.1/catalogs.parquet` | The same child links as a GeoParquet file, one row for each catalog. |
-| `v0.1/coverage/index.json` | The list of coverage files. Each catalog has one file with the bounding box of each collection. |
-| `schemas/v0.1.0/` | The extension schema and the coverage schema of release 0.1.0. Each release has its own directory. CI rejects a pull request that edits a released file. |
-| `next/` | The unreleased shape of `main`. It makes no stability promise. |
+| `v0.1/catalogs.json` | A [SpatioTemporal Asset Catalog (STAC)](https://stacspec.org/en/) with one child link per registered catalog. The `portolan_registry:*` fields describe each catalog. |
+| `v0.1/catalogs.parquet` | The same catalog metadata as GeoParquet, with one row per catalog. |
+| `v0.1/coverage/index.json` | Links to coverage files, one per catalog. Each file lists collection bounding boxes. |
+| `schemas/v0.1.0/` | The extension and coverage schemas for release 0.1.0. The site keeps every released schema unchanged. |
 
-The schema URL appears in `stac_extensions` of each `catalogs.json` and in `$schema` of each coverage file, so a tool can check which release it reads. Releases in one line only add fields. The schemas accept fields that they do not define, so a tool that validates against an older release in its line still works.
+Use a versioned path, such as `v0.1/`, to keep your tool on compatible releases. All 0.1.x releases use this path. Compatible releases may add fields, so your tool should accept fields it doesn't recognize.
 
-A breaking change starts a new line in a new path, such as `v0.2/`. The previous path stops in the same deploy, so a tool pinned to it gets a 404 instead of data in a shape it does not expect. Update the tool to read the new line. The maintainers announce each breaking release in the [Portolan Google Group](https://groups.google.com/g/portolan) and the [Portolan channel](https://cloudnativegeo.slack.com/archives/C0A1JBH9529) before it publishes. The site serves every released schema under `schemas/`, unchanged.
+To find a file's schema version, read `stac_extensions` in `catalogs.json` or `$schema` in a coverage file.
 
-Before 1.0.0, each minor version starts a line. From 1.0.0 on, each major version does. The [contract changelog](./schema/CHANGELOG.md) lists each release and the rules for each version step.
+A breaking release moves the data to a new path, such as `v0.2/`. The previous data path then returns HTTP 404, so you must update your tool to use the new version. The maintainers announce breaking releases in the [Portolan Google Group](https://groups.google.com/g/portolan) and the [Portolan Slack channel](https://cloudnativegeo.slack.com/archives/C0A1JBH9529) before publication.
 
-The site is live and serves `next/`. The first release, 0.1.0, is pending, so `v0.1/` and `schemas/v0.1.0/` do not exist yet. Until 0.1.0 publishes, read [`exports/catalogs.json`](./exports/catalogs.json) on `main` if your tool needs a stable shape.
+Before version 1.0.0, breaking changes increase the minor version, such as 0.1.0 to 0.2.0. From 1.0.0 onward, they increase the major version. See the [contract changelog](./schema/CHANGELOG.md) for release history and versioning rules.
+
+The site rebuilds when changes to the exports, schemas, or site files reach `main`.
 
 ## Schemas
 
-The [entry schema](./schema/entry.schema.json) defines submissions. The [extension schema](./schema/extension.json) and the [coverage schema](./schema/coverage.json) define the published contract. The [export schema](./schema/export.schema.json) defines the files in `exports/`, where the registry stores its state. The [Portolan specification](https://github.com/portolan-sdi/portolan-spec) sets the requirements for catalogs.
+Choose a schema based on the file you need to validate:
+
+| Schema | What it validates |
+|---|---|
+| [Entry schema](./schema/entry.schema.json) | The YAML files in `catalogs/` that you submit to register a catalog. |
+| [Extension schema](./schema/extension.json) | Registry fields on the published STAC Catalog and its child links. |
+| [Coverage schema](./schema/coverage.json) | The coverage index and each catalog's collection bounding boxes. |
+| [Export schema](./schema/export.schema.json) | The internal JSON registry in `exports/catalogs.json`. |
+
+These links point to the working schemas. For published JSON files, use the schema URLs they declare. The [Portolan specification](https://github.com/portolan-sdi/portolan-spec) defines the requirements for the catalogs themselves.
 
 ## Roadmap
 
