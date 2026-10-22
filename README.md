@@ -65,7 +65,7 @@ For problems with a registered catalog's data or documentation, use [catalog fee
 
 The [registry downloads](https://registry.portolan-sdi.org/) include catalog metadata as JSON and GeoParquet, plus collection bounding boxes. The registry contract defines the fields in these files and how they can change between versions.
 
-The first release, 0.1.0, is pending. Until it is available, use [`exports/catalogs.json`](./exports/catalogs.json) on `main` for existing integrations. Files under `next/` reflect unreleased changes and can change without notice.
+The current release is 0.1.0. Use `v0.1/` for new integrations. Files under `next/` reflect unreleased changes and can change without notice. The raw [`exports/catalogs.json`](./exports/catalogs.json) on `main` still works for existing integrations, but it has no version and changes with each merge.
 
 Release 0.1.0 uses these paths:
 
