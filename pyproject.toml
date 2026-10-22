@@ -41,7 +41,8 @@ validators = [
 # GeoParquet writer and the JSON Schema check of each published file. Install
 # with `--group site`.
 site = [
-    "jsonschema>=4.26",
+    # The extra adds the checkers for `date-time` and `uri`.
+    "jsonschema[format-nongpl]>=4.26",
     "pyarrow>=26",
     "shapely>=2.2",
 ]

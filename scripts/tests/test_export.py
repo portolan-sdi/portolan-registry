@@ -383,9 +383,14 @@ class TestNoVanishedFields:
         return {"links": [{"rel": "child", **link} for link in links.values()]}
 
     def test_refuses_a_field_that_lost_every_value(self):
-        previous = self.links({"href": "x"}, None)
+        previous = self.links({"href": "x"}, {"href": "y"}, None)
         with pytest.raises(ExportRefused, match="portolan_registry:logo"):
-            check_no_vanished_fields(self.export(self.links(None, None)), previous)
+            check_no_vanished_fields(self.export(self.links(None, None, None)), previous)
+
+    def test_one_catalog_may_drop_its_own_value(self):
+        """A refusal never clears, so one publisher change must not cause one."""
+        previous = self.links({"href": "x"}, None)
+        check_no_vanished_fields(self.export(self.links(None, None)), previous)
 
     def test_accepts_a_field_that_keeps_one_value(self):
         previous = self.links({"href": "x"}, {"href": "y"})
@@ -393,25 +398,25 @@ class TestNoVanishedFields:
 
     def test_an_empty_list_counts_as_no_value(self):
         field = "portolan_registry:producers"
-        previous = self.links([{"name": "a"}], field=field)
+        previous = self.links([{"name": "a"}], [{"name": "b"}], field=field)
         with pytest.raises(ExportRefused, match="producers"):
-            check_no_vanished_fields(self.export(self.links([], field=field)), previous)
+            check_no_vanished_fields(self.export(self.links([], [], field=field)), previous)
 
     def test_a_missing_field_counts_as_no_value(self):
-        previous = self.links(True, field="portolan_registry:stac_valid")
-        check_no_vanished_fields(
-            self.export(self.links(True, field="portolan_registry:stac_valid")), previous
-        )
+        field = "portolan_registry:stac_valid"
+        previous = self.links(True, False, field=field)
+        check_no_vanished_fields(self.export(self.links(True, None, field=field)), previous)
+        bare = {cid: {"portolan_registry:id": cid} for cid in previous}
         with pytest.raises(ExportRefused, match="stac_valid"):
-            check_no_vanished_fields(self.export({"c0": {"portolan_registry:id": "c0"}}), previous)
+            check_no_vanished_fields(self.export(bare), previous)
 
     @pytest.mark.parametrize("field", sorted(export_module.CLEARING_FIELDS))
     def test_allows_fields_that_clear_on_their_own(self, field):
-        previous = self.links("2026-01-01", field=field)
-        check_no_vanished_fields(self.export(self.links(None, field=field)), previous)
+        previous = self.links("2026-01-01", "2026-01-02", field=field)
+        check_no_vanished_fields(self.export(self.links(None, None, field=field)), previous)
 
     def test_a_removed_catalog_takes_its_values_with_it(self):
-        previous = self.links(None, {"href": "x"})
+        previous = self.links(None, {"href": "x"}, {"href": "y"})
         check_no_vanished_fields(self.export(self.links(None)), previous)
 
     def test_a_first_export_has_nothing_to_lose(self):

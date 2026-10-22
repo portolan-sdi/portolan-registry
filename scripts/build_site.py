@@ -26,6 +26,7 @@ import pyarrow.parquet as pq
 from jsonschema import Draft7Validator
 
 from registry.contract import (
+    CHANGELOG_PATH,
     COVERAGE,
     EXTENSION,
     NEXT,
@@ -34,6 +35,7 @@ from registry.contract import (
     SITE_URL,
     Version,
     active_majors,
+    child_links,
     declared_fields,
     format_version,
     load_schema,
@@ -46,7 +48,7 @@ from registry.contract import (
 )
 from registry.coverage import COVERAGE_PATH
 from registry.export import EXPORT_PATH
-from registry.geoparquet import build_table, write_table
+from registry.geoparquet import FIELD_TYPES, build_table, write_table
 from registry.report import log
 from registry.validators import ValidatorError, run_stac_node_validator
 
@@ -111,6 +113,11 @@ def _errors(validator: Draft7Validator, doc: Any, label: str) -> list[str]:
     return lines
 
 
+def _validator(schema: Mapping[str, Any]) -> Draft7Validator:
+    # Without the format checker, `date-time` and `uri` only annotate.
+    return Draft7Validator(schema, format_checker=Draft7Validator.FORMAT_CHECKER)
+
+
 def build_tree(
     tree: Tree,
     export: Mapping[str, Any],
@@ -146,17 +153,22 @@ def build_tree(
         write_json(directory / "coverage" / f"{catalog_id}.json", record)
 
     _, link_fields = declared_fields(extension)
+    untyped = link_fields - FIELD_TYPES.keys()
+    if untyped:
+        raise BuildError(
+            f"{tree.name}: no parquet type in registry/geoparquet.py for {', '.join(sorted(untyped))}"
+        )
     table = build_table(doc, link_fields)
     parquet_path = directory / "catalogs.parquet"
     write_table(table, parquet_path)
 
-    errors = _errors(Draft7Validator(extension), doc, f"{tree.name}/catalogs.json")
-    coverage_validator = Draft7Validator(coverage_schema)
+    errors = _errors(_validator(extension), doc, f"{tree.name}/catalogs.json")
+    coverage_validator = _validator(coverage_schema)
     errors += _errors(coverage_validator, index, f"{tree.name}/coverage/index.json")
     for catalog_id, record in files.items():
         errors += _errors(coverage_validator, record, f"{tree.name}/coverage/{catalog_id}.json")
 
-    children = [link for link in doc["links"] if link.get("rel") == "child"]
+    children = list(child_links(doc))
     missing = {link["portolan_registry:id"] for link in children} - files.keys()
     if missing:
         errors.append(f"{tree.name}: no coverage file for {', '.join(sorted(missing))}")
@@ -179,6 +191,21 @@ def copy_schemas(out: Path, *, root: Path) -> None:
         target = out / NEXT / "schemas" / name
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(schema_path(name, None, root=root), target)
+
+
+def _clear(out: Path) -> None:
+    """Remove an earlier build. Refuse any other directory that holds files.
+
+    The CNAME file marks a build, so a wrong --out such as `.` stops here
+    instead of deleting the checkout.
+    """
+    if not out.exists():
+        return
+    cname = out / "CNAME"
+    is_build = cname.is_file() and cname.read_text().strip() == DOMAIN
+    if any(out.iterdir()) and not is_build:
+        raise BuildError(f"{out} holds files and is not an earlier site build")
+    shutil.rmtree(out)
 
 
 def check_sizes(out: Path) -> None:
@@ -218,13 +245,12 @@ def build_site(
     with open(root / COVERAGE_PATH) as f:
         coverage = json.load(f)
 
-    if out.exists():
-        shutil.rmtree(out)
+    _clear(out)
     out.mkdir(parents=True)
     (out / "CNAME").write_text(DOMAIN + "\n")
     copy_schemas(out, root=root)
 
-    majors = active_majors(today, root / RELEASED_DIR)
+    majors = active_majors(today, root / RELEASED_DIR, root / CHANGELOG_PATH)
     trees = [
         Tree(NEXT, None),
         *(Tree(f"v{major}", version) for major, version in sorted(majors.items())),

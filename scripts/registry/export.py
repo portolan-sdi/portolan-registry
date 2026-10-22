@@ -386,15 +386,23 @@ def _has_value(value: object) -> bool:
     return value is not None and value != [] and value != {}
 
 
+# A field must lose its value on at least this many catalogs in one run
+# before the guard below refuses. One catalog that drops its own logo is a
+# publisher change. Several that drop it at once point at the crawler. The
+# previous export never changes after a refusal, so a refusal for a single
+# catalog would stop every later run.
+VANISHED_MIN_CATALOGS = 2
+
+
 def check_no_vanished_fields(
     export: Mapping[str, Any], previous_links: Mapping[str, Mapping[str, Any]]
 ) -> None:
     """Refuse an export in which a field lost its value on every catalog.
 
-    A field that had a value on some catalog and is now empty on all of them
-    is a crawler regression, such as a validator that did not run. Consumers
-    would read it as a fact about every catalog. Only catalogs in both
-    exports count, so a removed entry file takes its values with it.
+    A field that had a value on several catalogs and is now empty on all of
+    them is a crawler regression, such as a validator that did not run.
+    Consumers would read it as a fact about every catalog. Only catalogs in
+    both exports count, so a removed entry file takes its values with it.
     """
     links = {
         link["portolan_registry:id"]: link
@@ -404,12 +412,12 @@ def check_no_vanished_fields(
     shared = links.keys() & previous_links.keys()
     if not shared:
         return
-    fields = {
-        name
-        for cid in shared
-        for name, value in previous_links[cid].items()
-        if name.startswith(PREFIX) and name not in CLEARING_FIELDS and _has_value(value)
-    }
+    holders: dict[str, int] = {}
+    for cid in shared:
+        for name, value in previous_links[cid].items():
+            if name.startswith(PREFIX) and name not in CLEARING_FIELDS and _has_value(value):
+                holders[name] = holders.get(name, 0) + 1
+    fields = {name for name, count in holders.items() if count >= VANISHED_MIN_CATALOGS}
     vanished = sorted(
         name for name in fields if not any(_has_value(links[cid].get(name)) for cid in shared)
     )

@@ -10,12 +10,12 @@ from pathlib import Path
 import pytest
 from jsonschema import Draft7Validator
 
-from registry import contract
 from registry.contract import (
     COVERAGE,
     EXTENSION,
     SITE_URL,
     active_majors,
+    add_months,
     changelog_head,
     declared_fields,
     latest_releases,
@@ -80,12 +80,34 @@ class TestVersions:
     def test_no_release_directory_means_no_release(self, tmp_path):
         assert released_versions(tmp_path / "missing") == []
 
-    def test_writes_a_major_until_its_end_date(self, tmp_path, monkeypatch):
-        for name in ("v1.0.0", "v2.0.0", "v3.0.0"):
+    def test_writes_the_previous_major_for_six_months(self, tmp_path):
+        for name in ("v1.0.0", "v1.2.0", "v2.0.0"):
             (tmp_path / name).mkdir()
-        monkeypatch.setattr(contract, "SUPPORTED_MAJORS", {1: date(2027, 1, 1), 2: None})
-        assert active_majors(date(2027, 1, 1), tmp_path) == {1: (1, 0, 0), 2: (2, 0, 0)}
-        assert active_majors(date(2027, 1, 2), tmp_path) == {2: (2, 0, 0)}
+        changelog = tmp_path / "CHANGELOG.md"
+        changelog.write_text(
+            "## [2.1.0] - Unreleased\n\n## [2.0.0] - 2027-08-31\n\n"
+            "## [1.2.0] - 2027-01-01\n\n## [1.0.0] - 2026-10-22\n"
+        )
+        both = {1: (1, 2, 0), 2: (2, 0, 0)}
+        assert active_majors(date(2028, 2, 29), tmp_path, changelog) == both
+        assert active_majors(date(2028, 3, 1), tmp_path, changelog) == {2: (2, 0, 0)}
+
+    def test_a_major_without_a_dated_successor_stays(self, tmp_path):
+        (tmp_path / "v1.0.0").mkdir()
+        changelog = tmp_path / "CHANGELOG.md"
+        changelog.write_text("## [1.0.0] - 2026-10-22\n")
+        assert active_majors(date(2099, 1, 1), tmp_path, changelog) == {1: (1, 0, 0)}
+
+    @pytest.mark.parametrize(
+        ("day", "months", "expected"),
+        [
+            (date(2026, 10, 22), 6, date(2027, 4, 22)),
+            (date(2027, 8, 31), 6, date(2028, 2, 29)),
+            (date(2026, 12, 1), 1, date(2027, 1, 1)),
+        ],
+    )
+    def test_adds_calendar_months(self, day, months, expected):
+        assert add_months(day, months) == expected
 
     def test_reads_the_top_changelog_heading(self, tmp_path):
         path = tmp_path / "CHANGELOG.md"

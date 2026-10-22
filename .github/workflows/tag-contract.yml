@@ -1,8 +1,8 @@
 name: Tag Contract Release
 
 # A contract release is a pull request that adds schemas/vX.Y.Z/
-# (scripts/release_contract.py). When it merges, tag the merge commit as
-# export-vX.Y.Z, so each release names the code that wrote it.
+# (scripts/release_contract.py). When it merges, tag the commit that added
+# the release as export-vX.Y.Z, so each release names the code that wrote it.
 on:
   push:
     branches:
@@ -35,7 +35,10 @@ jobs:
             if git rev-parse -q --verify "refs/tags/$tag" > /dev/null; then
               continue
             fi
-            git tag "$tag" "$GITHUB_SHA"
+            # The commit that added the release, not this push. A run that
+            # failed before must not tag an old release at a later commit.
+            commit=$(git log --diff-filter=A --format=%H -- "$dir" | tail -n 1)
+            git tag "$tag" "$commit"
             git push origin "refs/tags/$tag"
-            echo "Tagged $GITHUB_SHA as $tag"
+            echo "Tagged $commit as $tag"
           done

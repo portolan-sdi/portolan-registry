@@ -77,15 +77,38 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
 
-  # Tell portolan-sdi.org after the new files are live. A refresh before the
-  # deploy ends would read the previous files.
+  # Tell portolan-sdi.org about a new export after the deploy ends. A
+  # refresh before then would read the previous files. The refresh also runs
+  # when the build or the deploy fails, because the site reads the raw export
+  # on main until it moves to v1/.
   refresh:
     name: Refresh Site Cache
     needs: deploy
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      # A push that changes only code or schemas has no new data for the
+      # site. A manual run always refreshes.
+      - name: Check for an export change
+        id: changed
+        env:
+          BEFORE: ${{ github.event.before }}
+        run: |
+          if [ "$GITHUB_EVENT_NAME" != push ] \
+            || ! git diff --quiet "$BEFORE" "$GITHUB_SHA" -- exports/; then
+            echo "export=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "export=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Refresh portolan-sdi.org catalog cache
+        if: steps.changed.outputs.export == 'true'
         continue-on-error: true
         run: |
           curl -fsS -X POST \
@@ -95,6 +118,7 @@ jobs:
           REVALIDATE_SECRET: ${{ secrets.REVALIDATE_SECRET }}
 
       - name: Create site token
+        if: steps.changed.outputs.export == 'true'
         uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
         id: site-token
         with:
@@ -105,6 +129,7 @@ jobs:
           permission-contents: write
 
       - name: Request site coverage bake
+        if: steps.changed.outputs.export == 'true'
         env:
           GH_TOKEN: ${{ steps.site-token.outputs.token }}
         run: |

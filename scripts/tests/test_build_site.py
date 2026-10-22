@@ -99,8 +99,8 @@ class TestBeforeTheFirstRelease:
         assert set(table.column("portolan_registry:id").to_pylist()) == store_ids(root)
 
     def test_replaces_an_old_build(self, root):
-        out = root.parent / "_site"
-        (out / "stale").mkdir(parents=True)
+        out, _ = build(root)
+        (out / "stale").mkdir()
         build(root)
         assert not (out / "stale").exists()
 
@@ -163,6 +163,29 @@ class TestChecks:
         (root / "exports" / "coverage-bboxes.json").write_text(json.dumps(coverage))
         with pytest.raises(BuildError, match="no coverage file for"):
             build(root)
+
+    def test_refuses_a_value_with_a_bad_format(self, root):
+        coverage = read(root / "exports" / "coverage-bboxes.json")
+        coverage["generated"] = "yesterday"
+        (root / "exports" / "coverage-bboxes.json").write_text(json.dumps(coverage))
+        with pytest.raises(BuildError, match="coverage.*'yesterday' is not a 'date-time'"):
+            build(root)
+
+    def test_refuses_a_field_without_a_parquet_type(self, root, monkeypatch):
+        monkeypatch.delitem(geoparquet.FIELD_TYPES, PREFIX + "host")
+        with pytest.raises(BuildError, match="no parquet type .* portolan_registry:host"):
+            build(root)
+
+    def test_refuses_to_replace_a_directory_that_is_not_a_build(self, root):
+        (root / "keep.txt").write_text("not a build")
+        with pytest.raises(BuildError, match="not an earlier site build"):
+            build_site.build_site(out=root, root=root, today=TODAY, stac_validator=False)
+        assert (root / "keep.txt").is_file()
+
+    def test_writes_into_an_empty_directory(self, root):
+        (root.parent / "_site").mkdir()
+        out, _ = build(root)
+        assert (out / "CNAME").is_file()
 
     def test_refuses_a_file_over_the_limit(self, root, monkeypatch):
         monkeypatch.setattr(build_site, "MAX_FILE_BYTES", 1000)

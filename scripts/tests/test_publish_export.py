@@ -130,11 +130,13 @@ class TestValidationFailureDate:
 class TestVanishedField:
     def test_refuses_a_field_the_crawler_stopped_writing(self, registry, capsys):
         """#203: a field with a value before and none now stops the export."""
-        registry.entry("a")
-        registry.published("a")
+        for catalog_id in ("a", "b"):
+            registry.entry(catalog_id)
+            registry.published(catalog_id)
         path = registry.root / "exports" / "catalogs.json"
         previous = json.loads(path.read_text())
-        previous["links"][0]["portolan_registry:a_later_field"] = "a value"
+        for link in previous["links"]:
+            link["portolan_registry:a_later_field"] = "a value"
         path.write_text(json.dumps(previous))
         assert publish_export.main([]) == 1
         assert "portolan_registry:a_later_field" in capsys.readouterr().err

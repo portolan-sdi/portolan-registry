@@ -19,6 +19,7 @@ import pyarrow.parquet as pq
 import shapely
 
 from registry.bbox import split_antimeridian
+from registry.contract import child_links
 from registry.export import PREFIX
 
 GEOPARQUET_VERSION = "1.1.0"
@@ -92,7 +93,7 @@ def build_table(doc: Mapping[str, Any], link_fields: set[str]) -> pa.Table:
     Raises KeyError when `link_fields` names a field that has no Arrow type.
     """
     fields = [*_LINK_FIELDS, *((name, FIELD_TYPES[name]) for name in sorted(link_fields))]
-    links = [link for link in doc.get("links", []) if link.get("rel") == "child"]
+    links = list(child_links(doc))
     geometries = [_geometry(link.get("bbox")) for link in links]
     rows = [{name: link.get(name) for name, _ in fields} for link in links]
     table = pa.Table.from_pylist(rows, schema=pa.schema(fields))

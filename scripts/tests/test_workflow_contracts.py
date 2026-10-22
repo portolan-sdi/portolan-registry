@@ -39,6 +39,11 @@ def test_the_site_refreshes_after_the_deploy():
     jobs = yaml.safe_load(Path(".github/workflows/pages.yml").read_text())["jobs"]
     assert jobs["deploy"]["needs"] == "build"
     assert jobs["refresh"]["needs"] == "deploy"
+    # The site reads the raw export until it moves to v1/, so a failed
+    # deploy must not stop the refresh.
+    assert jobs["refresh"]["if"] == "${{ !cancelled() }}"
+    gated = [step for step in jobs["refresh"]["steps"] if "Refresh" in step.get("name", "")]
+    assert gated[0]["if"] == "steps.changed.outputs.export == 'true'"
     assert jobs["deploy"]["permissions"] == {"pages": "write", "id-token": "write"}
 
 

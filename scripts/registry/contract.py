@@ -9,6 +9,7 @@ the latest released schema of major version N in schemas/.
 
 from __future__ import annotations
 
+import calendar
 import copy
 import json
 import re
@@ -32,10 +33,9 @@ SCHEMA_FILES = (EXTENSION, COVERAGE)
 
 NEXT = "next"
 
-# Major version -> the last day the registry writes it, or None while it is
-# current. After a major release, set the previous major to six months after
-# the release date. The build stops writing a major after its date.
-SUPPORTED_MAJORS: dict[int, date | None] = {1: None}
+# After a major release, the build writes the previous major for this many
+# months. The release date comes from schema/CHANGELOG.md.
+DEPRECATION_MONTHS = 6
 
 Version = tuple[int, int, int]
 
@@ -83,6 +83,23 @@ _HEADING = re.compile(r"^## \[(\d+\.\d+\.\d+)\] - (.+?)\s*$")
 UNRELEASED = "Unreleased"
 
 
+def release_dates(changelog: Path = CHANGELOG_PATH) -> dict[Version, date]:
+    """The date of each released version, from the CHANGELOG headings."""
+    dates = {}
+    for line in changelog.read_text().splitlines():
+        match = _HEADING.match(line)
+        if match and match.group(2) != UNRELEASED:
+            dates[parse_version(match.group(1))] = date.fromisoformat(match.group(2))
+    return dates
+
+
+def add_months(day: date, months: int) -> date:
+    """`day` plus `months`, on the last day of the month when it has no such day."""
+    month_index = day.month - 1 + months
+    year, month = day.year + month_index // 12, month_index % 12 + 1
+    return date(year, month, min(day.day, calendar.monthrange(year, month)[1]))
+
+
 def changelog_head(changelog: Path = CHANGELOG_PATH) -> tuple[Version, bool]:
     """The version of the top CHANGELOG heading, and whether it is released.
 
@@ -115,19 +132,30 @@ def load_schema(name: str, version: Version | None, *, root: Path = Path(".")) -
     return schema
 
 
-def active_majors(today: date, released_dir: Path = RELEASED_DIR) -> dict[int, Version]:
-    """The released majors the build writes today, with their latest version."""
+def active_majors(
+    today: date,
+    released_dir: Path = RELEASED_DIR,
+    changelog: Path = CHANGELOG_PATH,
+) -> dict[int, Version]:
+    """The released majors the build writes today, with their latest version.
+
+    The newest major is always active. An older major stays active until
+    DEPRECATION_MONTHS after the first release of the next major. A major
+    whose successor has no date in the CHANGELOG stays active.
+    """
+    latest = latest_releases(released_dir)
+    dates = release_dates(changelog)
     active = {}
-    for major, version in latest_releases(released_dir).items():
-        if major not in SUPPORTED_MAJORS:
+    for major, version in latest.items():
+        successors = sorted(v for v in dates if v[0] > major)
+        if successors and today > add_months(dates[successors[0]], DEPRECATION_MONTHS):
             continue
-        end = SUPPORTED_MAJORS[major]
-        if end is None or today <= end:
-            active[major] = version
+        active[major] = version
     return active
 
 
-def _child_links(doc: Mapping[str, Any]) -> Iterator[dict[str, Any]]:
+def child_links(doc: Mapping[str, Any]) -> Iterator[dict[str, Any]]:
+    """The child links of a registry document, one for each catalog."""
     for link in doc.get("links", []):
         if link.get("rel") == "child":
             yield link
@@ -153,7 +181,7 @@ def publish(export: Mapping[str, Any], *, base_url: str, extension_url: str) -> 
     for link in doc.get("links", []):
         if link.get("rel") in ("root", "self"):
             link["href"] = self_href
-    for link in _child_links(doc):
+    for link in child_links(doc):
         licenses = link.get(PREFIX + "licenses") or {}
         link[PREFIX + "licenses"] = [
             {"id": license_id, "count": count} for license_id, count in sorted(licenses.items())
