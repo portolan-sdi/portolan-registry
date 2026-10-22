@@ -82,7 +82,7 @@ To find a file's schema version, read `stac_extensions` in `catalogs.json` or `$
 
 A breaking release moves the data to a new path, such as `v0.2/`. The previous data path then returns HTTP 404, so you must update your tool to use the new version. The maintainers announce breaking releases in the [Portolan Google Group](https://groups.google.com/g/portolan) and the [Portolan Slack channel](https://cloudnativegeo.slack.com/archives/C0A1JBH9529) before publication.
 
-Before version 1.0.0, breaking changes increase the minor version, such as 0.1.0 to 0.2.0. From 1.0.0 onward, they increase the major version. See the [contract changelog](./schema/CHANGELOG.md) for release history and versioning rules.
+Before version 1.0.0, breaking changes increase the minor version, such as 0.1.0 to 0.2.0. From 1.0.0 onward, they increase the major version. The contract follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html). The [schema guide](./schema/README.md) lists the rules for each version step and the steps to release a version. The [contract changelog](./schema/CHANGELOG.md) lists each release.
 
 The site rebuilds when changes to the exports, schemas, or site files reach `main`.
 
@@ -96,6 +96,8 @@ Choose a schema based on the file you need to validate:
 | [Extension schema](./schema/extension.json) | Registry fields on the published STAC Catalog and its child links. |
 | [Coverage schema](./schema/coverage.json) | The coverage index and each catalog's collection bounding boxes. |
 | [Export schema](./schema/export.schema.json) | The internal JSON registry in `exports/catalogs.json`. |
+
+The extension and coverage schemas form the versioned contract. The entry and export schemas check files in this repository and have no version. The [schema guide](./schema/README.md) explains why the export and extension schemas are separate.
 
 These links point to the working schemas. For published JSON files, use the schema URLs they declare. The [Portolan specification](https://github.com/portolan-sdi/portolan-spec) defines the requirements for the catalogs themselves.
 
