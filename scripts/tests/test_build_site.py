@@ -84,7 +84,7 @@ class _Links(HTMLParser):
         super().__init__()
         self.local = []
 
-    def handle_starttag(self, tag, attrs):
+    def handle_starttag(self, _tag, attrs):
         for name, value in attrs:
             if name in ("href", "src") and value and "://" not in value:
                 self.local.append(value)
