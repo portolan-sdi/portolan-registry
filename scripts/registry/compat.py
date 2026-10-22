@@ -1,6 +1,6 @@
 """Classify the difference between two versions of a contract schema.
 
-The rules come from schema/CHANGELOG.md. A consumer validates with one
+The rules come from schema/README.md. A consumer validates with one
 released schema and must keep working on data from every later minor and
 patch release. So a change that lets the registry write data the old schema
 rejects, or that drops a field a consumer reads, is breaking.

@@ -346,7 +346,9 @@ class TestRelease:
         repo.changelog("## [0.1.1] - Unreleased", "## [0.1.0] - 2026-10-22")
         repo.edit(lambda s: link_fields(s).pop("portolan_registry:has_readme"))
         assert contract_compat.main([]) == 1
-        assert "FAIL" in capsys.readouterr().err
+        err = capsys.readouterr().err
+        assert "FAIL" in err
+        assert "See schema/README.md" in err
 
     def test_compat_cli_reports_a_bad_heading(self, repo, monkeypatch, capsys):
         monkeypatch.chdir(repo.root)

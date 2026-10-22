@@ -9,6 +9,7 @@ The script copies schema/extension.json and schema/coverage.json to
 schemas/vX.Y.Z/ with their versioned URLs, and dates the CHANGELOG heading.
 Open a pull request with the result. When it merges, the Pages deploy writes
 the vX/ tree and the tag workflow tags the commit as export-vX.Y.Z.
+schema/README.md lists every step of a release.
 """
 
 from __future__ import annotations

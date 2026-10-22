@@ -114,7 +114,10 @@ You can also <a href="https://www.portolan-sdi.org/registry">browse and search r
 </table>
 </div>
 <p class="note">The site keeps every released schema unchanged.
-For versioning rules and release history, see the
+Versions follow <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.
+For versioning rules, see the
+<a href="https://github.com/portolan-sdi/portolan-registry/tree/main/schema#versions">schema guide</a>.
+For release history, see the
 <a href="https://github.com/portolan-sdi/portolan-registry/blob/main/schema/CHANGELOG.md">contract changelog</a>.</p>
 </main>
 <footer>
