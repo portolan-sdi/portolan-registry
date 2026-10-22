@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import shutil
 from datetime import date
+from html.parser import HTMLParser
 from pathlib import Path
 
 import build_site
@@ -33,6 +34,7 @@ def root(tmp_path):
     root = tmp_path / "repo"
     shutil.copytree(REPO / "schema", root / "schema")
     shutil.copytree(REPO / "exports", root / "exports")
+    shutil.copytree(REPO / "site", root / "site")
     return root
 
 
@@ -75,6 +77,23 @@ def store_ids(root):
         for link in read(root / "exports" / "catalogs.json")["links"]
         if link["rel"] == "child"
     }
+
+
+class _Links(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.local = []
+
+    def handle_starttag(self, tag, attrs):
+        for name, value in attrs:
+            if name in ("href", "src") and value and "://" not in value:
+                self.local.append(value)
+
+
+def local_links(page):
+    parser = _Links()
+    parser.feed(page)
+    return parser.local
 
 
 class TestBeforeTheFirstRelease:
@@ -253,8 +272,8 @@ class TestChecks:
 
     def test_cli_builds(self, root, monkeypatch):
         monkeypatch.chdir(root)
-        assert build_site.main(["--out", "site", "--no-stac-validator"]) == 0
-        assert (root / "site" / "next" / "catalogs.json").is_file()
+        assert build_site.main(["--out", "_site", "--no-stac-validator"]) == 0
+        assert (root / "_site" / "next" / "catalogs.json").is_file()
 
     def test_stac_validator_findings_stop_the_build(self, root, monkeypatch):
         finding = validators.Finding("stac-node-validator", "core", "d", "", "bad link")
@@ -283,3 +302,31 @@ def test_the_built_site_passes_stac_node_validator(root):
     release(root)
     out = root.parent / "_site"
     build_site.build_site(out=out, root=root)
+
+
+class TestIndex:
+    def test_every_local_link_resolves(self, root):
+        release(root)
+        out, _ = build(root)
+        links = local_links((out / "index.html").read_text())
+        assert "style.css" in links and "_brand-vars.css" in links
+        assert [link for link in links if not (out / link).is_file()] == []
+
+    def test_shows_the_count_and_the_store_date(self, root):
+        store = read(root / "exports" / "catalogs.json")
+        out, _ = build(root)
+        page = (out / "index.html").read_text()
+        assert f"<dd>{store['count']}</dd>" in page
+        assert f">{store['generated'][:10]}</time>" in page
+
+    def test_says_when_no_release_is_published(self, root):
+        out, _ = build(root)
+        assert "No release is published yet." in (out / "index.html").read_text()
+
+    def test_lists_the_release_line_before_next(self, root):
+        release(root)
+        out, _ = build(root)
+        page = (out / "index.html").read_text()
+        assert "No release is published yet." not in page
+        assert page.index("<code>v0.1/</code>") < page.index("<code>next/</code>")
+        assert 'href="schemas/v0.1.0/extension.json"' in page

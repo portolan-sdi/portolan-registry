@@ -15,9 +15,10 @@ contract.
 from __future__ import annotations
 
 import argparse
+import html
 import json
 import shutil
-from collections.abc import Mapping
+from collections.abc import Iterable, Mapping
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -58,19 +59,80 @@ DOMAIN = "registry.portolan-sdi.org"
 # this size also means the per-catalog split no longer keeps files small.
 MAX_FILE_BYTES = 50 * 1024 * 1024
 
+# The static files of the landing page. portolan-ops syncs the brand files
+# into this directory. style.css belongs to this repo.
+ASSETS_DIR = Path("site")
+
+FONTS_URL = (
+    "https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700"
+    "&family=JetBrains+Mono:wght@400;500&display=swap"
+)
+
 INDEX_HTML = """<!doctype html>
 <html lang="en">
+<head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Portolan registry</title>
+<meta name="description" content="The Portolan registry as a versioned contract for tools.">
+<link rel="icon" href="portolan-logomark-4163cc.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="{fonts_url}">
+<link rel="stylesheet" href="_brand-vars.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="page">
+<header>
+<a href="https://www.portolan-sdi.org/"><img src="portolan-logo-horizontal-light.svg" alt="Portolan" width="143" height="32"></a>
+</header>
+<main>
+<p class="kicker">registry.portolan-sdi.org</p>
 <h1>Portolan registry</h1>
-<p>The registry of Portolan catalogs, as a versioned contract.</p>
-<ul>
-{releases}<li><a href="next/catalogs.json">next/catalogs.json</a> (unreleased, no stability promise)</li>
-</ul>
-<p>Read the contract rules in the
-<a href="https://github.com/portolan-sdi/portolan-registry#registry-contract">registry README</a>.</p>
+<p class="lede">This site publishes the registry of Portolan catalogs for tools to read.
+It serves a versioned contract: a STAC Catalog, a GeoParquet file, and the coverage of each catalog.
+To browse the catalogs, open the <a href="https://www.portolan-sdi.org/registry">registry page</a>.</p>
+<dl class="stats">
+<div><dt>Catalogs</dt><dd>{count}</dd></div>
+<div><dt>Updated</dt><dd><time datetime="{generated}">{updated}</time></dd></div>
+</dl>
+<h2>Release lines</h2>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Path</th><th>Contract</th><th>Files</th></tr></thead>
+<tbody>
+{trees}</tbody>
+</table>
+</div>
+{release_note}<h2>Schemas</h2>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Version</th><th>Files</th></tr></thead>
+<tbody>
+{schemas}</tbody>
+</table>
+</div>
+<p class="note">A released schema never changes.
+Read the rules for each version step in the
+<a href="https://github.com/portolan-sdi/portolan-registry/blob/main/schema/CHANGELOG.md">contract changelog</a>.</p>
+</main>
+<footer>
+<p>Read how to use the contract in the
+<a href="https://github.com/portolan-sdi/portolan-registry#registry-contract">registry README</a>.
+The source is on <a href="https://github.com/portolan-sdi/portolan-registry">GitHub</a>.</p>
+</footer>
+</div>
+</body>
 </html>
 """
+
+TREE_FILES = ("catalogs.json", "catalogs.parquet", "coverage/index.json")
+
+NO_RELEASE_NOTE = (
+    '<p class="note">No release is published yet. '
+    "<code>next/</code> follows <code>main</code> and makes no stability promise.</p>\n"
+)
 
 
 class BuildError(Exception):
@@ -200,6 +262,48 @@ def copy_schemas(out: Path, *, root: Path) -> None:
         shutil.copyfile(schema_path(name, None, root=root), target)
 
 
+def copy_assets(out: Path, *, root: Path) -> None:
+    """Copy the static files of the landing page to the site root."""
+    for path in sorted((root / ASSETS_DIR).iterdir()):
+        if path.is_file():
+            shutil.copyfile(path, out / path.name)
+
+
+def _file_list(base: str, names: Iterable[str]) -> str:
+    items = "".join(f'<li><a href="{base}{name}"><code>{name}</code></a></li>' for name in names)
+    return f"<ul>{items}</ul>"
+
+
+def render_index(trees: list[Tree], releases: list[Version], export: Mapping[str, Any]) -> str:
+    """The landing page. It lists the published trees and every schema."""
+    rows = []
+    # The released line first, because a tool pins it. `next/` is last.
+    for tree in sorted(trees, key=lambda t: t.version is None):
+        contract = "unreleased" if tree.version is None else format_version(tree.version)
+        rows.append(
+            f"<tr><td><code>{tree.name}/</code></td><td>{contract}</td>"
+            f"<td>{_file_list(f'{tree.name}/', TREE_FILES)}</td></tr>\n"
+        )
+    schemas = [
+        f"<tr><td>{format_version(version)}</td>"
+        f"<td>{_file_list(f'schemas/v{format_version(version)}/', SCHEMA_FILES)}</td></tr>\n"
+        for version in reversed(releases)
+    ]
+    schemas.append(
+        f"<tr><td>unreleased</td><td>{_file_list(f'{NEXT}/schemas/', SCHEMA_FILES)}</td></tr>\n"
+    )
+    generated = str(export["generated"])
+    return INDEX_HTML.format(
+        fonts_url=html.escape(FONTS_URL),
+        count=int(export["count"]),
+        generated=html.escape(generated),
+        updated=html.escape(generated[:10]),
+        trees="".join(rows),
+        release_note="" if releases else NO_RELEASE_NOTE,
+        schemas="".join(schemas),
+    )
+
+
 def _clear(out: Path) -> None:
     """Remove an earlier build. Refuse any other directory that holds files.
 
@@ -254,6 +358,7 @@ def build_site(
     out.mkdir(parents=True)
     (out / "CNAME").write_text(DOMAIN + "\n")
     copy_schemas(out, root=root)
+    copy_assets(out, root=root)
 
     # Only the newest line has a tree. A breaking release stops the tree of
     # the previous line, and its schemas stay under schemas/.
@@ -272,13 +377,7 @@ def build_site(
             failures.append(str(e))
     if failures:
         raise BuildError("\n".join(failures))
-    links = "".join(
-        f'<li><a href="{tree.name}/catalogs.json">{tree.name}/catalogs.json</a> '
-        f"(contract {format_version(tree.version)})</li>\n"
-        for tree in trees
-        if tree.version is not None
-    )
-    (out / "index.html").write_text(INDEX_HTML.format(releases=links))
+    (out / "index.html").write_text(render_index(trees, releases, export))
 
     check_sizes(out)
     if stac_validator:
