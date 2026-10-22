@@ -13,7 +13,15 @@ import contract_compat
 import pytest
 import release_contract
 
-from registry.compat import MAJOR, MINOR, PATCH, classify, required_level, step
+from registry.compat import (
+    MAJOR,
+    MINOR,
+    PATCH,
+    classify,
+    minimum_version,
+    required_level,
+    step,
+)
 from registry.contract import EXTENSION, SCHEMA_FILES, schema_url
 
 REPO = Path(__file__).resolve().parents[2]
@@ -93,6 +101,9 @@ class TestClassify:
     @pytest.mark.parametrize(
         ("old", "new", "expected"),
         [
+            ((0, 1, 0), (0, 2, 0), MAJOR),
+            ((0, 1, 0), (0, 1, 1), MINOR),
+            ((0, 1, 3), (1, 0, 0), MAJOR),
             ((1, 0, 0), (2, 0, 0), MAJOR),
             ((1, 0, 0), (1, 1, 0), MINOR),
             ((1, 0, 0), (1, 0, 1), PATCH),
@@ -104,20 +115,35 @@ class TestClassify:
         assert step(old, new) == expected
 
 
+@pytest.mark.parametrize(
+    ("old", "level", "expected"),
+    [
+        ((0, 1, 2), MAJOR, (0, 2, 0)),
+        ((0, 1, 2), MINOR, (0, 1, 3)),
+        ((0, 1, 2), PATCH, (0, 1, 3)),
+        ((1, 2, 3), MAJOR, (2, 0, 0)),
+        ((1, 2, 3), MINOR, (1, 3, 0)),
+        ((1, 2, 3), PATCH, (1, 2, 4)),
+    ],
+)
+def test_minimum_version(old, level, expected):
+    assert minimum_version(old, level) == expected
+
+
 class Repo:
-    """A copy of the contract files, with a released 1.0.0."""
+    """A copy of the contract files, ready to release 0.1.0."""
 
     def __init__(self, root: Path) -> None:
         self.root = root
         shutil.copytree(REPO / "schema", root / "schema")
-        self.changelog("## [1.0.0] - Unreleased")
+        self.changelog("## [0.1.0] - Unreleased")
 
     def changelog(self, *headings: str) -> None:
         text = "# Contract\n\n" + "\n\n".join(headings) + "\n"
         (self.root / "schema" / "CHANGELOG.md").write_text(text)
 
-    def release(self) -> None:
-        release_contract.release("1.0.0", root=self.root, today=date(2026, 10, 22))
+    def release(self, version: str = "0.1.0") -> None:
+        release_contract.release(version, root=self.root, today=date(2026, 10, 22))
 
     def edit(self, change) -> None:
         path = self.root / "schema" / EXTENSION
@@ -142,27 +168,43 @@ class TestCheck:
         repo.release()
         assert repo.check() == []
 
-    def test_a_minor_change_with_a_minor_heading_passes(self, repo):
+    def test_an_additive_change_with_a_patch_heading_passes(self, repo):
         repo.release()
-        repo.changelog("## [1.1.0] - Unreleased", "## [1.0.0] - 2026-10-22")
+        repo.changelog("## [0.1.1] - Unreleased", "## [0.1.0] - 2026-10-22")
         repo.edit(
             lambda s: link_fields(s).update({"portolan_registry:new_field": {"type": "string"}})
         )
         assert repo.check() == []
 
-    def test_a_removed_field_under_a_minor_heading_fails_and_names_it(self, repo):
+    def test_a_removed_field_under_a_patch_heading_fails_and_names_it(self, repo):
         repo.release()
+        repo.changelog("## [0.1.1] - Unreleased", "## [0.1.0] - 2026-10-22")
+        repo.edit(lambda s: link_fields(s).pop("portolan_registry:has_readme"))
+        [problem] = repo.check()
+        assert "is breaking, so it needs version 0.2.0 or later" in problem
+        assert "portolan_registry:has_readme" in problem
+
+    def test_a_removed_field_under_a_new_minor_passes(self, repo):
+        repo.release()
+        repo.changelog("## [0.2.0] - Unreleased", "## [0.1.0] - 2026-10-22")
+        repo.edit(lambda s: link_fields(s).pop("portolan_registry:has_readme"))
+        assert repo.check() == []
+
+    def test_from_1_0_a_breaking_change_needs_a_new_major(self, repo):
+        repo.changelog("## [1.0.0] - Unreleased")
+        repo.release("1.0.0")
         repo.changelog("## [1.1.0] - Unreleased", "## [1.0.0] - 2026-10-22")
         repo.edit(lambda s: link_fields(s).pop("portolan_registry:has_readme"))
         [problem] = repo.check()
-        assert "needs a major version" in problem
-        assert "portolan_registry:has_readme" in problem
+        assert "needs version 2.0.0 or later" in problem
 
-    def test_a_removed_field_under_a_major_heading_passes(self, repo):
-        repo.release()
-        repo.changelog("## [2.0.0] - Unreleased", "## [1.0.0] - 2026-10-22")
-        repo.edit(lambda s: link_fields(s).pop("portolan_registry:has_readme"))
-        assert repo.check() == []
+    def test_from_1_0_an_additive_change_needs_a_new_minor(self, repo):
+        repo.changelog("## [1.0.0] - Unreleased")
+        repo.release("1.0.0")
+        repo.changelog("## [1.0.1] - Unreleased", "## [1.0.0] - 2026-10-22")
+        repo.edit(lambda s: link_fields(s).update({"portolan_registry:new_field": {}}))
+        [problem] = repo.check()
+        assert "is additive, so it needs version 1.1.0 or later" in problem
 
     def test_a_change_without_an_unreleased_heading_fails(self, repo):
         repo.release()
@@ -172,22 +214,22 @@ class TestCheck:
 
     def test_an_unreleased_version_must_be_later(self, repo):
         repo.release()
-        repo.changelog("## [1.0.0] - Unreleased")
+        repo.changelog("## [0.1.0] - Unreleased")
         [problem] = repo.check()
         assert "must be later" in problem
 
     def test_a_dated_heading_needs_its_release(self, repo):
         repo.release()
-        repo.changelog("## [1.1.0] - 2026-11-01", "## [1.0.0] - 2026-10-22")
+        repo.changelog("## [0.1.1] - 2026-11-01", "## [0.1.0] - 2026-10-22")
         [problem] = repo.check()
         assert "release_contract.py" in problem
 
     def test_a_dated_heading_must_be_the_latest_release(self, repo):
         repo.release()
-        repo.changelog("## [0.9.0] - 2026-01-01")
-        (repo.root / "schemas" / "v0.9.0").mkdir()
+        repo.changelog("## [0.0.9] - 2026-01-01")
+        (repo.root / "schemas" / "v0.0.9").mkdir()
         [problem] = repo.check()
-        assert "latest release is 1.0.0" in problem
+        assert "latest release is 0.1.0" in problem
 
 
 def git(root, *args):
@@ -209,22 +251,22 @@ class TestReleasedFilesStayFixed:
         git(repo.root, "-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", "change")
 
     def test_a_new_release_directory_passes(self, history):
-        history.changelog("## [1.0.1] - Unreleased", "## [1.0.0] - 2026-10-22")
+        history.changelog("## [0.1.1] - Unreleased", "## [0.1.0] - 2026-10-22")
         history.edit(lambda s: link_fields(s)["portolan_registry:id"].update({"description": "x"}))
-        release_contract.release("1.0.1", root=history.root)
+        release_contract.release("0.1.1", root=history.root)
         self.commit(history)
         assert contract_compat.check(root=history.root, base_ref="main") == []
 
     def test_an_edited_release_fails(self, history):
-        path = history.root / "schemas" / "v1.0.0" / EXTENSION
+        path = history.root / "schemas" / "v0.1.0" / EXTENSION
         path.write_text(path.read_text().replace("Portolan Registry Extension", "Changed"))
         self.commit(history)
         [problem] = contract_compat.check(root=history.root, base_ref="main")
         assert "must never change" in problem
-        assert "schemas/v1.0.0/extension.json" in problem
+        assert "schemas/v0.1.0/extension.json" in problem
 
     def test_a_deleted_release_fails(self, history):
-        (history.root / "schemas" / "v1.0.0" / EXTENSION).unlink()
+        (history.root / "schemas" / "v0.1.0" / EXTENSION).unlink()
         self.commit(history)
         problems = contract_compat.check(root=history.root, base_ref="main")
         assert any("must never change" in p for p in problems)
@@ -232,34 +274,34 @@ class TestReleasedFilesStayFixed:
 
 class TestRelease:
     def test_writes_versioned_copies_and_dates_the_changelog(self, repo):
-        directory = release_contract.release("1.0.0", root=repo.root, today=date(2026, 10, 22))
-        assert directory == repo.root / "schemas" / "v1.0.0"
+        directory = release_contract.release("0.1.0", root=repo.root, today=date(2026, 10, 22))
+        assert directory == repo.root / "schemas" / "v0.1.0"
         for name in SCHEMA_FILES:
             text = (directory / name).read_text()
-            assert schema_url(name, (1, 0, 0)) in text
+            assert schema_url(name, (0, 1, 0)) in text
             assert schema_url(name, None) not in text
-        assert "## [1.0.0] - 2026-10-22" in (repo.root / "schema" / "CHANGELOG.md").read_text()
+        assert "## [0.1.0] - 2026-10-22" in (repo.root / "schema" / "CHANGELOG.md").read_text()
 
     def test_refuses_a_version_the_changelog_does_not_name(self, repo):
         with pytest.raises(release_contract.ReleaseRefused, match="top heading"):
-            release_contract.release("1.1.0", root=repo.root)
+            release_contract.release("0.2.0", root=repo.root)
 
     def test_refuses_to_overwrite_a_release(self, repo):
-        (repo.root / "schemas" / "v1.0.0").mkdir(parents=True)
+        (repo.root / "schemas" / "v0.1.0").mkdir(parents=True)
         with pytest.raises(release_contract.ReleaseRefused, match="already exists"):
-            release_contract.release("1.0.0", root=repo.root)
+            release_contract.release("0.1.0", root=repo.root)
 
     def test_cli_reports_a_refusal(self, repo, monkeypatch, capsys):
         monkeypatch.chdir(repo.root)
-        assert release_contract.main(["1.1.0"]) == 1
+        assert release_contract.main(["0.2.0"]) == 1
         assert "Release refused" in capsys.readouterr().err
-        assert release_contract.main(["1.0.0"]) == 0
+        assert release_contract.main(["0.1.0"]) == 0
 
     def test_compat_cli_exit_codes(self, repo, monkeypatch, capsys):
         monkeypatch.chdir(repo.root)
         assert contract_compat.main([]) == 0
         repo.release()
-        repo.changelog("## [1.0.1] - Unreleased", "## [1.0.0] - 2026-10-22")
+        repo.changelog("## [0.1.1] - Unreleased", "## [0.1.0] - 2026-10-22")
         repo.edit(lambda s: link_fields(s).pop("portolan_registry:has_readme"))
         assert contract_compat.main([]) == 1
         assert "FAIL" in capsys.readouterr().err

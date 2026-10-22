@@ -3,7 +3,7 @@
 
 Run from the repository root, on a branch:
 
-    uv run --frozen scripts/release_contract.py 1.0.0
+    uv run --frozen scripts/release_contract.py 0.1.0
 
 The script copies schema/extension.json and schema/coverage.json to
 schemas/vX.Y.Z/ with their versioned URLs, and dates the CHANGELOG heading.
@@ -68,7 +68,7 @@ def release(version_text: str, *, root: Path = Path("."), today: date | None = N
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("version", help="The version to release, for example 1.0.0.")
+    parser.add_argument("version", help="The version to release, for example 0.1.0.")
     args = parser.parse_args(argv)
     try:
         directory = release(args.version)

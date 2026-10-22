@@ -3,8 +3,13 @@
 The git store, exports/catalogs.json, holds the registry state in the shape
 that the crawler writes. This module turns that store into the published
 shape. The published shape follows the extension schema of one contract
-version. `next/` follows the working schema in schema/. Each `vN/` follows
-the latest released schema of major version N in schemas/.
+version. `next/` follows the working schema in schema/. Each release line
+has its own tree, which follows the latest released schema of that line.
+
+A release line is the set of versions that are compatible with each other.
+From 1.0.0 on, the major version names the line, and the tree is `v1/`.
+Before 1.0.0, the minor version names the line, and the tree is `v0.1/`.
+This is the rule that Cargo applies to 0.x versions.
 """
 
 from __future__ import annotations
@@ -33,11 +38,14 @@ SCHEMA_FILES = (EXTENSION, COVERAGE)
 
 NEXT = "next"
 
-# After a major release, the build writes the previous major for this many
-# months. The release date comes from schema/CHANGELOG.md.
+# After the first release of a new line, the build writes the previous line
+# for this many months. The release date comes from schema/CHANGELOG.md.
 DEPRECATION_MONTHS = 6
 
 Version = tuple[int, int, int]
+
+# (major,) from 1.0.0 on, (0, minor) before it.
+Line = tuple[int, ...]
 
 _VERSION_DIR = re.compile(r"^v(\d+)\.(\d+)\.(\d+)$")
 
@@ -70,11 +78,21 @@ def released_versions(released_dir: Path = RELEASED_DIR) -> list[Version]:
     )
 
 
-def latest_releases(released_dir: Path = RELEASED_DIR) -> dict[int, Version]:
-    """The latest released version of each major version."""
-    latest: dict[int, Version] = {}
+def line_of(version: Version) -> Line:
+    """The release line of a version. Versions in one line are compatible."""
+    return (0, version[1]) if version[0] == 0 else (version[0],)
+
+
+def line_name(line: Line) -> str:
+    """The tree of a release line, such as `v1` or `v0.1`."""
+    return "v" + ".".join(str(part) for part in line)
+
+
+def latest_releases(released_dir: Path = RELEASED_DIR) -> dict[Line, Version]:
+    """The latest released version of each release line."""
+    latest: dict[Line, Version] = {}
     for version in released_versions(released_dir):
-        latest[version[0]] = version
+        latest[line_of(version)] = version
     return latest
 
 
@@ -132,25 +150,25 @@ def load_schema(name: str, version: Version | None, *, root: Path = Path(".")) -
     return schema
 
 
-def active_majors(
+def active_lines(
     today: date,
     released_dir: Path = RELEASED_DIR,
     changelog: Path = CHANGELOG_PATH,
-) -> dict[int, Version]:
-    """The released majors the build writes today, with their latest version.
+) -> dict[Line, Version]:
+    """The release lines the build writes today, with their latest version.
 
-    The newest major is always active. An older major stays active until
-    DEPRECATION_MONTHS after the first release of the next major. A major
-    whose successor has no date in the CHANGELOG stays active.
+    The newest line is always active. An older line stays active until
+    DEPRECATION_MONTHS after the first release of a later line. A line whose
+    successor has no date in the CHANGELOG stays active.
     """
     latest = latest_releases(released_dir)
     dates = release_dates(changelog)
     active = {}
-    for major, version in latest.items():
-        successors = sorted(v for v in dates if v[0] > major)
+    for line, version in latest.items():
+        successors = sorted(v for v in dates if line_of(v) > line)
         if successors and today > add_months(dates[successors[0]], DEPRECATION_MONTHS):
             continue
-        active[major] = version
+        active[line] = version
     return active
 
 
@@ -169,7 +187,7 @@ def publish(export: Mapping[str, Any], *, base_url: str, extension_url: str) -> 
     """The published registry document, built from the git store.
 
     `base_url` is the published directory with a trailing slash, for example
-    https://registry.portolan-sdi.org/v1/. The result has the field set of
+    https://registry.portolan-sdi.org/v0.1/. The result has the field set of
     the working schema. Use `project` to cut it to a released field set.
     """
     doc = copy.deepcopy(dict(export))
@@ -204,8 +222,9 @@ def declared_fields(extension: Mapping[str, Any]) -> tuple[set[str], set[str]]:
 def project(doc: Mapping[str, Any], extension: Mapping[str, Any]) -> dict[str, Any]:
     """Drop each registry field that the extension schema does not declare.
 
-    A minor release adds fields. `next/` gains a field when it lands on main,
-    but `vN/` keeps the shape of its release until the next release of N.
+    An additive release adds fields. `next/` gains a field when it lands on
+    main, but a released tree such as `v0.1/` keeps the shape of its latest
+    release until the next release in its line.
     Fields outside the registry prefix are STAC fields and stay.
     """
     root_fields, link_fields = declared_fields(extension)

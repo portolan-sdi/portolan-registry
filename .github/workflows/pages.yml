@@ -2,7 +2,8 @@ name: Publish Registry Site
 
 # Builds registry.portolan-sdi.org from main and deploys it to GitHub Pages.
 # The site holds the versioned contract: the released schemas, `next/`, and
-# one `vN/` tree for each supported major version (schema/CHANGELOG.md).
+# one tree for each active release line, such as `v0.1/`
+# (schema/CHANGELOG.md).
 # The export reaches main through a pull request, so the moment worth
 # publishing is the merge, not the crawl.
 on:
@@ -80,7 +81,7 @@ jobs:
   # Tell portolan-sdi.org about a new export after the deploy ends. A
   # refresh before then would read the previous files. The refresh also runs
   # when the build or the deploy fails, because the site reads the raw export
-  # on main until it moves to v1/.
+  # on main until it moves to v0.1/.
   refresh:
     name: Refresh Site Cache
     needs: deploy

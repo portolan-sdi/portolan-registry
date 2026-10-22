@@ -3,7 +3,7 @@
 The rules come from schema/CHANGELOG.md. A consumer validates with one
 released schema and must keep working on data from every later minor and
 patch release. So a change that lets the registry write data the old schema
-rejects, or that drops a field a consumer reads, is major.
+rejects, or that drops a field a consumer reads, is breaking.
 """
 
 from __future__ import annotations
@@ -13,7 +13,9 @@ from dataclasses import dataclass
 from typing import Any
 
 PATCH, MINOR, MAJOR = 1, 2, 3
-LEVEL_NAMES = {PATCH: "patch", MINOR: "minor", MAJOR: "major"}
+# The kind of each change. The version step that a kind needs depends on the
+# release line: see `step` and `minimum_version`.
+LEVEL_NAMES = {PATCH: "documentation", MINOR: "additive", MAJOR: "breaking"}
 
 # Keywords that only document. A change to them is a patch.
 ANNOTATIONS = frozenset({"description", "title", "$comment", "examples"})
@@ -101,11 +103,26 @@ def required_level(changes: list[Change]) -> int | None:
 
 
 def step(old: tuple[int, int, int], new: tuple[int, int, int]) -> int | None:
-    """The version step from `old` to `new`. None when `new` is not later."""
+    """The kind of change that the step from `old` to `new` allows.
+
+    None when `new` is not later. Before 1.0.0, a new minor version starts a
+    new release line, so it allows a MAJOR change, and a new patch version
+    allows a MINOR change. This is the rule that Cargo applies to 0.x.
+    """
     if new <= old:
         return None
-    if new[0] > old[0]:
+    if new[0] > old[0] or (old[0] == 0 and new[1] > old[1]):
         return MAJOR
-    if new[1] > old[1]:
+    if old[0] == 0 or new[1] > old[1]:
         return MINOR
     return PATCH
+
+
+def minimum_version(old: tuple[int, int, int], level: int) -> tuple[int, int, int]:
+    """The first version after `old` that allows a change of `level`."""
+    major, minor, patch = old
+    if level == MAJOR:
+        return (0, minor + 1, 0) if major == 0 else (major + 1, 0, 0)
+    if level == MINOR and major > 0:
+        return major, minor + 1, 0
+    return major, minor, patch + 1

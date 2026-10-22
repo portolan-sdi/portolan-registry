@@ -20,7 +20,14 @@ import argparse
 import subprocess  # nosec B404
 from pathlib import Path
 
-from registry.compat import LEVEL_NAMES, Change, classify, required_level, step
+from registry.compat import (
+    LEVEL_NAMES,
+    Change,
+    classify,
+    minimum_version,
+    required_level,
+    step,
+)
 from registry.contract import (
     CHANGELOG_PATH,
     RELEASED_DIR,
@@ -103,11 +110,12 @@ def check(*, root: Path = Path("."), base_ref: str | None = None) -> list[str]:
             f"the latest release {format_version(latest)}"
         )
     elif needed is not None and named < needed:
-        breaking = [str(c) for c in changes if c.level > named]
+        blocking = [str(c) for c in changes if c.level > named]
         problems.append(
-            f"this change needs a {LEVEL_NAMES[needed]} version, but the CHANGELOG names "
-            f"{format_version(target)}, a {LEVEL_NAMES[named]} step from "
-            f"{format_version(latest)}:\n  " + "\n  ".join(breaking)
+            f"this change is {LEVEL_NAMES[needed]}, so it needs version "
+            f"{format_version(minimum_version(latest, needed))} or later. The CHANGELOG names "
+            f"{format_version(target)}, which allows only a {LEVEL_NAMES[named]} change after "
+            f"{format_version(latest)}:\n  " + "\n  ".join(blocking)
         )
     return problems
 

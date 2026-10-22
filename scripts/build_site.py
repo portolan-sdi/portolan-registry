@@ -6,7 +6,8 @@ Run from the repository root:
     uv run --frozen --group site scripts/build_site.py --out _site
 
 The site holds every released schema, the `next/` tree in the shape of the
-working schemas, and one `vN/` tree for each supported major version. The
+working schemas, and one tree for each active release line, such as `v0.1/`
+or `v1/`. The
 script validates every file it writes and exits 1 when a check fails, so the
 Pages workflow never deploys a tree that breaks its own contract.
 """
@@ -34,10 +35,11 @@ from registry.contract import (
     SCHEMA_FILES,
     SITE_URL,
     Version,
-    active_majors,
+    active_lines,
     child_links,
     declared_fields,
     format_version,
+    line_name,
     load_schema,
     project,
     publish,
@@ -65,7 +67,7 @@ INDEX_HTML = """<!doctype html>
 <h1>Portolan registry</h1>
 <p>The registry of Portolan catalogs, as a versioned contract.</p>
 <ul>
-{majors}<li><a href="next/catalogs.json">next/catalogs.json</a> (unreleased, no stability promise)</li>
+{releases}<li><a href="next/catalogs.json">next/catalogs.json</a> (unreleased, no stability promise)</li>
 </ul>
 <p>Read the contract rules in the
 <a href="https://github.com/portolan-sdi/portolan-registry#registry-contract">registry README</a>.</p>
@@ -79,7 +81,7 @@ class BuildError(Exception):
 
 @dataclass(frozen=True)
 class Tree:
-    """One published directory, such as `next/` or `v1/`."""
+    """One published directory, such as `next/` or `v0.1/`."""
 
     name: str
     version: Version | None
@@ -250,15 +252,15 @@ def build_site(
     (out / "CNAME").write_text(DOMAIN + "\n")
     copy_schemas(out, root=root)
 
-    majors = active_majors(today, root / RELEASED_DIR, root / CHANGELOG_PATH)
+    lines = active_lines(today, root / RELEASED_DIR, root / CHANGELOG_PATH)
     trees = [
         Tree(NEXT, None),
-        *(Tree(f"v{major}", version) for major, version in sorted(majors.items())),
+        *(Tree(line_name(line), version) for line, version in sorted(lines.items())),
     ]
     catalogs = []
     failures = []
     # Build every tree before failing, so one run reports both a `next/`
-    # problem and the `vN/` problem it causes.
+    # problem and the problem it causes in a released tree.
     for tree in trees:
         try:
             catalogs.append((tree, build_tree(tree, export, coverage, out=out, root=root)))
@@ -272,7 +274,7 @@ def build_site(
         for tree in trees
         if tree.version is not None
     )
-    (out / "index.html").write_text(INDEX_HTML.format(majors=links))
+    (out / "index.html").write_text(INDEX_HTML.format(releases=links))
 
     check_sizes(out)
     if stac_validator:

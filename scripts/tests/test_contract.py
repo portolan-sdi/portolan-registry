@@ -14,11 +14,13 @@ from registry.contract import (
     COVERAGE,
     EXTENSION,
     SITE_URL,
-    active_majors,
+    active_lines,
     add_months,
     changelog_head,
     declared_fields,
     latest_releases,
+    line_name,
+    line_of,
     load_schema,
     parse_version,
     project,
@@ -31,7 +33,7 @@ from registry.export import PREFIX
 from registry.geoparquet import FIELD_TYPES
 
 REPO = Path(__file__).resolve().parents[2]
-BASE = f"{SITE_URL}/v1/"
+BASE = f"{SITE_URL}/v0.1/"
 
 
 def store(**fields):
@@ -75,12 +77,12 @@ class TestVersions:
             (tmp_path / name).mkdir()
         (tmp_path / "v9.9.9").write_text("a file, not a release")
         assert released_versions(tmp_path) == [(1, 2, 0), (1, 10, 0), (2, 0, 0)]
-        assert latest_releases(tmp_path) == {1: (1, 10, 0), 2: (2, 0, 0)}
+        assert latest_releases(tmp_path) == {(1,): (1, 10, 0), (2,): (2, 0, 0)}
 
     def test_no_release_directory_means_no_release(self, tmp_path):
         assert released_versions(tmp_path / "missing") == []
 
-    def test_writes_the_previous_major_for_six_months(self, tmp_path):
+    def test_writes_the_previous_line_for_six_months(self, tmp_path):
         for name in ("v1.0.0", "v1.2.0", "v2.0.0"):
             (tmp_path / name).mkdir()
         changelog = tmp_path / "CHANGELOG.md"
@@ -88,15 +90,15 @@ class TestVersions:
             "## [2.1.0] - Unreleased\n\n## [2.0.0] - 2027-08-31\n\n"
             "## [1.2.0] - 2027-01-01\n\n## [1.0.0] - 2026-10-22\n"
         )
-        both = {1: (1, 2, 0), 2: (2, 0, 0)}
-        assert active_majors(date(2028, 2, 29), tmp_path, changelog) == both
-        assert active_majors(date(2028, 3, 1), tmp_path, changelog) == {2: (2, 0, 0)}
+        both = {(1,): (1, 2, 0), (2,): (2, 0, 0)}
+        assert active_lines(date(2028, 2, 29), tmp_path, changelog) == both
+        assert active_lines(date(2028, 3, 1), tmp_path, changelog) == {(2,): (2, 0, 0)}
 
-    def test_a_major_without_a_dated_successor_stays(self, tmp_path):
+    def test_a_line_without_a_dated_successor_stays(self, tmp_path):
         (tmp_path / "v1.0.0").mkdir()
         changelog = tmp_path / "CHANGELOG.md"
         changelog.write_text("## [1.0.0] - 2026-10-22\n")
-        assert active_majors(date(2099, 1, 1), tmp_path, changelog) == {1: (1, 0, 0)}
+        assert active_lines(date(2099, 1, 1), tmp_path, changelog) == {(1,): (1, 0, 0)}
 
     @pytest.mark.parametrize(
         ("day", "months", "expected"),
@@ -108,6 +110,35 @@ class TestVersions:
     )
     def test_adds_calendar_months(self, day, months, expected):
         assert add_months(day, months) == expected
+
+    def test_before_1_0_each_minor_is_a_line(self, tmp_path):
+        for name in ("v0.1.0", "v0.1.3", "v0.2.0", "v1.0.0", "v1.4.0"):
+            (tmp_path / name).mkdir()
+        assert latest_releases(tmp_path) == {
+            (0, 1): (0, 1, 3),
+            (0, 2): (0, 2, 0),
+            (1,): (1, 4, 0),
+        }
+        assert [line_name(line) for line in sorted(latest_releases(tmp_path))] == [
+            "v0.1",
+            "v0.2",
+            "v1",
+        ]
+
+    def test_a_new_minor_before_1_0_retires_the_previous_line(self, tmp_path):
+        for name in ("v0.1.0", "v0.1.1", "v0.2.0"):
+            (tmp_path / name).mkdir()
+        changelog = tmp_path / "CHANGELOG.md"
+        changelog.write_text(
+            "## [0.2.0] - 2027-01-10\n\n## [0.1.1] - 2026-12-01\n\n## [0.1.0] - 2026-10-22\n"
+        )
+        both = {(0, 1): (0, 1, 1), (0, 2): (0, 2, 0)}
+        assert active_lines(date(2027, 7, 10), tmp_path, changelog) == both
+        assert active_lines(date(2027, 7, 11), tmp_path, changelog) == {(0, 2): (0, 2, 0)}
+
+    def test_line_of(self):
+        assert line_of((0, 1, 5)) == (0, 1)
+        assert line_of((2, 3, 4)) == (2,)
 
     def test_reads_the_top_changelog_heading(self, tmp_path):
         path = tmp_path / "CHANGELOG.md"
@@ -121,7 +152,7 @@ class TestVersions:
 
     def test_the_committed_changelog_names_a_version(self):
         version, _ = changelog_head(REPO / "schema" / "CHANGELOG.md")
-        assert version >= (1, 0, 0)
+        assert version >= (0, 1, 0)
 
     def test_urls_name_the_version(self):
         assert schema_url(EXTENSION, None) == f"{SITE_URL}/next/schemas/extension.json"

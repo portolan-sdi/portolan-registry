@@ -59,19 +59,19 @@ For problems with a registered catalog's data or documentation, use [catalog fee
 
 ## Registry contract
 
-Tools read the registry from `https://registry.portolan-sdi.org`. The site publishes a versioned contract, so a tool can pin one major version and keep working while the registry adds fields.
+Tools read the registry from `https://registry.portolan-sdi.org`. The site publishes a versioned contract, so a tool can pin one release line and keep working while the registry adds fields. The contract is pre-1.0.
 
 | Path | Contents |
 |---|---|
-| `vN/catalogs.json` | The registry as a STAC Catalog. Each registered catalog is a child link with `portolan_registry:*` fields. |
-| `vN/catalogs.parquet` | The same child links as a GeoParquet file, one row for each catalog. |
-| `vN/coverage/index.json` | The list of coverage files. Each catalog has one file with the bounding box of each collection. |
-| `schemas/v1.0.0/` | The extension schema and the coverage schema of release 1.0.0. Each release has its own directory. CI rejects a pull request that edits a released file. |
+| `v0.1/catalogs.json` | The registry as a STAC Catalog. Each registered catalog is a child link with `portolan_registry:*` fields. |
+| `v0.1/catalogs.parquet` | The same child links as a GeoParquet file, one row for each catalog. |
+| `v0.1/coverage/index.json` | The list of coverage files. Each catalog has one file with the bounding box of each collection. |
+| `schemas/v0.1.0/` | The extension schema and the coverage schema of release 0.1.0. Each release has its own directory. CI rejects a pull request that edits a released file. |
 | `next/` | The unreleased shape of `main`. It makes no stability promise. |
 
-The schema URL appears in `stac_extensions` of each `catalogs.json` and in `$schema` of each coverage file. Minor releases only add fields. The schemas accept fields that they do not define, so a tool that validates against an older minor version still works. For a breaking change, the registry publishes a new major path such as `v2/`. It also writes the previous path on each crawl for 6 months after that release. The [contract changelog](./schema/CHANGELOG.md) lists each release and the rules for each version step.
+The schema URL appears in `stac_extensions` of each `catalogs.json` and in `$schema` of each coverage file. Releases in one line only add fields. The schemas accept fields that they do not define, so a tool that validates against an older release in its line still works. For a breaking change, the registry starts a new line in a new path, such as `v0.2/`. It also writes the previous path on each crawl for 6 months after that release. Before 1.0.0, each minor version starts a line. From 1.0.0 on, each major version does. The [contract changelog](./schema/CHANGELOG.md) lists each release and the rules for each version step.
 
-The first release, 1.0.0, is pending. Until it publishes, existing tools keep reading [`exports/catalogs.json`](./exports/catalogs.json) on `main`.
+The first release, 0.1.0, is pending. Until it publishes, existing tools keep reading [`exports/catalogs.json`](./exports/catalogs.json) on `main`.
 
 ## Schemas
 

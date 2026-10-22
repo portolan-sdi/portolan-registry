@@ -50,7 +50,7 @@ def first_child(doc):
     return next(link for link in doc["links"] if link["rel"] == "child")
 
 
-def release(root, version="1.0.0"):
+def release(root, version="0.1.0"):
     (root / "schema" / "CHANGELOG.md").write_text(f"## [{version}] - Unreleased\n")
     release_contract.release(version, root=root, today=TODAY)
 
@@ -70,7 +70,7 @@ class TestBeforeTheFirstRelease:
         assert (out / "CNAME").read_text() == "registry.portolan-sdi.org\n"
         assert (out / "next" / "schemas" / "extension.json").is_file()
         assert not (out / "schemas").exists()
-        assert not (out / "v1").exists()
+        assert not (out / "v0.1").exists()
 
     def test_next_declares_the_working_schema(self, root):
         out, _ = build(root)
@@ -109,13 +109,13 @@ class TestAfterARelease:
     def test_writes_the_release_and_its_tree(self, root):
         release(root)
         out, trees = build(root)
-        assert trees == [Tree("next", None), Tree("v1", (1, 0, 0))]
-        assert (out / "schemas" / "v1.0.0" / "extension.json").is_file()
-        doc = read(out / "v1" / "catalogs.json")
-        assert doc["stac_extensions"] == [f"{SITE_URL}/schemas/v1.0.0/extension.json"]
-        assert "v1/catalogs.json" in (out / "index.html").read_text()
+        assert trees == [Tree("next", None), Tree("v0.1", (0, 1, 0))]
+        assert (out / "schemas" / "v0.1.0" / "extension.json").is_file()
+        doc = read(out / "v0.1" / "catalogs.json")
+        assert doc["stac_extensions"] == [f"{SITE_URL}/schemas/v0.1.0/extension.json"]
+        assert "v0.1/catalogs.json" in (out / "index.html").read_text()
 
-    def test_v1_keeps_its_shape_while_next_gains_a_field(self, root, monkeypatch):
+    def test_a_release_keeps_its_shape_while_next_gains_a_field(self, root, monkeypatch):
         release(root)
         path = root / "schema" / "extension.json"
         schema = read(path)
@@ -132,20 +132,20 @@ class TestAfterARelease:
         monkeypatch.setitem(geoparquet.FIELD_TYPES, PREFIX + "new_field", pa.string())
         out, _ = build(root)
         next_child = first_child(read(out / "next" / "catalogs.json"))
-        v1_child = first_child(read(out / "v1" / "catalogs.json"))
+        v01_child = first_child(read(out / "v0.1" / "catalogs.json"))
         assert next_child[PREFIX + "new_field"] == "x"
-        assert PREFIX + "new_field" not in v1_child
-        v1_columns = pq.read_schema(out / "v1" / "catalogs.parquet").names
-        assert PREFIX + "new_field" not in v1_columns
+        assert PREFIX + "new_field" not in v01_child
+        v01_columns = pq.read_schema(out / "v0.1" / "catalogs.parquet").names
+        assert PREFIX + "new_field" not in v01_columns
 
     def test_a_breaking_store_change_fails_the_released_tree(self, root):
-        """A field v1 requires that the store stops writing must stop the deploy."""
+        """A field that a release requires and the store drops must stop the deploy."""
         release(root)
         store = read(root / "exports" / "catalogs.json")
         for link in store["links"]:
             link.pop(PREFIX + "has_readme", None)
         (root / "exports" / "catalogs.json").write_text(json.dumps(store))
-        with pytest.raises(BuildError, match="v1/catalogs.json.*has_readme"):
+        with pytest.raises(BuildError, match="v0.1/catalogs.json.*has_readme"):
             build(root)
 
 
