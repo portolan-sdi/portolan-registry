@@ -8,7 +8,9 @@ Run from the repository root, on a branch:
 The script copies schema/extension.json and schema/coverage.json to
 schemas/vX.Y.Z/ with their versioned URLs, and dates the CHANGELOG heading.
 Open a pull request with the result. When it merges, the Pages deploy writes
-the vX/ tree and the tag workflow tags the commit as export-vX.Y.Z.
+the tree of its release line, such as v0.1/, and the tag workflow tags the
+commit as export-vX.Y.Z. The pattern on the schema URL of a file widens to
+the whole line, so a file of a later release in the line passes this one.
 schema/README.md lists every step of a release.
 """
 
@@ -28,6 +30,7 @@ from registry.contract import (
     parse_version,
     schema_path,
     schema_url,
+    self_pattern,
 )
 from registry.report import log
 
@@ -51,7 +54,10 @@ def release(version_text: str, *, root: Path = Path("."), today: date | None = N
     directory.mkdir(parents=True)
     for name in SCHEMA_FILES:
         text = schema_path(name, None, root=root).read_text()
-        text = text.replace(schema_url(name, None), schema_url(name, version))
+        working, released = schema_url(name, None), schema_url(name, version)
+        text = text.replace(working, released)
+        # The pattern on a file's schema URL widens to the whole release line.
+        text = text.replace(json.dumps(self_pattern(working)), json.dumps(self_pattern(released)))
         # The copy must still be a JSON document after the URL change.
         json.loads(text)
         (directory / name).write_text(text)

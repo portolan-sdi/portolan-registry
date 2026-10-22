@@ -20,6 +20,7 @@ import json
 import shutil
 from collections.abc import Iterable, Mapping
 from dataclasses import dataclass
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -91,11 +92,11 @@ INDEX_HTML = """<!doctype html>
 <p class="kicker">registry.portolan-sdi.org</p>
 <h1>Portolan registry</h1>
 <p class="lede">Download metadata for registered Portolan catalogs as JSON or GeoParquet.
-Coverage files list the bounding boxes of each catalog's collections.
-You can also <a href="https://www.portolan-sdi.org/registry">browse and search registered catalogs</a>.</p>
+Each catalog's coverage file lists the bounding boxes of its collections.
+To explore the registry, <a href="https://www.portolan-sdi.org/registry">browse and search registered catalogs</a>.</p>
 <dl class="stats">
 <div><dt>Catalogs</dt><dd>{count}</dd></div>
-<div><dt>Updated</dt><dd><time datetime="{generated}">{updated}</time></dd></div>
+<div><dt>Last updated</dt><dd><time datetime="{generated}">{updated}</time></dd></div>
 </dl>
 <h2>Registry data</h2>
 <div class="table-wrap">
@@ -113,9 +114,9 @@ You can also <a href="https://www.portolan-sdi.org/registry">browse and search r
 {schemas}</tbody>
 </table>
 </div>
-<p class="note">The site keeps every released schema unchanged.
+<p class="note">Released schemas never change.
 Versions follow <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.
-For versioning rules, see the
+For compatibility and versioning rules, see the
 <a href="https://github.com/portolan-sdi/portolan-registry/tree/main/schema#versions">schema guide</a>.
 For release history, see the
 <a href="https://github.com/portolan-sdi/portolan-registry/blob/main/schema/CHANGELOG.md">contract changelog</a>.</p>
@@ -123,7 +124,7 @@ For release history, see the
 <footer>
 <p>For file formats and compatibility rules, see the
 <a href="https://github.com/portolan-sdi/portolan-registry#registry-contract">registry documentation</a>.
-<a href="https://github.com/portolan-sdi/portolan-registry">View the source on GitHub</a>.</p>
+<a href="https://github.com/portolan-sdi/portolan-registry">View source code on GitHub</a>.</p>
 </footer>
 </div>
 </body>
@@ -133,8 +134,8 @@ For release history, see the
 TREE_FILES = ("catalogs.json", "catalogs.parquet", "coverage/index.json")
 
 NO_RELEASE_NOTE = (
-    '<p class="note">The registry has no releases yet. '
-    "Files under <code>next/</code> reflect changes on <code>main</code> "
+    '<p class="note">The registry has not published a release yet. '
+    "Files under <code>next/</code> include changes from <code>main</code> "
     "and can change without notice.</p>\n"
 )
 
@@ -267,10 +268,19 @@ def copy_schemas(out: Path, *, root: Path) -> None:
 
 
 def copy_assets(out: Path, *, root: Path) -> None:
-    """Copy the landing page's static assets to the site root."""
+    """Copy the landing page's static assets to the site root.
+
+    Refuse a name that the build writes itself, such as CNAME, so an asset
+    never replaces a generated file. Refuse a directory, so no asset is
+    left out without notice.
+    """
     for path in sorted((root / ASSETS_DIR).iterdir()):
-        if path.is_file():
-            shutil.copyfile(path, out / path.name)
+        target = out / path.name
+        if not path.is_file():
+            raise BuildError(f"{path}: the site assets must be files")
+        if path.name == "index.html" or target.exists():
+            raise BuildError(f"{path}: the build writes {path.name} itself")
+        shutil.copyfile(path, target)
 
 
 def _file_list(base: str, names: Iterable[str]) -> str:
@@ -283,7 +293,7 @@ def render_index(trees: list[Tree], releases: list[Version], export: Mapping[str
     rows = []
     # The released line first, because a tool pins it. `next/` is last.
     for tree in sorted(trees, key=lambda t: t.version is None):
-        contract = "unreleased" if tree.version is None else format_version(tree.version)
+        contract = "Unreleased" if tree.version is None else format_version(tree.version)
         rows.append(
             f"<tr><td><code>{tree.name}/</code></td><td>{contract}</td>"
             f"<td>{_file_list(f'{tree.name}/', TREE_FILES)}</td></tr>\n"
@@ -294,9 +304,10 @@ def render_index(trees: list[Tree], releases: list[Version], export: Mapping[str
         for version in reversed(releases)
     ]
     schemas.append(
-        f"<tr><td>unreleased</td><td>{_file_list(f'{NEXT}/schemas/', SCHEMA_FILES)}</td></tr>\n"
+        f"<tr><td>Unreleased</td><td>{_file_list(f'{NEXT}/schemas/', SCHEMA_FILES)}</td></tr>\n"
     )
-    generated = str(export["generated"])
+    # HTML allows at most 3 digits of fractional seconds in `datetime`.
+    generated = datetime.fromisoformat(str(export["generated"])).isoformat(timespec="seconds")
     return INDEX_HTML.format(
         fonts_url=html.escape(FONTS_URL),
         count=int(export["count"]),

@@ -12,6 +12,8 @@ from collections.abc import Mapping
 from dataclasses import dataclass
 from typing import Any
 
+from registry.contract import self_pattern
+
 PATCH, MINOR, MAJOR = 1, 2, 3
 # The kind of each change. The version step that a kind needs depends on the
 # release line: see `step` and `minimum_version`.
@@ -46,9 +48,9 @@ class Change:
 
 
 def _normalize(node: Any, own_id: str) -> Any:
-    """Replace the schema's own URL, which changes with each version."""
+    """Replace the schema's own URL and its pattern, which change with each version."""
     if isinstance(node, str):
-        return SELF if node in (own_id, own_id.rstrip("#")) else node
+        return SELF if node in (own_id, own_id.rstrip("#"), self_pattern(own_id)) else node
     if isinstance(node, dict):
         return {k: _normalize(v, own_id) for k, v in node.items() if k != "$id"}
     if isinstance(node, list):

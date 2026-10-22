@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://registry.portolan-sdi.org/schemas/v0.1.0/extension.json",
   "title": "Portolan Registry Extension",
-  "description": "The contract of the Portolan registry export. The registry is a STAC Catalog. Each registered catalog is a child link, and this extension defines the registry fields on the root and on each child link. The schema is open: it accepts fields that it does not define, so a consumer that validates with it keeps working after a minor release.",
+  "description": "The contract of the Portolan registry export. The registry is a STAC Catalog. Each registered catalog is a child link, and this extension defines the registry fields on the root and on each child link. The schema is open: it accepts fields that it does not define. A released copy also accepts the schema URL of each later release in its line. So a tool that validates with an older release of the line keeps working.",
   "type": "object",
   "allOf": [
     {
@@ -44,7 +44,8 @@
         "stac_extensions": {
           "type": "array",
           "contains": {
-            "const": "https://registry.portolan-sdi.org/schemas/v0.1.0/extension.json"
+            "type": "string",
+            "pattern": "^https://registry\\.portolan-sdi\\.org/schemas/v0\\.1\\.[0-9]+/extension\\.json$"
           }
         }
       }

@@ -183,7 +183,7 @@ def main(argv: list[str] | None = None) -> int:
     for problem in problems:
         log(f"FAIL: {problem}")
     if problems:
-        log(f"See {GUIDE} for the version rules and the release steps.")
+        log(f"See {GUIDE} for versioning rules and release instructions.")
     else:
         log("The contract version matches the schema change.")
     return 1 if problems else 0

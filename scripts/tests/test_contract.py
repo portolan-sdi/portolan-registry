@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import copy
 import json
+import re
 from pathlib import Path
 
 import pytest
@@ -23,6 +24,7 @@ from registry.contract import (
     publish,
     released_versions,
     schema_url,
+    self_pattern,
     split_coverage,
 )
 from registry.export import PREFIX
@@ -112,6 +114,38 @@ class TestVersions:
     def test_urls_name_the_version(self):
         assert schema_url(EXTENSION, None) == f"{SITE_URL}/next/schemas/extension.json"
         assert schema_url(COVERAGE, (1, 2, 3)) == f"{SITE_URL}/schemas/v1.2.3/coverage.json"
+
+
+class TestSelfPattern:
+    """The pattern that a schema sets on the schema URL of a file."""
+
+    @staticmethod
+    def matches(schema_version, file_version, name=EXTENSION):
+        pattern = self_pattern(schema_url(name, schema_version))
+        return re.fullmatch(pattern, schema_url(name, file_version)) is not None
+
+    def test_next_accepts_only_its_own_url(self):
+        assert self.matches(None, None)
+        assert not self.matches(None, (0, 1, 0))
+
+    def test_a_release_accepts_every_release_in_its_line(self):
+        assert self.matches((0, 1, 0), (0, 1, 0))
+        assert self.matches((0, 1, 0), (0, 1, 12), name=COVERAGE)
+        assert self.matches((1, 2, 0), (1, 9, 3))
+
+    def test_a_release_refuses_other_lines_and_next(self):
+        assert not self.matches((0, 1, 0), (0, 2, 0))
+        assert not self.matches((0, 1, 0), (0, 11, 0))
+        assert not self.matches((1, 2, 0), (2, 0, 0))
+        assert not self.matches((0, 1, 0), None)
+        pattern = self_pattern(schema_url(EXTENSION, (0, 1, 0)))
+        assert not re.fullmatch(pattern, schema_url(COVERAGE, (0, 1, 0)))
+
+    def test_escapes_only_the_dot(self):
+        """An ECMAScript validator with the `u` flag rejects `\\-` and `\\/`."""
+        pattern = self_pattern(schema_url(EXTENSION, (0, 1, 0)))
+        assert "\\-" not in pattern and "\\/" not in pattern
+        assert not re.fullmatch(pattern, schema_url(EXTENSION, (0, 1, 0)).replace(".org", "Xorg"))
 
 
 class TestPublish:
@@ -215,11 +249,11 @@ class TestSchemas:
     def test_extension_requires_its_own_url(self):
         extension = load_schema(EXTENSION, None, root=REPO)
         contains = extension["definitions"]["stac_extensions"]["properties"]["stac_extensions"]
-        assert contains["contains"]["const"] == extension["$id"]
+        assert contains["contains"]["pattern"] == self_pattern(extension["$id"])
 
     def test_coverage_names_its_own_url(self):
         coverage = load_schema(COVERAGE, None, root=REPO)
-        assert coverage["properties"]["$schema"]["const"] == coverage["$id"]
+        assert coverage["properties"]["$schema"]["pattern"] == self_pattern(coverage["$id"])
 
     def test_extension_and_producer_schema_declare_the_same_link_fields(self):
         """The producer schema guards the store and the extension guards the
