@@ -22,6 +22,17 @@ def test_auto_merge_runs_as_the_app():
     assert all(level != "write" for level in permissions.values())
 
 
+def test_auto_merge_leaves_dependency_updates_alone():
+    """A hold turns auto-merge off. Dependency updates merge on their checks."""
+    path = Path(".github/workflows/auto-merge.yml")
+    steps = yaml.safe_load(path.read_text())["jobs"]["auto-merge"]["steps"]
+    script = next(step for step in steps if step.get("id") == "pr")["with"]["script"]
+    for bot in ("portolan-renovate[bot]", "dependabot[bot]"):
+        assert f"'{bot}'" in script, bot
+    # The bot check must come before the first hold, or a hold fires first.
+    assert script.index("dependencyBots.includes") < script.index("hold('")
+
+
 def test_site_dispatch_names_the_registry_commit():
     path = Path(".github/workflows/pages.yml")
     workflow = yaml.safe_load(path.read_text())
