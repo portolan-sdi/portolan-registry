@@ -183,7 +183,7 @@ jobs:
             echo "No exports/catalogs.json found (will be created on first publish)"
           fi
 
-  # The registry contract (schema/CHANGELOG.md). Fails when a schema change
+  # The registry contract (schema/README.md). Fails when a schema change
   # needs a larger version step than the CHANGELOG names, or when a branch
   # changes a released schema under schemas/. No `paths` filter, so the
   # check reports on every pull request and can be required.

@@ -15,10 +15,12 @@ contract.
 from __future__ import annotations
 
 import argparse
+import html
 import json
 import shutil
-from collections.abc import Mapping
+from collections.abc import Iterable, Mapping
 from dataclasses import dataclass
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -58,19 +60,84 @@ DOMAIN = "registry.portolan-sdi.org"
 # this size also means the per-catalog split no longer keeps files small.
 MAX_FILE_BYTES = 50 * 1024 * 1024
 
+# The static files of the landing page. portolan-ops syncs the brand files
+# into this directory. style.css belongs to this repo.
+ASSETS_DIR = Path("site")
+
+FONTS_URL = (
+    "https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700"
+    "&family=JetBrains+Mono:wght@400;500&display=swap"
+)
+
 INDEX_HTML = """<!doctype html>
 <html lang="en">
+<head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Portolan registry</title>
+<meta name="description" content="Download Portolan catalog metadata as JSON or GeoParquet, with collection bounding boxes.">
+<link rel="icon" href="portolan-logomark-4163cc.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="{fonts_url}">
+<link rel="stylesheet" href="_brand-vars.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="page">
+<header>
+<a href="https://www.portolan-sdi.org/"><img src="portolan-logo-horizontal-light.svg" alt="Portolan home" width="143" height="32"></a>
+</header>
+<main>
+<p class="kicker">registry.portolan-sdi.org</p>
 <h1>Portolan registry</h1>
-<p>The registry of Portolan catalogs, as a versioned contract.</p>
-<ul>
-{releases}<li><a href="next/catalogs.json">next/catalogs.json</a> (unreleased, no stability promise)</li>
-</ul>
-<p>Read the contract rules in the
-<a href="https://github.com/portolan-sdi/portolan-registry#registry-contract">registry README</a>.</p>
+<p class="lede">Download metadata for registered Portolan catalogs as JSON or GeoParquet.
+Each catalog's coverage file lists the bounding boxes of its collections.
+To explore the registry, <a href="https://www.portolan-sdi.org/registry">browse and search registered catalogs</a>.</p>
+<dl class="stats">
+<div><dt>Catalogs</dt><dd>{count}</dd></div>
+<div><dt>Last updated</dt><dd><time datetime="{generated}">{updated}</time></dd></div>
+</dl>
+<h2>Registry data</h2>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Path</th><th>Schema version</th><th>Files</th></tr></thead>
+<tbody>
+{trees}</tbody>
+</table>
+</div>
+{release_note}<h2>Schemas</h2>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Version</th><th>Files</th></tr></thead>
+<tbody>
+{schemas}</tbody>
+</table>
+</div>
+<p class="note">Released schemas never change.
+Versions follow <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.
+For compatibility and versioning rules, see the
+<a href="https://github.com/portolan-sdi/portolan-registry/tree/main/schema#versions">schema guide</a>.
+For release history, see the
+<a href="https://github.com/portolan-sdi/portolan-registry/blob/main/schema/CHANGELOG.md">contract changelog</a>.</p>
+</main>
+<footer>
+<p>For file formats and compatibility rules, see the
+<a href="https://github.com/portolan-sdi/portolan-registry#consuming-catalog-metadata">registry documentation</a>.
+<a href="https://github.com/portolan-sdi/portolan-registry">View source code on GitHub</a>.</p>
+</footer>
+</div>
+</body>
 </html>
 """
+
+TREE_FILES = ("catalogs.json", "catalogs.parquet", "coverage/index.json")
+
+NO_RELEASE_NOTE = (
+    '<p class="note">The registry has not published a release yet. '
+    "Files under <code>next/</code> include changes from <code>main</code> "
+    "and can change without notice.</p>\n"
+)
 
 
 class BuildError(Exception):
@@ -200,6 +267,58 @@ def copy_schemas(out: Path, *, root: Path) -> None:
         shutil.copyfile(schema_path(name, None, root=root), target)
 
 
+def copy_assets(out: Path, *, root: Path) -> None:
+    """Copy the landing page's static assets to the site root.
+
+    Refuse a name that the build writes itself, such as CNAME, so an asset
+    never replaces a generated file. Refuse a directory, so no asset is
+    left out without notice.
+    """
+    for path in sorted((root / ASSETS_DIR).iterdir()):
+        target = out / path.name
+        if not path.is_file():
+            raise BuildError(f"{path}: the site assets must be files")
+        if path.name == "index.html" or target.exists():
+            raise BuildError(f"{path}: the build writes {path.name} itself")
+        shutil.copyfile(path, target)
+
+
+def _file_list(base: str, names: Iterable[str]) -> str:
+    items = "".join(f'<li><a href="{base}{name}"><code>{name}</code></a></li>' for name in names)
+    return f"<ul>{items}</ul>"
+
+
+def render_index(trees: list[Tree], releases: list[Version], export: Mapping[str, Any]) -> str:
+    """Render the landing page with data downloads and schema links."""
+    rows = []
+    # The released line first, because a tool pins it. `next/` is last.
+    for tree in sorted(trees, key=lambda t: t.version is None):
+        contract = "Unreleased" if tree.version is None else format_version(tree.version)
+        rows.append(
+            f"<tr><td><code>{tree.name}/</code></td><td>{contract}</td>"
+            f"<td>{_file_list(f'{tree.name}/', TREE_FILES)}</td></tr>\n"
+        )
+    schemas = [
+        f"<tr><td>{format_version(version)}</td>"
+        f"<td>{_file_list(f'schemas/v{format_version(version)}/', SCHEMA_FILES)}</td></tr>\n"
+        for version in reversed(releases)
+    ]
+    schemas.append(
+        f"<tr><td>Unreleased</td><td>{_file_list(f'{NEXT}/schemas/', SCHEMA_FILES)}</td></tr>\n"
+    )
+    # HTML allows at most 3 digits of fractional seconds in `datetime`.
+    generated = datetime.fromisoformat(str(export["generated"])).isoformat(timespec="seconds")
+    return INDEX_HTML.format(
+        fonts_url=html.escape(FONTS_URL),
+        count=int(export["count"]),
+        generated=html.escape(generated),
+        updated=html.escape(generated[:10]),
+        trees="".join(rows),
+        release_note="" if releases else NO_RELEASE_NOTE,
+        schemas="".join(schemas),
+    )
+
+
 def _clear(out: Path) -> None:
     """Remove an earlier build. Refuse any other directory that holds files.
 
@@ -254,6 +373,7 @@ def build_site(
     out.mkdir(parents=True)
     (out / "CNAME").write_text(DOMAIN + "\n")
     copy_schemas(out, root=root)
+    copy_assets(out, root=root)
 
     # Only the newest line has a tree. A breaking release stops the tree of
     # the previous line, and its schemas stay under schemas/.
@@ -272,13 +392,7 @@ def build_site(
             failures.append(str(e))
     if failures:
         raise BuildError("\n".join(failures))
-    links = "".join(
-        f'<li><a href="{tree.name}/catalogs.json">{tree.name}/catalogs.json</a> '
-        f"(contract {format_version(tree.version)})</li>\n"
-        for tree in trees
-        if tree.version is not None
-    )
-    (out / "index.html").write_text(INDEX_HTML.format(releases=links))
+    (out / "index.html").write_text(render_index(trees, releases, export))
 
     check_sizes(out)
     if stac_validator:
