@@ -9,10 +9,12 @@ from __future__ import annotations
 import json
 
 import pytest
+import responses
 from conftest import FROZEN, FakeFetcher
 
 from registry import mirror as mirror_module
 from registry.crawl import crawl_catalog
+from registry.fetch import HttpFetcher
 from registry.mirror import Mirror, MirrorFull, MirroringFetcher, complete_mirror
 
 ROOT = "https://ex.org/catalog.json"
@@ -106,6 +108,34 @@ class TestCompleteMirror:
         complete_mirror(mirror, lambda: tree)
         assert mirror.failures == []
         assert not (tmp_path / "coastal/AGENTS.md").exists()
+
+    @responses.activate
+    def test_an_s3_403_for_a_sidecar_is_a_missing_file(self, tmp_path):
+        """S3 answers 403 for a missing key when it denies ListBucket (#207)."""
+        responses.add(
+            responses.GET,
+            "https://ex.org/AGENTS.md",
+            body="<Error><Code>AccessDenied</Code><Message>Access Denied</Message></Error>",
+            status=403,
+            content_type="application/xml",
+            headers={"x-amz-request-id": "ABC"},
+        )
+        responses.add(responses.GET, "https://ex.org/README.md", body="# Example\n", status=200)
+        mirror = Mirror(ROOT, tmp_path)
+        mirror.add_document(ROOT, {"type": "Catalog", "id": "root", "links": []})
+        complete_mirror(mirror, HttpFetcher, workers=1)
+        assert mirror.failures == []
+        assert files(tmp_path) == ["README.md", "catalog.json"]
+
+    @responses.activate
+    def test_another_403_for_a_sidecar_is_a_failure(self, tmp_path):
+        responses.add(responses.GET, "https://ex.org/AGENTS.md", body="Forbidden", status=403)
+        responses.add(responses.GET, "https://ex.org/README.md", body="# Example\n", status=200)
+        mirror = Mirror(ROOT, tmp_path)
+        mirror.add_document(ROOT, {"type": "Catalog", "id": "root", "links": []})
+        complete_mirror(mirror, HttpFetcher, workers=1)
+        assert len(mirror.failures) == 1
+        assert mirror.failures[0].startswith("https://ex.org/AGENTS.md: 403")
 
     def test_a_server_error_is_a_failure(self, tree, tmp_path):
         tree.docs["https://ex.org/coastal/items/coastal-2.json"] = ConnectionError("520")
