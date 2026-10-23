@@ -75,6 +75,17 @@ jobs:
               repo: context.repo.repo,
               pull_number: number
             });
+            // Dependency bots arm auto-merge on their own pull requests, and
+            // the required checks gate the merge. This workflow decides only
+            // catalog submissions, so it leaves those pull requests alone. A
+            // hold here would turn their auto-merge off. GitHub reserves
+            // [bot] logins, so a person cannot claim one.
+            const dependencyBots = ['portolan-renovate[bot]', 'dependabot[bot]'];
+            if (dependencyBots.includes(pr.user.login)) {
+              console.log(`PR #${number} is a ${pr.user.login} update; its required checks decide`);
+              core.setOutput('decision', 'none');
+              return;
+            }
             // A hold also clears any auto-merge that an earlier run turned
             // on. Otherwise a commit pushed after that run merges with it.
             const hold = reason => {
