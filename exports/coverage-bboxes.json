@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-22T12:03:26.908696+00:00",
+  "generated": "2026-10-23T11:04:11.881072+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-10-22T12:03:26.908696+00:00",
+  "registry_generated": "2026-10-23T11:04:11.881072+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -43763,7 +43763,7 @@
     },
     {
       "id": "harmonized-field-data",
-      "collection_count": 67,
+      "collection_count": 68,
       "collections": [
         {
           "id": "at",
@@ -43823,6 +43823,16 @@
             -33.6734,
             -39.0188,
             -6.3783
+          ]
+        },
+        {
+          "id": "ca_prairies",
+          "title": "Field boundaries for the Canadian Prairies, derived from Sentinel-2",
+          "bbox": [
+            -120.0001,
+            48.9715,
+            -95.475,
+            58.5989
           ]
         },
         {
@@ -53545,7 +53555,7 @@
     },
     {
       "id": "planet-disasterdata",
-      "collection_count": 40,
+      "collection_count": 41,
       "collections": [
         {
           "id": "post-event-pelican-2026-10-11",
@@ -53755,6 +53765,16 @@
             28.2474,
             85.5823,
             28.4136
+          ]
+        },
+        {
+          "id": "post-event-skysat-2026-10-19",
+          "title": "East of the Rasuwa corridor, 19 Oct (SkySat) \u2014 Post-event Imagery",
+          "bbox": [
+            85.4834,
+            28.1949,
+            85.5574,
+            28.4032
           ]
         },
         {

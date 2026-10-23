@@ -16,6 +16,7 @@ from registry.fetch import (
     USER_AGENT,
     HttpFetcher,
     NotFound,
+    NotJson,
     TooLarge,
     default_retry,
     resolve_url,
@@ -84,6 +85,80 @@ class TestGetJson:
         responses.add(responses.GET, URL, json={}, status=200)
         HttpFetcher(user_agent="custom/1.0").get_json(URL)
         assert responses.calls[0].request.headers["User-Agent"] == "custom/1.0"
+
+    @responses.activate
+    def test_an_html_body_names_its_content_type(self):
+        """A STAC Browser link answers 200 with the browser page (#207)."""
+        responses.add(
+            responses.GET,
+            URL,
+            body="<!doctype html><html></html>",
+            status=200,
+            content_type="text/html; charset=utf-8",
+        )
+        with pytest.raises(NotJson) as caught:
+            HttpFetcher().get_json(URL)
+        assert caught.value.content_type == "text/html"
+        assert str(caught.value) == f"{URL} returns text/html, not JSON"
+
+    @responses.activate
+    def test_a_json_body_that_does_not_parse_says_so(self):
+        responses.add(responses.GET, URL, body="{", status=200, content_type="application/json")
+        with pytest.raises(NotJson) as caught:
+            HttpFetcher().get_json(URL)
+        assert f"{URL} returns application/json that does not parse" in str(caught.value)
+
+    @responses.activate
+    def test_not_json_is_a_value_error(self):
+        """Callers that caught the JSONDecodeError still catch it."""
+        responses.add(responses.GET, URL, body="x", status=200, content_type="text/plain")
+        with pytest.raises(ValueError):
+            HttpFetcher().get_json(URL)
+
+
+S3_DENIED = (
+    '<?xml version="1.0" encoding="UTF-8"?>\n'
+    "<Error><Code>AccessDenied</Code><Message>Access Denied</Message></Error>"
+)
+
+
+class TestS3AccessDenied:
+    """S3 answers 403 for a missing key when the bucket denies ListBucket (#207)."""
+
+    @responses.activate
+    def test_an_s3_access_denied_is_not_found(self):
+        responses.add(
+            responses.GET,
+            URL,
+            body=S3_DENIED,
+            status=403,
+            content_type="application/xml",
+            headers={"x-amz-request-id": "ABC"},
+        )
+        with pytest.raises(NotFound) as caught:
+            HttpFetcher().get_bytes(URL)
+        assert "403 AccessDenied from S3" in str(caught.value)
+
+    @responses.activate
+    def test_another_403_is_not_not_found(self):
+        """source.coop answers 403 to a client it blocks. The file can exist."""
+        responses.add(responses.GET, URL, body="Forbidden", status=403)
+        with pytest.raises(requests.HTTPError) as caught:
+            HttpFetcher().get_bytes(URL)
+        assert not isinstance(caught.value, NotFound)
+
+    @responses.activate
+    def test_an_s3_403_with_another_code_is_not_not_found(self):
+        responses.add(
+            responses.GET,
+            URL,
+            body=S3_DENIED.replace("AccessDenied", "AllAccessDisabled"),
+            status=403,
+            headers={"x-amz-request-id": "ABC"},
+        )
+        with pytest.raises(requests.HTTPError) as caught:
+            HttpFetcher().get_bytes(URL)
+        assert not isinstance(caught.value, NotFound)
 
 
 class TestLimits:

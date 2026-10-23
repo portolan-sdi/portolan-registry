@@ -17,6 +17,8 @@ url: https://example.org/catalog.json
 submitter_email: you@example.org
 ```
 
+Use the address of the `catalog.json` file itself. The registry rejects a URL that contains `#`, such as a STAC Browser link, because a server never receives the part after `#`.
+
 Choose a unique filename. The registry also rejects URLs that another entry already uses. It extracts the remaining metadata from your catalog.
 
 The registry uses your email address to notify you about validation failures and catalog feedback. The [`catalogs/`](./catalogs) directory lists your address publicly, but the JSON registry excludes it.

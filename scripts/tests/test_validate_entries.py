@@ -15,11 +15,13 @@ import subprocess
 
 import pytest
 import requests
+import responses
 import validate_entries
 from conftest import FakeFetcher
 from test_validators import TOOLS
 
 from registry import contacts, validators
+from registry.fetch import HttpFetcher
 from registry.validators import Finding, ValidatorError
 
 ROOT = "https://ex.org/catalog.json"
@@ -121,6 +123,78 @@ class TestSubmitterAddress:
         )
         assert check(path, tree) == []
         assert ROOT in tree.calls
+
+
+PR_131_URL = (
+    "https://browser.portolan-sdi.org/#/external/"
+    "ron-portolan.s3.eu-central-1.amazonaws.com/portolan/catalog.json"
+)
+
+
+class TestCatalogUrl:
+    """The error names the cause and the fix for a URL that is not a catalog (#207)."""
+
+    def test_a_browser_link_names_the_direct_url(self, tmp_path):
+        path = entry_file(
+            tmp_path, "cat.yaml", f"url: {PR_131_URL}\nsubmitter_email: submitter@example.com\n"
+        )
+        fetcher = FakeFetcher()
+        errors = check(path, fetcher)
+        assert len(errors) == 1
+        assert "STAC Browser link" in errors[0]
+        assert (
+            "Set 'url' to https://ron-portolan.s3.eu-central-1.amazonaws.com/portolan/catalog.json."
+            in errors[0]
+        )
+        assert fetcher.calls == []
+
+    @pytest.mark.parametrize(
+        ("fragment", "direct"),
+        [
+            ("#/external/ex.org/a/catalog.json?.language=en", "https://ex.org/a/catalog.json"),
+            ("#/search/external/ex.org/a/catalog.json", "https://ex.org/a/catalog.json"),
+            ("#/external/http://ex.org/a/catalog.json", "http://ex.org/a/catalog.json"),
+        ],
+    )
+    def test_other_browser_link_forms_name_the_direct_url(self, tmp_path, fragment, direct):
+        url = f"https://radiantearth.github.io/stac-browser/{fragment}"
+        path = entry_file(tmp_path, "cat.yaml", f"url: {url}\nsubmitter_email: s@example.com\n")
+        errors = check(path, FakeFetcher())
+        assert f"Set 'url' to {direct}." in errors[0]
+
+    def test_any_fragment_is_refused_before_the_crawl(self, tmp_path):
+        path = entry_file(
+            tmp_path, "cat.yaml", f"url: {ROOT}#top\nsubmitter_email: s@example.com\n"
+        )
+        fetcher = FakeFetcher()
+        errors = check(path, fetcher)
+        assert len(errors) == 1
+        assert "'url' contains '#'. Remove '#' and the text after it." in errors[0]
+        assert fetcher.calls == []
+
+    @responses.activate
+    def test_a_root_that_answers_html_names_the_content_type(self, tmp_path):
+        responses.add(
+            responses.GET,
+            ROOT,
+            body="<!doctype html><html></html>",
+            status=200,
+            content_type="text/html; charset=utf-8",
+        )
+        path = entry_file(tmp_path, "cat.yaml", ENTRY)
+        errors = check(path, HttpFetcher())
+        assert errors == [
+            f"{path}: {ROOT} returns text/html, not JSON. "
+            "Set 'url' to the catalog.json file itself, not a page that shows it."
+        ]
+
+    @responses.activate
+    def test_a_registered_root_that_answers_html_does_not_fail(self, tmp_path):
+        responses.add(
+            responses.GET, ROOT, body="<html></html>", status=200, content_type="text/html"
+        )
+        path = entry_file(tmp_path, "cat.yaml", ENTRY)
+        assert check(path, HttpFetcher(), published=published()) == []
 
 
 class TestValidatorGate:
