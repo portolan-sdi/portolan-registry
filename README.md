@@ -61,39 +61,29 @@ For registry problems, open a [bug report](https://github.com/portolan-sdi/porto
 
 For problems with a registered catalog's data or documentation, use [catalog feedback](https://github.com/portolan-sdi/portolan-registry/issues/new?template=catalog-feedback.yml). Include the catalog ID: its filename in `catalogs/` without `.yaml`. The registry emails your feedback to the catalog's submitter.
 
-## Use registry data in your tools
+## Consuming catalog metadata
 
-The registry publishes its data at [registry.portolan-sdi.org](https://registry.portolan-sdi.org/). The home page shows the current version and links to every file.
+You can access the registry directly from your own tools using the JSON files published at [registry.portolan-sdi.org](https://registry.portolan-sdi.org/).
 
-Each version has its own folder, such as `v0.1/`, with these files:
+### Available files
 
-- `catalogs.json` is a [STAC](https://stacspec.org/en/) catalog with one link for each registered catalog. The `portolan_registry:*` fields on each link describe that catalog.
-- `catalogs.parquet` has the same data as GeoParquet, with one row for each catalog.
-- `coverage/index.json` links to one coverage file for each catalog. A coverage file lists the bounding box of each collection in that catalog.
+- **`catalogs.json`** — A [STAC](https://stacspec.org/en/) catalog containing links to registered catalogs, with additional metadata in the `portolan_registry:*` fields.
+- **`coverage/index.json`** — An index of geographic coverage files for each catalog. Each file contains the bounding boxes of that catalog's collections.
 
-Point your tool at the folder that the home page lists. Updates to that folder can add new fields, so make your tool ignore fields it doesn't recognize. Existing fields keep their names and meanings. A breaking change gets a new folder, such as `v0.2/`, and the old folder then stops working. The maintainers announce each of these changes in the [Portolan Google Group](https://groups.google.com/g/portolan) and the [Portolan Slack channel](https://cloudnativegeo.slack.com/archives/C0A1JBH9529) before it happens.
+### Schema compatibility
 
-The `next/` folder previews upcoming changes. It can change at any time, so don't build a tool on it.
+The registry uses versioned schemas to provide a predictable format for downstream tools. Versions apply to the **structure of the published metadata**, not the catalogs themselves. Catalogs can be added, updated, or removed without changing the schema version.
 
-Some older tools read [`exports/catalogs.json`](./exports/catalogs.json) from this repository. That file still works, but it has no version and can change with any merge.
+Each released version belongs to a compatibility line:
 
-## Schemas
+- **Compatible changes** can add new fields, but existing fields retain their names, types, and meanings. Tools should ignore fields they don't recognize.
+- **Breaking changes** require a new compatibility line. When a new line is released, the previous line's data URLs are retired.
 
-Most people don't need to read the schemas. If you do, pick the one that matches your task:
+For production integrations, use a released version listed at [registry.portolan-sdi.org](https://registry.portolan-sdi.org/). The `next/` directory contains unreleased changes and provides no compatibility guarantees.
 
-- **To submit a catalog,** see the [entry schema](./schema/entry.schema.json). It defines the YAML file that you add to `catalogs/`.
-- **To validate registry data in your tool,** use the schema URL inside each file. For `catalogs.json`, it's in `stac_extensions`. For a coverage file, it's in `$schema`.
-- **To change the registry itself,** read the [schema guide](./schema/README.md). It explains each schema in this repository and how versions work.
+Each published JSON file identifies its schema. See the [schema guide](./schema/README.md) for schema definitions, compatibility rules, and release instructions.
 
-The [Portolan specification](https://github.com/portolan-sdi/portolan-spec) sets the requirements for the catalogs themselves.
-
-## Roadmap
-
-We plan to:
-
-- Improve the catalog grader integration and its feedback.
-
-Follow the [Portolan planning board](https://github.com/orgs/portolan-sdi/projects/1) for project plans.
+The older [`exports/catalogs.json`](./exports/catalogs.json) remains available in this repository, but its schema is not versioned.
 
 ## License
 
