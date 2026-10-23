@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import copy
 import json
-from collections.abc import Mapping, Sequence
+from collections.abc import Collection, Mapping, Sequence
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
@@ -363,6 +363,74 @@ def check_export_safe(
     if dropped_state:
         raise ExportRefused(
             f"export would discard validation state for: {', '.join(sorted(dropped_state))}"
+        )
+
+
+# Fields that clear on their own when catalogs heal or leave deprecation. A
+# run in which all of them are null on every link is a healthy registry.
+CLEARING_FIELDS = frozenset(
+    {
+        PREFIX + "stale_since",
+        PREFIX + "failure_reason",
+        PREFIX + "stac_invalid_since",
+        PREFIX + "deprecated_since",
+        PREFIX + "deprecated_reason",
+        PREFIX + "superseded_by",
+    }
+)
+
+
+def _has_value(value: object) -> bool:
+    # An empty list or object is what child_link writes when the registry
+    # read nothing, so it counts as no value too.
+    return value is not None and value != [] and value != {}
+
+
+# A field must lose its value on at least this many catalogs in one run
+# before the guard below refuses. One catalog that drops its own logo is a
+# publisher change. Several that drop it at once point at the crawler. The
+# previous export never changes after a refusal, so a refusal for a single
+# catalog would stop every later run.
+VANISHED_MIN_CATALOGS = 2
+
+
+def check_no_vanished_fields(
+    export: Mapping[str, Any],
+    previous_links: Mapping[str, Mapping[str, Any]],
+    *,
+    crawled: Collection[str],
+) -> None:
+    """Refuse an export in which a field lost its value on every crawled catalog.
+
+    A field that had a value on several catalogs and is now empty on all of
+    them is a crawler regression, such as a validator that did not run.
+    Consumers would read it as a fact about every catalog. Only catalogs in
+    both exports count, so a removed entry file takes its values with it.
+    Only catalogs that this run crawled count too. A catalog that the run
+    could not crawl keeps its previous link, so its old values would hide the
+    regression.
+    """
+    links = {
+        link["portolan_registry:id"]: link
+        for link in export.get("links", [])
+        if link.get("rel") == "child" and link.get("portolan_registry:id")
+    }
+    shared = links.keys() & previous_links.keys() & set(crawled)
+    if not shared:
+        return
+    holders: dict[str, int] = {}
+    for cid in shared:
+        for name, value in previous_links[cid].items():
+            if name.startswith(PREFIX) and name not in CLEARING_FIELDS and _has_value(value):
+                holders[name] = holders.get(name, 0) + 1
+    fields = {name for name, count in holders.items() if count >= VANISHED_MIN_CATALOGS}
+    vanished = sorted(
+        name for name in fields if not any(_has_value(links[cid].get(name)) for cid in shared)
+    )
+    if vanished:
+        raise ExportRefused(
+            f"export has no value on any catalog for {', '.join(vanished)}, "
+            "which the previous export had"
         )
 
 

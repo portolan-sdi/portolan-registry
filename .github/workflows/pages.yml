@@ -1,0 +1,120 @@
+name: Publish Registry Site
+
+# Builds registry.portolan-sdi.org from main and deploys it to GitHub Pages.
+# The site holds the versioned contract: the released schemas, `next/`, and
+# the tree of the newest release line, such as `v0.1/` (schema/CHANGELOG.md).
+# The export reaches main through a pull request, so the moment worth
+# publishing is the merge, not the crawl.
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'exports/**'
+      - 'schema/**'
+      - 'schemas/**'
+      - 'scripts/**'
+      - 'pyproject.toml'
+      - 'uv.lock'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One deploy at a time, and never cancel one halfway. A newer run deploys
+# after the older one ends.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build Site
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup uv
+        uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+
+      # The build runs stac-node-validator on each catalogs.json it writes.
+      - name: Setup Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '22'
+
+      - name: Install stac-node-validator
+        run: npm ci --prefix scripts/stac-node-validator --no-audit --no-fund
+
+      - name: Build and check the site
+        run: uv run --frozen --group site scripts/build_site.py --out _site
+
+      - name: Configure Pages
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+
+      - name: Upload the site
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: _site/
+
+  deploy:
+    name: Deploy Site
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+
+  # Tell portolan-sdi.org about a new export after the deploy ends. A
+  # refresh before then would read the previous files. The refresh also runs
+  # when the build or the deploy fails, because the site reads the raw export
+  # on main until it moves to the release tree. It runs on every push: a
+  # newer push can cancel a queued run, and the newer run must still refresh
+  # for the export that the cancelled run carried.
+  refresh:
+    name: Refresh Site Cache
+    needs: deploy
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Refresh portolan-sdi.org catalog cache
+        continue-on-error: true
+        run: |
+          curl -fsS -X POST \
+            -H "Authorization: Bearer $REVALIDATE_SECRET" \
+            https://www.portolan-sdi.org/api/revalidate
+        env:
+          REVALIDATE_SECRET: ${{ secrets.REVALIDATE_SECRET }}
+
+      - name: Create site token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        id: site-token
+        with:
+          client-id: ${{ secrets.REGISTRY_BOT_APP_CLIENT_ID }}
+          private-key: ${{ secrets.REGISTRY_BOT_APP_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: portolan-sdi.org
+          permission-contents: write
+
+      - name: Request site coverage bake
+        env:
+          GH_TOKEN: ${{ steps.site-token.outputs.token }}
+        run: |
+          gh api \
+            --method POST \
+            repos/portolan-sdi/portolan-sdi.org/dispatches \
+            --field event_type=registry-export-updated \
+            --field "client_payload[registry_sha]=$GITHUB_SHA"

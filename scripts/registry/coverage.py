@@ -8,6 +8,7 @@ from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
+from registry.bbox import split_antimeridian
 from registry.crawl import CollectionSummary
 from registry.export import ROOT_URL, TIMESTAMP_REFRESH_DAYS, ExportRefused
 from registry.status import parse_timestamp
@@ -31,12 +32,7 @@ def _collection_identity(summary: CollectionSummary) -> tuple[str, str]:
 
 def _map_bboxes(bbox: Sequence[float]) -> list[list[float]]:
     """Convert a cleaned STAC bbox to one or two rounded map rectangles."""
-    half = len(bbox) // 2
-    west, south, east, north = (round(bbox[i], 4) for i in (0, 1, half, half + 1))
-    horizontal = [west, south, east, north]
-    if west <= east:
-        return [horizontal]
-    return [[west, south, 180.0, north], [-180.0, south, east, north]]
+    return [[round(v, 4) for v in part] for part in split_antimeridian(bbox)]
 
 
 def _catalog_coverage(catalog: Mapping[str, Any]) -> dict[str, Any]:

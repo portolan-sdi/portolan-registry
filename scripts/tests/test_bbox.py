@@ -6,7 +6,7 @@ import math
 
 import pytest
 
-from registry.bbox import clean_bbox, collection_bbox, union_bboxes
+from registry.bbox import clean_bbox, collection_bbox, split_antimeridian, union_bboxes
 
 
 class TestCleanBbox:
@@ -113,3 +113,17 @@ class TestCollectionBbox:
 
     def test_missing_extent_returns_none(self):
         assert collection_bbox({}) is None
+
+
+class TestSplitAntimeridian:
+    def test_keeps_a_box_that_does_not_cross(self):
+        assert split_antimeridian([0, 1, 2, 3]) == [[0, 1, 2, 3]]
+
+    def test_splits_a_crossing_box(self):
+        assert split_antimeridian([170, -1, -170, 1]) == [
+            [170, -1, 180.0, 1],
+            [-180.0, -1, -170, 1],
+        ]
+
+    def test_drops_altitudes(self):
+        assert split_antimeridian([0, 1, 5, 2, 3, 9]) == [[0, 1, 2, 3]]

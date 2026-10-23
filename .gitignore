@@ -29,3 +29,5 @@ __pycache__/
 coverage.xml
 .mypy_cache/
 .ruff_cache/
+# The Pages site that scripts/build_site.py writes.
+/_site/

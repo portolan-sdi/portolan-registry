@@ -7,6 +7,8 @@ the nightly check can detect the first failure and notify the submitter.
 
 from __future__ import annotations
 
+import json
+
 import publish_export
 import pytest
 from registry_run import Registry
@@ -123,3 +125,19 @@ class TestValidationFailureDate:
         registry.published("cat", stac_valid=False, stac_invalid_since=self.SINCE)
         run()
         assert registry.link("cat")["portolan_registry:stac_invalid_since"] is None
+
+
+class TestVanishedField:
+    def test_refuses_a_field_the_crawler_stopped_writing(self, registry, capsys):
+        """#203: a field with a value before and none now stops the export."""
+        for catalog_id in ("a", "b"):
+            registry.entry(catalog_id)
+            registry.published(catalog_id)
+        path = registry.root / "exports" / "catalogs.json"
+        previous = json.loads(path.read_text())
+        for link in previous["links"]:
+            link["portolan_registry:a_later_field"] = "a value"
+        path.write_text(json.dumps(previous))
+        assert publish_export.main([]) == 1
+        assert "portolan_registry:a_later_field" in capsys.readouterr().err
+        assert json.loads(path.read_text()) == previous
