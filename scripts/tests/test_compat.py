@@ -22,7 +22,7 @@ from registry.compat import (
     required_level,
     step,
 )
-from registry.contract import EXTENSION, SCHEMA_FILES, schema_url
+from registry.contract import EXTENSION, SCHEMA_FILES, schema_url, self_pattern
 
 REPO = Path(__file__).resolve().parents[2]
 LINK = ("definitions", "link", "then", "properties")
@@ -49,11 +49,12 @@ class TestClassify:
         assert required_level([]) is None
 
     def test_a_new_version_url_is_no_change(self):
-        new = json.loads(
-            json.dumps(extension()).replace(
-                schema_url(EXTENSION, None), schema_url(EXTENSION, (1, 0, 0))
-            )
-        )
+        """The release script changes the URL and the pattern on it."""
+        working, released = schema_url(EXTENSION, None), schema_url(EXTENSION, (1, 0, 0))
+        text = json.dumps(extension()).replace(working, released)
+        text = text.replace(json.dumps(self_pattern(working)), json.dumps(self_pattern(released)))
+        new = json.loads(text)
+        assert new != extension()
         assert classify(extension(), new) == []
 
     def test_a_removed_field_is_major(self):
@@ -346,7 +347,9 @@ class TestRelease:
         repo.changelog("## [0.1.1] - Unreleased", "## [0.1.0] - 2026-10-22")
         repo.edit(lambda s: link_fields(s).pop("portolan_registry:has_readme"))
         assert contract_compat.main([]) == 1
-        assert "FAIL" in capsys.readouterr().err
+        err = capsys.readouterr().err
+        assert "FAIL" in err
+        assert "See schema/README.md" in err
 
     def test_compat_cli_reports_a_bad_heading(self, repo, monkeypatch, capsys):
         monkeypatch.chdir(repo.root)
