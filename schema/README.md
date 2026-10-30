@@ -4,7 +4,7 @@ This directory contains four JSON Schemas. The registry contract consists of `ex
 
 | Schema | What it validates | Who uses it | Version |
 |---|---|---|---|
-| [`extension.json`](./extension.json) | The published `catalogs.json`, as an open STAC extension. | Tool authors | Contract |
+| [`extension.json`](./extension.json) | The published `catalogs.json`, as an open SpatioTemporal Asset Catalog (STAC) extension. | Tool authors | Contract |
 | [`coverage.json`](./coverage.json) | The published coverage files. | Tool authors | Contract |
 | [`entry.schema.json`](./entry.schema.json) | The submission files in `catalogs/`. | Submitters and CI | None |
 | [`export.schema.json`](./export.schema.json) | The registry data in `exports/catalogs.json`, stored in Git. | CI | None |
@@ -46,7 +46,7 @@ The site publishes data for the newest release line and `next/`, along with ever
 
 | Path | Contents |
 |---|---|
-| `vX.Y/` or `vX/` | Data for the newest release line. `catalogs.json` and `catalogs.parquet` have the fields of the line's latest release. |
+| `vX.Y/` or `vX/` | Data for the newest release line. `catalogs.json` and `catalogs.parquet` have the fields of the line's newest release. |
 | `next/` | Data in the format defined by the working schemas on `main`, with no stability promise. |
 | `schemas/v0.1.0/` and later | The schemas for each release, with one directory for each version. A released schema never changes. |
 
@@ -60,7 +60,7 @@ To validate a published file, use the schema URL that the file declares. A tool 
 
 Each pull request must pass these contract checks:
 
-- `Contract Version` runs [`scripts/contract_compat.py`](../scripts/contract_compat.py) to compare the working schemas with the latest release. It fails if the change requires a larger version increase than the version in the top changelog heading allows. It also fails if a breaking change has an `Unreleased` heading or if a released schema changes.
+- `Contract Version` runs [`scripts/contract_compat.py`](../scripts/contract_compat.py) to compare the working schemas with the newest release. It fails if the change requires a larger version increase than the version in the top changelog heading allows. It also fails if a breaking change has an `Unreleased` heading or if a released schema changes.
 - `Build Site` runs [`scripts/build_site.py`](../scripts/build_site.py) to build each data directory and validate each file against that directory's schemas. It uploads the site as the run's `registry-site` artifact.
 
 The version check can't detect changes to a unit or meaning. For these changes, choose the breaking version yourself.

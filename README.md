@@ -4,7 +4,7 @@
 
 The Portolan registry brings independently hosted [Portolan](https://github.com/portolan-sdi/portolan-spec) catalogs into one searchable network. Catalog owners keep their data in their own storage. Submit your Portolan catalog to help other users find and search it.
 
-**[Browse registered catalogs](https://www.portolan-sdi.org/registry)**, use the [registry QGIS plugin](https://plugins.qgis.org/plugins/portolan_registry_qgis/), or [download catalog metadata](https://registry.portolan-sdi.org/) for your own tools.
+**[Browse registered catalogs](https://www.portolan-sdi.org/registry)**, use the [registry plugin](https://plugins.qgis.org/plugins/portolan_registry_qgis/) for Quantum Geographic Information System (QGIS), or [download catalog metadata](https://registry.portolan-sdi.org/) for your own tools.
 
 ## Quickstart
 
@@ -19,7 +19,7 @@ url: https://example.org/catalog.json
 submitter_email: you@example.org
 ```
 
-Use the address of the `catalog.json` file itself. The registry rejects a URL that contains `#`, such as a STAC Browser link, because a server never receives the part after `#`.
+Use the address of the `catalog.json` file itself. The registry rejects a URL that contains `#`, such as a SpatioTemporal Asset Catalog (STAC) Browser link, because a server never receives the part after `#`.
 
 Choose a unique filename. The registry also rejects URLs that another entry already uses. It extracts the remaining metadata from your catalog.
 
@@ -29,14 +29,14 @@ The registry uses your email address to notify you about validation failures and
 
 Submitting through the registry page creates a pull request in this repository. Each submission receives two checks:
 
-- **Deterministic validation.** `rashid` checks Portolan requirements, and `stac-node-validator` checks STAC core and extension schemas. These checks use a copy of your catalog metadata; they do not download and validate every data asset.
-- **Catalog grade.** A Codex agent runs the catalog grader skill and posts a comment with its grade, findings, and suggested fixes. We are still developing this new integration.
+- **Deterministic validation.** `rashid` checks Portolan requirements, and `stac-node-validator` checks STAC core and extension schemas. These checks read a copy of your catalog metadata. They do not download or validate the data assets.
+- **Catalog grade.** A Codex agent runs the catalog grader skill and posts a comment with its grade, findings, and suggested fixes. This integration is new, and its output can change.
 
 New catalogs must pass deterministic validation before they enter the registry. The agent's grade provides feedback. If validation fails, fix the reported errors and update your submission.
 
 After your submission passes validation and a maintainer merges it, the registry publishes its metadata in [`exports/catalogs.json`](./exports/catalogs.json). Your catalog then appears on the registry page. Scheduled checks revisit registered catalogs and notify submitters about failures.
 
-Each night, the registry checks catalog metadata with `rashid` and `stac-node-validator`. If a catalog you registered fails validation, the Monday check includes it in a weekly email with the failed rules and examples. You receive one email for all your catalogs that fail that check. When a catalog passes validation, the emails stop including it. Validation errors leave your catalog listed with status `valid`, unless it is deprecated.
+Each night, the registry checks catalog metadata with `rashid` and `stac-node-validator`. If a catalog you registered fails validation, the Monday check includes it in a weekly email with the failed rules and examples. You receive one email for all your catalogs that fail that check. When a catalog passes validation, the emails stop including it. Validation errors leave your catalog listed with status `valid`, unless its status is `deprecated`.
 
 In the [JSON registry](./exports/catalogs.json), `portolan_registry:stac_valid` records the validation result. The `portolan_registry:stac_invalid_since` field records when the registry first detected the current failure. A passing check sets `portolan_registry:stac_valid` to `true` and clears the failure timestamp.
 
@@ -63,28 +63,37 @@ For problems with a registered catalog's data or documentation, use [catalog fee
 
 ## Consuming catalog metadata
 
-You can access the registry directly from your own tools using the JSON files published at [registry.portolan-sdi.org](https://registry.portolan-sdi.org/).
+Your tools can read registry metadata from [registry.portolan-sdi.org](https://registry.portolan-sdi.org/). Each release line has its own directory. For the 0.1 line, read this URL:
+
+```text
+https://registry.portolan-sdi.org/v0.1/catalogs.json
+```
 
 ### Available files
 
-- **`catalogs.json`** — A [STAC](https://stacspec.org/en/) catalog containing links to registered catalogs, with additional metadata in the `portolan_registry:*` fields.
-- **`coverage/index.json`** — An index of geographic coverage files for each catalog. Each file contains the bounding boxes of that catalog's collections.
+Each release line directory, such as `v0.1/`, contains these files:
+
+- **`catalogs.json`**: A STAC catalog with one child link for each registered catalog. The `portolan_registry:*` fields on each link contain the registry metadata.
+- **`catalogs.parquet`**: The same child links as a GeoParquet 1.1 file, with one row for each catalog. The geometry column holds the bounding boxes of the catalog's collections.
+- **`coverage/index.json`**: An index of the geographic coverage files. Each coverage file lists the bounding boxes of one catalog's collections.
 
 ### Schema compatibility
 
-The registry uses versioned schemas to provide a predictable format for downstream tools. Versions apply to the **structure of the published metadata**, not the catalogs themselves. Catalogs can be added, updated, or removed without changing the schema version.
+The schema version applies to the **structure of the published metadata**, not to the catalogs. The registry adds, updates, and removes catalogs with no change to the schema version.
 
-Each released version belongs to a compatibility line:
+Each release belongs to a release line, such as `v0.1/`:
 
-- **Compatible changes** can add new fields, but existing fields retain their names, types, and meanings. Tools should ignore fields they don't recognize.
-- **Breaking changes** require a new compatibility line. When a new line is released, the previous line's data URLs are retired.
+- A **compatible release** adds fields to the current line and keeps the name, type, and meaning of each current field. Your tool must ignore any field that it does not recognize.
+- A **breaking release** starts a new line in a new directory, such as `v0.2/`. When the breaking release deploys, every URL under the previous line's directory returns HTTP 404.
 
-For production integrations, use a released version listed at [registry.portolan-sdi.org](https://registry.portolan-sdi.org/). The `next/` directory contains unreleased changes and provides no compatibility guarantees.
+Maintainers announce each breaking release before it deploys. They post in the [Portolan Google Group](https://groups.google.com/g/portolan) and the [Portolan channel](https://cloudnativegeo.slack.com/archives/C0A1JBH9529) in Cloud-Native Geo Slack. Follow one of these channels, then move your tool to the new line before the release deploys.
 
-Each published JSON file identifies its schema. See the [schema guide](./schema/README.md) for schema definitions, compatibility rules, and release instructions.
+For production tools, read a released line that [registry.portolan-sdi.org](https://registry.portolan-sdi.org/) lists. The `next/` directory shows unreleased changes, and a change there can break your tool at any time.
 
-The older [`exports/catalogs.json`](./exports/catalogs.json) remains available in this repository, but its schema is not versioned.
+Each published JSON file declares the URL of its schema. See the [schema guide](./schema/README.md) for schema definitions, compatibility rules, and release instructions.
+
+This repository also keeps the older [`exports/catalogs.json`](./exports/catalogs.json). Its schema has no version.
 
 ## License
 
-This repository uses the [Apache License 2.0](./LICENSE). Registered datasets retain their own licenses; check each catalog before use.
+This repository uses the [Apache License 2.0](./LICENSE). Registered datasets keep their own licenses. Check the license of each catalog before you use it.

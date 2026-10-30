@@ -10,7 +10,7 @@ For versioning rules and instructions to change or release a schema, see
 the [schema guide](./README.md). The `Contract Version` check reads the first
 `## [X.Y.Z]` heading in this file.
 
-## [0.1.0] - 2026-10-22
+## [0.1.0] - 2026-10-30
 
 ### Added
 
