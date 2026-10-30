@@ -7,8 +7,9 @@
   "required": ["$schema", "generated"],
   "properties": {
     "$schema": {
-      "description": "The versioned URL of this schema.",
-      "const": "https://registry.portolan-sdi.org/next/schemas/coverage.json"
+      "description": "The versioned URL of the schema of this file. A released copy accepts the URL of each release in its line.",
+      "type": "string",
+      "pattern": "^https://registry\\.portolan-sdi\\.org/next/schemas/coverage\\.json$"
     },
     "generated": {
       "description": "When the registry wrote the data in this document, RFC 3339.",

@@ -129,6 +129,25 @@ def schema_url(name: str, version: Version | None) -> str:
     return f"{SITE_URL}/schemas/v{format_version(version)}/{name}"
 
 
+_RELEASED_URL = f"{SITE_URL}/schemas/v"
+
+
+def self_pattern(url: str) -> str:
+    """The pattern that the schema at `url` sets on a file's schema URL.
+
+    A released schema accepts the URL of every release in its line, so a tool
+    that validates with an older release of the line keeps working. The
+    `next/` schema accepts only its own URL. The pattern escapes only `.`,
+    because an ECMAScript validator rejects an escaped `-` or `/`.
+    """
+    if not url.startswith(_RELEASED_URL):
+        return "^" + url.replace(".", r"\.") + "$"
+    version_text, name = url[len(_RELEASED_URL) :].split("/", 1)
+    line = [str(part) for part in line_of(parse_version(version_text))]
+    version = r"\.".join(line + ["[0-9]+"] * (3 - len(line)))
+    return "^" + _RELEASED_URL.replace(".", r"\.") + version + "/" + name.replace(".", r"\.") + "$"
+
+
 def schema_path(name: str, version: Version | None, *, root: Path = Path(".")) -> Path:
     """Where the repository keeps one contract schema. None is the working copy."""
     if version is None:

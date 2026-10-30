@@ -2,7 +2,7 @@ name: Publish Registry Site
 
 # Builds registry.portolan-sdi.org from main and deploys it to GitHub Pages.
 # The site holds the versioned contract: the released schemas, `next/`, and
-# the tree of the newest release line, such as `v0.1/` (schema/CHANGELOG.md).
+# the tree of the newest release line, such as `v0.1/` (schema/README.md).
 # The export reaches main through a pull request, so the moment worth
 # publishing is the merge, not the crawl.
 on:
@@ -13,6 +13,7 @@ on:
       - 'exports/**'
       - 'schema/**'
       - 'schemas/**'
+      - 'site/**'
       - 'scripts/**'
       - 'pyproject.toml'
       - 'uv.lock'
