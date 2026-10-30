@@ -57,6 +57,9 @@ def released_files_changed(base_ref: str, *, root: Path = Path(".")) -> list[str
     return [line for line in proc.stdout.splitlines() if line and not line.startswith("A")]
 
 
+GUIDE = "schema/README.md"
+
+
 def schema_changes(
     old: Version | None, new: Version | None, *, root: Path = Path(".")
 ) -> list[Change]:
@@ -179,7 +182,9 @@ def main(argv: list[str] | None = None) -> int:
         problems = [str(e)]
     for problem in problems:
         log(f"FAIL: {problem}")
-    if not problems:
+    if problems:
+        log(f"See {GUIDE} for versioning rules and release instructions.")
+    else:
         log("The contract version matches the schema change.")
     return 1 if problems else 0
 
