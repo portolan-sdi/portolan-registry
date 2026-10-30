@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-23T11:04:11.881072+00:00",
+  "generated": "2026-10-30T11:15:32.145144+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-10-23T11:04:11.881072+00:00",
+  "registry_generated": "2026-10-30T11:15:32.145144+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -68,7 +68,7 @@
           "title": "Bahnh\u00f6fe und Haltestellen Baden-W\u00fcrttemberg",
           "bbox": [
             -8.849,
-            4.8667,
+            39.0844,
             30.5198,
             56.9438
           ]
@@ -88,7 +88,7 @@
           "title": "Haltesteige Baden-W\u00fcrttemberg",
           "bbox": [
             -8.849,
-            4.8667,
+            39.0844,
             30.5198,
             56.9438
           ]
@@ -41005,9 +41005,9 @@
           "id": "maasto-1-1/maastokuvionreuna",
           "title": "maastokuvionreuna",
           "bbox": [
-            19.7566,
+            19.0714,
             58.8445,
-            30.564,
+            31.5974,
             70.095
           ]
         },
@@ -41038,7 +41038,7 @@
             19.9458,
             59.7705,
             30.4171,
-            68.8388
+            69.1441
           ]
         },
         {
@@ -41148,7 +41148,7 @@
             19.553,
             59.8338,
             31.2638,
-            68.7709
+            69.0169
           ]
         },
         {
@@ -41536,7 +41536,7 @@
           "title": "tervahauta",
           "bbox": [
             21.1752,
-            60.0087,
+            59.847,
             31.3883,
             69.6647
           ]
@@ -42711,7 +42711,7 @@
           "id": "power_switchgear",
           "title": "Switchgear and transformers",
           "bbox": [
-            -171.8852,
+            -176.6373,
             -68.5752,
             178.0267,
             78.9242
@@ -42791,7 +42791,7 @@
           "id": "street_cabinet",
           "title": "Street cabinets",
           "bbox": [
-            -171.9908,
+            -176.6358,
             -54.9333,
             178.2972,
             74.6685
@@ -42915,6 +42915,32 @@
             -45.7562,
             177.6692,
             71.2615
+          ]
+        }
+      ]
+    },
+    {
+      "id": "goes-fdc",
+      "collection_count": 1,
+      "collections": [
+        {
+          "id": "goes-18-fdcc",
+          "title": "GOES-18 ABI L2 Fire/Hot Spot Characterization, CONUS (virtual Zarr)",
+          "bbox": [
+            175.6236,
+            14.5713,
+            180.0,
+            53.5001
+          ]
+        },
+        {
+          "id": "goes-18-fdcc",
+          "title": "GOES-18 ABI L2 Fire/Hot Spot Characterization, CONUS (virtual Zarr)",
+          "bbox": [
+            -180.0,
+            14.5713,
+            -89.6236,
+            53.5001
           ]
         }
       ]
@@ -43117,7 +43143,7 @@
           "id": "mobilite/bornes-recharge-vehicules-electriques",
           "title": "Stations et points de recharges pour v\u00e9hicules \u00e9lectriques",
           "bbox": [
-            4.7152,
+            4.7046,
             45.5806,
             5.0769,
             45.9148
@@ -43763,7 +43789,7 @@
     },
     {
       "id": "harmonized-field-data",
-      "collection_count": 68,
+      "collection_count": 69,
       "collections": [
         {
           "id": "at",
@@ -43779,10 +43805,10 @@
           "id": "at_block",
           "title": "Field blocks for Austria",
           "bbox": [
-            9.4053,
-            46.3459,
-            17.2322,
-            48.9656
+            9.5314,
+            46.4014,
+            17.1605,
+            49.0179
           ]
         },
         {
@@ -43869,10 +43895,10 @@
           "id": "de_bb_block",
           "title": "Field blocks for Berlin / Brandenburg, Germany",
           "bbox": [
-            11.2351,
-            51.3107,
-            14.7655,
-            53.5645
+            11.2692,
+            51.359,
+            14.7642,
+            53.5586
           ]
         },
         {
@@ -43889,20 +43915,20 @@
           "id": "de_by",
           "title": "Field boundaries for Bavaria, Germany",
           "bbox": [
-            8.9769,
-            47.18,
-            14.0142,
-            50.5613
+            8.9771,
+            47.2703,
+            13.8373,
+            50.5552
           ]
         },
         {
           "id": "de_by_block",
           "title": "Field blocks for Bavaria, Germany",
           "bbox": [
-            8.9769,
-            47.18,
-            14.0142,
-            50.5613
+            8.9772,
+            47.2703,
+            13.8373,
+            50.5551
           ]
         },
         {
@@ -43919,10 +43945,10 @@
           "id": "de_mv",
           "title": "Field blocks for Mecklenburg-Western Pomerania, Germany",
           "bbox": [
-            10.461,
-            53.0845,
-            14.3972,
-            54.6906
+            10.5936,
+            53.1103,
+            14.412,
+            54.6839
           ]
         },
         {
@@ -43939,10 +43965,10 @@
           "id": "de_nds_block",
           "title": "Field blocks for Lower Saxony / Bremen / Hamburg, Germany",
           "bbox": [
-            6.6071,
-            51.2798,
-            11.6519,
-            53.9089
+            6.6688,
+            51.3041,
+            11.5982,
+            53.9317
           ]
         },
         {
@@ -44009,10 +44035,20 @@
           "id": "de_th",
           "title": "Field blocks for Thuringia, Germany",
           "bbox": [
-            9.8703,
-            50.1658,
-            12.7081,
-            51.6525
+            9.8781,
+            50.2089,
+            12.6539,
+            51.6433
+          ]
+        },
+        {
+          "id": "de_thuenen",
+          "title": "Crop type map of Germany from Sentinel-1, Sentinel-2 and Landsat (Th\u00fcnen Institute)",
+          "bbox": [
+            5.8666,
+            47.2703,
+            15.0418,
+            55.0493
           ]
         },
         {
@@ -44039,30 +44075,30 @@
           "id": "ec_lv",
           "title": "Field boundaries for Latvia - Eurocrops 2021",
           "bbox": [
-            20.8392,
-            55.6322,
-            28.4252,
-            58.0439
+            20.9836,
+            55.6754,
+            28.2205,
+            58.0765
           ]
         },
         {
           "id": "ec_ro",
           "title": "Field boundaries for Romania - Eurocrops",
           "bbox": [
-            21.9836,
-            43.5324,
-            28.9233,
-            45.1767
+            22.0254,
+            43.6257,
+            28.9069,
+            45.1102
           ]
         },
         {
           "id": "ec_si",
           "title": "Field boundaries for Slovenia - Eurocrops 2021",
           "bbox": [
-            13.3914,
-            45.4117,
-            16.608,
-            46.8698
+            13.4107,
+            45.4223,
+            16.5963,
+            46.8742
           ]
         },
         {
@@ -44149,10 +44185,10 @@
           "id": "es_cn",
           "title": "Spain Crop fields of Canary Islands",
           "bbox": [
-            -18.1956,
-            27.6495,
-            -13.4457,
-            29.2763
+            -18.1508,
+            27.6527,
+            -13.4476,
+            29.2768
           ]
         },
         {
@@ -44319,10 +44355,10 @@
           "id": "lu",
           "title": "Field blocks for Luxembourg",
           "bbox": [
-            5.7361,
-            49.4487,
-            6.5333,
-            50.1823
+            5.7387,
+            49.4494,
+            6.5304,
+            50.1828
           ]
         },
         {
@@ -44349,10 +44385,10 @@
           "id": "nl_block",
           "title": "Field blocks for The Netherlands",
           "bbox": [
-            3.2579,
-            50.7343,
-            7.2378,
-            53.4878
+            3.3597,
+            50.7504,
+            7.2244,
+            53.4989
           ]
         },
         {
@@ -44439,10 +44475,10 @@
           "id": "us_usda_cropland",
           "title": "U.S. Department of Agriculture Crop Sequence Boundaries",
           "bbox": [
-            -127.8221,
-            23.2521,
-            -65.3956,
-            48.1831
+            -124.5619,
+            25.2107,
+            -66.9677,
+            49.3596
           ]
         }
       ]
@@ -45565,7 +45601,7 @@
     },
     {
       "id": "karstgrundwasser-v2",
-      "collection_count": 8,
+      "collection_count": 9,
       "collections": [
         {
           "id": "ub",
@@ -45645,6 +45681,16 @@
             45.8456,
             10.4649,
             47.6824
+          ]
+        },
+        {
+          "id": "mfm-u_stations",
+          "title": "MfM-U Messstationen (Monitoring flankierende Massnahmen Umwelt)",
+          "bbox": [
+            7.6489,
+            46.1038,
+            9.4226,
+            47.5381
           ]
         }
       ]
@@ -46060,56 +46106,6 @@
           ]
         },
         {
-          "id": "einrichtungen/bibliotheken",
-          "title": "Bibliotheken in K\u00f6ln",
-          "bbox": [
-            6.8299,
-            50.8573,
-            7.1004,
-            51.0652
-          ]
-        },
-        {
-          "id": "einrichtungen/friedhofseingaenge",
-          "title": "Friedh\u00f6fe in K\u00f6ln \u2013 Friedhofseing\u00e4nge",
-          "bbox": [
-            6.8183,
-            50.8362,
-            7.0916,
-            51.062
-          ]
-        },
-        {
-          "id": "einrichtungen/kindertagesstaetten",
-          "title": "Kindertagesstaetten in K\u00f6ln",
-          "bbox": [
-            6.8244,
-            50.8371,
-            7.1191,
-            51.0649
-          ]
-        },
-        {
-          "id": "einrichtungen/krankenhaeuser",
-          "title": "Krankenh\u00e4user in K\u00f6ln",
-          "bbox": [
-            6.8976,
-            50.8812,
-            7.0569,
-            50.9919
-          ]
-        },
-        {
-          "id": "einrichtungen/schulen",
-          "title": "Schulen in K\u00f6ln",
-          "bbox": [
-            6.8288,
-            50.8452,
-            7.1021,
-            51.0685
-          ]
-        },
-        {
           "id": "gebietsgliederung/blockseiten",
           "title": "Blockseiten K\u00f6ln",
           "bbox": [
@@ -46260,16 +46256,6 @@
           ]
         },
         {
-          "id": "planung/flaechennutzungsplan",
-          "title": "Fl\u00e4chennutzungsplan Web Aktuell",
-          "bbox": [
-            6.7725,
-            50.8305,
-            7.1621,
-            51.0849
-          ]
-        },
-        {
           "id": "planung/soziale-erhaltungssatzungen",
           "title": "Soziale Erhaltungssatzungen K\u00f6ln",
           "bbox": [
@@ -46290,6 +46276,16 @@
           ]
         },
         {
+          "id": "planung/flaechennutzungsplan",
+          "title": "Fl\u00e4chennutzungsplan Web Aktuell",
+          "bbox": [
+            6.7725,
+            50.8305,
+            7.1621,
+            51.0849
+          ]
+        },
+        {
           "id": "verkehr/ampelanlagen-2024",
           "title": "Ampelanlagen K\u00f6ln 2024",
           "bbox": [
@@ -46297,6 +46293,26 @@
             50.8397,
             7.1194,
             51.0805
+          ]
+        },
+        {
+          "id": "verkehr/radverkehrsnetz-gelbes-netz",
+          "title": "Radverkehrsnetz \u2013 Gelbes Netz",
+          "bbox": [
+            6.8019,
+            50.8308,
+            7.1619,
+            51.0847
+          ]
+        },
+        {
+          "id": "verkehr/radverkehrsnetz-gruenes-netz",
+          "title": "Radverkehrsnetz \u2013 Gr\u00fcnes Netz",
+          "bbox": [
+            6.8137,
+            50.837,
+            7.1197,
+            51.0706
           ]
         },
         {
@@ -46330,26 +46346,6 @@
           ]
         },
         {
-          "id": "verkehr/radverkehrsnetz-gelbes-netz",
-          "title": "Radverkehrsnetz \u2013 Gelbes Netz",
-          "bbox": [
-            6.8019,
-            50.8308,
-            7.1619,
-            51.0847
-          ]
-        },
-        {
-          "id": "verkehr/radverkehrsnetz-gruenes-netz",
-          "title": "Radverkehrsnetz \u2013 Gr\u00fcnes Netz",
-          "bbox": [
-            6.8137,
-            50.837,
-            7.1197,
-            51.0706
-          ]
-        },
-        {
           "id": "verkehr/tempo-30-zonen",
           "title": "Tempo 30-Zonen",
           "bbox": [
@@ -46377,6 +46373,56 @@
             50.8304,
             7.162,
             51.085
+          ]
+        },
+        {
+          "id": "einrichtungen/bibliotheken",
+          "title": "Bibliotheken in K\u00f6ln",
+          "bbox": [
+            6.8299,
+            50.8573,
+            7.1004,
+            51.0652
+          ]
+        },
+        {
+          "id": "einrichtungen/friedhofseingaenge",
+          "title": "Friedh\u00f6fe in K\u00f6ln \u2013 Friedhofseing\u00e4nge",
+          "bbox": [
+            6.8183,
+            50.8362,
+            7.0916,
+            51.062
+          ]
+        },
+        {
+          "id": "einrichtungen/kindertagesstaetten",
+          "title": "Kindertagesstaetten in K\u00f6ln",
+          "bbox": [
+            6.8244,
+            50.8371,
+            7.1191,
+            51.0642
+          ]
+        },
+        {
+          "id": "einrichtungen/krankenhaeuser",
+          "title": "Krankenh\u00e4user in K\u00f6ln",
+          "bbox": [
+            6.8976,
+            50.8812,
+            7.0569,
+            50.9919
+          ]
+        },
+        {
+          "id": "einrichtungen/schulen",
+          "title": "Schulen in K\u00f6ln",
+          "bbox": [
+            6.8288,
+            50.8452,
+            7.1021,
+            51.0685
           ]
         }
       ]
@@ -48637,10 +48683,10 @@
           "id": "vivienda/viviendas-uso-turistico",
           "title": "Viviendas de uso tur\u00edstico con licencia",
           "bbox": [
-            -3.7825,
-            40.3325,
-            -3.576,
-            40.4952
+            -3.7814,
+            40.333,
+            -3.5772,
+            40.4946
           ]
         }
       ]
@@ -49715,9 +49761,9 @@
           "id": "verkehr/baustellen",
           "title": "Baustellen - Tempor\u00e4re Einschr\u00e4nkungen beim Gehen, Fahren und Parken (Opendata)",
           "bbox": [
-            11.3891,
+            11.3747,
             48.0425,
-            11.9859,
+            11.7447,
             48.2697
           ]
         },
@@ -53984,16 +54030,6 @@
           ]
         },
         {
-          "id": "podzial/granica-panstwa",
-          "title": "PRG \u2013 Granica pa\u0144stwa",
-          "bbox": [
-            14.0696,
-            49.002,
-            24.1458,
-            55.0361
-          ]
-        },
-        {
           "id": "podzial/powiaty",
           "title": "PRG \u2013 Granice powiat\u00f3w",
           "bbox": [
@@ -54011,6 +54047,16 @@
             49.002,
             24.1458,
             54.8364
+          ]
+        },
+        {
+          "id": "podzial/granica-panstwa",
+          "title": "PRG \u2013 Granica pa\u0144stwa",
+          "bbox": [
+            14.0696,
+            49.002,
+            24.1458,
+            55.0361
           ]
         },
         {
@@ -57033,7 +57079,7 @@
           "bbox": [
             10.9422,
             55.2694,
-            24.1445,
+            24.1774,
             68.3864
           ]
         },
@@ -59198,46 +59244,6 @@
           ]
         },
         {
-          "id": "nutzungsplanung/kernzonen",
-          "title": "Bau- und Zonenordnung (BZO) \u2013 Kernzonen (bzo_kernzone_v)",
-          "bbox": [
-            8.4807,
-            47.3234,
-            8.598,
-            47.4309
-          ]
-        },
-        {
-          "id": "nutzungsplanung/quartiererhaltungszonen",
-          "title": "Bau- und Zonenordnung (BZO) \u2013 Quartiererhaltungszonen (bzo_quez_v)",
-          "bbox": [
-            8.5055,
-            47.3518,
-            8.564,
-            47.4172
-          ]
-        },
-        {
-          "id": "nutzungsplanung/wohnanteil",
-          "title": "Bau- und Zonenordnung (BZO) \u2013 Wohnanteil (bzo_zone_wohnanteil_v)",
-          "bbox": [
-            8.4663,
-            47.3234,
-            8.6057,
-            47.4323
-          ]
-        },
-        {
-          "id": "nutzungsplanung/zonen",
-          "title": "Bau- und Zonenordnung (BZO) \u2013 Zonen (bzo_zone_v)",
-          "bbox": [
-            8.448,
-            47.3202,
-            8.6255,
-            47.4347
-          ]
-        },
-        {
           "id": "raumgliederung/stadtkreise",
           "title": "Stadtkreise (adm_stadtkreise_a)",
           "bbox": [
@@ -59345,6 +59351,46 @@
             47.3237,
             8.6246,
             47.4346
+          ]
+        },
+        {
+          "id": "nutzungsplanung/kernzonen",
+          "title": "Bau- und Zonenordnung (BZO) \u2013 Kernzonen (bzo_kernzone_v)",
+          "bbox": [
+            8.4807,
+            47.3234,
+            8.598,
+            47.4309
+          ]
+        },
+        {
+          "id": "nutzungsplanung/quartiererhaltungszonen",
+          "title": "Bau- und Zonenordnung (BZO) \u2013 Quartiererhaltungszonen (bzo_quez_v)",
+          "bbox": [
+            8.5055,
+            47.3518,
+            8.564,
+            47.4172
+          ]
+        },
+        {
+          "id": "nutzungsplanung/wohnanteil",
+          "title": "Bau- und Zonenordnung (BZO) \u2013 Wohnanteil (bzo_zone_wohnanteil_v)",
+          "bbox": [
+            8.4663,
+            47.3234,
+            8.6057,
+            47.4323
+          ]
+        },
+        {
+          "id": "nutzungsplanung/zonen",
+          "title": "Bau- und Zonenordnung (BZO) \u2013 Zonen (bzo_zone_v)",
+          "bbox": [
+            8.448,
+            47.3202,
+            8.6255,
+            47.4347
           ]
         }
       ]
