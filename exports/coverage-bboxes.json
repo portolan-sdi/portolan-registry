@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-01T12:43:06.790616+00:00",
+  "generated": "2026-11-02T14:50:46.029162+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-11-01T12:43:06.790616+00:00",
+  "registry_generated": "2026-11-02T14:50:46.029162+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -38649,7 +38649,7 @@
     },
     {
       "id": "epoch-forest-typology-2020",
-      "collection_count": 111,
+      "collection_count": 110,
       "collections": [
         {
           "id": "utm-01n",
@@ -39119,16 +39119,6 @@
             2.3489,
             96.8177,
             81.6371
-          ]
-        },
-        {
-          "id": "utm-47n",
-          "title": "ForTy 2020, UTM zone 47 north (EPSG:32647)",
-          "bbox": [
-            95.0744,
-            -0.0926,
-            102.6794,
-            81.6321
           ]
         },
         {
