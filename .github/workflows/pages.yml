@@ -34,6 +34,9 @@ jobs:
     name: Build Site
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    outputs:
+      generated: ${{ steps.published.outputs.generated }}
+      indexes: ${{ steps.published.outputs.indexes }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -53,6 +56,29 @@ jobs:
 
       - name: Build and check the site
         run: uv run --frozen --group site scripts/build_site.py --out _site
+
+      # The refresh job waits until the CDN serves these files. Each tree
+      # carries the same export, so all indexes must report one time.
+      - name: Record the published export
+        id: published
+        run: |
+          indexes=$(cd _site && find . -mindepth 3 -maxdepth 3 \
+            -path './*/coverage/index.json' | sed 's|^\./||' | sort | tr '\n' ' ')
+          generated=""
+          for path in $indexes; do
+            value=$(jq -r .generated "_site/$path")
+            if [ -n "$generated" ] && [ "$value" != "$generated" ]; then
+              echo "$path reports $value, not $generated" >&2
+              exit 1
+            fi
+            generated="$value"
+          done
+          if [ -z "$generated" ]; then
+            echo "The build wrote no coverage index" >&2
+            exit 1
+          fi
+          echo "generated=$generated" >> "$GITHUB_OUTPUT"
+          echo "indexes=$indexes" >> "$GITHUB_OUTPUT"
 
       - name: Configure Pages
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
@@ -78,19 +104,47 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
 
-  # Tell portolan-sdi.org about a new export after the deploy ends. A
-  # refresh before then would read the previous files. The refresh also runs
-  # when the build or the deploy fails, because the site reads the raw export
-  # on main until it moves to the release tree. It runs on every push: a
-  # newer push can cancel a queued run, and the newer run must still refresh
-  # for the export that the cancelled run carried.
+  # Tell portolan-sdi.org about a new export after the CDN serves it.
+  # portolan-sdi.org reads the release tree on this site, so a refresh after
+  # a failed deploy would read the previous files. The refresh runs on every
+  # successful deploy: a newer push can cancel a queued run, and the newer
+  # run must still refresh for the export that the cancelled run carried.
   refresh:
     name: Refresh Site Cache
-    needs: deploy
-    if: ${{ !cancelled() }}
+    needs: [build, deploy]
+    if: ${{ !cancelled() && needs.deploy.result == 'success' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
+      # The CDN keeps each file for up to 600 seconds, and a query string
+      # does not bypass it. Thirteen checks one minute apart outlast one
+      # cache period. When the time runs out, the refresh continues with a
+      # warning, because a late refresh is better than none.
+      - name: Wait for the CDN to serve the export
+        env:
+          GENERATED: ${{ needs.build.outputs.generated }}
+          INDEXES: ${{ needs.build.outputs.indexes }}
+        run: |
+          for attempt in $(seq 1 13); do
+            stale=""
+            for path in $INDEXES; do
+              served=$(curl -fsS "https://registry.portolan-sdi.org/$path" \
+                | jq -r .generated) || served=""
+              if [ "$served" != "$GENERATED" ]; then
+                stale="$stale $path"
+              fi
+            done
+            if [ -z "$stale" ]; then
+              echo "The CDN serves the export from $GENERATED"
+              exit 0
+            fi
+            echo "Attempt $attempt: old files at$stale"
+            if [ "$attempt" -lt 13 ]; then
+              sleep 60
+            fi
+          done
+          echo "::warning::The CDN still serves an older export at$stale"
+
       - name: Refresh portolan-sdi.org catalog cache
         continue-on-error: true
         run: |
@@ -110,12 +164,17 @@ jobs:
           repositories: portolan-sdi.org
           permission-contents: write
 
+      # The bake reads the release tree, which holds only the latest export.
+      # `generated` names the export that this run deployed. The bake waits
+      # until the CDN serves that export or a newer one.
       - name: Request site coverage bake
         env:
           GH_TOKEN: ${{ steps.site-token.outputs.token }}
+          GENERATED: ${{ needs.build.outputs.generated }}
         run: |
           gh api \
             --method POST \
             repos/portolan-sdi/portolan-sdi.org/dispatches \
             --field event_type=registry-export-updated \
-            --field "client_payload[registry_sha]=$GITHUB_SHA"
+            --field "client_payload[registry_sha]=$GITHUB_SHA" \
+            --field "client_payload[generated]=$GENERATED"
