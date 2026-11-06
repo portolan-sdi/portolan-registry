@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-05T14:01:35.720508+00:00",
+  "generated": "2026-11-06T13:46:39.346136+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-11-05T14:01:35.720508+00:00",
+  "registry_generated": "2026-11-06T13:46:39.346136+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -50,7 +50,7 @@
             -124.5085,
             -83.1643,
             120.6733,
-            90.0
+            84.0302
           ]
         },
         {
@@ -108,7 +108,7 @@
           "title": "RadNETZ Baden-W\u00fcrttemberg",
           "bbox": [
             7.5131,
-            47.4645,
+            47.5423,
             10.471,
             49.7884
           ]
@@ -52497,8 +52497,58 @@
     },
     {
       "id": "planet-disasterdata",
-      "collection_count": 41,
+      "collection_count": 46,
       "collections": [
+        {
+          "id": "post-event-planetscope-2026-11-03",
+          "title": "Mo Chhu valley, Laya to Punakha, 3 Nov (PlanetScope) \u2014 Post-event Imagery",
+          "bbox": [
+            89.4605,
+            27.4372,
+            89.9518,
+            28.1239
+          ]
+        },
+        {
+          "id": "post-event-skysat-2026-11-02",
+          "title": "Taktsemakhang and Laya, 2 Nov (SkySat) \u2014 Post-event Imagery",
+          "bbox": [
+            89.5956,
+            28.0198,
+            89.8128,
+            28.09
+          ]
+        },
+        {
+          "id": "post-event-skysat-2026-11-05",
+          "title": "Gasa Tshachu and the Punakha\u2013Gasa highway, 5 Nov (SkySat) \u2014 Post-event Imagery",
+          "bbox": [
+            89.6799,
+            27.7044,
+            89.7722,
+            27.9877
+          ]
+        },
+        {
+          "id": "pre-event-planetscope-2026-10-27",
+          "title": "Upper Mo Chhu valley, 27 Oct (PlanetScope) \u2014 Pre-event Imagery",
+          "bbox": [
+            89.4899,
+            28.0139,
+            89.7924,
+            28.1894
+          ]
+        },
+        {
+          "id": "pre-event-planetscope-2026-10-28",
+          "title": "Gasa and the Punakha\u2013Gasa highway, 28 Oct (PlanetScope) \u2014 Pre-event Imagery",
+          "bbox": [
+            89.657,
+            27.5919,
+            90.0548,
+            27.9604
+          ]
+        },
         {
           "id": "post-event-pelican-2026-10-11",
           "title": "Santiago de Veraguas and eastern Herrera, 11 Oct (Pelican) \u2014 Post-event Imagery",
@@ -55925,7 +55975,7 @@
           "bbox": [
             14.0808,
             58.0337,
-            18.0202,
+            17.8333,
             63.703
           ]
         },
