@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-06T13:46:39.346136+00:00",
+  "generated": "2026-11-07T12:30:42.305406+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-11-06T13:46:39.346136+00:00",
+  "registry_generated": "2026-11-07T12:30:42.305406+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -29828,16 +29828,6 @@
           ]
         },
         {
-          "id": "medio-ambiente/r/calidad_aire_datos_dia",
-          "title": "Red de Calidad del Aire. Datos del d\u00eda en curso",
-          "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
-          ]
-        },
-        {
           "id": "medio-ambiente/r/calidad_aire_datos_historico",
           "title": "Red de Calidad del Aire. Datos horarios desde 2005",
           "bbox": [
@@ -29990,6 +29980,16 @@
         {
           "id": "medio-ambiente/r/riecov",
           "title": "Registro de instalaciones emisoras de COV (RIECOV)",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "medio-ambiente/r/calidad_aire_datos_dia",
+          "title": "Red de Calidad del Aire. Datos del d\u00eda en curso",
           "bbox": [
             -180.0,
             -90.0,
@@ -40741,20 +40741,20 @@
           "id": "ftw-s2-2024",
           "title": "FTW Global \u2014 Field Boundaries 2024 (GeoParquet)",
           "bbox": [
-            -175.3497,
-            -46.8373,
-            179.793,
-            65.8206
+            -176.5671,
+            -55.1082,
+            179.6082,
+            81.0369
           ]
         },
         {
           "id": "ftw-s2-2025",
           "title": "FTW Global \u2014 Field Boundaries 2025 (GeoParquet)",
           "bbox": [
-            -175.3499,
-            -46.745,
-            179.7927,
-            65.8206
+            -176.6606,
+            -55.1634,
+            179.6368,
+            80.1467
           ]
         },
         {
@@ -40831,20 +40831,20 @@
           "id": "ftw-raster-2024",
           "title": "FTW Global \u2014 Field & Boundary Probabilities 2024 (COG)",
           "bbox": [
-            -176.0391,
-            -46.9542,
+            -179.9342,
+            -55.9457,
             179.8203,
-            65.8216
+            81.0609
           ]
         },
         {
           "id": "ftw-raster-2025",
           "title": "FTW Global \u2014 Field & Boundary Probabilities 2025 (COG)",
           "bbox": [
-            -176.0391,
-            -46.9542,
+            -179.9342,
+            -55.9457,
             179.8203,
-            65.8216
+            80.1653
           ]
         }
       ]
@@ -52976,6 +52976,16 @@
           ]
         },
         {
+          "id": "podzial/granica-panstwa",
+          "title": "PRG \u2013 Granica pa\u0144stwa",
+          "bbox": [
+            14.0696,
+            49.002,
+            24.1458,
+            55.0361
+          ]
+        },
+        {
           "id": "podzial/powiaty",
           "title": "PRG \u2013 Granice powiat\u00f3w",
           "bbox": [
@@ -52993,16 +53003,6 @@
             49.002,
             24.1458,
             54.8364
-          ]
-        },
-        {
-          "id": "podzial/granica-panstwa",
-          "title": "PRG \u2013 Granica pa\u0144stwa",
-          "bbox": [
-            14.0696,
-            49.002,
-            24.1458,
-            55.0361
           ]
         },
         {
@@ -56411,7 +56411,7 @@
     },
     {
       "id": "us-census-tiger",
-      "collection_count": 19,
+      "collection_count": 31,
       "collections": [
         {
           "id": "cd120",
@@ -56721,6 +56721,226 @@
             42.7269,
             -71.4649,
             45.0167
+          ]
+        },
+        {
+          "id": "acs2024-state",
+          "title": "States, ACS 2020-2024",
+          "bbox": [
+            172.3478,
+            17.8315,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "acs2024-state",
+          "title": "States, ACS 2020-2024",
+          "bbox": [
+            -180.0,
+            17.8315,
+            -65.1684,
+            71.4399
+          ]
+        },
+        {
+          "id": "acs2024-state-geo",
+          "title": "States, ACS 2020-2024, with outlines",
+          "bbox": [
+            172.3478,
+            17.8315,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "acs2024-state-geo",
+          "title": "States, ACS 2020-2024, with outlines",
+          "bbox": [
+            -180.0,
+            17.8315,
+            -65.1684,
+            71.4399
+          ]
+        },
+        {
+          "id": "acs2024-county",
+          "title": "Counties, ACS 2020-2024",
+          "bbox": [
+            172.3478,
+            17.8315,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "acs2024-county",
+          "title": "Counties, ACS 2020-2024",
+          "bbox": [
+            -180.0,
+            17.8315,
+            -65.1684,
+            71.4399
+          ]
+        },
+        {
+          "id": "acs2024-county-geo",
+          "title": "Counties, ACS 2020-2024, with outlines",
+          "bbox": [
+            172.3478,
+            17.8315,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "acs2024-county-geo",
+          "title": "Counties, ACS 2020-2024, with outlines",
+          "bbox": [
+            -180.0,
+            17.8315,
+            -65.1684,
+            71.4399
+          ]
+        },
+        {
+          "id": "acs2024-place",
+          "title": "Places, ACS 2020-2024",
+          "bbox": [
+            172.9386,
+            17.9451,
+            180.0,
+            71.3403
+          ]
+        },
+        {
+          "id": "acs2024-place",
+          "title": "Places, ACS 2020-2024",
+          "bbox": [
+            -180.0,
+            17.9451,
+            -65.2895,
+            71.3403
+          ]
+        },
+        {
+          "id": "acs2024-place-geo",
+          "title": "Places, ACS 2020-2024, with outlines",
+          "bbox": [
+            172.9386,
+            17.9451,
+            180.0,
+            71.3403
+          ]
+        },
+        {
+          "id": "acs2024-place-geo",
+          "title": "Places, ACS 2020-2024, with outlines",
+          "bbox": [
+            -180.0,
+            17.9451,
+            -65.2895,
+            71.3403
+          ]
+        },
+        {
+          "id": "acs2024-tract",
+          "title": "Census tracts, ACS 2020-2024",
+          "bbox": [
+            172.3478,
+            17.8315,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "acs2024-tract",
+          "title": "Census tracts, ACS 2020-2024",
+          "bbox": [
+            -180.0,
+            17.8315,
+            -65.1684,
+            71.4399
+          ]
+        },
+        {
+          "id": "acs2024-tract-geo",
+          "title": "Census tracts, ACS 2020-2024, with outlines",
+          "bbox": [
+            172.3478,
+            17.8315,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "acs2024-tract-geo",
+          "title": "Census tracts, ACS 2020-2024, with outlines",
+          "bbox": [
+            -180.0,
+            17.8315,
+            -65.1684,
+            71.4399
+          ]
+        },
+        {
+          "id": "acs2024-bg",
+          "title": "Block groups, ACS 2020-2024",
+          "bbox": [
+            172.3478,
+            17.8315,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "acs2024-bg",
+          "title": "Block groups, ACS 2020-2024",
+          "bbox": [
+            -180.0,
+            17.8315,
+            -65.1684,
+            71.4399
+          ]
+        },
+        {
+          "id": "acs2024-bg-geo",
+          "title": "Block groups, ACS 2020-2024, with outlines",
+          "bbox": [
+            172.3478,
+            17.8315,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "acs2024-bg-geo",
+          "title": "Block groups, ACS 2020-2024, with outlines",
+          "bbox": [
+            -180.0,
+            17.8315,
+            -65.1684,
+            71.4399
+          ]
+        },
+        {
+          "id": "acs2024-zcta520",
+          "title": "ZIP Code Tabulation Areas, ACS 2020-2024",
+          "bbox": [
+            -176.6969,
+            17.9108,
+            -65.2209,
+            71.3414
+          ]
+        },
+        {
+          "id": "acs2024-zcta520-geo",
+          "title": "ZIP Code Tabulation Areas, ACS 2020-2024, with outlines",
+          "bbox": [
+            -176.6969,
+            17.9108,
+            -65.2209,
+            71.3414
           ]
         }
       ]
@@ -58190,6 +58410,46 @@
           ]
         },
         {
+          "id": "nutzungsplanung/kernzonen",
+          "title": "Bau- und Zonenordnung (BZO) \u2013 Kernzonen (bzo_kernzone_v)",
+          "bbox": [
+            8.4807,
+            47.3234,
+            8.598,
+            47.4309
+          ]
+        },
+        {
+          "id": "nutzungsplanung/quartiererhaltungszonen",
+          "title": "Bau- und Zonenordnung (BZO) \u2013 Quartiererhaltungszonen (bzo_quez_v)",
+          "bbox": [
+            8.5055,
+            47.3518,
+            8.564,
+            47.4172
+          ]
+        },
+        {
+          "id": "nutzungsplanung/wohnanteil",
+          "title": "Bau- und Zonenordnung (BZO) \u2013 Wohnanteil (bzo_zone_wohnanteil_v)",
+          "bbox": [
+            8.4663,
+            47.3234,
+            8.6057,
+            47.4323
+          ]
+        },
+        {
+          "id": "nutzungsplanung/zonen",
+          "title": "Bau- und Zonenordnung (BZO) \u2013 Zonen (bzo_zone_v)",
+          "bbox": [
+            8.448,
+            47.3202,
+            8.6255,
+            47.4347
+          ]
+        },
+        {
           "id": "raumgliederung/stadtkreise",
           "title": "Stadtkreise (adm_stadtkreise_a)",
           "bbox": [
@@ -58297,46 +58557,6 @@
             47.3237,
             8.6246,
             47.4346
-          ]
-        },
-        {
-          "id": "nutzungsplanung/kernzonen",
-          "title": "Bau- und Zonenordnung (BZO) \u2013 Kernzonen (bzo_kernzone_v)",
-          "bbox": [
-            8.4807,
-            47.3234,
-            8.598,
-            47.4309
-          ]
-        },
-        {
-          "id": "nutzungsplanung/quartiererhaltungszonen",
-          "title": "Bau- und Zonenordnung (BZO) \u2013 Quartiererhaltungszonen (bzo_quez_v)",
-          "bbox": [
-            8.5055,
-            47.3518,
-            8.564,
-            47.4172
-          ]
-        },
-        {
-          "id": "nutzungsplanung/wohnanteil",
-          "title": "Bau- und Zonenordnung (BZO) \u2013 Wohnanteil (bzo_zone_wohnanteil_v)",
-          "bbox": [
-            8.4663,
-            47.3234,
-            8.6057,
-            47.4323
-          ]
-        },
-        {
-          "id": "nutzungsplanung/zonen",
-          "title": "Bau- und Zonenordnung (BZO) \u2013 Zonen (bzo_zone_v)",
-          "bbox": [
-            8.448,
-            47.3202,
-            8.6255,
-            47.4347
           ]
         }
       ]
