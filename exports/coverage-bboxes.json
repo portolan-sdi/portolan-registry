@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-07T12:30:42.305406+00:00",
+  "generated": "2026-11-08T12:48:32.808538+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-11-07T12:30:42.305406+00:00",
+  "registry_generated": "2026-11-08T12:48:32.808538+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -42669,8 +42669,18 @@
     },
     {
       "id": "harmonized-field-data",
-      "collection_count": 69,
+      "collection_count": 77,
       "collections": [
+        {
+          "id": "ai4sf_ml",
+          "title": "Field boundaries for Cambodia and Vietnam (AI4SmallFarms) with splits",
+          "bbox": [
+            102.9025,
+            9.6422,
+            109.0434,
+            21.3441
+          ]
+        },
         {
           "id": "at",
           "title": "Field boundaries for Austria",
@@ -42719,6 +42729,16 @@
             41.1891,
             28.6233,
             44.2802
+          ]
+        },
+        {
+          "id": "br_ba_lem",
+          "title": "Field boundaries for the west of Bahia state, Brazil",
+          "bbox": [
+            -46.398,
+            -14.0093,
+            -45.4941,
+            -11.7646
           ]
         },
         {
@@ -43162,6 +43182,16 @@
           ]
         },
         {
+          "id": "glocab",
+          "title": "GloCAB cropland field boundaries (Brazil, Canada, Russia, Ukraine, USA)",
+          "bbox": [
+            -102.3783,
+            -20.4705,
+            75.0888,
+            53.9398
+          ]
+        },
+        {
           "id": "hr",
           "title": "Croatian Field Boundaries",
           "bbox": [
@@ -43192,6 +43222,16 @@
           ]
         },
         {
+          "id": "in_10k_ml",
+          "title": "10,000 Crop Field Boundaries across India with splits",
+          "bbox": [
+            68.797,
+            9.2486,
+            96.2369,
+            34.5325
+          ]
+        },
+        {
           "id": "it_1",
           "title": "Italy Tuscany (ITI1) Crop Fields \u2014 EuroCropsV2",
           "bbox": [
@@ -43219,6 +43259,16 @@
             24.0468,
             145.8027,
             45.52
+          ]
+        },
+        {
+          "id": "ke_ecaas",
+          "title": "Crop-cut farm polygons with crop type and yield for Kenya (ECAAS Bird's-Eye)",
+          "bbox": [
+            34.1136,
+            -3.8724,
+            38.7211,
+            1.2194
           ]
         },
         {
@@ -43312,6 +43362,16 @@
           ]
         },
         {
+          "id": "rw_rwanda_ml",
+          "title": "Rwanda Crop Field Boundaries with splits",
+          "bbox": [
+            30.292,
+            -1.5901,
+            30.4234,
+            -1.3918
+          ]
+        },
+        {
           "id": "se",
           "title": "Swedish Crop Fields (Jordbruksskiften)",
           "bbox": [
@@ -43359,6 +43419,26 @@
             25.2107,
             -66.9677,
             49.3596
+          ]
+        },
+        {
+          "id": "za_fusion_ml",
+          "title": "South Africa Crop Field Boundaries (Fusion Competition) with splits",
+          "bbox": [
+            20.5215,
+            -34.3992,
+            21.0434,
+            -33.9805
+          ]
+        },
+        {
+          "id": "zm_ecaas",
+          "title": "Crop-cut farm polygons with crop type and yield for Zambia (ECAAS Bird's-Eye)",
+          "bbox": [
+            22.0989,
+            -17.8677,
+            33.5074,
+            -8.4049
           ]
         }
       ]
