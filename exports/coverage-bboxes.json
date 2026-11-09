@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-08T12:48:32.808538+00:00",
+  "generated": "2026-11-09T15:16:45.617769+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-11-08T12:48:32.808538+00:00",
+  "registry_generated": "2026-11-09T15:16:45.617769+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -40731,10 +40731,10 @@
           "id": "ftw-s2-2023",
           "title": "FTW Global \u2014 Field Boundaries 2023 (GeoParquet)",
           "bbox": [
-            -175.349,
-            -46.9056,
-            179.7856,
-            65.8206
+            -176.6246,
+            -55.1345,
+            179.6327,
+            81.0489
           ]
         },
         {
@@ -40821,10 +40821,10 @@
           "id": "ftw-raster-2023",
           "title": "FTW Global \u2014 Field & Boundary Probabilities 2023 (COG)",
           "bbox": [
-            -176.0391,
-            -46.9542,
+            -179.9342,
+            -55.9457,
             179.8203,
-            65.8216
+            81.0609
           ]
         },
         {
@@ -56491,7 +56491,7 @@
     },
     {
       "id": "us-census-tiger",
-      "collection_count": 31,
+      "collection_count": 38,
       "collections": [
         {
           "id": "cd120",
@@ -56804,6 +56804,66 @@
           ]
         },
         {
+          "id": "aiannh",
+          "title": "American Indian, Alaska Native and Native Hawaiian areas: reservations, off-reservation trust lands, statistical areas and Hawaiian home lands, 2026",
+          "bbox": [
+            -174.2362,
+            18.9107,
+            -67.0354,
+            71.3403
+          ]
+        },
+        {
+          "id": "anrc",
+          "title": "Alaska Native Regional Corporations, 2026",
+          "bbox": [
+            172.3478,
+            51.175,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "anrc",
+          "title": "Alaska Native Regional Corporations, 2026",
+          "bbox": [
+            -180.0,
+            51.175,
+            -129.974,
+            71.4399
+          ]
+        },
+        {
+          "id": "aitsn",
+          "title": "Tribal subdivisions, 2026",
+          "bbox": [
+            -124.0933,
+            31.5078,
+            -83.1579,
+            48.636
+          ]
+        },
+        {
+          "id": "ttract",
+          "title": "Tribal census tracts, 2026",
+          "bbox": [
+            -131.7135,
+            25.7574,
+            -67.0354,
+            55.294
+          ]
+        },
+        {
+          "id": "tbg",
+          "title": "Tribal block groups, 2026",
+          "bbox": [
+            -131.7135,
+            25.7574,
+            -67.0354,
+            55.294
+          ]
+        },
+        {
           "id": "acs2024-state",
           "title": "States, ACS 2020-2024",
           "bbox": [
@@ -57021,6 +57081,46 @@
             17.9108,
             -65.2209,
             71.3414
+          ]
+        },
+        {
+          "id": "tabblock20",
+          "title": "2020 Census tabulation blocks, with population and housing units",
+          "bbox": [
+            172.5794,
+            17.8842,
+            180.0,
+            71.4019
+          ]
+        },
+        {
+          "id": "tabblock20",
+          "title": "2020 Census tabulation blocks, with population and housing units",
+          "bbox": [
+            -180.0,
+            17.8842,
+            -65.2009,
+            71.4019
+          ]
+        },
+        {
+          "id": "tabblock20-h3",
+          "title": "2020 Census population and housing units on H3 cells",
+          "bbox": [
+            172.5794,
+            17.8842,
+            180.0,
+            71.4019
+          ]
+        },
+        {
+          "id": "tabblock20-h3",
+          "title": "2020 Census population and housing units on H3 cells",
+          "bbox": [
+            -180.0,
+            17.8842,
+            -65.2009,
+            71.4019
           ]
         }
       ]
