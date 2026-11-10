@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-09T15:16:45.617769+00:00",
+  "generated": "2026-11-10T07:48:11.977598+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-11-09T15:16:45.617769+00:00",
+  "registry_generated": "2026-11-10T07:48:11.977598+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -42669,7 +42669,7 @@
     },
     {
       "id": "harmonized-field-data",
-      "collection_count": 77,
+      "collection_count": 78,
       "collections": [
         {
           "id": "ai4sf_ml",
@@ -43269,6 +43269,16 @@
             -3.8724,
             38.7211,
             1.2194
+          ]
+        },
+        {
+          "id": "lacuna",
+          "title": "Mapping Africa: crop field boundary labels for Africa, 2017-2023",
+          "bbox": [
+            -17.1413,
+            -29.9804,
+            47.2492,
+            18.2707
           ]
         },
         {
@@ -44394,6 +44404,32 @@
       ]
     },
     {
+      "id": "italian-cadastre",
+      "collection_count": 2,
+      "collections": [
+        {
+          "id": "particelle",
+          "title": "Italian cadastral parcels",
+          "bbox": [
+            6.6144,
+            35.4929,
+            18.5171,
+            46.6806
+          ]
+        },
+        {
+          "id": "fogli",
+          "title": "Italian cadastral map sheets",
+          "bbox": [
+            6.6144,
+            35.4929,
+            18.5171,
+            46.6806
+          ]
+        }
+      ]
+    },
+    {
       "id": "jrc-glofas",
       "collection_count": 16,
       "collections": [
@@ -45066,6 +45102,56 @@
           ]
         },
         {
+          "id": "einrichtungen/bibliotheken",
+          "title": "Bibliotheken in K\u00f6ln",
+          "bbox": [
+            6.8299,
+            50.8573,
+            7.1004,
+            51.0652
+          ]
+        },
+        {
+          "id": "einrichtungen/friedhofseingaenge",
+          "title": "Friedh\u00f6fe in K\u00f6ln \u2013 Friedhofseing\u00e4nge",
+          "bbox": [
+            6.8183,
+            50.8362,
+            7.0916,
+            51.062
+          ]
+        },
+        {
+          "id": "einrichtungen/kindertagesstaetten",
+          "title": "Kindertagesstaetten in K\u00f6ln",
+          "bbox": [
+            6.8244,
+            50.8371,
+            7.1191,
+            51.0642
+          ]
+        },
+        {
+          "id": "einrichtungen/krankenhaeuser",
+          "title": "Krankenh\u00e4user in K\u00f6ln",
+          "bbox": [
+            6.8976,
+            50.8812,
+            7.0569,
+            50.9919
+          ]
+        },
+        {
+          "id": "einrichtungen/schulen",
+          "title": "Schulen in K\u00f6ln",
+          "bbox": [
+            6.8288,
+            50.8452,
+            7.1021,
+            51.0685
+          ]
+        },
+        {
           "id": "gebietsgliederung/blockseiten",
           "title": "Blockseiten K\u00f6ln",
           "bbox": [
@@ -45216,6 +45302,16 @@
           ]
         },
         {
+          "id": "planung/flaechennutzungsplan",
+          "title": "Fl\u00e4chennutzungsplan Web Aktuell",
+          "bbox": [
+            6.7725,
+            50.8305,
+            7.1621,
+            51.0849
+          ]
+        },
+        {
           "id": "planung/soziale-erhaltungssatzungen",
           "title": "Soziale Erhaltungssatzungen K\u00f6ln",
           "bbox": [
@@ -45236,16 +45332,6 @@
           ]
         },
         {
-          "id": "planung/flaechennutzungsplan",
-          "title": "Fl\u00e4chennutzungsplan Web Aktuell",
-          "bbox": [
-            6.7725,
-            50.8305,
-            7.1621,
-            51.0849
-          ]
-        },
-        {
           "id": "verkehr/ampelanlagen-2024",
           "title": "Ampelanlagen K\u00f6ln 2024",
           "bbox": [
@@ -45253,26 +45339,6 @@
             50.8397,
             7.1194,
             51.0805
-          ]
-        },
-        {
-          "id": "verkehr/radverkehrsnetz-gelbes-netz",
-          "title": "Radverkehrsnetz \u2013 Gelbes Netz",
-          "bbox": [
-            6.8019,
-            50.8308,
-            7.1619,
-            51.0847
-          ]
-        },
-        {
-          "id": "verkehr/radverkehrsnetz-gruenes-netz",
-          "title": "Radverkehrsnetz \u2013 Gr\u00fcnes Netz",
-          "bbox": [
-            6.8137,
-            50.837,
-            7.1197,
-            51.0706
           ]
         },
         {
@@ -45306,6 +45372,26 @@
           ]
         },
         {
+          "id": "verkehr/radverkehrsnetz-gelbes-netz",
+          "title": "Radverkehrsnetz \u2013 Gelbes Netz",
+          "bbox": [
+            6.8019,
+            50.8308,
+            7.1619,
+            51.0847
+          ]
+        },
+        {
+          "id": "verkehr/radverkehrsnetz-gruenes-netz",
+          "title": "Radverkehrsnetz \u2013 Gr\u00fcnes Netz",
+          "bbox": [
+            6.8137,
+            50.837,
+            7.1197,
+            51.0706
+          ]
+        },
+        {
           "id": "verkehr/tempo-30-zonen",
           "title": "Tempo 30-Zonen",
           "bbox": [
@@ -45333,56 +45419,6 @@
             50.8304,
             7.162,
             51.085
-          ]
-        },
-        {
-          "id": "einrichtungen/bibliotheken",
-          "title": "Bibliotheken in K\u00f6ln",
-          "bbox": [
-            6.8299,
-            50.8573,
-            7.1004,
-            51.0652
-          ]
-        },
-        {
-          "id": "einrichtungen/friedhofseingaenge",
-          "title": "Friedh\u00f6fe in K\u00f6ln \u2013 Friedhofseing\u00e4nge",
-          "bbox": [
-            6.8183,
-            50.8362,
-            7.0916,
-            51.062
-          ]
-        },
-        {
-          "id": "einrichtungen/kindertagesstaetten",
-          "title": "Kindertagesstaetten in K\u00f6ln",
-          "bbox": [
-            6.8244,
-            50.8371,
-            7.1191,
-            51.0642
-          ]
-        },
-        {
-          "id": "einrichtungen/krankenhaeuser",
-          "title": "Krankenh\u00e4user in K\u00f6ln",
-          "bbox": [
-            6.8976,
-            50.8812,
-            7.0569,
-            50.9919
-          ]
-        },
-        {
-          "id": "einrichtungen/schulen",
-          "title": "Schulen in K\u00f6ln",
-          "bbox": [
-            6.8288,
-            50.8452,
-            7.1021,
-            51.0685
           ]
         }
       ]
@@ -52577,8 +52613,48 @@
     },
     {
       "id": "planet-disasterdata",
-      "collection_count": 46,
+      "collection_count": 50,
       "collections": [
+        {
+          "id": "post-event-planetscope-2026-11-05",
+          "title": "Southern Santa Cruz, 5 Nov (PlanetScope) \u2014 Post-event Imagery",
+          "bbox": [
+            -90.4823,
+            -0.8471,
+            -90.1452,
+            -0.6057
+          ]
+        },
+        {
+          "id": "post-event-skysat-2026-11-07",
+          "title": "Puerto Ayora and Bellavista, 7 Nov (SkySat) \u2014 Post-event Imagery",
+          "bbox": [
+            -90.3481,
+            -0.8315,
+            -90.2836,
+            -0.6415
+          ]
+        },
+        {
+          "id": "post-event-skysat-2026-11-08",
+          "title": "Puerto Ayora and Bellavista, 8 Nov (SkySat) \u2014 Post-event Imagery",
+          "bbox": [
+            -90.3458,
+            -0.8276,
+            -90.2893,
+            -0.6448
+          ]
+        },
+        {
+          "id": "pre-event-planetscope-2026-10-14",
+          "title": "Southern Santa Cruz, 14 Oct (PlanetScope) \u2014 Pre-event Imagery",
+          "bbox": [
+            -90.4508,
+            -0.843,
+            -90.1647,
+            -0.6408
+          ]
+        },
         {
           "id": "post-event-planetscope-2026-11-03",
           "title": "Mo Chhu valley, Laya to Punakha, 3 Nov (PlanetScope) \u2014 Post-event Imagery",
@@ -56491,7 +56567,7 @@
     },
     {
       "id": "us-census-tiger",
-      "collection_count": 38,
+      "collection_count": 45,
       "collections": [
         {
           "id": "cd120",
@@ -57121,6 +57197,146 @@
             17.8842,
             -65.2009,
             71.4019
+          ]
+        },
+        {
+          "id": "lodes2024-wac",
+          "title": "Jobs by workplace block (WAC), LODES 2024",
+          "bbox": [
+            172.3478,
+            18.9055,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "lodes2024-wac",
+          "title": "Jobs by workplace block (WAC), LODES 2024",
+          "bbox": [
+            -180.0,
+            18.9055,
+            -66.9259,
+            71.4399
+          ]
+        },
+        {
+          "id": "lodes2024-rac",
+          "title": "Jobs by residence block (RAC), LODES 2024",
+          "bbox": [
+            172.3478,
+            18.9055,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "lodes2024-rac",
+          "title": "Jobs by residence block (RAC), LODES 2024",
+          "bbox": [
+            -180.0,
+            18.9055,
+            -66.9259,
+            71.4399
+          ]
+        },
+        {
+          "id": "lodes2024-od",
+          "title": "Jobs from home block to work block (OD), LODES 2024",
+          "bbox": [
+            172.3478,
+            18.9055,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "lodes2024-od",
+          "title": "Jobs from home block to work block (OD), LODES 2024",
+          "bbox": [
+            -180.0,
+            18.9055,
+            -66.9259,
+            71.4399
+          ]
+        },
+        {
+          "id": "lodes2024-wac-tract",
+          "title": "Jobs by workplace tract, LODES 2024",
+          "bbox": [
+            172.3478,
+            18.9055,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "lodes2024-wac-tract",
+          "title": "Jobs by workplace tract, LODES 2024",
+          "bbox": [
+            -180.0,
+            18.9055,
+            -66.9259,
+            71.4399
+          ]
+        },
+        {
+          "id": "lodes2024-rac-tract",
+          "title": "Jobs by residence tract, LODES 2024",
+          "bbox": [
+            172.3478,
+            18.9055,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "lodes2024-rac-tract",
+          "title": "Jobs by residence tract, LODES 2024",
+          "bbox": [
+            -180.0,
+            18.9055,
+            -66.9259,
+            71.4399
+          ]
+        },
+        {
+          "id": "lodes2024-wac-county",
+          "title": "Jobs by workplace county, LODES 2024",
+          "bbox": [
+            172.3478,
+            18.9055,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "lodes2024-wac-county",
+          "title": "Jobs by workplace county, LODES 2024",
+          "bbox": [
+            -180.0,
+            18.9055,
+            -66.9259,
+            71.4399
+          ]
+        },
+        {
+          "id": "lodes2024-rac-county",
+          "title": "Jobs by residence county, LODES 2024",
+          "bbox": [
+            172.3478,
+            18.9055,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "lodes2024-rac-county",
+          "title": "Jobs by residence county, LODES 2024",
+          "bbox": [
+            -180.0,
+            18.9055,
+            -66.9259,
+            71.4399
           ]
         }
       ]
