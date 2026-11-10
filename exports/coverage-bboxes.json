@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-10T07:48:11.977598+00:00",
+  "generated": "2026-11-10T14:23:39.801020+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-11-10T07:48:11.977598+00:00",
+  "registry_generated": "2026-11-10T14:23:39.801020+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -48813,7 +48813,7 @@
           "id": "detections",
           "title": "Active Fire Detections (MODIS and VIIRS)",
           "bbox": [
-            -179.995,
+            -179.9999,
             -89.6907,
             179.9988,
             87.4687
@@ -52613,7 +52613,7 @@
     },
     {
       "id": "planet-disasterdata",
-      "collection_count": 50,
+      "collection_count": 51,
       "collections": [
         {
           "id": "post-event-planetscope-2026-11-05",
@@ -52653,6 +52653,16 @@
             -0.843,
             -90.1647,
             -0.6408
+          ]
+        },
+        {
+          "id": "post-event-skysat-2026-11-09",
+          "title": "Taktsemakhang and Laya, 9 Nov (SkySat) \u2014 Post-event Imagery",
+          "bbox": [
+            89.6763,
+            27.9805,
+            89.7505,
+            28.1383
           ]
         },
         {
