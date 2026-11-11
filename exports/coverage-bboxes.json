@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-10T14:23:39.801020+00:00",
+  "generated": "2026-11-11T13:37:26.246475+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-11-10T14:23:39.801020+00:00",
+  "registry_generated": "2026-11-11T13:37:26.246475+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -52613,7 +52613,7 @@
     },
     {
       "id": "planet-disasterdata",
-      "collection_count": 51,
+      "collection_count": 52,
       "collections": [
         {
           "id": "post-event-planetscope-2026-11-05",
@@ -52656,13 +52656,13 @@
           ]
         },
         {
-          "id": "post-event-skysat-2026-11-09",
-          "title": "Taktsemakhang and Laya, 9 Nov (SkySat) \u2014 Post-event Imagery",
+          "id": "post-event-skysat-2026-11-10",
+          "title": "Punakha and the lower Mo Chhu, 10 Nov (SkySat) \u2014 Post-event Imagery",
           "bbox": [
-            89.6763,
-            27.9805,
-            89.7505,
-            28.1383
+            89.8078,
+            27.503,
+            89.8793,
+            27.676
           ]
         },
         {
@@ -52693,6 +52693,16 @@
             27.7044,
             89.7722,
             27.9877
+          ]
+        },
+        {
+          "id": "post-event-skysat-2026-11-09",
+          "title": "Taktsemakhang and Laya, 9 Nov (SkySat) \u2014 Post-event Imagery",
+          "bbox": [
+            89.6763,
+            27.9805,
+            89.7505,
+            28.1383
           ]
         },
         {
