@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-30T12:11:27.278786+00:00",
+  "generated": "2026-11-12T14:40:54.431688+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-10-30T12:11:27.278786+00:00",
+  "registry_generated": "2026-11-12T14:40:54.431688+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -50,7 +50,7 @@
             -124.5085,
             -83.1643,
             120.6733,
-            90.0
+            84.0302
           ]
         },
         {
@@ -108,7 +108,7 @@
           "title": "RadNETZ Baden-W\u00fcrttemberg",
           "bbox": [
             7.5131,
-            47.4645,
+            47.5423,
             10.471,
             49.7884
           ]
@@ -29828,16 +29828,6 @@
           ]
         },
         {
-          "id": "medio-ambiente/r/calidad_aire_datos_dia",
-          "title": "Red de Calidad del Aire. Datos del d\u00eda en curso",
-          "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
-          ]
-        },
-        {
           "id": "medio-ambiente/r/calidad_aire_datos_historico",
           "title": "Red de Calidad del Aire. Datos horarios desde 2005",
           "bbox": [
@@ -29990,6 +29980,16 @@
         {
           "id": "medio-ambiente/r/riecov",
           "title": "Registro de instalaciones emisoras de COV (RIECOV)",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "medio-ambiente/r/calidad_aire_datos_dia",
+          "title": "Red de Calidad del Aire. Datos del d\u00eda en curso",
           "bbox": [
             -180.0,
             -90.0,
@@ -38649,1156 +38649,26 @@
     },
     {
       "id": "epoch-forest-typology-2020",
-      "collection_count": 111,
+      "collection_count": 2,
       "collections": [
         {
-          "id": "utm-01n",
-          "title": "ForTy 2020, UTM zone 1 north (EPSG:32601)",
-          "bbox": [
-            179.6135,
-            51.158,
-            180.0,
-            72.0287
-          ]
-        },
-        {
-          "id": "utm-01n",
-          "title": "ForTy 2020, UTM zone 1 north (EPSG:32601)",
+          "id": "v1",
+          "title": "ForTy v1 \u2014 2020 baseline",
           "bbox": [
             -180.0,
-            51.158,
-            -173.6356,
-            72.0287
-          ]
-        },
-        {
-          "id": "utm-02n",
-          "title": "ForTy 2020, UTM zone 2 north (EPSG:32602)",
-          "bbox": [
-            -174.3865,
-            51.9457,
-            -167.6971,
-            67.1804
-          ]
-        },
-        {
-          "id": "utm-03n",
-          "title": "ForTy 2020, UTM zone 3 north (EPSG:32603)",
-          "bbox": [
-            -168.2257,
-            53.1667,
-            -161.5779,
-            70.4022
-          ]
-        },
-        {
-          "id": "utm-04n",
-          "title": "ForTy 2020, UTM zone 4 north (EPSG:32604)",
-          "bbox": [
-            -162.4559,
-            1.5362,
-            -155.5779,
-            71.618
-          ]
-        },
-        {
-          "id": "utm-05n",
-          "title": "ForTy 2020, UTM zone 5 north (EPSG:32605)",
-          "bbox": [
-            -156.4559,
-            18.7558,
-            -149.5779,
-            71.6148
-          ]
-        },
-        {
-          "id": "utm-06n",
-          "title": "ForTy 2020, UTM zone 6 north (EPSG:32606)",
-          "bbox": [
-            -150.4559,
-            59.1514,
-            -143.5779,
-            70.8178
-          ]
-        },
-        {
-          "id": "utm-07n",
-          "title": "ForTy 2020, UTM zone 7 north (EPSG:32607)",
-          "bbox": [
-            -144.4559,
-            58.7388,
-            -137.5779,
-            70.41
-          ]
-        },
-        {
-          "id": "utm-08n",
-          "title": "ForTy 2020, UTM zone 8 north (EPSG:32608)",
-          "bbox": [
-            -138.4031,
-            52.3567,
-            -131.5779,
-            70.0105
-          ]
-        },
-        {
-          "id": "utm-09n",
-          "title": "ForTy 2020, UTM zone 9 north (EPSG:32609)",
-          "bbox": [
-            -132.4559,
-            49.1112,
-            -125.5779,
-            72.5673
-          ]
-        },
-        {
-          "id": "utm-10n",
-          "title": "ForTy 2020, UTM zone 10 north (EPSG:32610)",
-          "bbox": [
-            -126.4031,
-            33.5173,
-            -119.487,
-            77.41
-          ]
-        },
-        {
-          "id": "utm-11n",
-          "title": "ForTy 2020, UTM zone 11 north (EPSG:32611)",
-          "bbox": [
-            -120.5187,
-            26.7489,
-            -113.4212,
-            78.6152
-          ]
-        },
-        {
-          "id": "utm-12n",
-          "title": "ForTy 2020, UTM zone 12 north (EPSG:32612)",
-          "bbox": [
-            -114.5788,
-            9.9514,
-            -107.487,
-            79.2246
-          ]
-        },
-        {
-          "id": "utm-13n",
-          "title": "ForTy 2020, UTM zone 13 north (EPSG:32613)",
-          "bbox": [
-            -108.5788,
-            17.5358,
-            -101.4212,
-            79.8281
-          ]
-        },
-        {
-          "id": "utm-14n",
-          "title": "ForTy 2020, UTM zone 14 north (EPSG:32614)",
-          "bbox": [
-            -102.5788,
-            15.2363,
-            -95.4212,
-            81.0276
-          ]
-        },
-        {
-          "id": "utm-15n",
-          "title": "ForTy 2020, UTM zone 15 north (EPSG:32615)",
-          "bbox": [
-            -96.6647,
-            -0.0926,
-            -89.1823,
-            82.2401
-          ]
-        },
-        {
-          "id": "utm-16n",
-          "title": "ForTy 2020, UTM zone 16 north (EPSG:32616)",
-          "bbox": [
-            -90.9256,
-            -0.0925,
-            -83.1823,
-            82.844
-          ]
-        },
-        {
-          "id": "utm-17n",
-          "title": "ForTy 2020, UTM zone 17 north (EPSG:32617)",
-          "bbox": [
-            -84.9256,
-            -0.0926,
-            -77.1823,
-            82.844
-          ]
-        },
-        {
-          "id": "utm-18n",
-          "title": "ForTy 2020, UTM zone 18 north (EPSG:32618)",
-          "bbox": [
-            -78.9256,
-            -0.0926,
-            -71.1823,
-            82.844
-          ]
-        },
-        {
-          "id": "utm-19n",
-          "title": "ForTy 2020, UTM zone 19 north (EPSG:32619)",
-          "bbox": [
-            -72.9256,
-            -0.0926,
-            -65.1823,
-            82.844
-          ]
-        },
-        {
-          "id": "utm-20n",
-          "title": "ForTy 2020, UTM zone 20 north (EPSG:32620)",
-          "bbox": [
-            -66.8253,
-            -0.0926,
-            -59.1823,
-            82.844
-          ]
-        },
-        {
-          "id": "utm-21n",
-          "title": "ForTy 2020, UTM zone 21 north (EPSG:32621)",
-          "bbox": [
-            -60.9256,
-            -0.0926,
-            -53.1823,
-            82.844
-          ]
-        },
-        {
-          "id": "utm-22n",
-          "title": "ForTy 2020, UTM zone 22 north (EPSG:32622)",
-          "bbox": [
-            -54.9256,
-            -0.0926,
-            -47.1823,
-            82.844
-          ]
-        },
-        {
-          "id": "utm-23n",
-          "title": "ForTy 2020, UTM zone 23 north (EPSG:32623)",
-          "bbox": [
-            -48.9256,
-            59.5742,
-            -41.1823,
-            82.844
-          ]
-        },
-        {
-          "id": "utm-24n",
-          "title": "ForTy 2020, UTM zone 24 north (EPSG:32624)",
-          "bbox": [
-            -42.9256,
-            61.1713,
-            -35.1823,
-            82.844
-          ]
-        },
-        {
-          "id": "utm-25n",
-          "title": "ForTy 2020, UTM zone 25 north (EPSG:32625)",
-          "bbox": [
-            -36.9256,
-            39.2188,
-            -29.1823,
-            82.844
-          ]
-        },
-        {
-          "id": "utm-26n",
-          "title": "ForTy 2020, UTM zone 26 north (EPSG:32626)",
-          "bbox": [
-            -30.9256,
-            14.4228,
-            -23.1823,
-            82.844
-          ]
-        },
-        {
-          "id": "utm-27n",
-          "title": "ForTy 2020, UTM zone 27 north (EPSG:32627)",
-          "bbox": [
-            -24.9256,
-            14.8268,
-            -17.1823,
-            82.844
-          ]
-        },
-        {
-          "id": "utm-28n",
-          "title": "ForTy 2020, UTM zone 28 north (EPSG:32628)",
-          "bbox": [
-            -18.9256,
-            6.8267,
-            -11.1823,
-            82.2405
-          ]
-        },
-        {
-          "id": "utm-29n",
-          "title": "ForTy 2020, UTM zone 29 north (EPSG:32629)",
-          "bbox": [
-            -12.2778,
-            3.9816,
-            -5.6403,
-            81.6321
-          ]
-        },
-        {
-          "id": "utm-30n",
-          "title": "ForTy 2020, UTM zone 30 north (EPSG:32630)",
-          "bbox": [
-            -6.3434,
-            4.3894,
-            0.3786,
-            61.1958
-          ]
-        },
-        {
-          "id": "utm-31n",
-          "title": "ForTy 2020, UTM zone 31 north (EPSG:32631)",
-          "bbox": [
-            -0.3752,
-            3.978,
-            6.3786,
-            53.9849
-          ]
-        },
-        {
-          "id": "utm-32n",
-          "title": "ForTy 2020, UTM zone 32 north (EPSG:32632)",
-          "bbox": [
-            4.1717,
-            -0.0926,
-            12.5634,
-            67.5664
-          ]
-        },
-        {
-          "id": "utm-33n",
-          "title": "ForTy 2020, UTM zone 33 north (EPSG:32633)",
-          "bbox": [
-            9.4559,
-            -0.0926,
-            22.3,
-            81.0166
-          ]
-        },
-        {
-          "id": "utm-34n",
-          "title": "ForTy 2020, UTM zone 34 north (EPSG:32634)",
-          "bbox": [
-            17.5441,
-            -0.0926,
-            24.4221,
-            71.2136
-          ]
-        },
-        {
-          "id": "utm-35n",
-          "title": "ForTy 2020, UTM zone 35 north (EPSG:32635)",
-          "bbox": [
-            10.0458,
-            -0.0926,
-            34.959,
-            81.0351
-          ]
-        },
-        {
-          "id": "utm-36n",
-          "title": "ForTy 2020, UTM zone 36 north (EPSG:32636)",
-          "bbox": [
-            29.5441,
-            -0.0926,
-            36.4221,
-            70.8115
-          ]
-        },
-        {
-          "id": "utm-37n",
-          "title": "ForTy 2020, UTM zone 37 north (EPSG:32637)",
-          "bbox": [
-            32.0075,
-            -0.0926,
-            42.4221,
-            80.9915
-          ]
-        },
-        {
-          "id": "utm-38n",
-          "title": "ForTy 2020, UTM zone 38 north (EPSG:32638)",
-          "bbox": [
-            41.5969,
-            -0.0926,
-            48.5639,
-            81.0351
-          ]
-        },
-        {
-          "id": "utm-39n",
-          "title": "ForTy 2020, UTM zone 39 north (EPSG:32639)",
-          "bbox": [
-            47.3353,
-            4.3842,
-            54.5639,
-            81.6371
-          ]
-        },
-        {
-          "id": "utm-40n",
-          "title": "ForTy 2020, UTM zone 40 north (EPSG:32640)",
-          "bbox": [
-            53.3353,
-            11.9792,
-            60.8177,
-            82.2405
-          ]
-        },
-        {
-          "id": "utm-41n",
-          "title": "ForTy 2020, UTM zone 41 north (EPSG:32641)",
-          "bbox": [
-            59.3353,
-            24.7338,
-            66.513,
-            82.2405
-          ]
-        },
-        {
-          "id": "utm-42n",
-          "title": "ForTy 2020, UTM zone 42 north (EPSG:32642)",
-          "bbox": [
-            65.5969,
-            20.3918,
-            72.4947,
-            77.4153
-          ]
-        },
-        {
-          "id": "utm-43n",
-          "title": "ForTy 2020, UTM zone 43 north (EPSG:32643)",
-          "bbox": [
-            71.5441,
-            -0.0926,
-            78.6794,
-            79.8277
-          ]
-        },
-        {
-          "id": "utm-44n",
-          "title": "ForTy 2020, UTM zone 44 north (EPSG:32644)",
-          "bbox": [
-            77.5441,
-            5.6128,
-            84.4947,
-            81.6365
-          ]
-        },
-        {
-          "id": "utm-45n",
-          "title": "ForTy 2020, UTM zone 45 north (EPSG:32645)",
-          "bbox": [
-            83.5441,
-            17.9428,
-            90.8177,
-            81.6291
-          ]
-        },
-        {
-          "id": "utm-46n",
-          "title": "ForTy 2020, UTM zone 46 north (EPSG:32646)",
-          "bbox": [
-            89.0744,
-            2.3489,
-            96.8177,
-            81.6371
-          ]
-        },
-        {
-          "id": "utm-47n",
-          "title": "ForTy 2020, UTM zone 47 north (EPSG:32647)",
-          "bbox": [
-            95.0744,
-            -0.0926,
-            102.6794,
-            81.6321
-          ]
-        },
-        {
-          "id": "utm-48n",
-          "title": "ForTy 2020, UTM zone 48 north (EPSG:32648)",
-          "bbox": [
-            101.2317,
-            -0.0926,
-            108.513,
-            79.8262
-          ]
-        },
-        {
-          "id": "utm-49n",
-          "title": "ForTy 2020, UTM zone 49 north (EPSG:32649)",
-          "bbox": [
-            107.4212,
-            -0.0926,
-            114.513,
-            78.6069
-          ]
-        },
-        {
-          "id": "utm-50n",
-          "title": "ForTy 2020, UTM zone 50 north (EPSG:32650)",
-          "bbox": [
-            113.4212,
-            -0.0926,
-            120.4947,
-            76.1923
-          ]
-        },
-        {
-          "id": "utm-51n",
-          "title": "ForTy 2020, UTM zone 51 north (EPSG:32651)",
-          "bbox": [
-            119.5441,
-            -0.0926,
-            126.4947,
-            74.3983
-          ]
-        },
-        {
-          "id": "utm-52n",
-          "title": "ForTy 2020, UTM zone 52 north (EPSG:32652)",
-          "bbox": [
-            125.5441,
-            -0.0926,
-            132.4221,
-            73.7946
-          ]
-        },
-        {
-          "id": "utm-53n",
-          "title": "ForTy 2020, UTM zone 53 north (EPSG:32653)",
-          "bbox": [
-            131.5441,
-            6.835,
-            138.513,
-            76.2078
-          ]
-        },
-        {
-          "id": "utm-54n",
-          "title": "ForTy 2020, UTM zone 54 north (EPSG:32654)",
-          "bbox": [
-            137.4212,
-            9.1296,
-            144.513,
-            76.8117
-          ]
-        },
-        {
-          "id": "utm-55n",
-          "title": "ForTy 2020, UTM zone 55 north (EPSG:32655)",
-          "bbox": [
-            143.4212,
-            12.7991,
-            150.4947,
-            76.8089
-          ]
-        },
-        {
-          "id": "utm-56n",
-          "title": "ForTy 2020, UTM zone 56 north (EPSG:32656)",
-          "bbox": [
-            149.5441,
-            45.5947,
-            156.4221,
-            76.8117
-          ]
-        },
-        {
-          "id": "utm-57n",
-          "title": "ForTy 2020, UTM zone 57 north (EPSG:32657)",
-          "bbox": [
-            155.5441,
-            5.6107,
-            162.4221,
-            71.2213
-          ]
-        },
-        {
-          "id": "utm-58n",
-          "title": "ForTy 2020, UTM zone 58 north (EPSG:32658)",
-          "bbox": [
-            161.5441,
-            5.2018,
-            168.4221,
-            70.8028
-          ]
-        },
-        {
-          "id": "utm-59n",
-          "title": "ForTy 2020, UTM zone 59 north (EPSG:32659)",
-          "bbox": [
-            167.5441,
-            -0.0926,
-            174.4221,
-            70.4136
-          ]
-        },
-        {
-          "id": "utm-60n",
-          "title": "ForTy 2020, UTM zone 60 north (EPSG:32660)",
-          "bbox": [
-            173.5441,
-            51.1503,
-            180.0,
-            72.0126
-          ]
-        },
-        {
-          "id": "utm-60n",
-          "title": "ForTy 2020, UTM zone 60 north (EPSG:32660)",
-          "bbox": [
-            -180.0,
-            51.1503,
-            -179.5053,
-            72.0126
-          ]
-        },
-        {
-          "id": "utm-01s",
-          "title": "ForTy 2020, UTM zone 1 south (EPSG:32701)",
-          "bbox": [
-            179.9014,
-            -44.7916,
-            180.0,
-            -12.8159
-          ]
-        },
-        {
-          "id": "utm-01s",
-          "title": "ForTy 2020, UTM zone 1 south (EPSG:32701)",
-          "bbox": [
-            -180.0,
-            -44.7916,
-            -173.9166,
-            -12.8159
-          ]
-        },
-        {
-          "id": "utm-02s",
-          "title": "ForTy 2020, UTM zone 2 south (EPSG:32702)",
-          "bbox": [
-            -174.0986,
-            -19.1927,
-            -169.1313,
-            -13.2152
-          ]
-        },
-        {
-          "id": "utm-04s",
-          "title": "ForTy 2020, UTM zone 4 south (EPSG:32704)",
-          "bbox": [
-            -159.9509,
-            -22.0419,
-            -157.1385,
-            -8.7407
-          ]
-        },
-        {
-          "id": "utm-05s",
-          "title": "ForTy 2020, UTM zone 5 south (EPSG:32705)",
-          "bbox": [
-            -156.0362,
-            -22.8598,
-            -149.9453,
-            -5.2053
-          ]
-        },
-        {
-          "id": "utm-06s",
-          "title": "ForTy 2020, UTM zone 6 south (EPSG:32706)",
-          "bbox": [
-            -150.0766,
-            -27.9863,
-            -143.9521,
-            -14.0289
-          ]
-        },
-        {
-          "id": "utm-07s",
-          "title": "ForTy 2020, UTM zone 7 south (EPSG:32707)",
-          "bbox": [
-            -144.0563,
-            -27.9923,
-            -138.1904,
-            -7.6576
-          ]
-        },
-        {
-          "id": "utm-08s",
-          "title": "ForTy 2020, UTM zone 8 south (EPSG:32708)",
-          "bbox": [
-            -137.2332,
-            -23.6735,
-            -134.6893,
-            -17.961
-          ]
-        },
-        {
-          "id": "utm-09s",
-          "title": "ForTy 2020, UTM zone 9 south (EPSG:32709)",
-          "bbox": [
-            -130.9278,
-            -25.1592,
-            -128.0711,
-            -23.6616
-          ]
-        },
-        {
-          "id": "utm-10s",
-          "title": "ForTy 2020, UTM zone 10 south (EPSG:32710)",
-          "bbox": [
-            -125.1089,
-            -24.7484,
-            -124.4967,
-            -24.3338
-          ]
-        },
-        {
-          "id": "utm-12s",
-          "title": "ForTy 2020, UTM zone 12 south (EPSG:32712)",
-          "bbox": [
-            -109.7462,
-            -27.5977,
-            -109.1147,
-            -26.7778
-          ]
-        },
-        {
-          "id": "utm-15s",
-          "title": "ForTy 2020, UTM zone 15 south (EPSG:32715)",
-          "bbox": [
-            -91.7707,
-            -1.5431,
-            -89.9482,
-            0.0868
-          ]
-        },
-        {
-          "id": "utm-16s",
-          "title": "ForTy 2020, UTM zone 16 south (EPSG:32716)",
-          "bbox": [
-            -90.0207,
-            -1.5432,
-            -89.1104,
-            -0.321
-          ]
-        },
-        {
-          "id": "utm-17s",
-          "title": "ForTy 2020, UTM zone 17 south (EPSG:32717)",
-          "bbox": [
-            -81.5945,
-            -33.969,
-            -77.9186,
-            0.0869
-          ]
-        },
-        {
-          "id": "utm-18s",
-          "title": "ForTy 2020, UTM zone 18 south (EPSG:32718)",
-          "bbox": [
-            -78.0495,
-            -54.8195,
-            -71.6238,
-            0.0869
-          ]
-        },
-        {
-          "id": "utm-19s",
-          "title": "ForTy 2020, UTM zone 19 south (EPSG:32719)",
-          "bbox": [
-            -72.3719,
-            -56.7648,
-            -65.6399,
-            0.0869
-          ]
-        },
-        {
-          "id": "utm-20s",
-          "title": "ForTy 2020, UTM zone 20 south (EPSG:32720)",
-          "bbox": [
-            -66.3387,
-            -55.2347,
-            -59.6594,
-            0.0869
-          ]
-        },
-        {
-          "id": "utm-21s",
-          "title": "ForTy 2020, UTM zone 21 south (EPSG:32721)",
-          "bbox": [
-            -60.2999,
-            -53.1951,
-            -53.7286,
-            0.0869
-          ]
-        },
-        {
-          "id": "utm-22s",
-          "title": "ForTy 2020, UTM zone 22 south (EPSG:32722)",
-          "bbox": [
-            -54.2341,
-            -34.7574,
-            -47.8113,
-            0.0869
-          ]
-        },
-        {
-          "id": "utm-23s",
-          "title": "ForTy 2020, UTM zone 23 south (EPSG:32723)",
-          "bbox": [
-            -48.2044,
-            -25.5439,
-            -41.831,
-            -0.3209
-          ]
-        },
-        {
-          "id": "utm-24s",
-          "title": "ForTy 2020, UTM zone 24 south (EPSG:32724)",
-          "bbox": [
-            -42.1847,
-            -55.2109,
-            -35.7873,
-            -2.3562
-          ]
-        },
-        {
-          "id": "utm-25s",
-          "title": "ForTy 2020, UTM zone 25 south (EPSG:32725)",
-          "bbox": [
-            -36.16,
-            -55.2287,
-            -34.3772,
-            -4.7991
-          ]
-        },
-        {
-          "id": "utm-26s",
-          "title": "ForTy 2020, UTM zone 26 south (EPSG:32726)",
-          "bbox": [
-            -28.2117,
             -59.5973,
-            -25.987,
-            -55.9508
-          ]
-        },
-        {
-          "id": "utm-28s",
-          "title": "ForTy 2020, UTM zone 28 south (EPSG:32728)",
-          "bbox": [
-            -14.6821,
-            -37.6096,
-            -12.0589,
-            -7.6576
-          ]
-        },
-        {
-          "id": "utm-29s",
-          "title": "ForTy 2020, UTM zone 29 south (EPSG:32729)",
-          "bbox": [
-            -10.2354,
-            -40.7342,
-            -9.616,
-            -39.9165
-          ]
-        },
-        {
-          "id": "utm-30s",
-          "title": "ForTy 2020, UTM zone 30 south (EPSG:32730)",
-          "bbox": [
-            -6.0936,
-            -16.3303,
-            -5.4375,
-            -15.6472
-          ]
-        },
-        {
-          "id": "utm-32s",
-          "title": "ForTy 2020, UTM zone 32 south (EPSG:32732)",
-          "bbox": [
-            6.2834,
-            -18.7681,
-            12.1265,
-            0.0869
-          ]
-        },
-        {
-          "id": "utm-33s",
-          "title": "ForTy 2020, UTM zone 33 south (EPSG:32733)",
-          "bbox": [
-            11.9064,
-            -33.5319,
-            18.2571,
-            0.0869
-          ]
-        },
-        {
-          "id": "utm-34s",
-          "title": "ForTy 2020, UTM zone 34 south (EPSG:32734)",
-          "bbox": [
-            17.7659,
-            -35.1847,
-            24.2714,
-            0.0869
-          ]
-        },
-        {
-          "id": "utm-35s",
-          "title": "ForTy 2020, UTM zone 35 south (EPSG:32735)",
-          "bbox": [
-            23.7659,
-            -34.3698,
-            30.2571,
-            0.0869
-          ]
-        },
-        {
-          "id": "utm-36s",
-          "title": "ForTy 2020, UTM zone 36 south (EPSG:32736)",
-          "bbox": [
-            29.78,
-            -31.6439,
-            36.1265,
-            0.0869
-          ]
-        },
-        {
-          "id": "utm-37s",
-          "title": "ForTy 2020, UTM zone 37 south (EPSG:32737)",
-          "bbox": [
-            35.9014,
-            -47.2235,
-            42.0523,
-            0.0869
-          ]
-        },
-        {
-          "id": "utm-38s",
-          "title": "ForTy 2020, UTM zone 38 south (EPSG:32738)",
-          "bbox": [
-            41.9798,
-            -25.9754,
-            48.169,
-            0.0868
-          ]
-        },
-        {
-          "id": "utm-39s",
-          "title": "ForTy 2020, UTM zone 39 south (EPSG:32739)",
-          "bbox": [
-            47.8342,
-            -46.8206,
-            53.4554,
-            -4.8014
-          ]
-        },
-        {
-          "id": "utm-40s",
-          "title": "ForTy 2020, UTM zone 40 south (EPSG:32740)",
-          "bbox": [
-            54.2171,
-            -21.6356,
-            57.9287,
-            -3.5802
-          ]
-        },
-        {
-          "id": "utm-41s",
-          "title": "ForTy 2020, UTM zone 41 south (EPSG:32741)",
-          "bbox": [
-            62.9924,
-            -20.009,
-            63.6134,
-            -19.6017
-          ]
-        },
-        {
-          "id": "utm-42s",
-          "title": "ForTy 2020, UTM zone 42 south (EPSG:32742)",
-          "bbox": [
-            68.0884,
-            -50.3764,
-            72.0658,
-            -5.2051
-          ]
-        },
-        {
-          "id": "utm-43s",
-          "title": "ForTy 2020, UTM zone 43 south (EPSG:32743)",
-          "bbox": [
-            71.966,
-            -53.61,
-            74.0222,
-            0.0868
-          ]
-        },
-        {
-          "id": "utm-47s",
-          "title": "ForTy 2020, UTM zone 47 south (EPSG:32747)",
-          "bbox": [
-            97.8009,
-            -4.3954,
-            102.0571,
-            0.0869
-          ]
-        },
-        {
-          "id": "utm-48s",
-          "title": "ForTy 2020, UTM zone 48 south (EPSG:32748)",
-          "bbox": [
-            101.966,
-            -10.7801,
-            108.0814,
-            0.0869
-          ]
-        },
-        {
-          "id": "utm-49s",
-          "title": "ForTy 2020, UTM zone 49 south (EPSG:32749)",
-          "bbox": [
-            107.9505,
-            -29.2055,
-            114.1887,
-            0.0869
-          ]
-        },
-        {
-          "id": "utm-50s",
-          "title": "ForTy 2020, UTM zone 50 south (EPSG:32750)",
-          "bbox": [
-            113.7956,
-            -35.5933,
-            120.2714,
-            0.0869
-          ]
-        },
-        {
-          "id": "utm-51s",
-          "title": "ForTy 2020, UTM zone 51 south (EPSG:32751)",
-          "bbox": [
-            119.7659,
-            -34.7824,
-            126.2714,
-            0.0869
-          ]
-        },
-        {
-          "id": "utm-52s",
-          "title": "ForTy 2020, UTM zone 52 south (EPSG:32752)",
-          "bbox": [
-            125.7659,
-            -32.7378,
-            132.2714,
-            0.0869
-          ]
-        },
-        {
-          "id": "utm-53s",
-          "title": "ForTy 2020, UTM zone 53 south (EPSG:32753)",
-          "bbox": [
-            131.7659,
-            -36.4002,
-            138.2714,
-            0.0869
-          ]
-        },
-        {
-          "id": "utm-54s",
-          "title": "ForTy 2020, UTM zone 54 south (EPSG:32754)",
-          "bbox": [
-            137.7659,
-            -40.2972,
-            144.3216,
-            -1.1348
-          ]
-        },
-        {
-          "id": "utm-55s",
-          "title": "ForTy 2020, UTM zone 55 south (EPSG:32755)",
-          "bbox": [
-            143.6613,
-            -43.981,
-            150.2714,
-            -0.7288
-          ]
-        },
-        {
-          "id": "utm-56s",
-          "title": "ForTy 2020, UTM zone 56 south (EPSG:32756)",
-          "bbox": [
-            149.7659,
-            -37.5903,
-            156.0755,
-            -1.5424
-          ]
-        },
-        {
-          "id": "utm-57s",
-          "title": "ForTy 2020, UTM zone 57 south (EPSG:32757)",
-          "bbox": [
-            155.9563,
-            -55.2366,
-            162.0629,
-            -4.3946
-          ]
-        },
-        {
-          "id": "utm-58s",
-          "title": "ForTy 2020, UTM zone 58 south (EPSG:32758)",
-          "bbox": [
-            161.9693,
-            -51.1845,
-            168.3762,
-            -0.3211
-          ]
-        },
-        {
-          "id": "utm-59s",
-          "title": "ForTy 2020, UTM zone 59 south (EPSG:32759)",
-          "bbox": [
-            167.6281,
-            -52.7963,
-            174.3601,
-            -11.991
-          ]
-        },
-        {
-          "id": "utm-60s",
-          "title": "ForTy 2020, UTM zone 60 south (EPSG:32760)",
-          "bbox": [
-            173.6809,
-            -42.331,
             180.0,
-            -0.3209
+            82.844
           ]
         },
         {
-          "id": "utm-60s",
-          "title": "ForTy 2020, UTM zone 60 south (EPSG:32760)",
+          "id": "v2_beta",
+          "title": "ForTy v2 beta \u2014 2017\u20132025 [BETA]",
           "bbox": [
             -180.0,
-            -42.331,
-            -179.9089,
-            -0.3209
+            -59.5973,
+            180.0,
+            82.844
           ]
         }
       ]
@@ -41811,10 +40681,10 @@
           "id": "ftw-s2-2018",
           "title": "FTW Global \u2014 Field Boundaries 2018 (GeoParquet)",
           "bbox": [
-            -175.3516,
-            -46.8366,
-            179.8118,
-            65.8206
+            -176.5653,
+            -55.1525,
+            179.6383,
+            79.2578
           ]
         },
         {
@@ -41861,30 +40731,30 @@
           "id": "ftw-s2-2023",
           "title": "FTW Global \u2014 Field Boundaries 2023 (GeoParquet)",
           "bbox": [
-            -175.349,
-            -46.9056,
-            179.7856,
-            65.8206
+            -176.6246,
+            -55.1345,
+            179.6327,
+            81.0489
           ]
         },
         {
           "id": "ftw-s2-2024",
           "title": "FTW Global \u2014 Field Boundaries 2024 (GeoParquet)",
           "bbox": [
-            -175.3497,
-            -46.8373,
-            179.793,
-            65.8206
+            -176.5671,
+            -55.1082,
+            179.6082,
+            81.0369
           ]
         },
         {
           "id": "ftw-s2-2025",
           "title": "FTW Global \u2014 Field Boundaries 2025 (GeoParquet)",
           "bbox": [
-            -175.3499,
-            -46.745,
-            179.7927,
-            65.8206
+            -176.6606,
+            -55.1634,
+            179.6368,
+            80.1467
           ]
         },
         {
@@ -41901,10 +40771,10 @@
           "id": "ftw-raster-2018",
           "title": "FTW Global \u2014 Field & Boundary Probabilities 2018 (COG)",
           "bbox": [
-            -176.0391,
-            -46.9542,
+            -179.9342,
+            -55.9457,
             179.8203,
-            65.8216
+            79.2692
           ]
         },
         {
@@ -41951,30 +40821,30 @@
           "id": "ftw-raster-2023",
           "title": "FTW Global \u2014 Field & Boundary Probabilities 2023 (COG)",
           "bbox": [
-            -176.0391,
-            -46.9542,
+            -179.9342,
+            -55.9457,
             179.8203,
-            65.8216
+            81.0609
           ]
         },
         {
           "id": "ftw-raster-2024",
           "title": "FTW Global \u2014 Field & Boundary Probabilities 2024 (COG)",
           "bbox": [
-            -176.0391,
-            -46.9542,
+            -179.9342,
+            -55.9457,
             179.8203,
-            65.8216
+            81.0609
           ]
         },
         {
           "id": "ftw-raster-2025",
           "title": "FTW Global \u2014 Field & Boundary Probabilities 2025 (COG)",
           "bbox": [
-            -176.0391,
-            -46.9542,
+            -179.9342,
+            -55.9457,
             179.8203,
-            65.8216
+            80.1653
           ]
         }
       ]
@@ -42017,7 +40887,7 @@
     },
     {
       "id": "geoconnex",
-      "collection_count": 38,
+      "collection_count": 39,
       "collections": [
         {
           "id": "ca_gage_assessment:gages",
@@ -42087,6 +40957,16 @@
             40.8351,
             -104.0469,
             45.3068
+          ]
+        },
+        {
+          "id": "nacc:barriers",
+          "title": "National Aquatic Barriers",
+          "bbox": [
+            -176.6873,
+            17.6878,
+            -64.6204,
+            71.2667
           ]
         },
         {
@@ -42276,7 +41156,7 @@
             -170.7894,
             -14.3737,
             145.7909,
-            66.9045
+            71.3068
           ]
         },
         {
@@ -43789,8 +42669,18 @@
     },
     {
       "id": "harmonized-field-data",
-      "collection_count": 69,
+      "collection_count": 78,
       "collections": [
+        {
+          "id": "ai4sf_ml",
+          "title": "Field boundaries for Cambodia and Vietnam (AI4SmallFarms) with splits",
+          "bbox": [
+            102.9025,
+            9.6422,
+            109.0434,
+            21.3441
+          ]
+        },
         {
           "id": "at",
           "title": "Field boundaries for Austria",
@@ -43839,6 +42729,16 @@
             41.1891,
             28.6233,
             44.2802
+          ]
+        },
+        {
+          "id": "br_ba_lem",
+          "title": "Field boundaries for the west of Bahia state, Brazil",
+          "bbox": [
+            -46.398,
+            -14.0093,
+            -45.4941,
+            -11.7646
           ]
         },
         {
@@ -44282,6 +43182,16 @@
           ]
         },
         {
+          "id": "glocab",
+          "title": "GloCAB cropland field boundaries (Brazil, Canada, Russia, Ukraine, USA)",
+          "bbox": [
+            -102.3783,
+            -20.4705,
+            75.0888,
+            53.9398
+          ]
+        },
+        {
           "id": "hr",
           "title": "Croatian Field Boundaries",
           "bbox": [
@@ -44312,6 +43222,16 @@
           ]
         },
         {
+          "id": "in_10k_ml",
+          "title": "10,000 Crop Field Boundaries across India with splits",
+          "bbox": [
+            68.797,
+            9.2486,
+            96.2369,
+            34.5325
+          ]
+        },
+        {
           "id": "it_1",
           "title": "Italy Tuscany (ITI1) Crop Fields \u2014 EuroCropsV2",
           "bbox": [
@@ -44339,6 +43259,26 @@
             24.0468,
             145.8027,
             45.52
+          ]
+        },
+        {
+          "id": "ke_ecaas",
+          "title": "Crop-cut farm polygons with crop type and yield for Kenya (ECAAS Bird's-Eye)",
+          "bbox": [
+            34.1136,
+            -3.8724,
+            38.7211,
+            1.2194
+          ]
+        },
+        {
+          "id": "lacuna",
+          "title": "Mapping Africa: crop field boundary labels for Africa, 2017-2023",
+          "bbox": [
+            -17.1413,
+            -29.9804,
+            47.2492,
+            18.2707
           ]
         },
         {
@@ -44432,6 +43372,16 @@
           ]
         },
         {
+          "id": "rw_rwanda_ml",
+          "title": "Rwanda Crop Field Boundaries with splits",
+          "bbox": [
+            30.292,
+            -1.5901,
+            30.4234,
+            -1.3918
+          ]
+        },
+        {
           "id": "se",
           "title": "Swedish Crop Fields (Jordbruksskiften)",
           "bbox": [
@@ -44479,6 +43429,26 @@
             25.2107,
             -66.9677,
             49.3596
+          ]
+        },
+        {
+          "id": "za_fusion_ml",
+          "title": "South Africa Crop Field Boundaries (Fusion Competition) with splits",
+          "bbox": [
+            20.5215,
+            -34.3992,
+            21.0434,
+            -33.9805
+          ]
+        },
+        {
+          "id": "zm_ecaas",
+          "title": "Crop-cut farm polygons with crop type and yield for Zambia (ECAAS Bird's-Eye)",
+          "bbox": [
+            22.0989,
+            -17.8677,
+            33.5074,
+            -8.4049
           ]
         }
       ]
@@ -45434,6 +44404,32 @@
       ]
     },
     {
+      "id": "italian-cadastre",
+      "collection_count": 2,
+      "collections": [
+        {
+          "id": "particelle",
+          "title": "Italian cadastral parcels",
+          "bbox": [
+            6.6144,
+            35.4929,
+            18.5171,
+            46.6806
+          ]
+        },
+        {
+          "id": "fogli",
+          "title": "Italian cadastral map sheets",
+          "bbox": [
+            6.6144,
+            35.4929,
+            18.5171,
+            46.6806
+          ]
+        }
+      ]
+    },
+    {
       "id": "jrc-glofas",
       "collection_count": 16,
       "collections": [
@@ -46106,6 +45102,56 @@
           ]
         },
         {
+          "id": "einrichtungen/bibliotheken",
+          "title": "Bibliotheken in K\u00f6ln",
+          "bbox": [
+            6.8299,
+            50.8573,
+            7.1004,
+            51.0652
+          ]
+        },
+        {
+          "id": "einrichtungen/friedhofseingaenge",
+          "title": "Friedh\u00f6fe in K\u00f6ln \u2013 Friedhofseing\u00e4nge",
+          "bbox": [
+            6.8183,
+            50.8362,
+            7.0916,
+            51.062
+          ]
+        },
+        {
+          "id": "einrichtungen/kindertagesstaetten",
+          "title": "Kindertagesstaetten in K\u00f6ln",
+          "bbox": [
+            6.8244,
+            50.8371,
+            7.1191,
+            51.0642
+          ]
+        },
+        {
+          "id": "einrichtungen/krankenhaeuser",
+          "title": "Krankenh\u00e4user in K\u00f6ln",
+          "bbox": [
+            6.8976,
+            50.8812,
+            7.0569,
+            50.9919
+          ]
+        },
+        {
+          "id": "einrichtungen/schulen",
+          "title": "Schulen in K\u00f6ln",
+          "bbox": [
+            6.8288,
+            50.8452,
+            7.1021,
+            51.0685
+          ]
+        },
+        {
           "id": "gebietsgliederung/blockseiten",
           "title": "Blockseiten K\u00f6ln",
           "bbox": [
@@ -46256,6 +45302,16 @@
           ]
         },
         {
+          "id": "planung/flaechennutzungsplan",
+          "title": "Fl\u00e4chennutzungsplan Web Aktuell",
+          "bbox": [
+            6.7725,
+            50.8305,
+            7.1621,
+            51.0849
+          ]
+        },
+        {
           "id": "planung/soziale-erhaltungssatzungen",
           "title": "Soziale Erhaltungssatzungen K\u00f6ln",
           "bbox": [
@@ -46276,16 +45332,6 @@
           ]
         },
         {
-          "id": "planung/flaechennutzungsplan",
-          "title": "Fl\u00e4chennutzungsplan Web Aktuell",
-          "bbox": [
-            6.7725,
-            50.8305,
-            7.1621,
-            51.0849
-          ]
-        },
-        {
           "id": "verkehr/ampelanlagen-2024",
           "title": "Ampelanlagen K\u00f6ln 2024",
           "bbox": [
@@ -46293,26 +45339,6 @@
             50.8397,
             7.1194,
             51.0805
-          ]
-        },
-        {
-          "id": "verkehr/radverkehrsnetz-gelbes-netz",
-          "title": "Radverkehrsnetz \u2013 Gelbes Netz",
-          "bbox": [
-            6.8019,
-            50.8308,
-            7.1619,
-            51.0847
-          ]
-        },
-        {
-          "id": "verkehr/radverkehrsnetz-gruenes-netz",
-          "title": "Radverkehrsnetz \u2013 Gr\u00fcnes Netz",
-          "bbox": [
-            6.8137,
-            50.837,
-            7.1197,
-            51.0706
           ]
         },
         {
@@ -46346,6 +45372,26 @@
           ]
         },
         {
+          "id": "verkehr/radverkehrsnetz-gelbes-netz",
+          "title": "Radverkehrsnetz \u2013 Gelbes Netz",
+          "bbox": [
+            6.8019,
+            50.8308,
+            7.1619,
+            51.0847
+          ]
+        },
+        {
+          "id": "verkehr/radverkehrsnetz-gruenes-netz",
+          "title": "Radverkehrsnetz \u2013 Gr\u00fcnes Netz",
+          "bbox": [
+            6.8137,
+            50.837,
+            7.1197,
+            51.0706
+          ]
+        },
+        {
           "id": "verkehr/tempo-30-zonen",
           "title": "Tempo 30-Zonen",
           "bbox": [
@@ -46373,56 +45419,6 @@
             50.8304,
             7.162,
             51.085
-          ]
-        },
-        {
-          "id": "einrichtungen/bibliotheken",
-          "title": "Bibliotheken in K\u00f6ln",
-          "bbox": [
-            6.8299,
-            50.8573,
-            7.1004,
-            51.0652
-          ]
-        },
-        {
-          "id": "einrichtungen/friedhofseingaenge",
-          "title": "Friedh\u00f6fe in K\u00f6ln \u2013 Friedhofseing\u00e4nge",
-          "bbox": [
-            6.8183,
-            50.8362,
-            7.0916,
-            51.062
-          ]
-        },
-        {
-          "id": "einrichtungen/kindertagesstaetten",
-          "title": "Kindertagesstaetten in K\u00f6ln",
-          "bbox": [
-            6.8244,
-            50.8371,
-            7.1191,
-            51.0642
-          ]
-        },
-        {
-          "id": "einrichtungen/krankenhaeuser",
-          "title": "Krankenh\u00e4user in K\u00f6ln",
-          "bbox": [
-            6.8976,
-            50.8812,
-            7.0569,
-            50.9919
-          ]
-        },
-        {
-          "id": "einrichtungen/schulen",
-          "title": "Schulen in K\u00f6ln",
-          "bbox": [
-            6.8288,
-            50.8452,
-            7.1021,
-            51.0685
           ]
         }
       ]
@@ -49805,6 +48801,22 @@
             48.0971,
             11.622,
             48.1812
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nasa-firms-active-fire",
+      "collection_count": 1,
+      "collections": [
+        {
+          "id": "detections",
+          "title": "Active Fire Detections (MODIS and VIIRS)",
+          "bbox": [
+            -179.9999,
+            -89.6907,
+            179.9988,
+            87.4687
           ]
         }
       ]
@@ -53601,8 +52613,118 @@
     },
     {
       "id": "planet-disasterdata",
-      "collection_count": 41,
+      "collection_count": 52,
       "collections": [
+        {
+          "id": "post-event-planetscope-2026-11-05",
+          "title": "Southern Santa Cruz, 5 Nov (PlanetScope) \u2014 Post-event Imagery",
+          "bbox": [
+            -90.4823,
+            -0.8471,
+            -90.1452,
+            -0.6057
+          ]
+        },
+        {
+          "id": "post-event-skysat-2026-11-07",
+          "title": "Puerto Ayora and Bellavista, 7 Nov (SkySat) \u2014 Post-event Imagery",
+          "bbox": [
+            -90.3481,
+            -0.8315,
+            -90.2836,
+            -0.6415
+          ]
+        },
+        {
+          "id": "post-event-skysat-2026-11-08",
+          "title": "Puerto Ayora and Bellavista, 8 Nov (SkySat) \u2014 Post-event Imagery",
+          "bbox": [
+            -90.3458,
+            -0.8276,
+            -90.2893,
+            -0.6448
+          ]
+        },
+        {
+          "id": "pre-event-planetscope-2026-10-14",
+          "title": "Southern Santa Cruz, 14 Oct (PlanetScope) \u2014 Pre-event Imagery",
+          "bbox": [
+            -90.4508,
+            -0.843,
+            -90.1647,
+            -0.6408
+          ]
+        },
+        {
+          "id": "post-event-skysat-2026-11-10",
+          "title": "Punakha and the lower Mo Chhu, 10 Nov (SkySat) \u2014 Post-event Imagery",
+          "bbox": [
+            89.8078,
+            27.503,
+            89.8793,
+            27.676
+          ]
+        },
+        {
+          "id": "post-event-planetscope-2026-11-03",
+          "title": "Mo Chhu valley, Laya to Punakha, 3 Nov (PlanetScope) \u2014 Post-event Imagery",
+          "bbox": [
+            89.4605,
+            27.4372,
+            89.9518,
+            28.1239
+          ]
+        },
+        {
+          "id": "post-event-skysat-2026-11-02",
+          "title": "Taktsemakhang and Laya, 2 Nov (SkySat) \u2014 Post-event Imagery",
+          "bbox": [
+            89.5956,
+            28.0198,
+            89.8128,
+            28.09
+          ]
+        },
+        {
+          "id": "post-event-skysat-2026-11-05",
+          "title": "Gasa Tshachu and the Punakha\u2013Gasa highway, 5 Nov (SkySat) \u2014 Post-event Imagery",
+          "bbox": [
+            89.6799,
+            27.7044,
+            89.7722,
+            27.9877
+          ]
+        },
+        {
+          "id": "post-event-skysat-2026-11-09",
+          "title": "Taktsemakhang and Laya, 9 Nov (SkySat) \u2014 Post-event Imagery",
+          "bbox": [
+            89.6763,
+            27.9805,
+            89.7505,
+            28.1383
+          ]
+        },
+        {
+          "id": "pre-event-planetscope-2026-10-27",
+          "title": "Upper Mo Chhu valley, 27 Oct (PlanetScope) \u2014 Pre-event Imagery",
+          "bbox": [
+            89.4899,
+            28.0139,
+            89.7924,
+            28.1894
+          ]
+        },
+        {
+          "id": "pre-event-planetscope-2026-10-28",
+          "title": "Gasa and the Punakha\u2013Gasa highway, 28 Oct (PlanetScope) \u2014 Pre-event Imagery",
+          "bbox": [
+            89.657,
+            27.5919,
+            90.0548,
+            27.9604
+          ]
+        },
         {
           "id": "post-event-pelican-2026-10-11",
           "title": "Santiago de Veraguas and eastern Herrera, 11 Oct (Pelican) \u2014 Post-event Imagery",
@@ -54030,6 +53152,16 @@
           ]
         },
         {
+          "id": "podzial/granica-panstwa",
+          "title": "PRG \u2013 Granica pa\u0144stwa",
+          "bbox": [
+            14.0696,
+            49.002,
+            24.1458,
+            55.0361
+          ]
+        },
+        {
           "id": "podzial/powiaty",
           "title": "PRG \u2013 Granice powiat\u00f3w",
           "bbox": [
@@ -54047,16 +53179,6 @@
             49.002,
             24.1458,
             54.8364
-          ]
-        },
-        {
-          "id": "podzial/granica-panstwa",
-          "title": "PRG \u2013 Granica pa\u0144stwa",
-          "bbox": [
-            14.0696,
-            49.002,
-            24.1458,
-            55.0361
           ]
         },
         {
@@ -57029,7 +56151,7 @@
           "bbox": [
             14.0808,
             58.0337,
-            18.0202,
+            17.8333,
             63.703
           ]
         },
@@ -57465,7 +56587,7 @@
     },
     {
       "id": "us-census-tiger",
-      "collection_count": 19,
+      "collection_count": 45,
       "collections": [
         {
           "id": "cd120",
@@ -57775,6 +56897,466 @@
             42.7269,
             -71.4649,
             45.0167
+          ]
+        },
+        {
+          "id": "aiannh",
+          "title": "American Indian, Alaska Native and Native Hawaiian areas: reservations, off-reservation trust lands, statistical areas and Hawaiian home lands, 2026",
+          "bbox": [
+            -174.2362,
+            18.9107,
+            -67.0354,
+            71.3403
+          ]
+        },
+        {
+          "id": "anrc",
+          "title": "Alaska Native Regional Corporations, 2026",
+          "bbox": [
+            172.3478,
+            51.175,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "anrc",
+          "title": "Alaska Native Regional Corporations, 2026",
+          "bbox": [
+            -180.0,
+            51.175,
+            -129.974,
+            71.4399
+          ]
+        },
+        {
+          "id": "aitsn",
+          "title": "Tribal subdivisions, 2026",
+          "bbox": [
+            -124.0933,
+            31.5078,
+            -83.1579,
+            48.636
+          ]
+        },
+        {
+          "id": "ttract",
+          "title": "Tribal census tracts, 2026",
+          "bbox": [
+            -131.7135,
+            25.7574,
+            -67.0354,
+            55.294
+          ]
+        },
+        {
+          "id": "tbg",
+          "title": "Tribal block groups, 2026",
+          "bbox": [
+            -131.7135,
+            25.7574,
+            -67.0354,
+            55.294
+          ]
+        },
+        {
+          "id": "acs2024-state",
+          "title": "States, ACS 2020-2024",
+          "bbox": [
+            172.3478,
+            17.8315,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "acs2024-state",
+          "title": "States, ACS 2020-2024",
+          "bbox": [
+            -180.0,
+            17.8315,
+            -65.1684,
+            71.4399
+          ]
+        },
+        {
+          "id": "acs2024-state-geo",
+          "title": "States, ACS 2020-2024, with outlines",
+          "bbox": [
+            172.3478,
+            17.8315,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "acs2024-state-geo",
+          "title": "States, ACS 2020-2024, with outlines",
+          "bbox": [
+            -180.0,
+            17.8315,
+            -65.1684,
+            71.4399
+          ]
+        },
+        {
+          "id": "acs2024-county",
+          "title": "Counties, ACS 2020-2024",
+          "bbox": [
+            172.3478,
+            17.8315,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "acs2024-county",
+          "title": "Counties, ACS 2020-2024",
+          "bbox": [
+            -180.0,
+            17.8315,
+            -65.1684,
+            71.4399
+          ]
+        },
+        {
+          "id": "acs2024-county-geo",
+          "title": "Counties, ACS 2020-2024, with outlines",
+          "bbox": [
+            172.3478,
+            17.8315,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "acs2024-county-geo",
+          "title": "Counties, ACS 2020-2024, with outlines",
+          "bbox": [
+            -180.0,
+            17.8315,
+            -65.1684,
+            71.4399
+          ]
+        },
+        {
+          "id": "acs2024-place",
+          "title": "Places, ACS 2020-2024",
+          "bbox": [
+            172.9386,
+            17.9451,
+            180.0,
+            71.3403
+          ]
+        },
+        {
+          "id": "acs2024-place",
+          "title": "Places, ACS 2020-2024",
+          "bbox": [
+            -180.0,
+            17.9451,
+            -65.2895,
+            71.3403
+          ]
+        },
+        {
+          "id": "acs2024-place-geo",
+          "title": "Places, ACS 2020-2024, with outlines",
+          "bbox": [
+            172.9386,
+            17.9451,
+            180.0,
+            71.3403
+          ]
+        },
+        {
+          "id": "acs2024-place-geo",
+          "title": "Places, ACS 2020-2024, with outlines",
+          "bbox": [
+            -180.0,
+            17.9451,
+            -65.2895,
+            71.3403
+          ]
+        },
+        {
+          "id": "acs2024-tract",
+          "title": "Census tracts, ACS 2020-2024",
+          "bbox": [
+            172.3478,
+            17.8315,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "acs2024-tract",
+          "title": "Census tracts, ACS 2020-2024",
+          "bbox": [
+            -180.0,
+            17.8315,
+            -65.1684,
+            71.4399
+          ]
+        },
+        {
+          "id": "acs2024-tract-geo",
+          "title": "Census tracts, ACS 2020-2024, with outlines",
+          "bbox": [
+            172.3478,
+            17.8315,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "acs2024-tract-geo",
+          "title": "Census tracts, ACS 2020-2024, with outlines",
+          "bbox": [
+            -180.0,
+            17.8315,
+            -65.1684,
+            71.4399
+          ]
+        },
+        {
+          "id": "acs2024-bg",
+          "title": "Block groups, ACS 2020-2024",
+          "bbox": [
+            172.3478,
+            17.8315,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "acs2024-bg",
+          "title": "Block groups, ACS 2020-2024",
+          "bbox": [
+            -180.0,
+            17.8315,
+            -65.1684,
+            71.4399
+          ]
+        },
+        {
+          "id": "acs2024-bg-geo",
+          "title": "Block groups, ACS 2020-2024, with outlines",
+          "bbox": [
+            172.3478,
+            17.8315,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "acs2024-bg-geo",
+          "title": "Block groups, ACS 2020-2024, with outlines",
+          "bbox": [
+            -180.0,
+            17.8315,
+            -65.1684,
+            71.4399
+          ]
+        },
+        {
+          "id": "acs2024-zcta520",
+          "title": "ZIP Code Tabulation Areas, ACS 2020-2024",
+          "bbox": [
+            -176.6969,
+            17.9108,
+            -65.2209,
+            71.3414
+          ]
+        },
+        {
+          "id": "acs2024-zcta520-geo",
+          "title": "ZIP Code Tabulation Areas, ACS 2020-2024, with outlines",
+          "bbox": [
+            -176.6969,
+            17.9108,
+            -65.2209,
+            71.3414
+          ]
+        },
+        {
+          "id": "tabblock20",
+          "title": "2020 Census tabulation blocks, with population and housing units",
+          "bbox": [
+            172.5794,
+            17.8842,
+            180.0,
+            71.4019
+          ]
+        },
+        {
+          "id": "tabblock20",
+          "title": "2020 Census tabulation blocks, with population and housing units",
+          "bbox": [
+            -180.0,
+            17.8842,
+            -65.2009,
+            71.4019
+          ]
+        },
+        {
+          "id": "tabblock20-h3",
+          "title": "2020 Census population and housing units on H3 cells",
+          "bbox": [
+            172.5794,
+            17.8842,
+            180.0,
+            71.4019
+          ]
+        },
+        {
+          "id": "tabblock20-h3",
+          "title": "2020 Census population and housing units on H3 cells",
+          "bbox": [
+            -180.0,
+            17.8842,
+            -65.2009,
+            71.4019
+          ]
+        },
+        {
+          "id": "lodes2024-wac",
+          "title": "Jobs by workplace block (WAC), LODES 2024",
+          "bbox": [
+            172.3478,
+            18.9055,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "lodes2024-wac",
+          "title": "Jobs by workplace block (WAC), LODES 2024",
+          "bbox": [
+            -180.0,
+            18.9055,
+            -66.9259,
+            71.4399
+          ]
+        },
+        {
+          "id": "lodes2024-rac",
+          "title": "Jobs by residence block (RAC), LODES 2024",
+          "bbox": [
+            172.3478,
+            18.9055,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "lodes2024-rac",
+          "title": "Jobs by residence block (RAC), LODES 2024",
+          "bbox": [
+            -180.0,
+            18.9055,
+            -66.9259,
+            71.4399
+          ]
+        },
+        {
+          "id": "lodes2024-od",
+          "title": "Jobs from home block to work block (OD), LODES 2024",
+          "bbox": [
+            172.3478,
+            18.9055,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "lodes2024-od",
+          "title": "Jobs from home block to work block (OD), LODES 2024",
+          "bbox": [
+            -180.0,
+            18.9055,
+            -66.9259,
+            71.4399
+          ]
+        },
+        {
+          "id": "lodes2024-wac-tract",
+          "title": "Jobs by workplace tract, LODES 2024",
+          "bbox": [
+            172.3478,
+            18.9055,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "lodes2024-wac-tract",
+          "title": "Jobs by workplace tract, LODES 2024",
+          "bbox": [
+            -180.0,
+            18.9055,
+            -66.9259,
+            71.4399
+          ]
+        },
+        {
+          "id": "lodes2024-rac-tract",
+          "title": "Jobs by residence tract, LODES 2024",
+          "bbox": [
+            172.3478,
+            18.9055,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "lodes2024-rac-tract",
+          "title": "Jobs by residence tract, LODES 2024",
+          "bbox": [
+            -180.0,
+            18.9055,
+            -66.9259,
+            71.4399
+          ]
+        },
+        {
+          "id": "lodes2024-wac-county",
+          "title": "Jobs by workplace county, LODES 2024",
+          "bbox": [
+            172.3478,
+            18.9055,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "lodes2024-wac-county",
+          "title": "Jobs by workplace county, LODES 2024",
+          "bbox": [
+            -180.0,
+            18.9055,
+            -66.9259,
+            71.4399
+          ]
+        },
+        {
+          "id": "lodes2024-rac-county",
+          "title": "Jobs by residence county, LODES 2024",
+          "bbox": [
+            172.3478,
+            18.9055,
+            180.0,
+            71.4399
+          ]
+        },
+        {
+          "id": "lodes2024-rac-county",
+          "title": "Jobs by residence county, LODES 2024",
+          "bbox": [
+            -180.0,
+            18.9055,
+            -66.9259,
+            71.4399
           ]
         }
       ]
@@ -59244,6 +58826,46 @@
           ]
         },
         {
+          "id": "nutzungsplanung/kernzonen",
+          "title": "Bau- und Zonenordnung (BZO) \u2013 Kernzonen (bzo_kernzone_v)",
+          "bbox": [
+            8.4807,
+            47.3234,
+            8.598,
+            47.4309
+          ]
+        },
+        {
+          "id": "nutzungsplanung/quartiererhaltungszonen",
+          "title": "Bau- und Zonenordnung (BZO) \u2013 Quartiererhaltungszonen (bzo_quez_v)",
+          "bbox": [
+            8.5055,
+            47.3518,
+            8.564,
+            47.4172
+          ]
+        },
+        {
+          "id": "nutzungsplanung/wohnanteil",
+          "title": "Bau- und Zonenordnung (BZO) \u2013 Wohnanteil (bzo_zone_wohnanteil_v)",
+          "bbox": [
+            8.4663,
+            47.3234,
+            8.6057,
+            47.4323
+          ]
+        },
+        {
+          "id": "nutzungsplanung/zonen",
+          "title": "Bau- und Zonenordnung (BZO) \u2013 Zonen (bzo_zone_v)",
+          "bbox": [
+            8.448,
+            47.3202,
+            8.6255,
+            47.4347
+          ]
+        },
+        {
           "id": "raumgliederung/stadtkreise",
           "title": "Stadtkreise (adm_stadtkreise_a)",
           "bbox": [
@@ -59351,46 +58973,6 @@
             47.3237,
             8.6246,
             47.4346
-          ]
-        },
-        {
-          "id": "nutzungsplanung/kernzonen",
-          "title": "Bau- und Zonenordnung (BZO) \u2013 Kernzonen (bzo_kernzone_v)",
-          "bbox": [
-            8.4807,
-            47.3234,
-            8.598,
-            47.4309
-          ]
-        },
-        {
-          "id": "nutzungsplanung/quartiererhaltungszonen",
-          "title": "Bau- und Zonenordnung (BZO) \u2013 Quartiererhaltungszonen (bzo_quez_v)",
-          "bbox": [
-            8.5055,
-            47.3518,
-            8.564,
-            47.4172
-          ]
-        },
-        {
-          "id": "nutzungsplanung/wohnanteil",
-          "title": "Bau- und Zonenordnung (BZO) \u2013 Wohnanteil (bzo_zone_wohnanteil_v)",
-          "bbox": [
-            8.4663,
-            47.3234,
-            8.6057,
-            47.4323
-          ]
-        },
-        {
-          "id": "nutzungsplanung/zonen",
-          "title": "Bau- und Zonenordnung (BZO) \u2013 Zonen (bzo_zone_v)",
-          "bbox": [
-            8.448,
-            47.3202,
-            8.6255,
-            47.4347
           ]
         }
       ]
