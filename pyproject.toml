@@ -38,7 +38,8 @@ validators = [
     "rashid==0.3.0",
 ]
 # What scripts/build_site.py needs to build and check the Pages site: the
-# GeoParquet writer and the JSON Schema check of each published file. Install
+# GeoParquet writer and the JSON Schema check of each published file.
+# scripts/build_catalog_index.py uses the GeoParquet writer too. Install
 # with `--group site`.
 site = [
     # The extra adds the checkers for `date-time` and `uri`.

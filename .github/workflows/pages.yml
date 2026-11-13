@@ -54,6 +54,10 @@ jobs:
       - name: Install stac-node-validator
         run: npm ci --prefix scripts/stac-node-validator --no-audit --no-fund
 
+      # The catalog index is on a branch of its own, not on main.
+      - name: Fetch the catalog index
+        uses: ./.github/actions/fetch-catalog-index
+
       - name: Build and check the site
         run: uv run --frozen --group site scripts/build_site.py --out _site
 

@@ -1,0 +1,26 @@
+name: Fetch the catalog index
+description: >
+  Copy the published catalog index to exports/collections.parquet, where
+  scripts/build_site.py and scripts/build_catalog_index.py read it. The
+  Catalog Index workflow keeps the file on a branch of its own, because the
+  file is too large to keep a history of on main
+  (scripts/registry/catalog_index.py). The step does nothing before the
+  first index build, when the branch does not exist.
+
+runs:
+  using: composite
+  steps:
+    - name: Fetch the catalog index
+      shell: bash
+      env:
+        BRANCH: bot/catalog-index
+      run: |
+        if ! git fetch --quiet --depth 1 origin "$BRANCH"; then
+          echo "No $BRANCH branch; the registry has no published catalog index"
+          exit 0
+        fi
+        # Write to a temporary file first, so a failed read leaves no
+        # partial index for the build to publish.
+        git show FETCH_HEAD:collections.parquet > "$RUNNER_TEMP/collections.parquet"
+        mv "$RUNNER_TEMP/collections.parquet" exports/collections.parquet
+        echo "Fetched the catalog index from $(git rev-parse --short FETCH_HEAD)"
