@@ -28,6 +28,7 @@ from registry.catalog_index import (
     Row,
     Walk,
     build_table,
+    check_rows,
     read_index,
     same_rows,
     settle_rows,
@@ -45,13 +46,17 @@ MAX_WORKERS = 4
 
 
 def walk_entry(path: Path, fetcher_factory: Callable[[], Fetcher]) -> Walk | None:
-    """Walk the catalog of one entry file. None when the root does not answer."""
+    """Walk the catalog of one entry file.
+
+    None when the root does not answer, or when the index cannot hold the rows.
+    """
     url = load_entry(path).get("url")
     if not url:
         log(f"  {path.stem}: skipping, the entry has no URL")
         return None
     try:
         walk = walk_catalog(path.stem, url, fetcher_factory)
+        check_rows(walk.rows)
     except Exception as e:
         log(f"  {path.stem}: FAILED: {e}")
         return None

@@ -61,6 +61,12 @@ CONTAINER_TYPES = ("Catalog", "Collection")
 # otherwise hold the job until it times out.
 MAX_DOCUMENTS = 50_000
 
+# The most text one walk keeps, as the sum of the lengths of `original`.
+# ftw-global-data-2e, the largest registered tree by this measure, had 15
+# million characters in November 2026. One document can have 32 MB
+# (registry.fetch), so the document limit alone does not bound the memory.
+MAX_WALK_CHARS = 128 * 1024 * 1024
+
 # The threads that read one catalog. source.coop took more than 1 second for
 # each document in November 2026, and ftw-global-data-2e has 507 of them.
 WALK_WORKERS = 16
@@ -234,6 +240,24 @@ def _fetch_children(
     return found
 
 
+def _add_children(
+    urls: Sequence[str],
+    parents: list[Row],
+    seen: set[str],
+    targets: list[tuple[str, list[Row]]],
+    max_documents: int,
+) -> str | None:
+    """Add each new child URL to `targets`. Return the limit that stops it, or None."""
+    for url in urls:
+        if url in seen:
+            continue
+        if len(seen) >= max_documents:
+            return f"links more than {max_documents} documents"
+        seen.add(url)
+        targets.append((url, parents))
+    return None
+
+
 def walk_catalog(
     catalog_id: str,
     url: str,
@@ -241,6 +265,7 @@ def walk_catalog(
     *,
     workers: int = WALK_WORKERS,
     max_documents: int = MAX_DOCUMENTS,
+    max_chars: int = MAX_WALK_CHARS,
 ) -> Walk:
     """Read the tree below `url` and return one row for each catalog and collection.
 
@@ -254,7 +279,8 @@ def walk_catalog(
     Raises when the root does not fetch, or when it is not a catalog or a
     collection with an `id`. A child that is missing is a fact about the
     catalog, so the walk skips it. A child that fails for another reason
-    makes the walk incomplete.
+    makes the walk incomplete. So does a tree over `max_documents` documents
+    or `max_chars` characters of documents, and the walk then stops.
     """
     local = threading.local()
 
@@ -274,25 +300,40 @@ def walk_catalog(
 
     walk = Walk(rows=[])
     seen = {url}
+    chars = 0
+    limit: str | None = None
     wave: list[tuple[str, dict[str, Any], list[Row]]] = [(url, root, [])]
     with ThreadPoolExecutor(max_workers=workers) as pool:
         while wave:
             targets: list[tuple[str, list[Row]]] = []
             for doc_url, doc, parents in wave:
-                walk.rows.append(build_row(catalog_id, doc_url, doc, parents))
-                below = [*parents, {"id": doc["id"], "href": doc_url}]
-                for child_url in _child_urls(doc_url, doc):
-                    if child_url in seen:
-                        continue
-                    if len(seen) >= max_documents:
-                        walk.complete = False
-                        break
-                    seen.add(child_url)
-                    targets.append((child_url, below))
+                row = build_row(catalog_id, doc_url, doc, parents)
+                chars += len(row["original"])
+                if chars > max_chars:
+                    limit = f"has more than {max_chars} characters of documents"
+                    break
+                walk.rows.append(row)
+                if limit is None:
+                    below = [*parents, {"id": doc["id"], "href": doc_url}]
+                    urls = _child_urls(doc_url, doc)
+                    limit = _add_children(urls, below, seen, targets, max_documents)
+            if chars > max_chars:
+                break
             wave = _fetch_children(targets, fetch, pool, walk)
-    if len(seen) >= max_documents:
-        log(f"  Warning: {catalog_id} links more than {max_documents} documents")
+    if limit is not None:
+        log(f"  Warning: {catalog_id} {limit}; the walk stops")
+        walk.complete = False
     return walk
+
+
+def check_rows(rows: Sequence[Row]) -> None:
+    """Raise when Arrow cannot hold the rows of one catalog.
+
+    A JSON document can hold text that is not valid Unicode, such as one
+    half of a surrogate pair. Arrow refuses it. Without this check per
+    catalog, one such document stops the index of every catalog.
+    """
+    pa.Table.from_pylist(list(rows), schema=SCHEMA)
 
 
 def previous_rows(previous: pa.Table | None, catalog_id: str) -> list[Row]:

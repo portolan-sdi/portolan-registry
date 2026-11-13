@@ -20,6 +20,7 @@ from registry.catalog_index import (
     Walk,
     build_row,
     build_table,
+    check_rows,
     data_link,
     previous_rows,
     read_index,
@@ -145,6 +146,29 @@ class TestWalk:
         result = walk(FakeFetcher(docs={ROOT: catalog(*children), **docs}), max_documents=3)
         assert not result.complete
         assert len(result.rows) == 3
+
+    def test_a_document_limit_keeps_the_children_already_found(self):
+        """The walk reads the children it found before the limit, and no level below."""
+        docs = {
+            ROOT: catalog("./a/catalog.json", "./b/catalog.json", "./c/catalog.json"),
+            "https://ex.org/a/catalog.json": catalog("./deep/catalog.json", catalog_id="a"),
+            "https://ex.org/a/deep/catalog.json": catalog(catalog_id="deep"),
+            "https://ex.org/b/catalog.json": catalog(catalog_id="b"),
+        }
+        result = walk(FakeFetcher(docs=docs), max_documents=3)
+        assert not result.complete
+        assert sorted(row["id"] for row in result.rows) == ["a", "b", "root"]
+
+    def test_stops_at_the_text_limit(self):
+        children = [f"./{n}/collection.json" for n in range(5)]
+        docs = {f"https://ex.org/{n}/collection.json": collection(str(n)) for n in range(5)}
+        fetcher = FakeFetcher(docs={ROOT: catalog(*children), **docs})
+        whole = walk(fetcher)
+        assert whole.complete and len(whole.rows) == 6
+        root_chars = len(whole.rows[0]["original"])
+        result = walk(fetcher, max_chars=root_chars + 150)
+        assert not result.complete
+        assert 1 < len(result.rows) < 6
 
     def test_raises_when_the_root_does_not_fetch(self):
         with pytest.raises(requests.HTTPError):
@@ -377,6 +401,12 @@ class TestCarriedRows:
     def test_no_answer_and_no_previous_rows_gives_nothing(self, previous):
         assert settle_rows("new", None, previous) == []
         assert settle_rows("new", None, None) == []
+
+
+def test_refuses_rows_that_arrow_cannot_hold():
+    check_rows([row_of(collection())])
+    with pytest.raises(Exception, match="surrogate"):
+        check_rows([row_of(collection(title="half \ud800 pair"))])
 
 
 def test_the_data_link_names_the_file_by_rel_and_type():

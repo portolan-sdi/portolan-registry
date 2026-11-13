@@ -145,6 +145,24 @@ def test_a_child_that_fails_keeps_the_previous_rows(run, capsys):
     assert "alpha: 2 row(s), incomplete" in capsys.readouterr().err
 
 
+def test_a_catalog_that_arrow_cannot_hold_does_not_stop_the_others(run, capsys):
+    """One document with text that is not valid Unicode must not stop the index."""
+    run.register("alpha", "roads")
+    run.register("beta", "rivers")
+    run.build()
+    run.fetcher.docs["https://beta.org/rivers/collection.json"]["title"] = "half \ud800 pair"
+    run.fetcher.docs["https://alpha.org/roads/collection.json"]["title"] = "Roads"
+    assert run.build() == 0
+    assert "beta: FAILED" in capsys.readouterr().err
+    table = pq.read_table(run.output, columns=["id", "title"]).to_pylist()
+    assert {row["id"]: row["title"] for row in table} == {
+        "alpha": None,
+        "roads": "Roads",
+        "beta": None,
+        "rivers": None,
+    }
+
+
 def test_refuses_to_write_an_empty_index(run, capsys):
     run.register("alpha", "roads")
     run.fetcher.docs.clear()
