@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-12T14:40:54.431688+00:00",
+  "generated": "2026-11-13T11:12:56.707333+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-11-12T14:40:54.431688+00:00",
+  "registry_generated": "2026-11-13T11:12:56.707333+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -42669,7 +42669,7 @@
     },
     {
       "id": "harmonized-field-data",
-      "collection_count": 78,
+      "collection_count": 79,
       "collections": [
         {
           "id": "ai4sf_ml",
@@ -43429,6 +43429,16 @@
             25.2107,
             -66.9677,
             49.3596
+          ]
+        },
+        {
+          "id": "wri_trazo_ml",
+          "title": "Trazo field boundary annotations for South America with splits",
+          "bbox": [
+            -76.7601,
+            -38.9176,
+            -39.0051,
+            1.7415
           ]
         },
         {
@@ -49835,6 +49845,22 @@
             50.3227,
             9.4616,
             52.5315
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nyc-land-cover-2017",
+      "collection_count": 1,
+      "collections": [
+        {
+          "id": "land-cover-2017",
+          "title": "NYC Land Cover 2017 (6-inch, 8 classes)",
+          "bbox": [
+            -74.2604,
+            40.4858,
+            -73.698,
+            40.9177
           ]
         }
       ]
