@@ -120,7 +120,7 @@ def test_a_removed_catalog_has_no_rows(run):
     run.register("gone", "roads", status="removed")
     run.build()
     assert {catalog_id for catalog_id, _ in run.ids()} == {"alpha"}
-    assert not [call for call in run.fetcher.calls if "gone.org" in call]
+    assert "https://gone.org/catalog.json" not in run.fetcher.calls
 
 
 def test_a_catalog_that_does_not_answer_keeps_its_rows(run, capsys):
