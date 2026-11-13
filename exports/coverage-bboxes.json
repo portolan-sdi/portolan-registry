@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-13T11:12:56.707333+00:00",
+  "generated": "2026-11-13T13:58:13.177777+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-11-13T11:12:56.707333+00:00",
+  "registry_generated": "2026-11-13T13:58:13.177777+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -49845,6 +49845,62 @@
             50.3227,
             9.4616,
             52.5315
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nthh-data-publications",
+      "collection_count": 5,
+      "collections": [
+        {
+          "id": "free-flowing-rivers",
+          "title": "Mapping the world's free-flowing rivers \u2014 global river reach connectivity assessment",
+          "bbox": [
+            -179.9979,
+            -55.8771,
+            179.9979,
+            83.5896
+          ]
+        },
+        {
+          "id": "grwl-raw",
+          "title": "Global River Width from Landsat \u2014 raw vector observations V01.01",
+          "bbox": [
+            -180.0,
+            -54.3104,
+            180.0,
+            82.3108
+          ]
+        },
+        {
+          "id": "hydrolakes",
+          "title": "HydroLAKES v1.0: Polygons",
+          "bbox": [
+            -180.0,
+            -55.8651,
+            180.0,
+            83.576
+          ]
+        },
+        {
+          "id": "lakeatlas",
+          "title": "HydroATLAS LakeATLAS v1.0 \u2014 global hydro-environmental lake attributes",
+          "bbox": [
+            -180.0,
+            -55.8651,
+            180.0,
+            83.576
+          ]
+        },
+        {
+          "id": "river-plastic-inputs",
+          "title": "Global river plastic inputs \u2014 Lebreton et al. (2017)",
+          "bbox": [
+            -137.9375,
+            -55.6208,
+            179.8792,
+            60.4125
           ]
         }
       ]
