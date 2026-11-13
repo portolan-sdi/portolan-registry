@@ -42,21 +42,39 @@ def test_site_dispatch_names_the_registry_commit():
     command = dispatch["run"]
     assert "event_type=registry-export-updated" in command
     assert "client_payload[registry_sha]=$GITHUB_SHA" in command
+    assert "client_payload[generated]=$GENERATED" in command
     assert "repos/portolan-sdi/portolan-sdi.org/dispatches" in command
+    assert dispatch["env"]["GENERATED"] == "${{ needs.build.outputs.generated }}"
 
 
-def test_the_site_refreshes_after_the_deploy():
-    """A refresh before the deploy ends would read the previous files."""
+def test_the_site_refreshes_after_a_successful_deploy():
+    """The site reads the release tree, so a refresh before the deploy ends
+    or after a failed deploy would read the previous files."""
     jobs = yaml.safe_load(Path(".github/workflows/pages.yml").read_text())["jobs"]
     assert jobs["deploy"]["needs"] == "build"
-    assert jobs["refresh"]["needs"] == "deploy"
-    # The site reads the raw export until it moves to the release tree, so a
-    # failed deploy must not stop the refresh.
-    assert jobs["refresh"]["if"] == "${{ !cancelled() }}"
+    assert jobs["refresh"]["needs"] == ["build", "deploy"]
+    assert jobs["refresh"]["if"] == "${{ !cancelled() && needs.deploy.result == 'success' }}"
     # A newer push can cancel a queued run that carried an export, so every
-    # run refreshes. No step may skip on what this one push changed.
+    # deploy refreshes. No step may skip on what this one push changed.
     assert all("if" not in step for step in jobs["refresh"]["steps"])
     assert jobs["deploy"]["permissions"] == {"pages": "write", "id-token": "write"}
+
+
+def test_the_refresh_waits_for_the_cdn():
+    """The CDN keeps each file for up to 600 seconds after a deploy."""
+    jobs = yaml.safe_load(Path(".github/workflows/pages.yml").read_text())["jobs"]
+    assert jobs["build"]["outputs"] == {
+        "generated": "${{ steps.published.outputs.generated }}",
+        "indexes": "${{ steps.published.outputs.indexes }}",
+    }
+    names = [step.get("name") for step in jobs["refresh"]["steps"]]
+    wait = names.index("Wait for the CDN to serve the export")
+    assert wait < names.index("Refresh portolan-sdi.org catalog cache")
+    assert wait < names.index("Request site coverage bake")
+    run = jobs["refresh"]["steps"][wait]["run"]
+    assert "https://registry.portolan-sdi.org/$path" in run
+    # Thirteen checks one minute apart outlast one 600 second cache period.
+    assert "seq 1 13" in run and "sleep 60" in run
 
 
 def test_the_deploy_and_ci_build_the_same_site():
