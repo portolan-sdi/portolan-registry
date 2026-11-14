@@ -1,0 +1,119 @@
+name: Catalog Index
+
+# Builds collections.parquet, the catalog index of the registry: one row for
+# each catalog and each collection of every registered catalog
+# (scripts/registry/catalog_index.py). The index is not in the catalog
+# export, because the export holds no catalog or collection document.
+#
+# The file is about 9 MB and most of its bytes change with each update. A
+# history of it on main would add that size to every clone for each night
+# with a change. So the file lives on the bot/catalog-index branch as one
+# commit, and each update replaces that commit. Publish Registry Site
+# copies the file from the branch into the site.
+on:
+  schedule:
+    # Nightly, at a minute of its own. Scheduled Re-validation starts at
+    # 06:00 UTC and reads the same hosts.
+    - cron: '17 4 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One build at a time. A second run would compare its rows with a branch
+# that the first run is about to replace.
+concurrency:
+  group: catalog-index
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build Index
+    runs-on: ubuntu-latest
+    # The run reads each catalog and collection document, and no item. It
+    # read 12,681 documents in 2 minutes on 13 November 2026.
+    timeout-minutes: 30
+    outputs:
+      changed: ${{ steps.build.outputs.changed }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup uv
+        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+
+      # The build compares its rows with the published index. It also
+      # copies rows from it for a catalog that does not answer.
+      - name: Fetch the published index
+        uses: ./.github/actions/fetch-catalog-index
+
+      # The script leaves the file untouched when no row changed, so the
+      # checksum tells a change apart from a night with none.
+      - name: Build the index
+        id: build
+        run: |
+          before=$(sha256sum exports/collections.parquet 2>/dev/null || true)
+          uv run --frozen --group site scripts/build_catalog_index.py
+          after=$(sha256sum exports/collections.parquet)
+          if [ "$before" = "$after" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Upload the index
+        if: steps.build.outputs.changed == 'true'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: catalog-index
+          path: exports/collections.parquet
+          if-no-files-found: error
+          retention-days: 7
+
+  # A job of its own, so the job that reads documents from other hosts has
+  # no write permission.
+  publish:
+    name: Publish Index
+    needs: build
+    if: needs.build.outputs.changed == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      # Replace the index branch.
+      contents: write
+      # Start Publish Registry Site.
+      actions: write
+    steps:
+      - name: Download the index
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: catalog-index
+          path: index
+
+      # A new repository with one commit, pushed over the branch. The
+      # branch never has a second commit, so the old file leaves the
+      # repository when GitHub collects the unreachable commit.
+      - name: Replace the index branch
+        working-directory: index
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: bot/catalog-index
+        run: |
+          git init --quiet --initial-branch "$BRANCH"
+          git config user.name "github-actions[bot]"
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+          git add collections.parquet
+          git commit --quiet -m "chore: update the catalog index"
+          git push --force \
+            "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" \
+            "$BRANCH"
+
+      # A push with GITHUB_TOKEN starts no workflow, and the index is not
+      # on main. So this job starts the deploy itself.
+      - name: Deploy the site
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --repo "$GITHUB_REPOSITORY" --ref main

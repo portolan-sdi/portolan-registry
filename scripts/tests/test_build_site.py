@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import re
 import shutil
-from datetime import date
+from datetime import UTC, date, datetime
 from html.parser import HTMLParser
 from pathlib import Path
 
@@ -17,7 +17,7 @@ import release_contract
 from build_site import BuildError, Tree
 from jsonschema import Draft7Validator
 
-from registry import geoparquet, validators
+from registry import catalog_index, geoparquet, validators
 from registry.contract import SITE_URL
 from registry.export import PREFIX
 
@@ -35,7 +35,8 @@ def root(tmp_path):
     """A repository copy with the committed store and the working schemas."""
     root = tmp_path / "repo"
     shutil.copytree(REPO / "schema", root / "schema")
-    shutil.copytree(REPO / "exports", root / "exports")
+    # Without the catalog index, which a local index build leaves in exports/.
+    shutil.copytree(REPO / "exports", root / "exports", ignore=shutil.ignore_patterns("*.parquet"))
     shutil.copytree(REPO / "site", root / "site")
     return root
 
@@ -319,6 +320,76 @@ def test_the_built_site_passes_stac_node_validator(root):
     release(root)
     out = root.parent / "_site"
     build_site.build_site(out=out, root=root)
+
+
+def write_catalog_index(root, rows=None):
+    """Put a catalog index where the build reads it."""
+    if rows is None:
+        doc = {"type": "Catalog", "id": "example", "description": "d", "links": []}
+        rows = [catalog_index.build_row("example", "https://ex.org/catalog.json", doc, [])]
+    table = catalog_index.build_table(rows, generated=datetime(2026, 1, 15, tzinfo=UTC))
+    path = root / catalog_index.INDEX_PATH
+    catalog_index.write_index(table, path)
+    return path
+
+
+def data_links(doc):
+    return [link for link in doc["links"] if link["rel"] == "data"]
+
+
+class TestCatalogIndex:
+    def test_each_tree_publishes_the_index_and_links_to_it(self, root):
+        release(root)
+        source = write_catalog_index(root)
+        out, _ = build(root)
+        for tree in ("next", "v0.1"):
+            assert (out / tree / "collections.parquet").read_bytes() == source.read_bytes()
+            assert data_links(read(out / tree / "catalogs.json")) == [
+                {
+                    "rel": "data",
+                    "href": f"{SITE_URL}/{tree}/collections.parquet",
+                    "type": "application/vnd.apache.parquet",
+                    "title": "Catalogs and collections as GeoParquet",
+                }
+            ]
+
+    def test_the_landing_page_lists_the_index(self, root):
+        write_catalog_index(root)
+        out, _ = build(root)
+        assert "next/collections.parquet" in local_links((out / "index.html").read_text())
+
+    def test_the_link_passes_the_extension_schema(self, root):
+        write_catalog_index(root)
+        out, _ = build(root)
+        extension = Draft7Validator(read(root / "schema" / "extension.json"))
+        assert list(extension.iter_errors(read(out / "next" / "catalogs.json"))) == []
+
+    def test_a_site_without_an_index_has_no_link(self, root):
+        out, _ = build(root)
+        assert not (out / "next" / "collections.parquet").exists()
+        assert data_links(read(out / "next" / "catalogs.json")) == []
+        assert "collections.parquet" not in (out / "index.html").read_text()
+
+    @pytest.mark.parametrize("content", ["other layout", "no rows"])
+    def test_an_index_that_the_build_cannot_use_does_not_stop_the_deploy(
+        self, root, content, capsys
+    ):
+        if content == "no rows":
+            write_catalog_index(root, rows=[])
+        else:
+            pq.write_table(pa.table({"id": ["a"]}), root / catalog_index.INDEX_PATH)
+        out, _ = build(root)
+        assert not (out / "next" / "collections.parquet").exists()
+        assert data_links(read(out / "next" / "catalogs.json")) == []
+        assert "not a catalog index of this layout" in capsys.readouterr().err
+
+    def test_an_index_over_the_size_limit_is_left_out(self, root, monkeypatch, capsys):
+        """One large file must not make check_sizes refuse the whole site."""
+        path = write_catalog_index(root)
+        assert build_site.usable_index(root) == path
+        monkeypatch.setattr(build_site, "MAX_FILE_BYTES", 10)
+        assert build_site.usable_index(root) is None
+        assert "the site has no catalog index" in capsys.readouterr().err
 
 
 class TestIndex:
