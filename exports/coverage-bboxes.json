@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-14T12:59:49.228672+00:00",
+  "generated": "2026-11-15T13:28:35.030932+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-11-14T12:59:49.228672+00:00",
+  "registry_generated": "2026-11-15T13:28:35.030932+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -40721,10 +40721,10 @@
           "id": "ftw-s2-2022",
           "title": "FTW Global \u2014 Field Boundaries 2022 (GeoParquet)",
           "bbox": [
-            -175.349,
-            -46.8675,
-            179.7939,
-            65.8206
+            -176.6649,
+            -54.8651,
+            179.6354,
+            80.1582
           ]
         },
         {
@@ -40811,10 +40811,10 @@
           "id": "ftw-raster-2022",
           "title": "FTW Global \u2014 Field & Boundary Probabilities 2022 (COG)",
           "bbox": [
-            -176.0391,
-            -46.9542,
+            -179.9342,
+            -55.9457,
             179.8203,
-            65.8216
+            80.1653
           ]
         },
         {
