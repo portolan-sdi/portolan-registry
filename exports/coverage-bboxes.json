@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-15T13:28:35.030932+00:00",
+  "generated": "2026-11-16T14:53:04.755183+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-11-15T13:28:35.030932+00:00",
+  "registry_generated": "2026-11-16T14:53:04.755183+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -5270,7 +5270,7 @@
             11.2334,
             44.4546,
             11.4212,
-            44.545
+            44.5459
           ]
         },
         {
@@ -52695,7 +52695,7 @@
     },
     {
       "id": "planet-disasterdata",
-      "collection_count": 52,
+      "collection_count": 55,
       "collections": [
         {
           "id": "post-event-planetscope-2026-11-05",
@@ -52738,13 +52738,33 @@
           ]
         },
         {
-          "id": "post-event-skysat-2026-11-10",
-          "title": "Punakha and the lower Mo Chhu, 10 Nov (SkySat) \u2014 Post-event Imagery",
+          "id": "post-event-pelican-2026-11-11",
+          "title": "Punakha and Kabesa, 11 Nov (Pelican) \u2014 Post-event Imagery",
           "bbox": [
-            89.8078,
-            27.503,
-            89.8793,
-            27.676
+            89.7744,
+            27.5235,
+            89.9154,
+            27.7197
+          ]
+        },
+        {
+          "id": "post-event-skysat-2026-11-12",
+          "title": "Taktsemakhang, 12 Nov (SkySat) \u2014 Post-event Imagery",
+          "bbox": [
+            89.6838,
+            27.9698,
+            89.7459,
+            28.1329
+          ]
+        },
+        {
+          "id": "post-event-skysat-2026-11-14",
+          "title": "Sintaphu Tsho and Gasa Tshachu, 14 Nov (SkySat) \u2014 Post-event Imagery",
+          "bbox": [
+            89.7073,
+            27.8199,
+            89.8885,
+            28.2549
           ]
         },
         {
@@ -52785,6 +52805,16 @@
             27.9805,
             89.7505,
             28.1383
+          ]
+        },
+        {
+          "id": "post-event-skysat-2026-11-10",
+          "title": "Punakha and the lower Mo Chhu, 10 Nov (SkySat) \u2014 Post-event Imagery",
+          "bbox": [
+            89.8078,
+            27.503,
+            89.8793,
+            27.676
           ]
         },
         {
