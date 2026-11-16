@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-13T13:58:13.177777+00:00",
+  "generated": "2026-11-16T14:53:04.755183+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-11-13T13:58:13.177777+00:00",
+  "registry_generated": "2026-11-16T14:53:04.755183+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -47,10 +47,10 @@
           "id": "elektromobilitaet-und-sharing/ladesaeulen",
           "title": "Geb\u00fcndelte Daten E-Lades\u00e4ulen Baden-W\u00fcrttemberg",
           "bbox": [
-            -124.5085,
-            -83.1643,
-            120.6733,
-            84.0302
+            -7.9054,
+            -54.9041,
+            107.362,
+            80.0
           ]
         },
         {
@@ -5270,7 +5270,7 @@
             11.2334,
             44.4546,
             11.4212,
-            44.545
+            44.5459
           ]
         },
         {
@@ -29828,6 +29828,16 @@
           ]
         },
         {
+          "id": "medio-ambiente/r/calidad_aire_datos_dia",
+          "title": "Red de Calidad del Aire. Datos del d\u00eda en curso",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
           "id": "medio-ambiente/r/calidad_aire_datos_historico",
           "title": "Red de Calidad del Aire. Datos horarios desde 2005",
           "bbox": [
@@ -29871,10 +29881,10 @@
           "id": "medio-ambiente/r/calidad_aire_estaciones",
           "title": "Red de Calidad del Aire. Estaciones",
           "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
+            -4.3981,
+            40.0333,
+            -3.2211,
+            40.909
           ]
         },
         {
@@ -29980,16 +29990,6 @@
         {
           "id": "medio-ambiente/r/riecov",
           "title": "Registro de instalaciones emisoras de COV (RIECOV)",
-          "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
-          ]
-        },
-        {
-          "id": "medio-ambiente/r/calidad_aire_datos_dia",
-          "title": "Red de Calidad del Aire. Datos del d\u00eda en curso",
           "bbox": [
             -180.0,
             -90.0,
@@ -30191,10 +30191,10 @@
           "id": "medio-ambiente/m-p/participa_educacion_ambiental",
           "title": "Participaci\u00f3n en actividades de educaci\u00f3n ambiental",
           "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
+            -4.2044,
+            40.2981,
+            -3.4895,
+            41.1037
           ]
         },
         {
@@ -31631,10 +31631,10 @@
           "id": "salud/c-1/captadores_polen",
           "title": "Captadores de polen",
           "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
+            -4.0016,
+            40.0318,
+            -3.3705,
+            40.6543
           ]
         },
         {
@@ -40721,10 +40721,10 @@
           "id": "ftw-s2-2022",
           "title": "FTW Global \u2014 Field Boundaries 2022 (GeoParquet)",
           "bbox": [
-            -175.349,
-            -46.8675,
-            179.7939,
-            65.8206
+            -176.6649,
+            -54.8651,
+            179.6354,
+            80.1582
           ]
         },
         {
@@ -40811,10 +40811,10 @@
           "id": "ftw-raster-2022",
           "title": "FTW Global \u2014 Field & Boundary Probabilities 2022 (COG)",
           "bbox": [
-            -176.0391,
-            -46.9542,
+            -179.9342,
+            -55.9457,
             179.8203,
-            65.8216
+            80.1653
           ]
         },
         {
@@ -46369,10 +46369,10 @@
           "id": "ciencia-y-tecnologia/fuentes-agua-mascotas",
           "title": "Fuentes de agua para mascotas",
           "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
+            -3.7788,
+            40.3335,
+            -3.5468,
+            40.5031
           ]
         },
         {
@@ -46389,40 +46389,40 @@
           "id": "comercio/comercios-centenarios",
           "title": "Comercios centenarios de Madrid",
           "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
+            -3.7174,
+            40.3469,
+            -3.6278,
+            40.4979
           ]
         },
         {
           "id": "comercio/situados-aislados-2025",
           "title": "Relaci\u00f3n de situados aislados en v\u00eda p\u00fablica",
           "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
+            -3.788,
+            40.334,
+            -3.5675,
+            40.5368
           ]
         },
         {
           "id": "comercio/terrazas-hosteleria",
           "title": "Censo de locales, sus actividades y terrazas de hosteler\u00eda y restauraci\u00f3n",
           "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
+            -3.794,
+            40.3353,
+            -3.5505,
+            40.5324
           ]
         },
         {
           "id": "cultura-y-ocio/agenda-eventos-culturales-100",
           "title": "Actividades culturales y de ocio municipal en los pr\u00f3ximos 100 d\u00edas",
           "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
+            -3.7863,
+            40.3348,
+            -3.5727,
+            40.5197
           ]
         },
         {
@@ -46469,10 +46469,10 @@
           "id": "cultura-y-ocio/bibliotecas",
           "title": "Bibliotecas de Madrid",
           "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
+            -3.7694,
+            40.3495,
+            -3.5937,
+            40.4904
           ]
         },
         {
@@ -46489,10 +46489,10 @@
           "id": "cultura-y-ocio/centros-culturales",
           "title": "Centros Culturales Municipales (incluyen Socioculturales y Juveniles)",
           "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
+            -3.8245,
+            40.3348,
+            -3.5727,
+            40.5197
           ]
         },
         {
@@ -46509,20 +46509,20 @@
           "id": "cultura-y-ocio/monumentos-ciudad",
           "title": "Monumentos de la ciudad de Madrid",
           "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
+            -3.8324,
+            40.3411,
+            -3.5502,
+            40.5506
           ]
         },
         {
           "id": "cultura-y-ocio/museos",
           "title": "Museos de la ciudad de Madrid",
           "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
+            -3.8084,
+            40.3736,
+            -3.5933,
+            40.5454
           ]
         },
         {
@@ -46569,30 +46569,30 @@
           "id": "deporte/instalaciones-deportivas-basicas",
           "title": "Deportes. Instalaciones deportivas b\u00e1sicas municipales",
           "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
+            -3.7922,
+            40.3338,
+            -3.5575,
+            40.5352
           ]
         },
         {
           "id": "deporte/piscinas-municipales",
           "title": "Deportes. Piscinas municipales en la ciudad de Madrid",
           "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
+            -3.7833,
+            40.3462,
+            -3.5877,
+            40.4844
           ]
         },
         {
           "id": "deporte/polideportivos",
           "title": "Deportes. Centros deportivos municipales (polideportivos)",
           "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
+            -3.7833,
+            40.3427,
+            -3.5877,
+            40.4981
           ]
         },
         {
@@ -46609,40 +46609,40 @@
           "id": "economia/infraestructuras-emprendedores",
           "title": "Infraestructuras municipales para el fomento del emprendimiento",
           "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
+            -3.7457,
+            40.3586,
+            -3.5989,
+            40.492
           ]
         },
         {
           "id": "educacion/centros-educativos",
           "title": "Centros educativos en Madrid",
           "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
+            -3.8355,
+            40.3328,
+            -3.5391,
+            40.5486
           ]
         },
         {
           "id": "educacion/escuelas-infantiles-municipales",
           "title": "Escuelas infantiles municipales",
           "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
+            -3.7857,
+            40.3375,
+            -3.5606,
+            40.5045
           ]
         },
         {
           "id": "educacion/salas-estudio-lectura",
           "title": "Salas de estudio y lectura",
           "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
+            -3.7847,
+            40.3348,
+            -3.5727,
+            40.5197
           ]
         },
         {
@@ -46689,10 +46689,10 @@
           "id": "empleo/oficinas-agencia-empleo",
           "title": "Oficinas de la Agencia Municipal de Empleo",
           "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
+            -3.7526,
+            40.3586,
+            -3.5876,
+            40.4546
           ]
         },
         {
@@ -46709,10 +46709,10 @@
           "id": "energia/consumo-edificios-municipales",
           "title": "Consumo de energ\u00eda en edificios municipales. Datos mensuales",
           "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
+            -3.7862,
+            40.335,
+            -3.5699,
+            40.5199
           ]
         },
         {
@@ -46859,10 +46859,10 @@
           "id": "medio-ambiente/contenedor-aceitevegetal-usado",
           "title": "Contenedores de aceite vegetal usado",
           "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
+            -3.7819,
+            40.3386,
+            -3.5728,
+            40.517
           ]
         },
         {
@@ -46929,10 +46929,10 @@
           "id": "medio-ambiente/puntos-limpios-proximidad",
           "title": "Puntos limpios de proximidad",
           "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
+            -3.7934,
+            40.3348,
+            -3.5846,
+            40.5167
           ]
         },
         {
@@ -47099,20 +47099,20 @@
           "id": "sector-publico/oficinas-linea-madrid",
           "title": "Oficinas de L\u00ednea Madrid",
           "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
+            -3.7859,
+            40.3491,
+            -3.5778,
+            40.5199
           ]
         },
         {
           "id": "sector-publico/oficinas-registro",
           "title": "Oficinas de registro",
           "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
+            -3.7859,
+            40.3491,
+            -3.5778,
+            40.5199
           ]
         },
         {
@@ -47259,10 +47259,10 @@
           "id": "sociedad-y-bienestar/centros-atencion-social",
           "title": "Sedes. Centros de atenci\u00f3n social",
           "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
+            -3.8264,
+            40.3405,
+            -3.5528,
+            40.563
           ]
         },
         {
@@ -47299,10 +47299,10 @@
           "id": "sociedad-y-bienestar/instalaciones-accesibles-municipales",
           "title": "Instalaciones accesibles municipales",
           "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
+            -3.8264,
+            40.3303,
+            -3.5606,
+            40.5368
           ]
         },
         {
@@ -47429,10 +47429,10 @@
           "id": "transporte/paradas-taxi",
           "title": "Taxi. Reservas de paradas en v\u00eda p\u00fablica",
           "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
+            -3.8019,
+            40.342,
+            -3.5697,
+            40.5162
           ]
         },
         {
@@ -47449,40 +47449,40 @@
           "id": "transporte/reservas-carga-descarga",
           "title": "Carga y descarga. Reserva de estacionamiento para carga y descarga de mercanc\u00edas en v\u00eda p\u00fablica",
           "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
+            -3.8288,
+            40.3421,
+            -3.5577,
+            40.5137
           ]
         },
         {
           "id": "transporte/ser-calles-plazas",
           "title": "Servicio de Estacionamiento Regulado (SER). Calles y n\u00famero de plazas",
           "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
+            -3.7423,
+            40.3781,
+            -3.6415,
+            40.4895
           ]
         },
         {
           "id": "turismo/oficinas-turismo",
           "title": "Oficinas de turismo en Madrid",
           "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
+            -3.7217,
+            40.4077,
+            -3.586,
+            40.4519
           ]
         },
         {
           "id": "turismo/puntos-informacion-turistica",
           "title": "Puntos de informaci\u00f3n tur\u00edstica",
           "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
+            -3.7122,
+            40.4086,
+            -3.586,
+            40.4519
           ]
         },
         {
@@ -47519,10 +47519,10 @@
           "id": "urbanismo/aparcamientos-municipales-plazas",
           "title": "Aparcamientos municipales. N\u00famero de plazas",
           "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
+            -3.7841,
+            40.3424,
+            -3.5833,
+            40.4942
           ]
         },
         {
@@ -47589,10 +47589,10 @@
           "id": "urbanismo/fuentes-agua-beber",
           "title": "Fuentes de agua para beber",
           "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
+            -3.8312,
+            40.3331,
+            -3.5468,
+            40.592
           ]
         },
         {
@@ -52695,7 +52695,7 @@
     },
     {
       "id": "planet-disasterdata",
-      "collection_count": 52,
+      "collection_count": 55,
       "collections": [
         {
           "id": "post-event-planetscope-2026-11-05",
@@ -52738,13 +52738,33 @@
           ]
         },
         {
-          "id": "post-event-skysat-2026-11-10",
-          "title": "Punakha and the lower Mo Chhu, 10 Nov (SkySat) \u2014 Post-event Imagery",
+          "id": "post-event-pelican-2026-11-11",
+          "title": "Punakha and Kabesa, 11 Nov (Pelican) \u2014 Post-event Imagery",
           "bbox": [
-            89.8078,
-            27.503,
-            89.8793,
-            27.676
+            89.7744,
+            27.5235,
+            89.9154,
+            27.7197
+          ]
+        },
+        {
+          "id": "post-event-skysat-2026-11-12",
+          "title": "Taktsemakhang, 12 Nov (SkySat) \u2014 Post-event Imagery",
+          "bbox": [
+            89.6838,
+            27.9698,
+            89.7459,
+            28.1329
+          ]
+        },
+        {
+          "id": "post-event-skysat-2026-11-14",
+          "title": "Sintaphu Tsho and Gasa Tshachu, 14 Nov (SkySat) \u2014 Post-event Imagery",
+          "bbox": [
+            89.7073,
+            27.8199,
+            89.8885,
+            28.2549
           ]
         },
         {
@@ -52785,6 +52805,16 @@
             27.9805,
             89.7505,
             28.1383
+          ]
+        },
+        {
+          "id": "post-event-skysat-2026-11-10",
+          "title": "Punakha and the lower Mo Chhu, 10 Nov (SkySat) \u2014 Post-event Imagery",
+          "bbox": [
+            89.8078,
+            27.503,
+            89.8793,
+            27.676
           ]
         },
         {
