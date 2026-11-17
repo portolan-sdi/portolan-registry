@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-16T14:53:04.755183+00:00",
+  "generated": "2026-11-17T15:31:37.067378+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-11-16T14:53:04.755183+00:00",
+  "registry_generated": "2026-11-17T15:31:37.067378+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -40711,10 +40711,10 @@
           "id": "ftw-s2-2021",
           "title": "FTW Global \u2014 Field Boundaries 2021 (GeoParquet)",
           "bbox": [
-            -175.3508,
-            -46.9057,
-            179.7955,
-            65.8189
+            -176.6649,
+            -55.2252,
+            179.6406,
+            81.0525
           ]
         },
         {
@@ -40801,10 +40801,10 @@
           "id": "ftw-raster-2021",
           "title": "FTW Global \u2014 Field & Boundary Probabilities 2021 (COG)",
           "bbox": [
-            -176.0391,
-            -46.9542,
+            -179.9342,
+            -55.9457,
             179.8203,
-            65.8216
+            81.0609
           ]
         },
         {
@@ -49851,7 +49851,7 @@
     },
     {
       "id": "nthh-data-publications",
-      "collection_count": 5,
+      "collection_count": 7,
       "collections": [
         {
           "id": "free-flowing-rivers",
@@ -49894,6 +49894,16 @@
           ]
         },
         {
+          "id": "naip",
+          "title": "NAIP visualization COGs",
+          "bbox": [
+            -125.1562,
+            23.2413,
+            -66.0938,
+            49.838
+          ]
+        },
+        {
           "id": "river-plastic-inputs",
           "title": "Global river plastic inputs \u2014 Lebreton et al. (2017)",
           "bbox": [
@@ -49901,6 +49911,16 @@
             -55.6208,
             179.8792,
             60.4125
+          ]
+        },
+        {
+          "id": "us-census-places",
+          "title": "US Census counties, places and county subdivisions, 2023 cartographic boundaries",
+          "bbox": [
+            -179.1467,
+            -14.5487,
+            179.7785,
+            71.3878
           ]
         }
       ]
@@ -55629,7 +55649,7 @@
     },
     {
       "id": "summerland-open-data",
-      "collection_count": 49,
+      "collection_count": 36,
       "collections": [
         {
           "id": "base-layers/beyond-summerland",
@@ -55689,136 +55709,6 @@
             49.548,
             -119.6168,
             49.7122
-          ]
-        },
-        {
-          "id": "community/cultural-assets",
-          "title": "Cultural Assets",
-          "bbox": [
-            -119.777,
-            49.5641,
-            -119.6226,
-            49.6887
-          ]
-        },
-        {
-          "id": "community/curbside-collection",
-          "title": "Curbside Collection",
-          "bbox": [
-            -119.749,
-            49.5553,
-            -119.6194,
-            49.6742
-          ]
-        },
-        {
-          "id": "community/curbside-collection-roads",
-          "title": "Curbside Collection Roads",
-          "bbox": [
-            -119.7486,
-            49.5606,
-            -119.6208,
-            49.6676
-          ]
-        },
-        {
-          "id": "community/heritage-list",
-          "title": "Heritage List",
-          "bbox": [
-            -119.7203,
-            49.5655,
-            -119.6333,
-            49.6186
-          ]
-        },
-        {
-          "id": "community/sister-and-friendship-cities",
-          "title": "Sister and Friendship Cities",
-          "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
-          ]
-        },
-        {
-          "id": "development-permit-areas/bentley-road-industrial",
-          "title": "Bentley Road Industrial Development Permit Area",
-          "bbox": [
-            -119.6909,
-            49.619,
-            -119.6833,
-            49.6243
-          ]
-        },
-        {
-          "id": "development-permit-areas/downtown",
-          "title": "Downtown Development Permit Area",
-          "bbox": [
-            -119.6845,
-            49.5995,
-            -119.6621,
-            49.608
-          ]
-        },
-        {
-          "id": "development-permit-areas/environmentally-sensitive",
-          "title": "Environmentally Sensitive Development Permit Area",
-          "bbox": [
-            -119.8052,
-            49.548,
-            -119.6252,
-            49.7122
-          ]
-        },
-        {
-          "id": "development-permit-areas/high-hazard",
-          "title": "High Hazard Development Permit Area",
-          "bbox": [
-            -119.6943,
-            49.5567,
-            -119.6393,
-            49.6532
-          ]
-        },
-        {
-          "id": "development-permit-areas/lower-town",
-          "title": "Lower Town Development Permit Area",
-          "bbox": [
-            -119.6568,
-            49.5996,
-            -119.6496,
-            49.6048
-          ]
-        },
-        {
-          "id": "development-permit-areas/trout-creek",
-          "title": "Trout Creek Development Permit Area",
-          "bbox": [
-            -119.6321,
-            49.5673,
-            -119.6293,
-            49.5741
-          ]
-        },
-        {
-          "id": "development-permit-areas/watercourse-riparian",
-          "title": "Watercourse (Riparian) Development Permit Area",
-          "bbox": [
-            -119.798,
-            49.548,
-            -119.6194,
-            49.7087
-          ]
-        },
-        {
-          "id": "development-permit-areas/wildfire-hazard",
-          "title": "Wildfire Hazard Development Permit Area",
-          "bbox": [
-            -119.7151,
-            49.567,
-            -119.6688,
-            49.6302
           ]
         },
         {
