@@ -53,7 +53,10 @@ def test_the_site_refreshes_after_a_successful_deploy():
     jobs = yaml.safe_load(Path(".github/workflows/pages.yml").read_text())["jobs"]
     assert jobs["deploy"]["needs"] == "build"
     assert jobs["refresh"]["needs"] == ["build", "deploy"]
-    assert jobs["refresh"]["if"] == "${{ !cancelled() && needs.deploy.result == 'success' }}"
+    assert jobs["refresh"]["if"] == (
+        "${{ !cancelled() && needs.deploy.result == 'success'"
+        " && (github.event_name != 'workflow_dispatch' || inputs.refresh) }}"
+    )
     # A newer push can cancel a queued run that carried an export, so every
     # deploy refreshes. No step may skip on what this one push changed.
     assert all("if" not in step for step in jobs["refresh"]["steps"])
@@ -222,6 +225,10 @@ def test_the_index_workflow_and_the_fetch_name_one_branch():
     fetch = action["runs"]["steps"]
     assert _index_branch_of(fetch) == INDEX_BRANCH
     assert f"FETCH_HEAD:{INDEX_NAME}" in fetch[0]["run"]
+    # Only a missing branch lets the step pass with no file. Exit code 2 of
+    # ls-remote means that the branch does not exist.
+    assert "git ls-remote --exit-code --heads origin" in fetch[0]["run"]
+    assert '"$status" -eq 2' in fetch[0]["run"]
     assert f'mv "$RUNNER_TEMP/{INDEX_NAME}" {INDEX_PATH}' in fetch[0]["run"]
 
     publish = _steps("catalog-index.yml", "publish")
@@ -261,7 +268,13 @@ def test_the_index_workflow_publishes_only_a_changed_index():
     assert publish["permissions"] == {"contents": "write", "actions": "write"}
     assert all("uses" not in step or "checkout" not in step["uses"] for step in publish["steps"])
     deploy = publish["steps"][-1]
-    assert deploy["run"] == 'gh workflow run pages.yml --repo "$GITHUB_REPOSITORY" --ref main'
+    # The export did not change, so the deploy does not refresh portolan-sdi.org.
+    assert deploy["run"] == (
+        'gh workflow run pages.yml --repo "$GITHUB_REPOSITORY" --ref main -f refresh=false'
+    )
+    pages = yaml.safe_load(Path(".github/workflows/pages.yml").read_text())
+    refresh = pages[True]["workflow_dispatch"]["inputs"]["refresh"]
+    assert refresh["type"] == "boolean" and refresh["default"] is True
     # The deploy needs a manual trigger on the Pages workflow.
     pages = yaml.safe_load(Path(".github/workflows/pages.yml").read_text())
     assert "workflow_dispatch" in pages[True]

@@ -19,6 +19,13 @@ on:
       - 'uv.lock'
       - '.github/workflows/pages.yml'
   workflow_dispatch:
+    inputs:
+      refresh:
+        description: >-
+          Refresh the portolan-sdi.org cache and request its coverage bake.
+          Catalog Index sets false, because the export did not change.
+        type: boolean
+        default: true
 
 permissions:
   contents: read
@@ -116,7 +123,9 @@ jobs:
   refresh:
     name: Refresh Site Cache
     needs: [build, deploy]
-    if: ${{ !cancelled() && needs.deploy.result == 'success' }}
+    if: >-
+      ${{ !cancelled() && needs.deploy.result == 'success'
+      && (github.event_name != 'workflow_dispatch' || inputs.refresh) }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:

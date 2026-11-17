@@ -41,6 +41,16 @@ def tree(name, *collections):
     return docs
 
 
+def test_an_unreadable_entry_file_skips_only_its_catalog(tmp_path):
+    run = Run(tmp_path)
+    run.register("alpha", "a1")
+    (run.catalogs / "broken.yaml").write_text("- a list, not a mapping\n")
+    (run.catalogs / "bad.yaml").write_text("url: [unclosed\n")
+    run.statuses.update(broken="valid", bad="valid")
+    assert run.build() == 0
+    assert run.ids() == [("alpha", "a1"), ("alpha", "alpha")]
+
+
 class Run:
     """A registry directory, the documents its catalogs serve, and the script."""
 

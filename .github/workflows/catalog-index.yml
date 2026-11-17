@@ -112,8 +112,11 @@ jobs:
             "$BRANCH"
 
       # A push with GITHUB_TOKEN starts no workflow, and the index is not
-      # on main. So this job starts the deploy itself.
+      # on main. So this job starts the deploy itself. The export did not
+      # change, so the deploy does not refresh portolan-sdi.org.
       - name: Deploy the site
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh workflow run pages.yml --repo "$GITHUB_REPOSITORY" --ref main
+        run: >-
+          gh workflow run pages.yml --repo "$GITHUB_REPOSITORY" --ref main
+          -f refresh=false

@@ -56,7 +56,7 @@ def _declared_interval(collection: Mapping[str, Any]) -> Any:
     return intervals[0] if intervals else None
 
 
-def _temporal_interval(collection: Mapping[str, Any]) -> list[str | None] | None:
+def temporal_interval(collection: Mapping[str, Any]) -> list[str | None] | None:
     """The first temporal interval a collection declares, or None.
 
     STAC makes the first interval the overall extent. A null endpoint is an
@@ -98,7 +98,7 @@ def _merge_intervals(intervals: list[list[str | None]]) -> list[str | None] | No
 
 
 def _instant(value: str | None) -> datetime:
-    # _temporal_interval admits only values that parse.
+    # temporal_interval admits only values that parse.
     parsed = parse_timestamp(value)
     if parsed is None:
         raise ValueError(f"unparsable temporal endpoint: {value!r}")
@@ -272,7 +272,7 @@ def _summarize_collection(url: str, collection: Mapping[str, Any]) -> Collection
         spec_version=declared_version(collection),
         row_count=collection.get("table:row_count") or 0,
         providers=collection.get("providers"),
-        temporal=_temporal_interval(collection),
+        temporal=temporal_interval(collection),
     )
 
     for asset in (collection.get("assets") or {}).values():

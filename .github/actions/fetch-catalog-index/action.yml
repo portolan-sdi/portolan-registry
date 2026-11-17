@@ -15,10 +15,19 @@ runs:
       env:
         BRANCH: bot/catalog-index
       run: |
-        if ! git fetch --quiet --depth 1 origin "$BRANCH"; then
+        # ls-remote exits with 2 when the branch does not exist. Any other
+        # failure stops the job. A build without the index would remove the
+        # index from the site, or drop the rows of a catalog that is down.
+        status=0
+        git ls-remote --exit-code --heads origin "$BRANCH" > /dev/null || status=$?
+        if [ "$status" -eq 2 ]; then
           echo "No $BRANCH branch; the registry has no published catalog index"
           exit 0
+        elif [ "$status" -ne 0 ]; then
+          echo "::error::Cannot read the branches of the repository"
+          exit 1
         fi
+        git fetch --quiet --depth 1 origin "$BRANCH"
         # Write to a temporary file first, so a failed read leaves no
         # partial index for the build to publish.
         git show FETCH_HEAD:collections.parquet > "$RUNNER_TEMP/collections.parquet"

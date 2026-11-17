@@ -17,10 +17,12 @@ own catalog.
 from __future__ import annotations
 
 import json
+import math
 import threading
+import time
 from collections.abc import Callable, Mapping, Sequence
 from concurrent.futures import ThreadPoolExecutor
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
@@ -31,6 +33,7 @@ import pyarrow.parquet as pq
 import shapely
 
 from registry.bbox import collection_bbox
+from registry.crawl import temporal_interval
 from registry.export import PREFIX
 from registry.fetch import Fetcher, NotFound, resolve_url
 from registry.geoparquet import GEOMETRY, GEOPARQUET_VERSION, bbox_geometry
@@ -58,14 +61,19 @@ CONTAINER_TYPES = ("Catalog", "Collection")
 # The most documents one walk reads. comunidad-madrid-datos-abiertos, the
 # largest registered tree, had 2,141 catalogs and collections in November
 # 2026. A server that makes up a new child URL on each request would
-# otherwise hold the job until it times out.
+# otherwise give a walk with no end.
 MAX_DOCUMENTS = 50_000
 
 # The most text one walk keeps, as the sum of the lengths of `original`.
 # ftw-global-data-2e, the largest registered tree by this measure, had 15
 # million characters in November 2026. One document can have 32 MB
 # (registry.fetch), so the document limit alone does not bound the memory.
+# The walk can pass this limit by one batch of WALK_BATCH documents.
 MAX_WALK_CHARS = 128 * 1024 * 1024
+
+# The documents that one walk fetches before it counts their characters. The
+# walk holds at most this many documents that it did not count.
+WALK_BATCH = 64
 
 # The threads that read one catalog. source.coop took more than 1 second for
 # each document in November 2026, and ftw-global-data-2e has 507 of them.
@@ -109,12 +117,17 @@ class Walk:
     """The rows of one registered catalog.
 
     `complete` is False when a document did not fetch for a reason other
-    than a missing file, or when the walk stopped at its document limit.
-    The rows then have a hole that says nothing about the catalog.
+    than a missing file, or when the walk stopped at a limit. The rows then
+    have a hole that says nothing about the catalog. `holes` holds the URL
+    of each document that the walk did not read.
     """
 
     rows: list[Row]
-    complete: bool = True
+    holes: list[str] = field(default_factory=list)
+
+    @property
+    def complete(self) -> bool:
+        return not self.holes
 
 
 def _text(value: Any) -> str | None:
@@ -142,34 +155,36 @@ def _child_urls(url: str, doc: Mapping[str, Any]) -> list[str]:
     return [resolve_url(url, link["href"] or "") for link in _links(doc) if link["rel"] == "child"]
 
 
-def _instant(value: Any) -> datetime | None:
-    """One end of a temporal interval in UTC. None for an open or unreadable end."""
-    parsed = parse_timestamp(_text(value))
-    if parsed is None:
-        return None
-    try:
-        # STAC requires a time zone. Read a value without one as UTC.
-        return parsed.replace(tzinfo=UTC) if parsed.tzinfo is None else parsed.astimezone(UTC)
-    except (OverflowError, ValueError):
-        return None
+def _instant(value: str | None) -> datetime | None:
+    """One end of a temporal interval in UTC. None for an open end."""
+    parsed = parse_timestamp(value)
+    return None if parsed is None else parsed.astimezone(UTC)
 
 
 def _interval(collection: Mapping[str, Any]) -> tuple[datetime | None, datetime | None]:
-    """The first temporal interval of a collection. STAC makes it the overall extent."""
-    extent = collection.get("extent")
-    temporal = extent.get("temporal") if isinstance(extent, dict) else None
-    intervals = temporal.get("interval") if isinstance(temporal, dict) else None
-    first = intervals[0] if isinstance(intervals, list) and intervals else None
-    if not isinstance(first, list) or len(first) != 2:
+    """The first temporal interval of a collection. STAC makes it the overall extent.
+
+    The rules are those of the crawl (registry.crawl.temporal_interval), so
+    this file and `catalogs.parquet` agree. A null end is an open end. The
+    two ends are None when one end is not an RFC 3339 date-time, because a
+    client reads a null end as an open end.
+    """
+    try:
+        declared = temporal_interval(collection)
+        if declared is None:
+            return None, None
+        return _instant(declared[0]), _instant(declared[1])
+    except (AttributeError, LookupError, OverflowError, TypeError, ValueError):
+        # The extent does not have the shape that STAC requires, or UTC
+        # cannot hold the instant.
         return None, None
-    return _instant(first[0]), _instant(first[1])
 
 
 def _extent_columns(collection: Mapping[str, Any]) -> Row:
     """The geometry, bbox, and time columns of a collection row."""
     try:
         bbox = collection_bbox(collection)
-    except (AttributeError, TypeError):
+    except (AttributeError, LookupError, TypeError, ValueError):
         # The extent does not have the shape that STAC requires.
         bbox = None
     geometry = bbox_geometry(bbox)
@@ -189,6 +204,30 @@ def _extent_columns(collection: Mapping[str, Any]) -> Row:
     return columns
 
 
+def _finite(value: Any) -> Any:
+    """`value` with null in the place of each NaN and each infinite number."""
+    if isinstance(value, float) and not math.isfinite(value):
+        return None
+    if isinstance(value, dict):
+        return {key: _finite(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_finite(item) for item in value]
+    return value
+
+
+def _original(doc: Mapping[str, Any]) -> str:
+    """The document as JSON text.
+
+    Python reads `NaN` and `Infinity` from a document, and JSON has neither.
+    A client that parses the column would fail on such a row, so each one
+    becomes null.
+    """
+    try:
+        return json.dumps(doc, ensure_ascii=False, separators=(",", ":"), allow_nan=False)
+    except ValueError:
+        return json.dumps(_finite(doc), ensure_ascii=False, separators=(",", ":"), allow_nan=False)
+
+
 def build_row(catalog_id: str, url: str, doc: Mapping[str, Any], parents: Sequence[Row]) -> Row:
     """The row of one catalog or collection document."""
     is_collection = doc["type"] == "Collection"
@@ -205,7 +244,7 @@ def build_row(catalog_id: str, url: str, doc: Mapping[str, Any], parents: Sequen
         "end_datetime": None,
         "description": _text(doc.get("description")),
         "license": None,
-        "original": json.dumps(doc, ensure_ascii=False, separators=(",", ":")),
+        "original": _original(doc),
         "title": _text(doc.get("title")),
         "keywords": None,
         REGISTRY_ID: catalog_id,
@@ -232,7 +271,7 @@ def _fetch_children(
             log(f"  Warning: missing child {url}")
         elif isinstance(child, Exception):
             log(f"  Warning: Failed to fetch {url}: {child}")
-            walk.complete = False
+            walk.holes.append(url)
         elif _container_id(child) is None:
             log(f"  Warning: {url} is not a catalog or collection with an id")
         else:
@@ -266,25 +305,31 @@ def walk_catalog(
     workers: int = WALK_WORKERS,
     max_documents: int = MAX_DOCUMENTS,
     max_chars: int = MAX_WALK_CHARS,
+    deadline: float | None = None,
 ) -> Walk:
     """Read the tree below `url` and return one row for each catalog and collection.
 
     The walk follows `child` links from catalogs and from collections, because
-    STAC lets a collection be a parent. It reads no item. It runs in waves,
-    and each wave fetches the children of the documents of the wave before.
+    STAC lets a collection be a parent. It reads no item. It reads the tree
+    level by level, in batches of WALK_BATCH documents.
 
     `fetcher_factory` builds one fetcher for each worker thread, because
     HttpFetcher makes no thread-safety promise for a shared session.
 
+    `deadline` is a time.monotonic() value. After it, the walk starts no
+    fetch, so a slow host cannot hold the build until the job times out.
+
     Raises when the root does not fetch, or when it is not a catalog or a
     collection with an `id`. A child that is missing is a fact about the
     catalog, so the walk skips it. A child that fails for another reason
-    makes the walk incomplete. So does a tree over `max_documents` documents
-    or `max_chars` characters of documents, and the walk then stops.
+    is a hole in the walk. So is each document that the walk does not read
+    because of `max_documents`, `max_chars`, or `deadline`.
     """
     local = threading.local()
 
     def fetch(target: str) -> Any:
+        if deadline is not None and time.monotonic() > deadline:
+            return TimeoutError("the build has no time left")
         if not hasattr(local, "fetcher"):
             local.fetcher = fetcher_factory()
         try:
@@ -302,27 +347,37 @@ def walk_catalog(
     seen = {url}
     chars = 0
     limit: str | None = None
-    wave: list[tuple[str, dict[str, Any], list[Row]]] = [(url, root, [])]
+    queue: list[tuple[str, list[Row]]] = []
+    start = 0
+    found: list[tuple[str, dict[str, Any], list[Row]]] = [(url, root, [])]
     with ThreadPoolExecutor(max_workers=workers) as pool:
-        while wave:
-            targets: list[tuple[str, list[Row]]] = []
-            for doc_url, doc, parents in wave:
+        while True:
+            for doc_url, doc, parents in found:
                 row = build_row(catalog_id, doc_url, doc, parents)
                 chars += len(row["original"])
                 if chars > max_chars:
                     limit = f"has more than {max_chars} characters of documents"
-                    break
+                    walk.holes.append(doc_url)
+                    continue
                 walk.rows.append(row)
                 if limit is None:
                     below = [*parents, {"id": doc["id"], "href": doc_url}]
                     urls = _child_urls(doc_url, doc)
-                    limit = _add_children(urls, below, seen, targets, max_documents)
-            if chars > max_chars:
+                    limit = _add_children(urls, below, seen, queue, max_documents)
+                if limit is not None and _child_urls(doc_url, doc):
+                    # The walk did not queue each child of this document.
+                    walk.holes.append(doc_url)
+            found = []
+            # A batch can give no document, when each of its URLs fails.
+            while not found and start < len(queue) and chars <= max_chars:
+                batch = queue[start : start + WALK_BATCH]
+                start += len(batch)
+                found = _fetch_children(batch, fetch, pool, walk)
+            if not found:
                 break
-            wave = _fetch_children(targets, fetch, pool, walk)
+    walk.holes.extend(target for target, _ in queue[start:])
     if limit is not None:
         log(f"  Warning: {catalog_id} {limit}; the walk stops")
-        walk.complete = False
     return walk
 
 
@@ -345,21 +400,33 @@ def previous_rows(previous: pa.Table | None, catalog_id: str) -> list[Row]:
     return rows
 
 
+def _below_hole(row: Row, holes: set[str]) -> bool:
+    """True when `row` is a document that the walk did not read, or is below one."""
+    return row["href"] in holes or any(parent["href"] in holes for parent in row["parents"])
+
+
 def settle_rows(catalog_id: str, walk: Walk | None, previous: pa.Table | None) -> list[Row]:
     """The rows to publish for one catalog after this run.
 
-    A catalog that did not answer, or whose walk has a hole, keeps the rows
-    of the previous index. Without this, one slow night removes the catalog
-    from search and adds it again the next night. A catalog with no previous
-    rows publishes what the walk read.
+    A catalog that did not answer keeps the rows of the previous index.
+    Without this, one slow night removes the catalog from search and adds it
+    again the next night.
+
+    A walk with holes publishes the rows that it read. For each hole, it
+    also keeps the previous rows of that document and of the documents below
+    it. So a child that fails each night does not stop the other rows of
+    the catalog from changing.
     """
     if walk is not None and walk.complete:
         return walk.rows
     carried = previous_rows(previous, catalog_id)
+    if walk is not None:
+        holes = set(walk.holes)
+        read = {row["href"] for row in walk.rows}
+        carried = [row for row in carried if row["href"] not in read and _below_hole(row, holes)]
     if carried:
         log(f"  Carrying forward {len(carried)} row(s) of {catalog_id}")
-        return carried
-    return walk.rows if walk is not None else []
+    return [*(walk.rows if walk is not None else []), *carried]
 
 
 def _spread(value: int) -> int:

@@ -18,6 +18,7 @@ the rows of the previous file.
 from __future__ import annotations
 
 import argparse
+import time
 from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor
 from datetime import UTC, datetime
@@ -44,18 +45,27 @@ from registry.report import log
 # WALK_WORKERS threads of its own.
 MAX_WORKERS = 4
 
+# The time that the script reads catalogs for. After it, each walk starts no
+# fetch, and a catalog with an unread document keeps its previous rows. The
+# Catalog Index job stops after 30 minutes and then publishes nothing. A
+# whole run took 2 minutes on 13 November 2026.
+BUILD_SECONDS = 15 * 60
 
-def walk_entry(path: Path, fetcher_factory: Callable[[], Fetcher]) -> Walk | None:
+
+def walk_entry(
+    path: Path, fetcher_factory: Callable[[], Fetcher], deadline: float | None = None
+) -> Walk | None:
     """Walk the catalog of one entry file.
 
-    None when the root does not answer, or when the index cannot hold the rows.
+    None when the entry file is unreadable, when the root does not answer,
+    or when the index cannot hold the rows.
     """
-    url = load_entry(path).get("url")
-    if not url:
-        log(f"  {path.stem}: skipping, the entry has no URL")
-        return None
     try:
-        walk = walk_catalog(path.stem, url, fetcher_factory)
+        url = load_entry(path).get("url")
+        if not url:
+            log(f"  {path.stem}: skipping, the entry has no URL")
+            return None
+        walk = walk_catalog(path.stem, url, fetcher_factory, deadline=deadline)
         check_rows(walk.rows)
     except Exception as e:
         log(f"  {path.stem}: FAILED: {e}")
@@ -96,8 +106,9 @@ def main(
     ]
 
     log(f"=== Reading {len(paths)} catalog(s) ===")
+    deadline = time.monotonic() + BUILD_SECONDS
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as pool:
-        walks = list(pool.map(lambda path: walk_entry(path, fetcher_factory), paths))
+        walks = list(pool.map(lambda path: walk_entry(path, fetcher_factory, deadline), paths))
 
     rows: list[Row] = []
     for path, walk in zip(paths, walks, strict=True):

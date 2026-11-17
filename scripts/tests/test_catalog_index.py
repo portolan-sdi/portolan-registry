@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import math
 from datetime import UTC, datetime
 
 import pyarrow as pa
@@ -12,6 +13,7 @@ import requests
 import shapely
 from conftest import FROZEN, FakeFetcher
 
+from registry import catalog_index
 from registry.catalog_index import (
     INDEX_NAME,
     MEDIA_TYPE,
@@ -99,7 +101,35 @@ class TestWalk:
         tree.docs["https://ex.org/sub/catalog.json"] = requests.ConnectionError("reset")
         result = walk(tree)
         assert not result.complete
+        assert result.holes == ["https://ex.org/sub/catalog.json"]
         assert set(by_id(result.rows)) == {"example", "coastal"}
+
+    def test_a_batch_where_each_child_fails_does_not_stop_the_walk(self):
+        """The walk reads the next batch when one batch gives no document."""
+        size = catalog_index.WALK_BATCH
+        urls = [f"https://ex.org/{n}/collection.json" for n in range(size + 2)]
+        docs = {url: requests.ConnectionError("reset") for url in urls[:size]}
+        docs.update({url: collection(f"c{n}") for n, url in enumerate(urls) if url not in docs})
+        result = walk(FakeFetcher(docs={ROOT: catalog(*urls), **docs}))
+        assert len(result.holes) == size
+        assert sorted(by_id(result.rows)) == ["c64", "c65", "root"]
+
+    def test_starts_no_fetch_after_the_deadline(self, tree, monkeypatch):
+        """A slow host must not hold the build until the job times out."""
+        clock = iter([0.0])
+        monkeypatch.setattr(catalog_index.time, "monotonic", lambda: next(clock, 100.0))
+        result = walk(tree, deadline=50.0)
+        assert [row["id"] for row in result.rows] == ["example"]
+        assert sorted(result.holes) == [
+            "https://ex.org/coastal/collection.json",
+            "https://ex.org/sub/catalog.json",
+        ]
+        assert tree.calls == [ROOT]
+
+    def test_raises_when_the_root_starts_after_the_deadline(self, tree, monkeypatch):
+        monkeypatch.setattr(catalog_index.time, "monotonic", lambda: 100.0)
+        with pytest.raises(TimeoutError):
+            walk(tree, deadline=50.0)
 
     @pytest.mark.parametrize(
         "child",
@@ -146,6 +176,8 @@ class TestWalk:
         result = walk(FakeFetcher(docs={ROOT: catalog(*children), **docs}), max_documents=3)
         assert not result.complete
         assert len(result.rows) == 3
+        # The root has children that the walk did not queue.
+        assert result.holes == [ROOT]
 
     def test_a_document_limit_keeps_the_children_already_found(self):
         """The walk reads the children it found before the limit, and no level below."""
@@ -169,6 +201,7 @@ class TestWalk:
         result = walk(fetcher, max_chars=root_chars + 150)
         assert not result.complete
         assert 1 < len(result.rows) < 6
+        assert len(result.rows) + len(result.holes) == 6
 
     def test_raises_when_the_root_does_not_fetch(self):
         with pytest.raises(requests.HTTPError):
@@ -245,7 +278,9 @@ class TestRow:
         [
             (["2020-01-01T00:00:00Z", None], (datetime(2020, 1, 1, tzinfo=UTC), None)),
             ([None, "2020-01-01T02:00:00+02:00"], (None, datetime(2020, 1, 1, tzinfo=UTC))),
-            (["2020-01-01T00:00:00", None], (datetime(2020, 1, 1, tzinfo=UTC), None)),
+            (["2020-01-01T00:00:00", None], (None, None)),
+            ([None, None], (None, None)),
+            (["2019-01-01T00:00:00Z", "unknown"], (None, None)),
             (["last year", 2020], (None, None)),
             (["0001-01-01T00:00:00+14:00", None], (None, None)),
             (["2020-01-01T00:00:00Z"], (None, None)),
@@ -384,9 +419,25 @@ class TestCarriedRows:
         assert len(carried) == 5
         assert {row[REGISTRY_ID] for row in carried} == {"example"}
 
-    def test_an_incomplete_walk_keeps_the_previous_rows(self, previous):
-        carried = settle_rows("example", Walk([row_of(collection())], complete=False), previous)
-        assert len(carried) == 5
+    def test_a_hole_at_the_root_keeps_each_previous_row(self, previous):
+        fresh = row_of(collection())
+        settled = settle_rows("example", Walk([fresh], holes=[ROOT]), previous)
+        assert settled == [fresh, *previous_rows(previous, "example")]
+
+    def test_a_hole_keeps_only_the_rows_below_it(self, tree, previous):
+        """A child that fails each night must not freeze the rest of the catalog."""
+        tree.docs["https://ex.org/sub/catalog.json"] = requests.ConnectionError("reset")
+        tree.docs[ROOT]["title"] = "New title"
+        settled = by_id(settle_rows("example", walk(tree), previous))
+        assert set(settled) == {"example", "sub", "coastal", "inland", "alpine"}
+        assert settled["example"]["title"] == "New title"
+        assert settled["inland"] == by_id(previous_rows(previous, "example"))["inland"]
+
+    def test_a_hole_does_not_keep_a_collection_that_left_the_catalog(self, tree, previous):
+        tree.docs["https://ex.org/sub/catalog.json"] = requests.ConnectionError("reset")
+        del tree.docs["https://ex.org/coastal/collection.json"]
+        settled = by_id(settle_rows("example", walk(tree), previous))
+        assert set(settled) == {"example", "sub", "inland", "alpine"}
 
     def test_carried_rows_write_the_same_file_again(self, previous):
         """A night with no answer must not read as a change."""
@@ -395,12 +446,36 @@ class TestCarriedRows:
 
     def test_an_incomplete_walk_with_no_previous_rows_publishes_what_it_read(self, previous):
         rows = [row_of(collection())]
-        assert settle_rows("new", Walk(rows, complete=False), previous) == rows
-        assert settle_rows("new", Walk(rows, complete=False), None) == rows
+        assert settle_rows("new", Walk(rows, holes=[ROOT]), previous) == rows
+        assert settle_rows("new", Walk(rows, holes=[ROOT]), None) == rows
 
     def test_no_answer_and_no_previous_rows_gives_nothing(self, previous):
         assert settle_rows("new", None, previous) == []
         assert settle_rows("new", None, None) == []
+
+
+def _no_constant(name):
+    raise ValueError(f"not JSON: {name}")
+
+
+def test_original_holds_no_nan_or_infinity():
+    """Python reads NaN from a document. A JSON parser in a client does not."""
+    doc = collection(extent=extent([math.nan, 0, 1, 1], ["2020-01-01T00:00:00Z", None]))
+    doc["x"] = {"y": [math.inf, -math.inf, 1.5]}
+    row = row_of(doc)
+    original = json.loads(row["original"], parse_constant=_no_constant)
+    assert original["x"] == {"y": [None, None, 1.5]}
+    assert original["extent"]["spatial"]["bbox"] == [[None, 0, 1, 1]]
+    assert row["geometry"] is None
+
+
+@pytest.mark.parametrize(
+    "spatial",
+    [{"bbox": {"a": 1}}, {"bbox": [["w", "s", "e", "n"]]}, {"bbox": "0,0,1,1"}, []],
+)
+def test_an_extent_of_the_wrong_shape_gives_no_geometry(spatial):
+    row = row_of(collection(extent={"spatial": spatial}))
+    assert row["geometry"] is None and row["bbox"] is None
 
 
 def test_refuses_rows_that_arrow_cannot_hold():
