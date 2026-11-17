@@ -55,7 +55,8 @@ jobs:
         id: build
         run: |
           before=$(sha256sum exports/collections.parquet 2>/dev/null || true)
-          uv run --frozen --group site scripts/build_catalog_index.py
+          uv run --frozen --group site scripts/build_catalog_index.py \
+            --summary "$GITHUB_STEP_SUMMARY" --annotate
           after=$(sha256sum exports/collections.parquet)
           if [ "$before" = "$after" ]; then
             echo "changed=false" >> "$GITHUB_OUTPUT"

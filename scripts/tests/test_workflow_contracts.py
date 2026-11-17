@@ -256,6 +256,8 @@ def test_the_index_workflow_publishes_only_a_changed_index():
     assert names.index("Fetch the published index") < names.index("Build the index")
     run = next(step for step in build["steps"] if step.get("id") == "build")["run"]
     assert "uv run --frozen --group site scripts/build_catalog_index.py" in run
+    # The run page shows the catalogs with a problem, also on a run that passes.
+    assert '--summary "$GITHUB_STEP_SUMMARY" --annotate' in run
     assert f"sha256sum {INDEX_PATH}" in run
     upload = next(step for step in build["steps"] if step.get("name") == "Upload the index")
     assert upload["if"] == "steps.build.outputs.changed == 'true'"

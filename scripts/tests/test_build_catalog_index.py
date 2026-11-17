@@ -67,7 +67,7 @@ class Run:
         self.fetcher.docs.update(tree(name, *collections))
         self.statuses[name] = status
 
-    def build(self):
+    def build(self, *options):
         links = [
             {"rel": "child", PREFIX + "id": name, PREFIX + "status": status}
             for name, status in self.statuses.items()
@@ -80,6 +80,7 @@ class Run:
             str(self.catalogs),
             "--export",
             str(self.export),
+            *options,
         ]
         return build_catalog_index.main(argv, fetcher_factory=lambda: self.fetcher)
 
@@ -187,3 +188,50 @@ def test_an_entry_without_a_url_is_skipped(run, capsys):
     assert run.build() == 0
     assert {catalog_id for catalog_id, _ in run.ids()} == {"alpha"}
     assert "empty: skipping, the entry has no URL" in capsys.readouterr().err
+
+
+def test_reports_each_catalog_with_a_problem(run, capsys, tmp_path):
+    run.register("alpha", "roads", "rivers")
+    run.register("beta", "lakes")
+    run.build()
+    capsys.readouterr()
+    run.fetcher.docs["https://alpha.org/rivers/collection.json"] = requests.Timeout("slow")
+    run.fetcher.docs["https://beta.org/catalog.json"] = requests.ConnectionError("reset")
+    report = tmp_path / "summary.md"
+    report.write_text("Earlier step.\n")
+    assert run.build("--summary", str(report), "--annotate") == 0
+
+    out = capsys.readouterr().out.splitlines()
+    assert out == [
+        "::warning title=Catalog index::alpha: read with holes. 1 document(s) not read, such as "
+        "https://alpha.org/rivers/collection.json It keeps 1 row(s) from the previous index.",
+        "::warning title=Catalog index::beta: failed. reset "
+        "It keeps 2 row(s) from the previous index.",
+    ]
+    text = report.read_text()
+    assert text.startswith("Earlier step.\n## Catalog index\n")
+    assert "No row changed. The index keeps its 5 rows." in text
+    assert "| beta | Failed | 2 | reset |" in text
+
+
+def test_reports_the_rows_that_it_writes(run, tmp_path):
+    run.register("alpha", "roads")
+    report = tmp_path / "summary.md"
+    assert run.build("--summary", str(report)) == 0
+    assert "The build wrote 2 rows from 1 catalogs." in report.read_text()
+    assert "| Read | 1 |" in report.read_text()
+
+
+def test_reports_an_index_that_it_refuses_to_write(run, tmp_path):
+    run.register("alpha", "roads")
+    run.fetcher.docs.clear()
+    report = tmp_path / "summary.md"
+    assert run.build("--summary", str(report)) == 1
+    assert "The build wrote no index, because no catalog gave a row." in report.read_text()
+
+
+def test_prints_no_warning_without_the_option(run, capsys):
+    run.register("alpha", "roads")
+    run.fetcher.docs["https://alpha.org/catalog.json"] = requests.ConnectionError("reset")
+    run.build()
+    assert capsys.readouterr().out == ""
