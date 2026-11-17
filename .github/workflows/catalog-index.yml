@@ -12,8 +12,8 @@ name: Catalog Index
 # copies the file from the branch into the site.
 on:
   schedule:
-    # Nightly, at a minute of its own. Scheduled Re-validation starts at
-    # 06:00 UTC and reads the same hosts.
+    # Each night at 04:17 UTC. Scheduled Re-validation reads the same hosts
+    # and starts later, at 06:00 UTC, so the two runs do not overlap.
     - cron: '17 4 * * *'
   workflow_dispatch:
 
