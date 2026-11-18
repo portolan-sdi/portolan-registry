@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-16T14:53:04.755183+00:00",
+  "generated": "2026-11-17T22:02:45.201062+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-11-16T14:53:04.755183+00:00",
+  "registry_generated": "2026-11-17T22:02:45.201062+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -39442,6 +39442,132 @@
       ]
     },
     {
+      "id": "fieldmaps-international",
+      "collection_count": 12,
+      "collections": [
+        {
+          "id": "odbl/humanitarian/adm0-polygons",
+          "title": "ADM0 polygons (humanitarian view, ODbL)",
+          "bbox": [
+            -180.0,
+            -85.0511,
+            180.0,
+            83.6651
+          ]
+        },
+        {
+          "id": "odbl/humanitarian/adm0-lines",
+          "title": "ADM0 lines (humanitarian view, ODbL)",
+          "bbox": [
+            -141.0019,
+            -55.1537,
+            141.0222,
+            70.0923
+          ]
+        },
+        {
+          "id": "odbl/humanitarian/adm0-points",
+          "title": "ADM0 points (humanitarian view, ODbL)",
+          "bbox": [
+            -176.1971,
+            -77.9022,
+            177.995,
+            78.7075
+          ]
+        },
+        {
+          "id": "odbl/disaggregated/adm0-polygons",
+          "title": "ADM0 polygons (disaggregated view, ODbL)",
+          "bbox": [
+            -180.0,
+            -85.0511,
+            180.0,
+            83.6651
+          ]
+        },
+        {
+          "id": "odbl/disaggregated/adm0-lines",
+          "title": "ADM0 lines (disaggregated view, ODbL)",
+          "bbox": [
+            -141.0019,
+            -55.1537,
+            141.0222,
+            70.0923
+          ]
+        },
+        {
+          "id": "odbl/disaggregated/adm0-points",
+          "title": "ADM0 points (disaggregated view, ODbL)",
+          "bbox": [
+            -179.091,
+            -77.9022,
+            177.995,
+            80.8268
+          ]
+        },
+        {
+          "id": "cc0/humanitarian/adm0-polygons",
+          "title": "ADM0 polygons (humanitarian view, CC0)",
+          "bbox": [
+            -180.0,
+            -85.0511,
+            180.0,
+            83.6663
+          ]
+        },
+        {
+          "id": "cc0/humanitarian/adm0-lines",
+          "title": "ADM0 lines (humanitarian view, CC0)",
+          "bbox": [
+            -141.0019,
+            -55.1537,
+            141.0222,
+            70.0923
+          ]
+        },
+        {
+          "id": "cc0/humanitarian/adm0-points",
+          "title": "ADM0 points (humanitarian view, CC0)",
+          "bbox": [
+            -176.1967,
+            -78.0596,
+            177.962,
+            78.7033
+          ]
+        },
+        {
+          "id": "cc0/disaggregated/adm0-polygons",
+          "title": "ADM0 polygons (disaggregated view, CC0)",
+          "bbox": [
+            -180.0,
+            -85.0511,
+            180.0,
+            83.6663
+          ]
+        },
+        {
+          "id": "cc0/disaggregated/adm0-lines",
+          "title": "ADM0 lines (disaggregated view, CC0)",
+          "bbox": [
+            -141.0019,
+            -55.1537,
+            141.0222,
+            70.0923
+          ]
+        },
+        {
+          "id": "cc0/disaggregated/adm0-points",
+          "title": "ADM0 points (disaggregated view, CC0)",
+          "bbox": [
+            -179.0559,
+            -78.0596,
+            177.962,
+            80.8262
+          ]
+        }
+      ]
+    },
+    {
       "id": "finland-nls-geographic-names",
       "collection_count": 4,
       "collections": [
@@ -40711,10 +40837,10 @@
           "id": "ftw-s2-2021",
           "title": "FTW Global \u2014 Field Boundaries 2021 (GeoParquet)",
           "bbox": [
-            -175.3508,
-            -46.9057,
-            179.7955,
-            65.8189
+            -176.6649,
+            -55.2252,
+            179.6406,
+            81.0525
           ]
         },
         {
@@ -40801,10 +40927,10 @@
           "id": "ftw-raster-2021",
           "title": "FTW Global \u2014 Field & Boundary Probabilities 2021 (COG)",
           "bbox": [
-            -176.0391,
-            -46.9542,
+            -179.9342,
+            -55.9457,
             179.8203,
-            65.8216
+            81.0609
           ]
         },
         {
@@ -49851,7 +49977,7 @@
     },
     {
       "id": "nthh-data-publications",
-      "collection_count": 5,
+      "collection_count": 7,
       "collections": [
         {
           "id": "free-flowing-rivers",
@@ -49894,6 +50020,16 @@
           ]
         },
         {
+          "id": "naip",
+          "title": "NAIP visualization COGs",
+          "bbox": [
+            -125.1562,
+            23.2413,
+            -66.0938,
+            49.838
+          ]
+        },
+        {
           "id": "river-plastic-inputs",
           "title": "Global river plastic inputs \u2014 Lebreton et al. (2017)",
           "bbox": [
@@ -49901,6 +50037,16 @@
             -55.6208,
             179.8792,
             60.4125
+          ]
+        },
+        {
+          "id": "us-census-places",
+          "title": "US Census counties, places and county subdivisions, 2023 cartographic boundaries",
+          "bbox": [
+            -179.1467,
+            -14.5487,
+            179.7785,
+            71.3878
           ]
         }
       ]
