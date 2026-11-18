@@ -31,3 +31,7 @@ coverage.xml
 .ruff_cache/
 # The Pages site that scripts/build_site.py writes.
 /_site/
+
+# The catalog index that scripts/build_catalog_index.py writes. The published
+# copy is on the bot/catalog-index branch (registry/catalog_index.py).
+/exports/collections.parquet

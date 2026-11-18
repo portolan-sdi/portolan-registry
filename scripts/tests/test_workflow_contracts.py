@@ -53,7 +53,10 @@ def test_the_site_refreshes_after_a_successful_deploy():
     jobs = yaml.safe_load(Path(".github/workflows/pages.yml").read_text())["jobs"]
     assert jobs["deploy"]["needs"] == "build"
     assert jobs["refresh"]["needs"] == ["build", "deploy"]
-    assert jobs["refresh"]["if"] == "${{ !cancelled() && needs.deploy.result == 'success' }}"
+    assert jobs["refresh"]["if"] == (
+        "${{ !cancelled() && needs.deploy.result == 'success'"
+        " && (github.event_name != 'workflow_dispatch' || inputs.refresh) }}"
+    )
     # A newer push can cancel a queued run that carried an export, so every
     # deploy refreshes. No step may skip on what this one push changed.
     assert all("if" not in step for step in jobs["refresh"]["steps"])
@@ -195,3 +198,85 @@ def test_the_failure_comment_reads_the_approval_flags():
     )
     assert "jq -e '.approval_only'" in write["run"]
     assert "jq -e '.needs_approval'" in write["run"]
+
+
+def _index_branch_of(steps):
+    """The branch that a step names in its `BRANCH` variable."""
+    return next(step["env"]["BRANCH"] for step in steps if "BRANCH" in step.get("env", {}))
+
+
+def test_the_deploy_and_ci_fetch_the_catalog_index_before_the_build():
+    """The index is not on main, so a build without the fetch publishes none."""
+    for name, job in (("pages.yml", "build"), ("ci.yml", "site-build")):
+        steps = _steps(name, job)
+        fetch = next(
+            i
+            for i, step in enumerate(steps)
+            if step.get("uses") == "./.github/actions/fetch-catalog-index"
+        )
+        build = next(i for i, step in enumerate(steps) if "build_site.py" in step.get("run", ""))
+        assert fetch < build, name
+
+
+def test_the_index_workflow_and_the_fetch_name_one_branch():
+    from registry.catalog_index import INDEX_BRANCH, INDEX_NAME, INDEX_PATH
+
+    action = yaml.safe_load(Path(".github/actions/fetch-catalog-index/action.yml").read_text())
+    fetch = action["runs"]["steps"]
+    assert _index_branch_of(fetch) == INDEX_BRANCH
+    assert f"FETCH_HEAD:{INDEX_NAME}" in fetch[0]["run"]
+    # Only a missing branch lets the step pass with no file. Exit code 2 of
+    # ls-remote means that the branch does not exist.
+    assert "git ls-remote --exit-code --heads origin" in fetch[0]["run"]
+    assert '"$status" -eq 2' in fetch[0]["run"]
+    assert f'mv "$RUNNER_TEMP/{INDEX_NAME}" {INDEX_PATH}' in fetch[0]["run"]
+
+    publish = _steps("catalog-index.yml", "publish")
+    assert _index_branch_of(publish) == INDEX_BRANCH
+    push = next(step for step in publish if "BRANCH" in step.get("env", {}))
+    assert f"git add {INDEX_NAME}" in push["run"]
+    # One commit replaces the branch, so the branch keeps no history.
+    assert 'git init --quiet --initial-branch "$BRANCH"' in push["run"]
+    assert "git push --force" in push["run"]
+
+
+def test_the_index_workflow_publishes_only_a_changed_index():
+    from registry.catalog_index import INDEX_PATH
+
+    workflow = yaml.safe_load(Path(".github/workflows/catalog-index.yml").read_text())
+    assert workflow["permissions"] == {"contents": "read"}
+    # PyYAML reads the `on` key as True.
+    assert workflow[True]["schedule"]
+    build = workflow["jobs"]["build"]
+    assert 0 < build["timeout-minutes"] <= 60
+    assert "permissions" not in build
+    assert build["outputs"] == {"changed": "${{ steps.build.outputs.changed }}"}
+    names = [step.get("name") for step in build["steps"]]
+    # The build compares with the published index, so the fetch comes first.
+    assert names.index("Fetch the published index") < names.index("Build the index")
+    run = next(step for step in build["steps"] if step.get("id") == "build")["run"]
+    assert "uv run --frozen --group site scripts/build_catalog_index.py" in run
+    # The run page shows the catalogs with a problem, also on a run that passes.
+    assert '--summary "$GITHUB_STEP_SUMMARY" --annotate' in run
+    assert f"sha256sum {INDEX_PATH}" in run
+    upload = next(step for step in build["steps"] if step.get("name") == "Upload the index")
+    assert upload["if"] == "steps.build.outputs.changed == 'true'"
+    assert upload["with"]["path"] == str(INDEX_PATH)
+
+    publish = workflow["jobs"]["publish"]
+    assert publish["needs"] == "build"
+    assert publish["if"] == "needs.build.outputs.changed == 'true'"
+    # Only the job that reads no outside document can write.
+    assert publish["permissions"] == {"contents": "write", "actions": "write"}
+    assert all("uses" not in step or "checkout" not in step["uses"] for step in publish["steps"])
+    deploy = publish["steps"][-1]
+    # The export did not change, so the deploy does not refresh portolan-sdi.org.
+    assert deploy["run"] == (
+        'gh workflow run pages.yml --repo "$GITHUB_REPOSITORY" --ref main -f refresh=false'
+    )
+    pages = yaml.safe_load(Path(".github/workflows/pages.yml").read_text())
+    refresh = pages[True]["workflow_dispatch"]["inputs"]["refresh"]
+    assert refresh["type"] == "boolean" and refresh["default"] is True
+    # The deploy needs a manual trigger on the Pages workflow.
+    pages = yaml.safe_load(Path(".github/workflows/pages.yml").read_text())
+    assert "workflow_dispatch" in pages[True]

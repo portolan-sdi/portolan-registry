@@ -10,6 +10,10 @@ working schemas, and the tree of the newest release line, such as `v0.1/` or
 `v1/`. The script validates every file it writes and exits 1 when a check
 fails, so the Pages workflow never deploys a tree that breaks its own
 contract.
+
+Each tree also gets the catalog index, `collections.parquet`, when the file
+is at `exports/collections.parquet`. scripts/build_catalog_index.py writes
+that file, and the workflows fetch the published copy before the build.
 """
 
 from __future__ import annotations
@@ -27,6 +31,7 @@ from typing import Any
 import pyarrow.parquet as pq
 from jsonschema import Draft7Validator
 
+from registry.catalog_index import INDEX_NAME, INDEX_PATH, data_link, read_index
 from registry.contract import (
     COVERAGE,
     EXTENSION,
@@ -192,10 +197,12 @@ def build_tree(
     *,
     out: Path,
     root: Path,
+    catalog_index: Path | None = None,
 ) -> Path:
     """Write one tree and check it against its own schemas.
 
-    Returns the path of its catalogs.json.
+    `catalog_index` is the file to publish in the tree, or None for a tree
+    without one. Returns the path of its catalogs.json.
     """
     extension = load_schema(EXTENSION, tree.version, root=root)
     coverage_schema = load_schema(COVERAGE, tree.version, root=root)
@@ -207,8 +214,12 @@ def build_tree(
         extension_url=schema_url(EXTENSION, tree.version),
     )
     doc = project(doc, extension)
+    if catalog_index is not None:
+        doc["links"].append(data_link(tree.base_url))
     catalogs_path = directory / "catalogs.json"
     write_json(catalogs_path, doc)
+    if catalog_index is not None:
+        shutil.copyfile(catalog_index, directory / INDEX_NAME)
 
     index, files = split_coverage(
         coverage,
@@ -288,15 +299,24 @@ def _file_list(base: str, names: Iterable[str]) -> str:
     return f"<ul>{items}</ul>"
 
 
-def render_index(trees: list[Tree], releases: list[Version], export: Mapping[str, Any]) -> str:
-    """Render the landing page with data downloads and schema links."""
+def render_index(
+    trees: list[Tree],
+    releases: list[Version],
+    export: Mapping[str, Any],
+    files: Iterable[str] = TREE_FILES,
+) -> str:
+    """Render the landing page with data downloads and schema links.
+
+    `files` names the files that each tree holds.
+    """
+    files = tuple(files)
     rows = []
     # The released line first, because a tool pins it. `next/` is last.
     for tree in sorted(trees, key=lambda t: t.version is None):
         contract = "Unreleased" if tree.version is None else format_version(tree.version)
         rows.append(
             f"<tr><td><code>{tree.name}/</code></td><td>{contract}</td>"
-            f"<td>{_file_list(f'{tree.name}/', TREE_FILES)}</td></tr>\n"
+            f"<td>{_file_list(f'{tree.name}/', files)}</td></tr>\n"
         )
     schemas = [
         f"<tr><td>{format_version(version)}</td>"
@@ -344,6 +364,30 @@ def check_sizes(out: Path) -> None:
         raise BuildError("files over 50 MB:\n" + "\n".join(large))
 
 
+def usable_index(root: Path) -> Path | None:
+    """The catalog index to publish, or None when the site gets none.
+
+    The index layout is experimental. After a layout change, the published
+    file has the old columns until the next index build. A file that this
+    build cannot read must not stop the deploy of the other files, so the
+    site then has no index and no link to one. A client reads the catalog
+    JSON when the index is missing.
+    """
+    path = root / INDEX_PATH
+    if not path.is_file():
+        log(f"No catalog index at {path}; the site has none")
+        return None
+    # check_sizes refuses the whole site for one file over the limit.
+    if path.stat().st_size > MAX_FILE_BYTES:
+        log(f"Warning: {path} is over {MAX_FILE_BYTES} bytes; the site has no catalog index")
+        return None
+    table = read_index(path)
+    if table is None or table.num_rows == 0:
+        log(f"Warning: {path} is not a catalog index of this layout; the site has none")
+        return None
+    return path
+
+
 def stac_validate(catalogs: list[tuple[Tree, Path]], *, root: Path) -> None:
     """Run stac-node-validator on each catalogs.json, with the local schemas."""
     findings = []
@@ -381,18 +425,23 @@ def build_site(
     releases = released_versions(root / RELEASED_DIR)
     if releases:
         trees.append(Tree(line_name(line_of(releases[-1])), releases[-1]))
+    catalog_index = usable_index(root)
     catalogs = []
     failures = []
     # Build every tree before failing, so one run reports both a `next/`
     # problem and the problem it causes in a released tree.
     for tree in trees:
         try:
-            catalogs.append((tree, build_tree(tree, export, coverage, out=out, root=root)))
+            path = build_tree(
+                tree, export, coverage, out=out, root=root, catalog_index=catalog_index
+            )
+            catalogs.append((tree, path))
         except BuildError as e:
             failures.append(str(e))
     if failures:
         raise BuildError("\n".join(failures))
-    (out / "index.html").write_text(render_index(trees, releases, export))
+    files = TREE_FILES if catalog_index is None else (*TREE_FILES, INDEX_NAME)
+    (out / "index.html").write_text(render_index(trees, releases, export, files))
 
     check_sizes(out)
     if stac_validator:
