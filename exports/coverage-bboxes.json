@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-17T22:02:45.201062+00:00",
+  "generated": "2026-11-18T15:09:41.536882+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-11-17T22:02:45.201062+00:00",
+  "registry_generated": "2026-11-18T15:09:41.536882+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -2152,8 +2152,8 @@
           "title": "Grundwassermessstellen",
           "bbox": [
             13.0929,
-            52.343,
-            13.7551,
+            5.2609,
+            14.1491,
             52.6693
           ]
         },
@@ -2252,7 +2252,7 @@
           "title": "Aufgrabeverbote",
           "bbox": [
             13.1169,
-            52.3906,
+            52.3981,
             13.7106,
             52.6379
           ]
@@ -3083,7 +3083,7 @@
           "bbox": [
             13.1349,
             52.4596,
-            13.5347,
+            13.5509,
             52.6438
           ]
         },
@@ -40827,10 +40827,10 @@
           "id": "ftw-s2-2020",
           "title": "FTW Global \u2014 Field Boundaries 2020 (GeoParquet)",
           "bbox": [
-            -175.352,
-            -46.9056,
-            179.8026,
-            65.8189
+            -176.6648,
+            -55.1228,
+            179.6077,
+            81.021
           ]
         },
         {
@@ -40917,10 +40917,10 @@
           "id": "ftw-raster-2020",
           "title": "FTW Global \u2014 Field & Boundary Probabilities 2020 (COG)",
           "bbox": [
-            -176.0391,
-            -46.9542,
+            -179.9342,
+            -55.9457,
             179.8203,
-            65.8216
+            81.0609
           ]
         },
         {
@@ -48949,7 +48949,7 @@
           "id": "detections",
           "title": "Active Fire Detections (MODIS and VIIRS)",
           "bbox": [
-            -179.9999,
+            -179.995,
             -89.6907,
             179.9988,
             87.4687
