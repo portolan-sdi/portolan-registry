@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-18T15:09:41.536882+00:00",
+  "generated": "2026-11-19T15:18:13.034432+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-11-18T15:09:41.536882+00:00",
+  "registry_generated": "2026-11-19T15:18:13.034432+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -42795,7 +42795,7 @@
     },
     {
       "id": "harmonized-field-data",
-      "collection_count": 79,
+      "collection_count": 78,
       "collections": [
         {
           "id": "ai4sf_ml",
@@ -43291,10 +43291,10 @@
           "id": "fi",
           "title": "Finnish Crop Fields (Maatalousmaa)",
           "bbox": [
-            15.9583,
-            59.6558,
-            32.8735,
-            69.9892
+            19.327,
+            59.805,
+            31.382,
+            70.0838
           ]
         },
         {
@@ -43441,10 +43441,10 @@
           "id": "nl",
           "title": "BRP Crop Field Boundaries for The Netherlands (CAP-based)",
           "bbox": [
-            3.2576,
-            50.7343,
-            7.2381,
-            53.4948
+            3.3597,
+            50.7503,
+            7.2246,
+            53.5053
           ]
         },
         {
@@ -43493,7 +43493,7 @@
           "bbox": [
             -31.2665,
             32.6348,
-            -6.1731,
+            -6.1897,
             42.1514
           ]
         },
@@ -43511,10 +43511,10 @@
           "id": "se",
           "title": "Swedish Crop Fields (Jordbruksskiften)",
           "bbox": [
-            9.2413,
-            55.1742,
-            25.2814,
-            68.916
+            10.9668,
+            55.3377,
+            24.1304,
+            68.912
           ]
         },
         {
@@ -43555,16 +43555,6 @@
             25.2107,
             -66.9677,
             49.3596
-          ]
-        },
-        {
-          "id": "wri_trazo_ml",
-          "title": "Trazo field boundary annotations for South America with splits",
-          "bbox": [
-            -76.7601,
-            -38.9176,
-            -39.0051,
-            1.7415
           ]
         },
         {
