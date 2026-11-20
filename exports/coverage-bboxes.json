@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-20T14:55:51.890358+00:00",
+  "generated": "2026-11-20T20:13:49.715827+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-11-20T14:55:51.890358+00:00",
+  "registry_generated": "2026-11-20T20:13:49.715827+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -40791,7 +40791,7 @@
     },
     {
       "id": "ftw-global-data-2e",
-      "collection_count": 18,
+      "collection_count": 29,
       "collections": [
         {
           "id": "ftw-s2-2017",
@@ -40971,6 +40971,116 @@
             -55.9457,
             179.8203,
             80.1653
+          ]
+        },
+        {
+          "id": "confidence",
+          "title": "FTW Global \u2014 Prediction Confidence & Quality Layers (500 m)",
+          "bbox": [
+            -180.0,
+            -60.0,
+            180.0,
+            84.0
+          ]
+        },
+        {
+          "id": "vectors",
+          "title": "FTW Global \u2014 Field Boundary Predictions (GeoParquet)",
+          "bbox": [
+            -180.0,
+            -60.0,
+            180.0,
+            84.0
+          ]
+        },
+        {
+          "id": "predictions-zarr",
+          "title": "FTW Global \u2014 Field Prediction Probabilities (Zarr)",
+          "bbox": [
+            -180.0,
+            -56.9317,
+            180.0,
+            83.7483
+          ]
+        },
+        {
+          "id": "s2-planting-harvest-composites-2024",
+          "title": "FTW Global \u2014 Sentinel-2 Planting & Harvest Composites \u2014 COGs (2024)",
+          "bbox": [
+            -180.0,
+            -57.8301,
+            180.0,
+            83.7483
+          ]
+        },
+        {
+          "id": "s2-planting-harvest-composites-2025",
+          "title": "FTW Global \u2014 Sentinel-2 Planting & Harvest Composites \u2014 COGs (2025)",
+          "bbox": [
+            -180.0,
+            -57.8301,
+            180.0,
+            83.7483
+          ]
+        },
+        {
+          "id": "s2-planting-harvest-composites-zarr",
+          "title": "FTW Global \u2014 Sentinel-2 Planting & Harvest Composites \u2014 Zarr mosaic (2024 & 2025)",
+          "bbox": [
+            -180.0,
+            -57.8301,
+            180.0,
+            83.7483
+          ]
+        },
+        {
+          "id": "cells-r5",
+          "title": "Fields 2025 \u2014 A5 r5 cell aggregates (test)",
+          "bbox": [
+            -180.0,
+            -60.0,
+            180.0,
+            85.0
+          ]
+        },
+        {
+          "id": "cells-r7",
+          "title": "Fields 2025 \u2014 A5 r7 cell aggregates (test)",
+          "bbox": [
+            -180.0,
+            -60.0,
+            180.0,
+            85.0
+          ]
+        },
+        {
+          "id": "cells-r8",
+          "title": "Fields 2025 \u2014 A5 r8 cell aggregates (test)",
+          "bbox": [
+            -180.0,
+            -60.0,
+            180.0,
+            85.0
+          ]
+        },
+        {
+          "id": "fields-thinned",
+          "title": "Fields 2025 \u2014 thinned field polygons (test)",
+          "bbox": [
+            -180.0,
+            -60.0,
+            180.0,
+            85.0
+          ]
+        },
+        {
+          "id": "fields-yearly",
+          "title": "Fields 2024 & 2025 \u2014 cells-to-fields handover (test)",
+          "bbox": [
+            -180.0,
+            -60.0,
+            180.0,
+            85.0
           ]
         }
       ]
@@ -41534,8 +41644,24 @@
       ]
     },
     {
+      "id": "glc-fcs30d",
+      "collection_count": 1,
+      "collections": [
+        {
+          "id": "glc_fcs30d",
+          "title": "GLC_FCS30D global 30 m land cover, 1985\u20132022",
+          "bbox": [
+            -180.0,
+            -60.0002,
+            180.0,
+            80.0
+          ]
+        }
+      ]
+    },
+    {
       "id": "global-data",
-      "collection_count": 281,
+      "collection_count": 288,
       "collections": [
         {
           "id": "confidence",
@@ -41545,6 +41671,26 @@
             -60.0,
             180.0,
             84.0
+          ]
+        },
+        {
+          "id": "vectors",
+          "title": "FTW Global \u2014 Field Boundary Predictions (GeoParquet)",
+          "bbox": [
+            -180.0,
+            -60.0,
+            180.0,
+            84.0
+          ]
+        },
+        {
+          "id": "predictions-zarr",
+          "title": "FTW Global \u2014 Field Prediction Probabilities (Zarr)",
+          "bbox": [
+            -180.0,
+            -56.9317,
+            180.0,
+            83.7483
           ]
         },
         {
@@ -41575,6 +41721,56 @@
             -57.8301,
             180.0,
             83.7483
+          ]
+        },
+        {
+          "id": "cells-r5",
+          "title": "Fields 2025 \u2014 A5 r5 cell aggregates (test)",
+          "bbox": [
+            -180.0,
+            -60.0,
+            180.0,
+            85.0
+          ]
+        },
+        {
+          "id": "cells-r7",
+          "title": "Fields 2025 \u2014 A5 r7 cell aggregates (test)",
+          "bbox": [
+            -180.0,
+            -60.0,
+            180.0,
+            85.0
+          ]
+        },
+        {
+          "id": "cells-r8",
+          "title": "Fields 2025 \u2014 A5 r8 cell aggregates (test)",
+          "bbox": [
+            -180.0,
+            -60.0,
+            180.0,
+            85.0
+          ]
+        },
+        {
+          "id": "fields-thinned",
+          "title": "Fields 2025 \u2014 thinned field polygons (test)",
+          "bbox": [
+            -180.0,
+            -60.0,
+            180.0,
+            85.0
+          ]
+        },
+        {
+          "id": "fields-yearly",
+          "title": "Fields 2024 & 2025 \u2014 cells-to-fields handover (test)",
+          "bbox": [
+            -180.0,
+            -60.0,
+            180.0,
+            85.0
           ]
         },
         {
