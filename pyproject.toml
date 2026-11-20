@@ -35,7 +35,7 @@ dev = [
 # rather than turn existing entries red overnight. Kept out of `dev` because it
 # pulls in rasterio and pyarrow. Install with `--group validators`.
 validators = [
-    "rashid==0.3.0",
+    "rashid==0.4.0",
 ]
 # What scripts/build_site.py needs to build and check the Pages site: the
 # GeoParquet writer and the JSON Schema check of each published file.
