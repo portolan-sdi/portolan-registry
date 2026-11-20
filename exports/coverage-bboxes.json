@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-15T13:28:35.030932+00:00",
+  "generated": "2026-11-19T15:18:13.034432+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-11-15T13:28:35.030932+00:00",
+  "registry_generated": "2026-11-19T15:18:13.034432+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -2152,8 +2152,8 @@
           "title": "Grundwassermessstellen",
           "bbox": [
             13.0929,
-            52.343,
-            13.7551,
+            5.2609,
+            14.1491,
             52.6693
           ]
         },
@@ -2252,7 +2252,7 @@
           "title": "Aufgrabeverbote",
           "bbox": [
             13.1169,
-            52.3906,
+            52.3981,
             13.7106,
             52.6379
           ]
@@ -3083,7 +3083,7 @@
           "bbox": [
             13.1349,
             52.4596,
-            13.5347,
+            13.5509,
             52.6438
           ]
         },
@@ -5270,7 +5270,7 @@
             11.2334,
             44.4546,
             11.4212,
-            44.545
+            44.5459
           ]
         },
         {
@@ -39442,6 +39442,132 @@
       ]
     },
     {
+      "id": "fieldmaps-international",
+      "collection_count": 12,
+      "collections": [
+        {
+          "id": "odbl/humanitarian/adm0-polygons",
+          "title": "ADM0 polygons (humanitarian view, ODbL)",
+          "bbox": [
+            -180.0,
+            -85.0511,
+            180.0,
+            83.6651
+          ]
+        },
+        {
+          "id": "odbl/humanitarian/adm0-lines",
+          "title": "ADM0 lines (humanitarian view, ODbL)",
+          "bbox": [
+            -141.0019,
+            -55.1537,
+            141.0222,
+            70.0923
+          ]
+        },
+        {
+          "id": "odbl/humanitarian/adm0-points",
+          "title": "ADM0 points (humanitarian view, ODbL)",
+          "bbox": [
+            -176.1971,
+            -77.9022,
+            177.995,
+            78.7075
+          ]
+        },
+        {
+          "id": "odbl/disaggregated/adm0-polygons",
+          "title": "ADM0 polygons (disaggregated view, ODbL)",
+          "bbox": [
+            -180.0,
+            -85.0511,
+            180.0,
+            83.6651
+          ]
+        },
+        {
+          "id": "odbl/disaggregated/adm0-lines",
+          "title": "ADM0 lines (disaggregated view, ODbL)",
+          "bbox": [
+            -141.0019,
+            -55.1537,
+            141.0222,
+            70.0923
+          ]
+        },
+        {
+          "id": "odbl/disaggregated/adm0-points",
+          "title": "ADM0 points (disaggregated view, ODbL)",
+          "bbox": [
+            -179.091,
+            -77.9022,
+            177.995,
+            80.8268
+          ]
+        },
+        {
+          "id": "cc0/humanitarian/adm0-polygons",
+          "title": "ADM0 polygons (humanitarian view, CC0)",
+          "bbox": [
+            -180.0,
+            -85.0511,
+            180.0,
+            83.6663
+          ]
+        },
+        {
+          "id": "cc0/humanitarian/adm0-lines",
+          "title": "ADM0 lines (humanitarian view, CC0)",
+          "bbox": [
+            -141.0019,
+            -55.1537,
+            141.0222,
+            70.0923
+          ]
+        },
+        {
+          "id": "cc0/humanitarian/adm0-points",
+          "title": "ADM0 points (humanitarian view, CC0)",
+          "bbox": [
+            -176.1967,
+            -78.0596,
+            177.962,
+            78.7033
+          ]
+        },
+        {
+          "id": "cc0/disaggregated/adm0-polygons",
+          "title": "ADM0 polygons (disaggregated view, CC0)",
+          "bbox": [
+            -180.0,
+            -85.0511,
+            180.0,
+            83.6663
+          ]
+        },
+        {
+          "id": "cc0/disaggregated/adm0-lines",
+          "title": "ADM0 lines (disaggregated view, CC0)",
+          "bbox": [
+            -141.0019,
+            -55.1537,
+            141.0222,
+            70.0923
+          ]
+        },
+        {
+          "id": "cc0/disaggregated/adm0-points",
+          "title": "ADM0 points (disaggregated view, CC0)",
+          "bbox": [
+            -179.0559,
+            -78.0596,
+            177.962,
+            80.8262
+          ]
+        }
+      ]
+    },
+    {
       "id": "finland-nls-geographic-names",
       "collection_count": 4,
       "collections": [
@@ -40701,20 +40827,20 @@
           "id": "ftw-s2-2020",
           "title": "FTW Global \u2014 Field Boundaries 2020 (GeoParquet)",
           "bbox": [
-            -175.352,
-            -46.9056,
-            179.8026,
-            65.8189
+            -176.6648,
+            -55.1228,
+            179.6077,
+            81.021
           ]
         },
         {
           "id": "ftw-s2-2021",
           "title": "FTW Global \u2014 Field Boundaries 2021 (GeoParquet)",
           "bbox": [
-            -175.3508,
-            -46.9057,
-            179.7955,
-            65.8189
+            -176.6649,
+            -55.2252,
+            179.6406,
+            81.0525
           ]
         },
         {
@@ -40791,20 +40917,20 @@
           "id": "ftw-raster-2020",
           "title": "FTW Global \u2014 Field & Boundary Probabilities 2020 (COG)",
           "bbox": [
-            -176.0391,
-            -46.9542,
+            -179.9342,
+            -55.9457,
             179.8203,
-            65.8216
+            81.0609
           ]
         },
         {
           "id": "ftw-raster-2021",
           "title": "FTW Global \u2014 Field & Boundary Probabilities 2021 (COG)",
           "bbox": [
-            -176.0391,
-            -46.9542,
+            -179.9342,
+            -55.9457,
             179.8203,
-            65.8216
+            81.0609
           ]
         },
         {
@@ -42669,7 +42795,7 @@
     },
     {
       "id": "harmonized-field-data",
-      "collection_count": 79,
+      "collection_count": 78,
       "collections": [
         {
           "id": "ai4sf_ml",
@@ -43165,10 +43291,10 @@
           "id": "fi",
           "title": "Finnish Crop Fields (Maatalousmaa)",
           "bbox": [
-            15.9583,
-            59.6558,
-            32.8735,
-            69.9892
+            19.327,
+            59.805,
+            31.382,
+            70.0838
           ]
         },
         {
@@ -43315,10 +43441,10 @@
           "id": "nl",
           "title": "BRP Crop Field Boundaries for The Netherlands (CAP-based)",
           "bbox": [
-            3.2576,
-            50.7343,
-            7.2381,
-            53.4948
+            3.3597,
+            50.7503,
+            7.2246,
+            53.5053
           ]
         },
         {
@@ -43367,7 +43493,7 @@
           "bbox": [
             -31.2665,
             32.6348,
-            -6.1731,
+            -6.1897,
             42.1514
           ]
         },
@@ -43385,10 +43511,10 @@
           "id": "se",
           "title": "Swedish Crop Fields (Jordbruksskiften)",
           "bbox": [
-            9.2413,
-            55.1742,
-            25.2814,
-            68.916
+            10.9668,
+            55.3377,
+            24.1304,
+            68.912
           ]
         },
         {
@@ -43429,16 +43555,6 @@
             25.2107,
             -66.9677,
             49.3596
-          ]
-        },
-        {
-          "id": "wri_trazo_ml",
-          "title": "Trazo field boundary annotations for South America with splits",
-          "bbox": [
-            -76.7601,
-            -38.9176,
-            -39.0051,
-            1.7415
           ]
         },
         {
@@ -48823,7 +48939,7 @@
           "id": "detections",
           "title": "Active Fire Detections (MODIS and VIIRS)",
           "bbox": [
-            -179.9999,
+            -179.995,
             -89.6907,
             179.9988,
             87.4687
@@ -49851,7 +49967,7 @@
     },
     {
       "id": "nthh-data-publications",
-      "collection_count": 5,
+      "collection_count": 7,
       "collections": [
         {
           "id": "free-flowing-rivers",
@@ -49894,6 +50010,16 @@
           ]
         },
         {
+          "id": "naip",
+          "title": "NAIP visualization COGs",
+          "bbox": [
+            -125.1562,
+            23.2413,
+            -66.0938,
+            49.838
+          ]
+        },
+        {
           "id": "river-plastic-inputs",
           "title": "Global river plastic inputs \u2014 Lebreton et al. (2017)",
           "bbox": [
@@ -49901,6 +50027,16 @@
             -55.6208,
             179.8792,
             60.4125
+          ]
+        },
+        {
+          "id": "us-census-places",
+          "title": "US Census counties, places and county subdivisions, 2023 cartographic boundaries",
+          "bbox": [
+            -179.1467,
+            -14.5487,
+            179.7785,
+            71.3878
           ]
         }
       ]
@@ -52695,7 +52831,7 @@
     },
     {
       "id": "planet-disasterdata",
-      "collection_count": 52,
+      "collection_count": 55,
       "collections": [
         {
           "id": "post-event-planetscope-2026-11-05",
@@ -52738,13 +52874,33 @@
           ]
         },
         {
-          "id": "post-event-skysat-2026-11-10",
-          "title": "Punakha and the lower Mo Chhu, 10 Nov (SkySat) \u2014 Post-event Imagery",
+          "id": "post-event-pelican-2026-11-11",
+          "title": "Punakha and Kabesa, 11 Nov (Pelican) \u2014 Post-event Imagery",
           "bbox": [
-            89.8078,
-            27.503,
-            89.8793,
-            27.676
+            89.7744,
+            27.5235,
+            89.9154,
+            27.7197
+          ]
+        },
+        {
+          "id": "post-event-skysat-2026-11-12",
+          "title": "Taktsemakhang, 12 Nov (SkySat) \u2014 Post-event Imagery",
+          "bbox": [
+            89.6838,
+            27.9698,
+            89.7459,
+            28.1329
+          ]
+        },
+        {
+          "id": "post-event-skysat-2026-11-14",
+          "title": "Sintaphu Tsho and Gasa Tshachu, 14 Nov (SkySat) \u2014 Post-event Imagery",
+          "bbox": [
+            89.7073,
+            27.8199,
+            89.8885,
+            28.2549
           ]
         },
         {
@@ -52785,6 +52941,16 @@
             27.9805,
             89.7505,
             28.1383
+          ]
+        },
+        {
+          "id": "post-event-skysat-2026-11-10",
+          "title": "Punakha and the lower Mo Chhu, 10 Nov (SkySat) \u2014 Post-event Imagery",
+          "bbox": [
+            89.8078,
+            27.503,
+            89.8793,
+            27.676
           ]
         },
         {

@@ -76,6 +76,15 @@ Each release line directory, such as `v0.1/`, contains these files:
 - **`catalogs.json`**: A STAC catalog with one child link for each registered catalog. The `portolan_registry:*` fields on each link contain the registry metadata.
 - **`catalogs.parquet`**: The same child links as a GeoParquet 1.1 file, with one row for each catalog. The geometry column holds the bounding boxes of the catalog's collections.
 - **`coverage/index.json`**: An index of the geographic coverage files. Each coverage file lists the bounding boxes of one catalog's collections.
+- **`collections.parquet`**: An experimental catalog index as a GeoParquet 1.1 file. It has one row for each catalog and each collection in every registered catalog.
+
+#### Catalog index
+
+Use `collections.parquet` to search the collections of all registered catalogs with one query. The file follows the catalog index layout in the [incubating Portolan specification](https://github.com/portolan-sdi/portolan-spec/blob/main/specs/incubating/stac-geoparquet.md). `catalogs.json` links to the file with `rel: "data"` and `type: "application/vnd.apache.parquet"`.
+
+The registry adds one column, `portolan_registry:id`. It holds the registry ID of the registered catalog that contains the row. To get the registry metadata of that catalog, join the row to `catalogs.parquet` on this column. The row of a registered catalog has an empty `parents` list.
+
+A nightly workflow reads every registered catalog and updates the file when a catalog or collection document changes. The layout is experimental, and the compatibility rules in the next section don't apply to it. Read the catalog JSON when the file is missing.
 
 ### Schema compatibility
 

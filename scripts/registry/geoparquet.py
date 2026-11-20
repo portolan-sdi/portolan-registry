@@ -115,7 +115,8 @@ def _check_columns(links: list[dict[str, Any]], fields: list[tuple[str, pa.DataT
         raise ValueError(f"no parquet column or struct field for {', '.join(sorted(dropped))}")
 
 
-def _geometry(bbox: Sequence[float] | None) -> shapely.Polygon | shapely.MultiPolygon | None:
+def bbox_geometry(bbox: Sequence[float] | None) -> shapely.Polygon | shapely.MultiPolygon | None:
+    """A cleaned bbox as a Polygon, or as a MultiPolygon when it crosses ±180."""
     if not bbox:
         return None
     boxes = [
@@ -134,7 +135,7 @@ def build_table(doc: Mapping[str, Any], link_fields: set[str]) -> pa.Table:
     fields = [*_LINK_FIELDS, *((name, FIELD_TYPES[name]) for name in sorted(link_fields))]
     links = list(child_links(doc))
     _check_columns(links, fields)
-    geometries = [_geometry(link.get("bbox")) for link in links]
+    geometries = [bbox_geometry(link.get("bbox")) for link in links]
     rows = [{name: link.get(name) for name, _ in fields} for link in links]
     table = pa.Table.from_pylist(rows, schema=pa.schema(fields))
     wkb = [None if g is None else shapely.to_wkb(g, flavor="iso") for g in geometries]
