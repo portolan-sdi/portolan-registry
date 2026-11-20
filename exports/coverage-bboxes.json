@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-20T11:37:33.714946+00:00",
+  "generated": "2026-11-20T13:51:52.647212+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-11-20T11:37:33.714946+00:00",
+  "registry_generated": "2026-11-20T13:51:52.647212+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -41650,6 +41650,138 @@
       ]
     },
     {
+      "id": "global-drought-hazard",
+      "collection_count": 1,
+      "collections": [
+        {
+          "id": "drought-hazard",
+          "title": "SPEI-6 drought return levels",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "global-mangrove-watch",
+      "collection_count": 11,
+      "collections": [
+        {
+          "id": "annual-extent/extent-raster",
+          "title": "Annual mangrove extent, raster",
+          "bbox": [
+            -180.0,
+            -39.0,
+            180.0,
+            35.0
+          ]
+        },
+        {
+          "id": "annual-extent/extent-vector",
+          "title": "Annual mangrove extent, vector",
+          "bbox": [
+            -179.9922,
+            -38.9068,
+            180.0,
+            34.6351
+          ]
+        },
+        {
+          "id": "change/change-since-1985",
+          "title": "Mangrove change since 1985",
+          "bbox": [
+            -180.0,
+            -39.0,
+            180.0,
+            35.0
+          ]
+        },
+        {
+          "id": "change/change-since-1990",
+          "title": "Mangrove change since 1990",
+          "bbox": [
+            -180.0,
+            -39.0,
+            180.0,
+            35.0
+          ]
+        },
+        {
+          "id": "change/change-since-2000",
+          "title": "Mangrove change since 2000",
+          "bbox": [
+            -180.0,
+            -39.0,
+            180.0,
+            35.0
+          ]
+        },
+        {
+          "id": "change/change-since-2010",
+          "title": "Mangrove change since 2010",
+          "bbox": [
+            -180.0,
+            -39.0,
+            180.0,
+            35.0
+          ]
+        },
+        {
+          "id": "persistence/persistence-raster",
+          "title": "Mangroves in any year and in every year, raster",
+          "bbox": [
+            -180.0,
+            -39.0,
+            180.0,
+            35.0
+          ]
+        },
+        {
+          "id": "persistence/intersect-vector",
+          "title": "Mangroves in every year, vector",
+          "bbox": [
+            -179.9916,
+            -38.9068,
+            180.0,
+            34.6351
+          ]
+        },
+        {
+          "id": "persistence/union-vector",
+          "title": "Mangroves in any year, vector",
+          "bbox": [
+            -179.9922,
+            -38.9068,
+            180.0,
+            34.6351
+          ]
+        },
+        {
+          "id": "country-statistics/country-change",
+          "title": "Mangrove gain and loss by country",
+          "bbox": [
+            -180.0,
+            -39.0,
+            180.0,
+            35.0
+          ]
+        },
+        {
+          "id": "country-statistics/country-extent",
+          "title": "Mangrove area by country and year",
+          "bbox": [
+            -180.0,
+            -39.0,
+            180.0,
+            35.0
+          ]
+        }
+      ]
+    },
+    {
       "id": "gmwid",
       "collection_count": 27,
       "collections": [
@@ -51028,6 +51160,16 @@
           ]
         },
         {
+          "id": "catastro/edificios_overture",
+          "title": "Edificios (Overture Maps)",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
+          ]
+        },
+        {
           "id": "catastro/fraccion",
           "title": "Catastro fraccion",
           "bbox": [
@@ -51245,6 +51387,16 @@
             -34.0273,
             -60.178,
             -33.661
+          ]
+        },
+        {
+          "id": "vialidad/segmentos_overture",
+          "title": "Segmentos de transporte (Overture Maps)",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
           ]
         },
         {
@@ -51988,6 +52140,156 @@
           ]
         },
         {
+          "id": "ambiente-y-agro/glofas_agua_permanente",
+          "title": "Cuerpos de agua permanentes (GloFAS)",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
+          ]
+        },
+        {
+          "id": "ambiente-y-agro/glofas_peligro_rp10",
+          "title": "Clases de profundidad de inundaci\u00f3n, retorno de 10 a\u00f1os",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
+          ]
+        },
+        {
+          "id": "ambiente-y-agro/glofas_peligro_rp100",
+          "title": "Clases de profundidad de inundaci\u00f3n, retorno de 100 a\u00f1os",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
+          ]
+        },
+        {
+          "id": "ambiente-y-agro/glofas_peligro_rp20",
+          "title": "Clases de profundidad de inundaci\u00f3n, retorno de 20 a\u00f1os",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
+          ]
+        },
+        {
+          "id": "ambiente-y-agro/glofas_peligro_rp200",
+          "title": "Clases de profundidad de inundaci\u00f3n, retorno de 200 a\u00f1os",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
+          ]
+        },
+        {
+          "id": "ambiente-y-agro/glofas_peligro_rp50",
+          "title": "Clases de profundidad de inundaci\u00f3n, retorno de 50 a\u00f1os",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
+          ]
+        },
+        {
+          "id": "ambiente-y-agro/glofas_peligro_rp500",
+          "title": "Clases de profundidad de inundaci\u00f3n, retorno de 500 a\u00f1os",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
+          ]
+        },
+        {
+          "id": "ambiente-y-agro/glofas_peligro_rp75",
+          "title": "Clases de profundidad de inundaci\u00f3n, retorno de 75 a\u00f1os",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
+          ]
+        },
+        {
+          "id": "ambiente-y-agro/glofas_profundidad_rp10",
+          "title": "Profundidad de inundaci\u00f3n, retorno de 10 a\u00f1os",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
+          ]
+        },
+        {
+          "id": "ambiente-y-agro/glofas_profundidad_rp100",
+          "title": "Profundidad de inundaci\u00f3n, retorno de 100 a\u00f1os",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
+          ]
+        },
+        {
+          "id": "ambiente-y-agro/glofas_profundidad_rp20",
+          "title": "Profundidad de inundaci\u00f3n, retorno de 20 a\u00f1os",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
+          ]
+        },
+        {
+          "id": "ambiente-y-agro/glofas_profundidad_rp200",
+          "title": "Profundidad de inundaci\u00f3n, retorno de 200 a\u00f1os",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
+          ]
+        },
+        {
+          "id": "ambiente-y-agro/glofas_profundidad_rp50",
+          "title": "Profundidad de inundaci\u00f3n, retorno de 50 a\u00f1os",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
+          ]
+        },
+        {
+          "id": "ambiente-y-agro/glofas_profundidad_rp500",
+          "title": "Profundidad de inundaci\u00f3n, retorno de 500 a\u00f1os",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
+          ]
+        },
+        {
+          "id": "ambiente-y-agro/glofas_profundidad_rp75",
+          "title": "Profundidad de inundaci\u00f3n, retorno de 75 a\u00f1os",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
+          ]
+        },
+        {
           "id": "ambiente-y-agro/inta_carbono_suelo_2015_2022",
           "title": "Almacenamiento de Carbono en los suelos 2015-2022",
           "bbox": [
@@ -52185,6 +52487,16 @@
             -34.1766,
             -60.1388,
             -33.5416
+          ]
+        },
+        {
+          "id": "ambiente-y-agro/uso_del_suelo_overture",
+          "title": "Uso del suelo (Overture Maps)",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
           ]
         },
         {
@@ -52528,6 +52840,16 @@
           ]
         },
         {
+          "id": "comercio-y-cultura/lugares_overture",
+          "title": "Lugares de inter\u00e9s (Overture Maps)",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
+          ]
+        },
+        {
           "id": "comercio-y-cultura/medios_de_comunicacion",
           "title": "Medios de comunicacion",
           "bbox": [
@@ -52609,202 +52931,12 @@
         },
         {
           "id": "imagenes/sentinel2_trimestral",
-          "title": "Sentinel-2: mosaicos trimestrales sin nubes",
-          "bbox": [
-            -60.9593,
-            -34.1932,
-            -60.1176,
-            -33.524
-          ]
-        },
-        {
-          "id": "externos/glofas/profundidad_rp10",
-          "title": "Profundidad de inundaci\u00f3n, retorno de 10 a\u00f1os",
+          "title": "Sentinel-2: la fecha m\u00e1s despejada de cada trimestre",
           "bbox": [
             -60.944,
             -34.1766,
             -60.1388,
-            -33.5402
-          ]
-        },
-        {
-          "id": "externos/glofas/profundidad_rp20",
-          "title": "Profundidad de inundaci\u00f3n, retorno de 20 a\u00f1os",
-          "bbox": [
-            -60.944,
-            -34.1766,
-            -60.1388,
-            -33.5402
-          ]
-        },
-        {
-          "id": "externos/glofas/profundidad_rp50",
-          "title": "Profundidad de inundaci\u00f3n, retorno de 50 a\u00f1os",
-          "bbox": [
-            -60.944,
-            -34.1766,
-            -60.1388,
-            -33.5402
-          ]
-        },
-        {
-          "id": "externos/glofas/profundidad_rp75",
-          "title": "Profundidad de inundaci\u00f3n, retorno de 75 a\u00f1os",
-          "bbox": [
-            -60.944,
-            -34.1766,
-            -60.1388,
-            -33.5402
-          ]
-        },
-        {
-          "id": "externos/glofas/profundidad_rp100",
-          "title": "Profundidad de inundaci\u00f3n, retorno de 100 a\u00f1os",
-          "bbox": [
-            -60.944,
-            -34.1766,
-            -60.1388,
-            -33.5402
-          ]
-        },
-        {
-          "id": "externos/glofas/profundidad_rp200",
-          "title": "Profundidad de inundaci\u00f3n, retorno de 200 a\u00f1os",
-          "bbox": [
-            -60.944,
-            -34.1766,
-            -60.1388,
-            -33.5402
-          ]
-        },
-        {
-          "id": "externos/glofas/profundidad_rp500",
-          "title": "Profundidad de inundaci\u00f3n, retorno de 500 a\u00f1os",
-          "bbox": [
-            -60.944,
-            -34.1766,
-            -60.1388,
-            -33.5402
-          ]
-        },
-        {
-          "id": "externos/glofas/peligro_rp10",
-          "title": "Clases de profundidad de inundaci\u00f3n, retorno de 10 a\u00f1os",
-          "bbox": [
-            -60.944,
-            -34.1766,
-            -60.1388,
-            -33.5402
-          ]
-        },
-        {
-          "id": "externos/glofas/peligro_rp20",
-          "title": "Clases de profundidad de inundaci\u00f3n, retorno de 20 a\u00f1os",
-          "bbox": [
-            -60.944,
-            -34.1766,
-            -60.1388,
-            -33.5402
-          ]
-        },
-        {
-          "id": "externos/glofas/peligro_rp50",
-          "title": "Clases de profundidad de inundaci\u00f3n, retorno de 50 a\u00f1os",
-          "bbox": [
-            -60.944,
-            -34.1766,
-            -60.1388,
-            -33.5402
-          ]
-        },
-        {
-          "id": "externos/glofas/peligro_rp75",
-          "title": "Clases de profundidad de inundaci\u00f3n, retorno de 75 a\u00f1os",
-          "bbox": [
-            -60.944,
-            -34.1766,
-            -60.1388,
-            -33.5402
-          ]
-        },
-        {
-          "id": "externos/glofas/peligro_rp100",
-          "title": "Clases de profundidad de inundaci\u00f3n, retorno de 100 a\u00f1os",
-          "bbox": [
-            -60.944,
-            -34.1766,
-            -60.1388,
-            -33.5402
-          ]
-        },
-        {
-          "id": "externos/glofas/peligro_rp200",
-          "title": "Clases de profundidad de inundaci\u00f3n, retorno de 200 a\u00f1os",
-          "bbox": [
-            -60.944,
-            -34.1766,
-            -60.1388,
-            -33.5402
-          ]
-        },
-        {
-          "id": "externos/glofas/peligro_rp500",
-          "title": "Clases de profundidad de inundaci\u00f3n, retorno de 500 a\u00f1os",
-          "bbox": [
-            -60.944,
-            -34.1766,
-            -60.1388,
-            -33.5402
-          ]
-        },
-        {
-          "id": "externos/glofas/agua_permanente",
-          "title": "Cuerpos de agua permanentes (GloFAS)",
-          "bbox": [
-            -60.944,
-            -34.1766,
-            -60.1388,
-            -33.5402
-          ]
-        },
-        {
-          "id": "externos/overture/edificios",
-          "title": "Edificios (Overture Maps)",
-          "bbox": [
-            -60.944,
-            -34.1766,
-            -60.1388,
-            -33.5402
-          ]
-        },
-        {
-          "id": "externos/overture/lugares",
-          "title": "Lugares de inter\u00e9s (Overture Maps)",
-          "bbox": [
-            -60.944,
-            -34.1766,
-            -60.1388,
-            -33.5402
-          ]
-        },
-        {
-          "id": "externos/overture/segmentos",
-          "title": "Segmentos de transporte (Overture Maps)",
-          "bbox": [
-            -60.944,
-            -34.1766,
-            -60.1388,
-            -33.5402
-          ]
-        },
-        {
-          "id": "externos/overture/uso_del_suelo",
-          "title": "Uso del suelo (Overture Maps)",
-          "bbox": [
-            -60.944,
-            -34.1766,
-            -60.1388,
-            -33.5402
+            -33.5403
           ]
         }
       ]
