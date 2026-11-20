@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-20T13:51:52.647212+00:00",
+  "generated": "2026-11-20T14:32:34.789132+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-11-20T13:51:52.647212+00:00",
+  "registry_generated": "2026-11-20T14:32:34.789132+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -42515,6 +42515,22 @@
             45.7012,
             4.9224,
             45.7854
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gwl-fcs30d",
+      "collection_count": 1,
+      "collections": [
+        {
+          "id": "gwl-fcs30d",
+          "title": "GWL_FCS30D: global 30 m annual wetland maps, 2000\u20132022",
+          "bbox": [
+            -180.0,
+            -60.0002,
+            180.0,
+            80.0
           ]
         }
       ]
