@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-20T10:21:54.472147+00:00",
+  "generated": "2026-11-20T11:37:33.714946+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-11-20T10:21:54.472147+00:00",
+  "registry_generated": "2026-11-20T11:37:33.714946+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -45550,6 +45550,72 @@
       ]
     },
     {
+      "id": "kummu-gdp-pc",
+      "collection_count": 6,
+      "collections": [
+        {
+          "id": "gdp-per-capita-adm0",
+          "title": "GDP per capita (PPP), national, 1990-2024",
+          "bbox": [
+            -180.0,
+            -56.0,
+            180.0,
+            83.6667
+          ]
+        },
+        {
+          "id": "gdp-per-capita-adm1",
+          "title": "GDP per capita (PPP), reported subnational, 1990-2024",
+          "bbox": [
+            -179.9999,
+            -55.9794,
+            179.9999,
+            83.6667
+          ]
+        },
+        {
+          "id": "gdp-per-capita-adm2",
+          "title": "GDP per capita (PPP), downscaled admin 2, 1990-2024",
+          "bbox": [
+            -179.9999,
+            -90.0,
+            179.9999,
+            83.6563
+          ]
+        },
+        {
+          "id": "gdp-per-capita-grid",
+          "title": "GDP per capita (PPP) grids, 1990-2024",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "gdp-total",
+          "title": "Total GDP (PPP) grids, 1990-2024",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "gdp-per-capita-uncertainty",
+          "title": "GDP per capita (PPP) uncertainty, admin 2, 1990-2024",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        }
+      ]
+    },
+    {
       "id": "lisboa-cml",
       "collection_count": 35,
       "collections": [
@@ -50889,7 +50955,7 @@
     },
     {
       "id": "pergamino-ide",
-      "collection_count": 164,
+      "collection_count": 185,
       "collections": [
         {
           "id": "catastro/areas_fiscalizadas_construcciones",
@@ -52529,6 +52595,216 @@
             -33.9032,
             -60.5675,
             -33.8806
+          ]
+        },
+        {
+          "id": "imagenes/ortofotos_10cm_2022",
+          "title": "Ortofotos 10 cm 2022",
+          "bbox": [
+            -60.8517,
+            -34.0943,
+            -60.1613,
+            -33.6536
+          ]
+        },
+        {
+          "id": "imagenes/sentinel2_trimestral",
+          "title": "Sentinel-2: mosaicos trimestrales sin nubes",
+          "bbox": [
+            -60.9593,
+            -34.1932,
+            -60.1176,
+            -33.524
+          ]
+        },
+        {
+          "id": "externos/glofas/profundidad_rp10",
+          "title": "Profundidad de inundaci\u00f3n, retorno de 10 a\u00f1os",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
+          ]
+        },
+        {
+          "id": "externos/glofas/profundidad_rp20",
+          "title": "Profundidad de inundaci\u00f3n, retorno de 20 a\u00f1os",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
+          ]
+        },
+        {
+          "id": "externos/glofas/profundidad_rp50",
+          "title": "Profundidad de inundaci\u00f3n, retorno de 50 a\u00f1os",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
+          ]
+        },
+        {
+          "id": "externos/glofas/profundidad_rp75",
+          "title": "Profundidad de inundaci\u00f3n, retorno de 75 a\u00f1os",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
+          ]
+        },
+        {
+          "id": "externos/glofas/profundidad_rp100",
+          "title": "Profundidad de inundaci\u00f3n, retorno de 100 a\u00f1os",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
+          ]
+        },
+        {
+          "id": "externos/glofas/profundidad_rp200",
+          "title": "Profundidad de inundaci\u00f3n, retorno de 200 a\u00f1os",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
+          ]
+        },
+        {
+          "id": "externos/glofas/profundidad_rp500",
+          "title": "Profundidad de inundaci\u00f3n, retorno de 500 a\u00f1os",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
+          ]
+        },
+        {
+          "id": "externos/glofas/peligro_rp10",
+          "title": "Clases de profundidad de inundaci\u00f3n, retorno de 10 a\u00f1os",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
+          ]
+        },
+        {
+          "id": "externos/glofas/peligro_rp20",
+          "title": "Clases de profundidad de inundaci\u00f3n, retorno de 20 a\u00f1os",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
+          ]
+        },
+        {
+          "id": "externos/glofas/peligro_rp50",
+          "title": "Clases de profundidad de inundaci\u00f3n, retorno de 50 a\u00f1os",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
+          ]
+        },
+        {
+          "id": "externos/glofas/peligro_rp75",
+          "title": "Clases de profundidad de inundaci\u00f3n, retorno de 75 a\u00f1os",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
+          ]
+        },
+        {
+          "id": "externos/glofas/peligro_rp100",
+          "title": "Clases de profundidad de inundaci\u00f3n, retorno de 100 a\u00f1os",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
+          ]
+        },
+        {
+          "id": "externos/glofas/peligro_rp200",
+          "title": "Clases de profundidad de inundaci\u00f3n, retorno de 200 a\u00f1os",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
+          ]
+        },
+        {
+          "id": "externos/glofas/peligro_rp500",
+          "title": "Clases de profundidad de inundaci\u00f3n, retorno de 500 a\u00f1os",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
+          ]
+        },
+        {
+          "id": "externos/glofas/agua_permanente",
+          "title": "Cuerpos de agua permanentes (GloFAS)",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
+          ]
+        },
+        {
+          "id": "externos/overture/edificios",
+          "title": "Edificios (Overture Maps)",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
+          ]
+        },
+        {
+          "id": "externos/overture/lugares",
+          "title": "Lugares de inter\u00e9s (Overture Maps)",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
+          ]
+        },
+        {
+          "id": "externos/overture/segmentos",
+          "title": "Segmentos de transporte (Overture Maps)",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
+          ]
+        },
+        {
+          "id": "externos/overture/uso_del_suelo",
+          "title": "Uso del suelo (Overture Maps)",
+          "bbox": [
+            -60.944,
+            -34.1766,
+            -60.1388,
+            -33.5402
           ]
         }
       ]
