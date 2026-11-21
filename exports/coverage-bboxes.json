@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-20T20:13:49.715827+00:00",
+  "generated": "2026-11-21T14:15:56.916459+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-11-20T20:13:49.715827+00:00",
+  "registry_generated": "2026-11-21T14:15:56.916459+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -47979,10 +47979,10 @@
           "id": "groent/gadetraeer",
           "title": "Gadetr\u00e6er",
           "bbox": [
-            12.456,
-            55.6182,
-            12.6436,
-            55.73
+            12.4852,
+            55.6383,
+            12.6357,
+            55.724
           ]
         },
         {
@@ -52059,7 +52059,7 @@
           "id": "detections",
           "title": "Active Fire Detections (MODIS and VIIRS)",
           "bbox": [
-            -179.995,
+            -179.9999,
             -89.6907,
             179.9988,
             87.4687
@@ -58416,7 +58416,7 @@
           "title": "November 2024 Election Results by Precinct",
           "bbox": [
             -90.3205,
-            38.5319,
+            38.532,
             -90.1664,
             38.7744
           ]
@@ -58445,9 +58445,9 @@
           "id": "government/property-taxes",
           "title": "Property Taxes",
           "bbox": [
-            -90.3205,
-            38.5319,
-            -90.1664,
+            -90.3206,
+            38.5331,
+            -90.1754,
             38.7744
           ]
         },
@@ -58475,10 +58475,10 @@
           "id": "housing/property-sales",
           "title": "Property Sales",
           "bbox": [
-            -90.3205,
-            38.5319,
-            -90.1664,
-            38.7744
+            -90.3194,
+            38.5336,
+            -90.1791,
+            38.7731
           ]
         },
         {
@@ -58495,40 +58495,40 @@
           "id": "housing/electrical-permits",
           "title": "Electrical Permits",
           "bbox": [
-            -90.3205,
-            38.5319,
-            -90.1664,
-            38.7744
+            -90.3204,
+            38.5341,
+            -90.1804,
+            38.774
           ]
         },
         {
           "id": "housing/mechanical-permits",
           "title": "Mechanical Permits",
           "bbox": [
-            -90.3205,
-            38.5319,
-            -90.1664,
-            38.7744
+            -90.3188,
+            38.535,
+            -90.1804,
+            38.7731
           ]
         },
         {
           "id": "housing/plumbing-permits",
           "title": "Plumbing Permits",
           "bbox": [
-            -90.3205,
-            38.5319,
-            -90.1664,
-            38.7744
+            -90.3198,
+            38.5341,
+            -90.1791,
+            38.774
           ]
         },
         {
           "id": "housing/occupancy-permits",
           "title": "Occupancy Permits",
           "bbox": [
-            -90.3205,
-            38.5319,
-            -90.1664,
-            38.7744
+            -90.3199,
+            38.535,
+            -90.1784,
+            38.7701
           ]
         },
         {
@@ -58626,9 +58626,9 @@
           "title": "Street Permits",
           "bbox": [
             -90.3205,
-            38.5319,
-            -90.1664,
-            38.7744
+            38.5448,
+            -90.1751,
+            38.7743
           ]
         },
         {
