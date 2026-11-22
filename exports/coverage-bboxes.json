@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-21T14:15:56.916459+00:00",
+  "generated": "2026-11-22T14:06:09.270430+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-11-21T14:15:56.916459+00:00",
+  "registry_generated": "2026-11-22T14:06:09.270430+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -52004,8 +52004,8 @@
           "title": "Baustellen - Tempor\u00e4re Einschr\u00e4nkungen beim Gehen, Fahren und Parken (Opendata)",
           "bbox": [
             11.3747,
-            48.0425,
-            11.7447,
+            48.0329,
+            11.7931,
             48.2697
           ]
         },
@@ -52034,7 +52034,7 @@
           "title": "Parkraummanagementgebiete",
           "bbox": [
             11.4016,
-            48.0957,
+            48.0945,
             11.7083,
             48.1879
           ]
