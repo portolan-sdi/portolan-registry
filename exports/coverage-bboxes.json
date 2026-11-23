@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-22T17:14:54.993080+00:00",
+  "generated": "2026-11-23T17:28:17.675473+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-11-22T17:14:54.993080+00:00",
+  "registry_generated": "2026-11-23T17:28:17.675473+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -52059,7 +52059,7 @@
           "id": "detections",
           "title": "Active Fire Detections (MODIS and VIIRS)",
           "bbox": [
-            -179.995,
+            -179.9999,
             -89.6907,
             179.9988,
             87.4687
