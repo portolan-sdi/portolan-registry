@@ -72,7 +72,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: '20'
+          node-version: '26'
 
       - name: Install ajv-cli
         # Exact versions. These CLI tools have no lockfile of their own.
@@ -141,7 +141,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: '22'
+          node-version: '26'
 
       - name: Install stac-node-validator
         run: npm ci --prefix scripts/stac-node-validator --no-audit --no-fund
@@ -163,7 +163,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: '20'
+          node-version: '26'
 
       - name: Install ajv-cli
         # Exact versions. These CLI tools have no lockfile of their own.
@@ -230,7 +230,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: '22'
+          node-version: '26'
 
       - name: Install stac-node-validator
         run: npm ci --prefix scripts/stac-node-validator --no-audit --no-fund
