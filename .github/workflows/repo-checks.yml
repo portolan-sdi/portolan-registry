@@ -24,6 +24,8 @@ jobs:
     # v1 is a moving major tag. Changes to the required sections, the
     # evidence rule, or the file layout reach this repo when the tag moves,
     # not when ops merges.
-    uses: portolan-sdi/portolan-ops/.github/workflows/reusable-repo-checks.yml@v1
+    uses: portolan-sdi/portolan-ops/.github/workflows/reusable-repo-checks.yml@346268af1c8ed7e8dc970e0ba6f02c947dd5a519
     permissions:
       contents: read
+    with:
+      ops-ref: 346268af1c8ed7e8dc970e0ba6f02c947dd5a519
