@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-23T17:28:17.675473+00:00",
+  "generated": "2026-11-24T11:04:26.201480+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-11-23T17:28:17.675473+00:00",
+  "registry_generated": "2026-11-24T11:04:26.201480+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -5194,16 +5194,6 @@
           ]
         },
         {
-          "id": "statistica/popolazione-residente-aree-statistiche",
-          "title": "Popolazione residente per et\u00e0, sesso, cittadinanza, quartiere, zona, area statistica - serie storica",
-          "bbox": [
-            -180.0,
-            -90.0,
-            180.0,
-            90.0
-          ]
-        },
-        {
           "id": "territorio/aree-statistiche",
           "title": "Aree statistiche di Bologna",
           "bbox": [
@@ -5341,6 +5331,16 @@
             44.4469,
             11.4306,
             44.556
+          ]
+        },
+        {
+          "id": "statistica/popolazione-residente-aree-statistiche",
+          "title": "Popolazione residente per et\u00e0, sesso, cittadinanza, quartiere, zona, area statistica - serie storica",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
           ]
         }
       ]
@@ -44678,6 +44678,72 @@
       ]
     },
     {
+      "id": "global-surface-water",
+      "collection_count": 6,
+      "collections": [
+        {
+          "id": "occurrence",
+          "title": "Water occurrence",
+          "bbox": [
+            -180.0,
+            -60,
+            180.0,
+            80
+          ]
+        },
+        {
+          "id": "change",
+          "title": "Occurrence change intensity",
+          "bbox": [
+            -180.0,
+            -60,
+            180.0,
+            80
+          ]
+        },
+        {
+          "id": "seasonality",
+          "title": "Seasonality",
+          "bbox": [
+            -180.0,
+            -60,
+            180.0,
+            80
+          ]
+        },
+        {
+          "id": "recurrence",
+          "title": "Water recurrence",
+          "bbox": [
+            -180.0,
+            -60,
+            180.0,
+            80
+          ]
+        },
+        {
+          "id": "transitions",
+          "title": "Water transitions",
+          "bbox": [
+            -180.0,
+            -60,
+            180.0,
+            80
+          ]
+        },
+        {
+          "id": "extent",
+          "title": "Maximum water extent",
+          "bbox": [
+            -180.0,
+            -60,
+            180.0,
+            80
+          ]
+        }
+      ]
+    },
+    {
       "id": "gmwid",
       "collection_count": 27,
       "collections": [
@@ -52059,7 +52125,7 @@
           "id": "detections",
           "title": "Active Fire Detections (MODIS and VIIRS)",
           "bbox": [
-            -179.9999,
+            -179.995,
             -89.6907,
             179.9988,
             87.4687
