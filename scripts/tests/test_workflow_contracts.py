@@ -1,6 +1,26 @@
+import re
 from pathlib import Path
 
 import yaml
+
+UPSTREAM_REPOSITORY_GUARD = "github.repository == 'portolan-sdi/portolan-registry'"
+
+
+def test_scheduled_jobs_require_the_upstream_repository():
+    for path in sorted(Path(".github/workflows").glob("*.y*ml")):
+        workflow = yaml.safe_load(path.read_text())
+        # PyYAML resolves an unquoted `on` key to True.
+        triggers = workflow.get("on", workflow.get(True, ()))
+        if "schedule" not in triggers:
+            continue
+
+        for name, job in workflow["jobs"].items():
+            condition = job.get("if", "").strip().removeprefix("${{").removesuffix("}}").strip()
+            # Require the guard alone or conjoined with a parenthesized condition.
+            assert re.fullmatch(
+                rf"{re.escape(UPSTREAM_REPOSITORY_GUARD)}(?:\s*&&\s*\([^()]+\))?",
+                condition,
+            ), f"{path}: {name} must require the upstream repository"
 
 
 def test_auto_merge_runs_as_the_app():
@@ -265,7 +285,9 @@ def test_the_index_workflow_publishes_only_a_changed_index():
 
     publish = workflow["jobs"]["publish"]
     assert publish["needs"] == "build"
-    assert publish["if"] == "needs.build.outputs.changed == 'true'"
+    assert publish["if"] == (
+        f"{UPSTREAM_REPOSITORY_GUARD} && (needs.build.outputs.changed == 'true')"
+    )
     # Only the job that reads no outside document can write.
     assert publish["permissions"] == {"contents": "write", "actions": "write"}
     assert all("uses" not in step or "checkout" not in step["uses"] for step in publish["steps"])

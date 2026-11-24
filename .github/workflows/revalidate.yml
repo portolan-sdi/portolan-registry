@@ -16,6 +16,8 @@ concurrency:
 
 jobs:
   revalidate:
+    # Forks lack the upstream credentials used by scheduled workflows.
+    if: github.repository == 'portolan-sdi/portolan-registry'
     runs-on: ubuntu-latest
     # The run crawls and mirrors every catalog, one after
     # another. It took about 90 minutes on 11 October 2026.
