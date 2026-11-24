@@ -1,11 +1,11 @@
 {
-  "generated": "2026-11-24T11:04:26.201480+00:00",
+  "generated": "2026-11-24T16:59:53.244633+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-11-24T11:04:26.201480+00:00",
+  "registry_generated": "2026-11-24T16:59:53.244633+00:00",
   "catalogs": [
     {
       "id": "anncsu",
-      "collection_count": 3,
+      "collection_count": 4,
       "collections": [
         {
           "id": "indirizzi",
@@ -30,6 +30,16 @@
         {
           "id": "rilasci",
           "title": "Rilasci mensili ANNCSU",
+          "bbox": [
+            6.7003,
+            35.5017,
+            18.66,
+            47.0805
+          ]
+        },
+        {
+          "id": "stradario",
+          "title": "Stradario ANNCSU",
           "bbox": [
             6.7003,
             35.5017,
@@ -52125,7 +52135,7 @@
           "id": "detections",
           "title": "Active Fire Detections (MODIS and VIIRS)",
           "bbox": [
-            -179.995,
+            -179.9999,
             -89.6907,
             179.9988,
             87.4687
