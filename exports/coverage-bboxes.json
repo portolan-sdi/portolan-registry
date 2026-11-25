@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-24T16:59:53.244633+00:00",
+  "generated": "2026-11-25T08:58:39.456633+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-11-24T16:59:53.244633+00:00",
+  "registry_generated": "2026-11-25T08:58:39.456633+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -57,7 +57,7 @@
           "id": "elektromobilitaet-und-sharing/ladesaeulen",
           "title": "Geb\u00fcndelte Daten E-Lades\u00e4ulen Baden-W\u00fcrttemberg",
           "bbox": [
-            -7.9054,
+            -15.0,
             -54.9041,
             107.362,
             80.0
@@ -98,7 +98,7 @@
           "title": "Haltesteige Baden-W\u00fcrttemberg",
           "bbox": [
             -8.849,
-            39.0844,
+            7.5737,
             30.5198,
             56.9438
           ]
@@ -130,7 +130,7 @@
             7.5929,
             47.5494,
             10.3345,
-            49.5178
+            49.5499
           ]
         },
         {
@@ -2062,7 +2062,7 @@
           "title": "Ambulante Pflegeeinrichtungen",
           "bbox": [
             13.1207,
-            52.3868,
+            52.3849,
             13.7169,
             52.6391
           ]
@@ -2081,7 +2081,7 @@
           "id": "gesundheit/pflege-tagespflege",
           "title": "Tagespflegeeinrichtungen",
           "bbox": [
-            13.1528,
+            13.1466,
             52.3761,
             13.6514,
             52.6398
@@ -3093,7 +3093,7 @@
           "bbox": [
             13.1349,
             52.4596,
-            13.5509,
+            13.5551,
             52.6438
           ]
         },
@@ -37910,6 +37910,32 @@
       ]
     },
     {
+      "id": "copernicus-dem",
+      "collection_count": 2,
+      "collections": [
+        {
+          "id": "glo-30-2024-1",
+          "title": "Copernicus DEM GLO-30, release 2024_1",
+          "bbox": [
+            -180.0,
+            -89.9999,
+            179.9999,
+            84.0001
+          ]
+        },
+        {
+          "id": "source-acquisitions",
+          "title": "Copernicus DEM source acquisitions (TanDEM-X footprints)",
+          "bbox": [
+            -179.9996,
+            -89.9336,
+            179.9996,
+            84.2034
+          ]
+        }
+      ]
+    },
+    {
       "id": "corine-land-cover-2018",
       "collection_count": 1,
       "collections": [
@@ -39778,16 +39804,6 @@
           ]
         },
         {
-          "id": "korkeussuhteet/korkeuskayra",
-          "title": "korkeuskayra",
-          "bbox": [
-            19.1314,
-            59.6904,
-            31.5967,
-            70.0951
-          ]
-        },
-        {
           "id": "korkeussuhteet/korkeuskayrankorkeusarvo",
           "title": "korkeuskayrankorkeusarvo",
           "bbox": [
@@ -39835,6 +39851,16 @@
             59.7728,
             31.5296,
             70.0799
+          ]
+        },
+        {
+          "id": "korkeussuhteet/korkeuskayra",
+          "title": "korkeuskayra",
+          "bbox": [
+            19.1314,
+            59.6904,
+            31.5967,
+            70.0951
           ]
         },
         {
@@ -40840,7 +40866,7 @@
             -176.6648,
             -55.1228,
             179.6077,
-            81.021
+            80.8808
           ]
         },
         {
@@ -40880,7 +40906,7 @@
             -176.5671,
             -55.1082,
             179.6082,
-            81.0369
+            81.0311
           ]
         },
         {
@@ -40890,7 +40916,7 @@
             -176.6606,
             -55.1634,
             179.6368,
-            80.1467
+            80.1225
           ]
         },
         {
@@ -41820,7 +41846,7 @@
             -176.6648,
             -55.1228,
             179.6077,
-            81.021
+            80.8808
           ]
         },
         {
@@ -41860,7 +41886,7 @@
             -176.5671,
             -55.1082,
             179.6082,
-            81.0369
+            81.0311
           ]
         },
         {
@@ -41870,7 +41896,7 @@
             -176.6606,
             -55.1634,
             179.6368,
-            80.1467
+            80.1225
           ]
         },
         {
@@ -48055,10 +48081,10 @@
           "id": "groent/gadetraeer",
           "title": "Gadetr\u00e6er",
           "bbox": [
-            12.4852,
-            55.6383,
-            12.6357,
-            55.724
+            12.456,
+            55.6182,
+            12.6436,
+            55.73
           ]
         },
         {
@@ -49010,36 +49036,6 @@
           ]
         },
         {
-          "id": "residuos/ecoilhas",
-          "title": "Ecoilhas",
-          "bbox": [
-            -9.218,
-            38.6924,
-            -9.0926,
-            38.7955
-          ]
-        },
-        {
-          "id": "residuos/ecopontos",
-          "title": "Ecopontos",
-          "bbox": [
-            -9.2303,
-            38.6923,
-            -9.0911,
-            38.7831
-          ]
-        },
-        {
-          "id": "residuos/vidroes",
-          "title": "Vidr\u00f5es",
-          "bbox": [
-            -9.2261,
-            38.6949,
-            -9.0924,
-            38.7933
-          ]
-        },
-        {
           "id": "riscos/sondagens",
           "title": "Sondagens",
           "bbox": [
@@ -49097,6 +49093,36 @@
             38.6935,
             -9.0925,
             38.7861
+          ]
+        },
+        {
+          "id": "residuos/ecoilhas",
+          "title": "Ecoilhas",
+          "bbox": [
+            -9.218,
+            38.6924,
+            -9.0926,
+            38.7955
+          ]
+        },
+        {
+          "id": "residuos/ecopontos",
+          "title": "Ecopontos",
+          "bbox": [
+            -9.2303,
+            38.6923,
+            -9.0911,
+            38.7831
+          ]
+        },
+        {
+          "id": "residuos/vidroes",
+          "title": "Vidr\u00f5es",
+          "bbox": [
+            -9.2261,
+            38.6949,
+            -9.0924,
+            38.7933
           ]
         }
       ]
@@ -49723,7 +49749,7 @@
           "bbox": [
             -3.794,
             40.3353,
-            -3.5505,
+            -3.5476,
             40.5324
           ]
         },
@@ -52080,7 +52106,7 @@
           "title": "Baustellen - Tempor\u00e4re Einschr\u00e4nkungen beim Gehen, Fahren und Parken (Opendata)",
           "bbox": [
             11.3747,
-            48.0329,
+            48.0166,
             11.7931,
             48.2697
           ]
@@ -52135,7 +52161,7 @@
           "id": "detections",
           "title": "Active Fire Detections (MODIS and VIIRS)",
           "bbox": [
-            -179.9999,
+            -179.995,
             -89.6907,
             179.9988,
             87.4687
@@ -52857,9 +52883,9 @@
           "id": "skred/skredfaresoner-kartleggingsomrade",
           "title": "Skredfaresoner \u2013 Kartleggingsomrade",
           "bbox": [
-            4.8623,
-            58.5041,
-            26.0394,
+            4.8354,
+            58.0952,
+            28.1111,
             78.9508
           ]
         },
@@ -57554,7 +57580,7 @@
           "title": "Management Plans",
           "bbox": [
             -7.3096,
-            54.7424,
+            54.7344,
             -1.8464,
             58.4781
           ]
