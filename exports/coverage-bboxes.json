@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-25T16:50:28.112599+00:00",
+  "generated": "2026-11-26T21:15:39.122215+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-11-25T16:50:28.112599+00:00",
+  "registry_generated": "2026-11-26T21:15:39.122215+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -44163,10 +44163,10 @@
           "id": "es_cat",
           "title": "Catalonia Crop Fields (Mapa de cultius)",
           "bbox": [
-            0.1247,
-            40.5176,
-            3.3002,
-            42.8432
+            0.2006,
+            40.5241,
+            3.2975,
+            42.8208
           ]
         },
         {
@@ -46317,10 +46317,10 @@
           "id": "es_cat",
           "title": "Catalonia Crop Fields (Mapa de cultius)",
           "bbox": [
-            0.1247,
-            40.5176,
-            3.3002,
-            42.8432
+            0.2006,
+            40.5241,
+            3.2975,
+            42.8208
           ]
         },
         {
@@ -56073,8 +56073,98 @@
     },
     {
       "id": "planet-disasterdata",
-      "collection_count": 55,
+      "collection_count": 64,
       "collections": [
+        {
+          "id": "post-event-pelican-2026-11-24",
+          "title": "Machala, Huaquillas\u2013Aguas Verdes and the Guayas confluence, 24 Nov (Pelican) \u2014 Post-event Imagery",
+          "bbox": [
+            -80.2869,
+            -3.5509,
+            -79.767,
+            -2.0522
+          ]
+        },
+        {
+          "id": "post-event-planetscope-2026-11-15",
+          "title": "Tumbes, 15 Nov (PlanetScope) \u2014 Post-event Imagery",
+          "bbox": [
+            -80.6863,
+            -3.6603,
+            -80.3424,
+            -3.4181
+          ]
+        },
+        {
+          "id": "post-event-planetscope-2026-11-20",
+          "title": "Tumbes, 20 Nov (PlanetScope) \u2014 Post-event Imagery",
+          "bbox": [
+            -80.7397,
+            -3.6374,
+            -80.2822,
+            -3.3847
+          ]
+        },
+        {
+          "id": "post-event-planetscope-2026-11-21",
+          "title": "Tumbes and Guayaquil, 21 Nov (PlanetScope) \u2014 Post-event Imagery",
+          "bbox": [
+            -80.5522,
+            -3.6939,
+            -79.6561,
+            -2.0226
+          ]
+        },
+        {
+          "id": "post-event-planetscope-2026-11-23",
+          "title": "Tumbes, 23 Nov (PlanetScope) \u2014 Post-event Imagery",
+          "bbox": [
+            -80.5909,
+            -3.7332,
+            -80.267,
+            -3.506
+          ]
+        },
+        {
+          "id": "post-event-planetscope-2026-11-24",
+          "title": "Tumbes and the Zarumilla border, 24 Nov (PlanetScope) \u2014 Post-event Imagery",
+          "bbox": [
+            -80.6163,
+            -3.7856,
+            -79.9647,
+            -3.407
+          ]
+        },
+        {
+          "id": "pre-event-planetscope-2026-06-15",
+          "title": "Guayaquil and Dur\u00e1n, 15 Jun (PlanetScope) \u2014 Pre-event Imagery",
+          "bbox": [
+            -80.0343,
+            -2.3417,
+            -79.7135,
+            -2.1126
+          ]
+        },
+        {
+          "id": "pre-event-planetscope-2026-07-08",
+          "title": "Huaquillas\u2013Aguas Verdes and the Zarumilla river, 8 Jul (PlanetScope) \u2014 Pre-event Imagery",
+          "bbox": [
+            -80.3385,
+            -3.5584,
+            -80.0479,
+            -3.3519
+          ]
+        },
+        {
+          "id": "pre-event-planetscope-2026-09-12",
+          "title": "Tumbes, 12 Sep (PlanetScope) \u2014 Pre-event Imagery",
+          "bbox": [
+            -80.7058,
+            -3.6864,
+            -80.3859,
+            -3.458
+          ]
+        },
         {
           "id": "post-event-planetscope-2026-11-05",
           "title": "Southern Santa Cruz, 5 Nov (PlanetScope) \u2014 Post-event Imagery",
@@ -57613,6 +57703,32 @@
             54.688,
             -1.1635,
             60.5452
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sentinel-2-quarterly-cloudless-mosaics",
+      "collection_count": 2,
+      "collections": [
+        {
+          "id": "mosaics",
+          "title": "Quarterly cloudless mosaic tiles",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "coverage",
+          "title": "Tile footprints and per-quarter coverage",
+          "bbox": [
+            -180.0,
+            -83.7489,
+            180.0,
+            83.7483
           ]
         }
       ]
