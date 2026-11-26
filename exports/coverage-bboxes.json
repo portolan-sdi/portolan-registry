@@ -1,8 +1,24 @@
 {
-  "generated": "2026-11-26T21:15:39.122215+00:00",
+  "generated": "2026-11-26T22:00:16.790421+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-11-26T21:15:39.122215+00:00",
+  "registry_generated": "2026-11-26T22:00:16.790421+00:00",
   "catalogs": [
+    {
+      "id": "agea-it-aerial-ortho",
+      "collection_count": 1,
+      "collections": [
+        {
+          "id": "orthophoto-mosaic",
+          "title": "AGEA Orthophoto Mosaic of Italy, 2022\u20132024 (0.6 m, Zarr)",
+          "bbox": [
+            6.6206,
+            35.4875,
+            18.5408,
+            47.0944
+          ]
+        }
+      ]
+    },
     {
       "id": "anncsu",
       "collection_count": 4,
@@ -57461,6 +57477,52 @@
             49.9419,
             14.4772,
             50.1479
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s2-stac-geoparquet",
+      "collection_count": 4,
+      "collections": [
+        {
+          "id": "sentinel-2-l2a",
+          "title": "Sentinel-2 L2A scenes (item index)",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "stats",
+          "title": "MGRS coverage and cloud statistics",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "sentinel-2-c1-l2a",
+          "title": "Sentinel-2 Collection 1 L2A scenes (item index)",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "stats-c1",
+          "title": "MGRS coverage and cloud statistics (Collection 1)",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
           ]
         }
       ]
