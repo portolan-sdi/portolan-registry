@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-26T16:27:02.530450+00:00",
+  "generated": "2026-11-26T21:15:39.122215+00:00",
   "source": "https://raw.githubusercontent.com/portolan-sdi/portolan-registry/refs/heads/main/exports/catalogs.json",
-  "registry_generated": "2026-11-26T16:27:02.530450+00:00",
+  "registry_generated": "2026-11-26T21:15:39.122215+00:00",
   "catalogs": [
     {
       "id": "anncsu",
@@ -57703,6 +57703,32 @@
             54.688,
             -1.1635,
             60.5452
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sentinel-2-quarterly-cloudless-mosaics",
+      "collection_count": 2,
+      "collections": [
+        {
+          "id": "mosaics",
+          "title": "Quarterly cloudless mosaic tiles",
+          "bbox": [
+            -180.0,
+            -90.0,
+            180.0,
+            90.0
+          ]
+        },
+        {
+          "id": "coverage",
+          "title": "Tile footprints and per-quarter coverage",
+          "bbox": [
+            -180.0,
+            -83.7489,
+            180.0,
+            83.7483
           ]
         }
       ]
