@@ -28,6 +28,8 @@ concurrency:
 
 jobs:
   build:
+    # Forks lack the upstream credentials used by scheduled workflows.
+    if: github.repository == 'portolan-sdi/portolan-registry'
     name: Build Index
     runs-on: ubuntu-latest
     # The run reads each catalog and collection document, and no item. It
@@ -78,7 +80,8 @@ jobs:
   publish:
     name: Publish Index
     needs: build
-    if: needs.build.outputs.changed == 'true'
+    # Forks lack the upstream credentials used by scheduled workflows.
+    if: github.repository == 'portolan-sdi/portolan-registry' && (needs.build.outputs.changed == 'true')
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:

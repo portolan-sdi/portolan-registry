@@ -4,8 +4,8 @@
   "id": "portolan-registry",
   "title": "Portolan Registry",
   "description": "A unified registry of Portolan catalogs. Each child link points to a registered cloud-native STAC catalog.",
-  "generated": "2026-11-19T15:18:13.034432+00:00",
-  "count": 92,
+  "generated": "2026-11-26T21:15:39.122215+00:00",
+  "count": 102,
   "links": [
     {
       "rel": "root",
@@ -32,7 +32,7 @@
       "portolan_registry:id": "anncsu",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": null,
@@ -60,20 +60,20 @@
         "url": "https://geobeyond.it/"
       },
       "portolan_registry:licenses": {
-        "CC-BY-4.0": 3
+        "CC-BY-4.0": 4
       },
-      "portolan_registry:collection_count": 3,
+      "portolan_registry:collection_count": 4,
       "portolan_registry:feature_count": 41457918,
-      "portolan_registry:item_count": 14,
+      "portolan_registry:item_count": 18,
       "portolan_registry:asset_count": 7,
       "portolan_registry:total_size_bytes": 1394763379,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": [
-        "2025-09-03T00:00:00Z",
+        "2025-01-28T00:00:00Z",
         null
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -91,7 +91,7 @@
       "type": "application/json",
       "title": "Offene Geodaten Baden-W\u00fcrttemberg",
       "bbox": [
-        -8.849016,
+        -15.0,
         -54.90412,
         107.36199,
         80.0
@@ -99,7 +99,7 @@
       "portolan_registry:id": "baden-wuerttemberg-lgl",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -147,14 +147,14 @@
         "DL-DE-ZERO-2.0": 1
       },
       "portolan_registry:collection_count": 26,
-      "portolan_registry:feature_count": 859825,
+      "portolan_registry:feature_count": 861645,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 154,
-      "portolan_registry:total_size_bytes": 644253710,
+      "portolan_registry:total_size_bytes": 603638653,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -180,7 +180,7 @@
       "portolan_registry:id": "barcelona-open-data",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": null,
@@ -207,18 +207,18 @@
         "CC-BY-4.0": 30
       },
       "portolan_registry:collection_count": 30,
-      "portolan_registry:feature_count": 429315,
+      "portolan_registry:feature_count": 429309,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 177,
-      "portolan_registry:total_size_bytes": 118196347,
+      "portolan_registry:total_size_bytes": 113341232,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
-      "portolan_registry:stac_valid": true,
-      "portolan_registry:stac_invalid_since": null,
+      "portolan_registry:stac_valid": false,
+      "portolan_registry:stac_invalid_since": "2026-11-20T14:32:34.789132+00:00",
       "portolan_registry:has_agents_md": true,
       "portolan_registry:has_readme": true,
       "portolan_registry:deprecated": false,
@@ -240,7 +240,7 @@
       "portolan_registry:id": "basel-stadt-ogd",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -324,14 +324,14 @@
         "CC0-1.0": 1
       },
       "portolan_registry:collection_count": 38,
-      "portolan_registry:feature_count": 165280,
+      "portolan_registry:feature_count": 165351,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 242,
-      "portolan_registry:total_size_bytes": 76759138,
+      "portolan_registry:total_size_bytes": 69980664,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -357,7 +357,7 @@
       "portolan_registry:id": "bayern-geoportal",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -394,12 +394,12 @@
       "portolan_registry:collection_count": 26,
       "portolan_registry:feature_count": 689244,
       "portolan_registry:item_count": 0,
-      "portolan_registry:asset_count": 156,
-      "portolan_registry:total_size_bytes": 1321042050,
+      "portolan_registry:asset_count": 150,
+      "portolan_registry:total_size_bytes": 995404679,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -425,7 +425,7 @@
       "portolan_registry:id": "berlin-geoportal",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": null,
@@ -556,17 +556,17 @@
         "DL-DE-ZERO-2.0": 371
       },
       "portolan_registry:collection_count": 371,
-      "portolan_registry:feature_count": 15729886,
+      "portolan_registry:feature_count": 15729932,
       "portolan_registry:item_count": 0,
-      "portolan_registry:asset_count": 2265,
-      "portolan_registry:total_size_bytes": 4476754381,
+      "portolan_registry:asset_count": 2266,
+      "portolan_registry:total_size_bytes": 4307695232,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": [
         "1990-01-01T00:00:00Z",
         "1990-12-31T23:59:59Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -592,7 +592,7 @@
       "portolan_registry:id": "bologna-open-data",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -600,7 +600,7 @@
         "type": "image/png",
         "title": "Open Data Comune di Bologna"
       },
-      "portolan_registry:updated": "2026-10-16T12:00:00Z",
+      "portolan_registry:updated": "2026-09-20T12:00:00Z",
       "portolan_registry:first_registered": "2026-10-02T11:45:13+03:00",
       "portolan_registry:kind": "mirror",
       "portolan_registry:producers": [
@@ -623,17 +623,17 @@
         "CC-BY-4.0": 36
       },
       "portolan_registry:collection_count": 36,
-      "portolan_registry:feature_count": 410151,
+      "portolan_registry:feature_count": 410187,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 226,
-      "portolan_registry:total_size_bytes": 115437623,
+      "portolan_registry:total_size_bytes": 112348808,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": [
         "2010-01-01T00:00:00Z",
         null
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -657,7 +657,7 @@
         67.3489608987037
       ],
       "portolan_registry:id": "bot-open-data",
-      "portolan_registry:status": "stale",
+      "portolan_registry:status": "removed",
       "portolan_registry:api_type": "static",
       "portolan_registry:spec_version": "0.1.0",
       "portolan_registry:spec_version_mixed": false,
@@ -692,9 +692,9 @@
         "2026-08-31T23:59:59Z"
       ],
       "portolan_registry:last_crawled": "2026-10-22T12:03:26.908696+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_validated": "2026-11-22T14:06:09.270430+00:00",
       "portolan_registry:stale_since": "2026-10-23T11:04:11.881072+00:00",
-      "portolan_registry:failure_reason": "https://data.back-on-track.eu/bot-open-data/catalog.json returns text/html, not JSON",
+      "portolan_registry:failure_reason": "Stale for 30+ days",
       "portolan_registry:stac_valid": true,
       "portolan_registry:stac_invalid_since": null,
       "portolan_registry:has_agents_md": true,
@@ -718,7 +718,7 @@
       "portolan_registry:id": "bruxelles-urbis",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -759,14 +759,14 @@
         "other": 5
       },
       "portolan_registry:collection_count": 29,
-      "portolan_registry:feature_count": 1768936,
+      "portolan_registry:feature_count": 1768934,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 172,
-      "portolan_registry:total_size_bytes": 876712952,
+      "portolan_registry:total_size_bytes": 827746425,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -836,8 +836,8 @@
         "2025-02-02T00:00:00Z",
         null
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -940,12 +940,12 @@
         "2020-08-12T00:00:00Z",
         "2026-12-31T23:59:59Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
-      "portolan_registry:stac_valid": true,
-      "portolan_registry:stac_invalid_since": null,
+      "portolan_registry:stac_valid": false,
+      "portolan_registry:stac_invalid_since": "2026-11-20T14:32:34.789132+00:00",
       "portolan_registry:has_agents_md": true,
       "portolan_registry:has_readme": true,
       "portolan_registry:deprecated": false,
@@ -995,8 +995,8 @@
       "portolan_registry:total_size_bytes": 2612875166,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
@@ -1059,8 +1059,8 @@
       "portolan_registry:total_size_bytes": 1807383186,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -1086,7 +1086,7 @@
       "portolan_registry:id": "catalunya-icgc",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": null,
@@ -1116,11 +1116,11 @@
       "portolan_registry:feature_count": 618818,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 227,
-      "portolan_registry:total_size_bytes": 121439721912,
+      "portolan_registry:total_size_bytes": 121347254274,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -1146,7 +1146,7 @@
       "portolan_registry:id": "cesko-cuzk",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -1180,11 +1180,11 @@
       "portolan_registry:feature_count": 776869,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 120,
-      "portolan_registry:total_size_bytes": 3890809158,
+      "portolan_registry:total_size_bytes": 3850359403,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -1210,7 +1210,7 @@
       "portolan_registry:id": "comunidad-madrid-datos-abiertos",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": null,
@@ -1237,17 +1237,84 @@
         "CC-BY-4.0": 1964
       },
       "portolan_registry:collection_count": 1964,
-      "portolan_registry:feature_count": 13171260,
+      "portolan_registry:feature_count": 13219544,
       "portolan_registry:item_count": 0,
-      "portolan_registry:asset_count": 3958,
-      "portolan_registry:total_size_bytes": 3437003137,
+      "portolan_registry:asset_count": 3955,
+      "portolan_registry:total_size_bytes": 3441066704,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": [
         "1965-10-02T00:00:00Z",
         null
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:stale_since": null,
+      "portolan_registry:failure_reason": null,
+      "portolan_registry:stac_valid": true,
+      "portolan_registry:stac_invalid_since": null,
+      "portolan_registry:has_agents_md": true,
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
+    },
+    {
+      "rel": "child",
+      "href": "https://data.source.coop/portolan-mirrors/copernicus-dem/catalog.json",
+      "type": "application/json",
+      "title": "Copernicus DEM GLO-30, release 2024_1",
+      "bbox": [
+        -180.0,
+        -89.999861111,
+        179.999861111,
+        84.20343
+      ],
+      "portolan_registry:id": "copernicus-dem",
+      "portolan_registry:status": "valid",
+      "portolan_registry:api_type": "static",
+      "portolan_registry:spec_version": "0.3.0",
+      "portolan_registry:spec_version_mixed": false,
+      "portolan_registry:stac_version": "1.1.0",
+      "portolan_registry:logo": null,
+      "portolan_registry:updated": "2026-11-25T09:06:17Z",
+      "portolan_registry:first_registered": "2026-11-25T09:58:19+01:00",
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "DLR e.V. (German Aerospace Center)",
+          "url": "https://www.dlr.de/"
+        },
+        {
+          "name": "Airbus Defence and Space GmbH",
+          "url": "https://www.airbus.com/en/products-services/space/earth-observation"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "Portolan Mirrors",
+          "url": "https://source.coop/portolan-mirrors/copernicus-dem"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "Portolan Mirrors",
+        "url": "https://source.coop/portolan-mirrors/copernicus-dem"
+      },
+      "portolan_registry:licenses": {
+        "other": 2
+      },
+      "portolan_registry:collection_count": 2,
+      "portolan_registry:feature_count": 0,
+      "portolan_registry:item_count": 26475,
+      "portolan_registry:asset_count": 7,
+      "portolan_registry:total_size_bytes": 1191534337,
+      "portolan_registry:counts_partial": false,
+      "portolan_registry:temporal_extent": [
+        "2010-12-12T04:04:00Z",
+        "2020-11-12T00:11:22Z"
+      ],
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -1313,8 +1380,8 @@
         "2017-01-01T00:00:00Z",
         "2018-12-31T23:59:59Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -1340,7 +1407,7 @@
       "portolan_registry:id": "danmark-dataforsyningen",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -1376,14 +1443,14 @@
         "CC0-1.0": 19
       },
       "portolan_registry:collection_count": 34,
-      "portolan_registry:feature_count": 380693,
+      "portolan_registry:feature_count": 380713,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 215,
-      "portolan_registry:total_size_bytes": 1291910585,
+      "portolan_registry:total_size_bytes": 1288328176,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -1466,12 +1533,12 @@
       "portolan_registry:total_size_bytes": 77798888,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
-      "portolan_registry:stac_valid": true,
-      "portolan_registry:stac_invalid_since": null,
+      "portolan_registry:stac_valid": false,
+      "portolan_registry:stac_invalid_since": "2026-11-20T14:32:34.789132+00:00",
       "portolan_registry:has_agents_md": true,
       "portolan_registry:has_readme": true,
       "portolan_registry:deprecated": false,
@@ -1523,8 +1590,8 @@
         "2017-01-01T00:00:00Z",
         "2025-12-31T23:59:59Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
@@ -1583,8 +1650,8 @@
         "2001-01-01T00:00:00Z",
         "2025-12-31T23:59:59Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -1645,12 +1712,12 @@
         "2020-01-01T00:00:00Z",
         "2020-12-31T23:59:59Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
-      "portolan_registry:stac_valid": true,
-      "portolan_registry:stac_invalid_since": null,
+      "portolan_registry:stac_valid": false,
+      "portolan_registry:stac_invalid_since": "2026-11-20T14:32:34.789132+00:00",
       "portolan_registry:has_agents_md": true,
       "portolan_registry:has_readme": true,
       "portolan_registry:deprecated": false,
@@ -1703,12 +1770,12 @@
         "2020-01-01T00:00:00Z",
         "2020-12-31T23:59:59Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
-      "portolan_registry:stac_valid": true,
-      "portolan_registry:stac_invalid_since": null,
+      "portolan_registry:stac_valid": false,
+      "portolan_registry:stac_invalid_since": "2026-11-20T14:32:34.789132+00:00",
       "portolan_registry:has_agents_md": true,
       "portolan_registry:has_readme": true,
       "portolan_registry:deprecated": false,
@@ -1760,12 +1827,12 @@
         "2020-01-01T00:00:00Z",
         "2020-12-31T23:59:59Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
-      "portolan_registry:stac_valid": true,
-      "portolan_registry:stac_invalid_since": null,
+      "portolan_registry:stac_valid": false,
+      "portolan_registry:stac_invalid_since": "2026-11-20T14:32:34.789132+00:00",
       "portolan_registry:has_agents_md": true,
       "portolan_registry:has_readme": true,
       "portolan_registry:deprecated": false,
@@ -1823,12 +1890,12 @@
         "1984-01-01T00:00:00Z",
         "2025-12-31T23:59:59Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
-      "portolan_registry:stac_valid": true,
-      "portolan_registry:stac_invalid_since": null,
+      "portolan_registry:stac_valid": false,
+      "portolan_registry:stac_invalid_since": "2026-11-20T14:32:34.789132+00:00",
       "portolan_registry:has_agents_md": true,
       "portolan_registry:has_readme": true,
       "portolan_registry:deprecated": false,
@@ -1850,7 +1917,7 @@
       "portolan_registry:id": "estonia-maa-amet",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -1881,17 +1948,17 @@
         "other": 38
       },
       "portolan_registry:collection_count": 38,
-      "portolan_registry:feature_count": 9609066,
+      "portolan_registry:feature_count": 9609922,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 292,
-      "portolan_registry:total_size_bytes": 11863345033,
+      "portolan_registry:total_size_bytes": 11739070201,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": [
         "2019-01-01T00:00:00Z",
         "2025-01-01T23:59:59Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -1917,7 +1984,7 @@
       "portolan_registry:id": "euskadi-geoeuskadi",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -1998,12 +2065,12 @@
       "portolan_registry:collection_count": 22,
       "portolan_registry:feature_count": 22268,
       "portolan_registry:item_count": 0,
-      "portolan_registry:asset_count": 138,
-      "portolan_registry:total_size_bytes": 87954736,
+      "portolan_registry:asset_count": 137,
+      "portolan_registry:total_size_bytes": 78791157,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -2029,7 +2096,7 @@
       "portolan_registry:id": "fema-nfhl-geoparquet",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -2037,7 +2104,7 @@
         "type": "image/png",
         "title": "Geomermaids"
       },
-      "portolan_registry:updated": "2026-11-19T14:42:48Z",
+      "portolan_registry:updated": "2026-11-25T01:40:25Z",
       "portolan_registry:first_registered": "2026-10-01T12:19:08+00:00",
       "portolan_registry:kind": "mirror",
       "portolan_registry:producers": [
@@ -2060,17 +2127,17 @@
         "CC-PDM-1.0": 1
       },
       "portolan_registry:collection_count": 1,
-      "portolan_registry:feature_count": 97174562,
+      "portolan_registry:feature_count": 97179122,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 2510,
-      "portolan_registry:total_size_bytes": 35686913148,
+      "portolan_registry:total_size_bytes": 35688582207,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": [
         "2002-03-04T00:00:00Z",
-        "2026-11-19T23:59:59Z"
+        "2026-11-26T23:59:59Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -2139,11 +2206,11 @@
       "portolan_registry:feature_count": 4210,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 48,
-      "portolan_registry:total_size_bytes": 5041748214,
+      "portolan_registry:total_size_bytes": 5151688609,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -2169,7 +2236,7 @@
       "portolan_registry:id": "finland-nls-geographic-names",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -2200,14 +2267,14 @@
         "CC-BY-4.0": 4
       },
       "portolan_registry:collection_count": 4,
-      "portolan_registry:feature_count": 3847286,
+      "portolan_registry:feature_count": 3847337,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 27,
-      "portolan_registry:total_size_bytes": 1675858578,
+      "portolan_registry:total_size_bytes": 1626757998,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -2233,7 +2300,7 @@
       "portolan_registry:id": "finland-nls-topographic-data",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -2264,14 +2331,14 @@
         "CC-BY-4.0": 117
       },
       "portolan_registry:collection_count": 117,
-      "portolan_registry:feature_count": 59329749,
+      "portolan_registry:feature_count": 59865811,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 590,
-      "portolan_registry:total_size_bytes": 61977714161,
+      "portolan_registry:total_size_bytes": 51850403204,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -2287,18 +2354,18 @@
       "rel": "child",
       "href": "https://data.source.coop/ftw/global-data-2e/catalog.json",
       "type": "application/json",
-      "title": "Fields of the World \u2014 Global Data (2nd Edition)",
+      "title": "Fields of the World \u2014 Global Data",
       "bbox": [
-        -179.9342017717571,
-        -55.94573440106268,
-        179.8203248881878,
-        81.06088097321714
+        -180.0,
+        -60.0,
+        180.0,
+        85.0
       ],
       "portolan_registry:id": "ftw-global-data-2e",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
-      "portolan_registry:spec_version_mixed": false,
+      "portolan_registry:spec_version": "0.3.0",
+      "portolan_registry:spec_version_mixed": true,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
         "href": "https://data.source.coop/ftw/global-data-2e/ftw-logo.svg",
@@ -2312,12 +2379,40 @@
         {
           "name": "Taylor Geospatial",
           "url": "https://taylorgeospatial.org/"
+        },
+        {
+          "name": "Microsoft AI for Good Research Lab",
+          "url": "https://www.microsoft.com/en-us/research/group/ai-for-good-research-lab/"
+        },
+        {
+          "name": "Arizona State University",
+          "url": "https://www.asu.edu/"
+        },
+        {
+          "name": "Washington University in St. Louis",
+          "url": "https://wustl.edu/"
+        },
+        {
+          "name": "Oregon State University",
+          "url": "https://oregonstate.edu/"
+        },
+        {
+          "name": "Clark University",
+          "url": "https://www.clarku.edu/"
+        },
+        {
+          "name": "European Space Agency / Copernicus",
+          "url": "https://sentinels.copernicus.eu/"
         }
       ],
       "portolan_registry:processors": [
         {
           "name": "Taylor Geospatial",
           "url": "https://taylorgeospatial.org/"
+        },
+        {
+          "name": "Microsoft AI for Good Research Lab",
+          "url": "https://www.microsoft.com/en-us/research/group/ai-for-good-research-lab/"
         }
       ],
       "portolan_registry:host": {
@@ -2325,20 +2420,20 @@
         "url": "https://taylorgeospatial.org/"
       },
       "portolan_registry:licenses": {
-        "CC-BY-4.0": 18
+        "CC-BY-4.0": 29
       },
-      "portolan_registry:collection_count": 18,
+      "portolan_registry:collection_count": 29,
       "portolan_registry:feature_count": 0,
-      "portolan_registry:item_count": 528,
-      "portolan_registry:asset_count": 175,
-      "portolan_registry:total_size_bytes": 363086441655,
+      "portolan_registry:item_count": 743,
+      "portolan_registry:asset_count": 238,
+      "portolan_registry:total_size_bytes": 704479842549,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": [
         "2017-01-01T00:00:00Z",
         "2025-12-31T23:59:59Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
@@ -2404,8 +2499,8 @@
         "2024-01-01T00:00:00Z",
         "2024-12-31T23:59:59Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -2471,8 +2566,8 @@
       "portolan_registry:total_size_bytes": 6620350160,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -2534,8 +2629,71 @@
         "1975-01-01T00:00:00Z",
         "2030-12-31T23:59:59Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:stale_since": null,
+      "portolan_registry:failure_reason": null,
+      "portolan_registry:stac_valid": true,
+      "portolan_registry:stac_invalid_since": null,
+      "portolan_registry:has_agents_md": true,
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
+    },
+    {
+      "rel": "child",
+      "href": "https://data.source.coop/portolan-mirrors/glc-fcs30d/catalog.json",
+      "type": "application/json",
+      "title": "GLC_FCS30D: Global 30 m Land Cover Dynamics, 1985\u20132022",
+      "bbox": [
+        -180.0,
+        -60.000202534,
+        180.0,
+        80.0
+      ],
+      "portolan_registry:id": "glc-fcs30d",
+      "portolan_registry:status": "valid",
+      "portolan_registry:api_type": "static",
+      "portolan_registry:spec_version": "0.3.0",
+      "portolan_registry:spec_version_mixed": false,
+      "portolan_registry:stac_version": "1.1.0",
+      "portolan_registry:logo": null,
+      "portolan_registry:updated": "2026-11-20T17:05:25Z",
+      "portolan_registry:first_registered": "2026-11-20T21:13:24+01:00",
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Aerospace Information Research Institute, Chinese Academy of Sciences",
+          "url": "https://doi.org/10.5281/zenodo.15063683"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "Portolan Mirrors",
+          "url": "https://github.com/portolan-mirrors/glc-fcs30d"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "Portolan Mirrors",
+        "url": "https://github.com/portolan-mirrors/glc-fcs30d"
+      },
+      "portolan_registry:licenses": {
+        "CC-BY-4.0": 1
+      },
+      "portolan_registry:collection_count": 1,
+      "portolan_registry:feature_count": 0,
+      "portolan_registry:item_count": 0,
+      "portolan_registry:asset_count": 41,
+      "portolan_registry:total_size_bytes": 135835968431,
+      "portolan_registry:counts_partial": false,
+      "portolan_registry:temporal_extent": [
+        "1985-01-01T00:00:00Z",
+        "2022-12-31T23:59:59Z"
+      ],
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -2551,7 +2709,7 @@
       "rel": "child",
       "href": "https://data.source.coop/ftw/global-data/catalog.json",
       "type": "application/json",
-      "title": "Fields of the World \u2014 Global",
+      "title": "Fields of the World",
       "bbox": [
         -180.0,
         -60.0,
@@ -2561,17 +2719,17 @@
       "portolan_registry:id": "global-data",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
-      "portolan_registry:spec_version_mixed": false,
+      "portolan_registry:spec_version": "0.3.0",
+      "portolan_registry:spec_version_mixed": true,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
-        "href": "https://data.source.coop/ftw/global-data/docs/ftw-logo.svg",
+        "href": "https://data.source.coop/ftw/global-data/_assets/ftw-logo.svg",
         "type": "image/svg+xml",
         "title": "Fields of the World"
       },
-      "portolan_registry:updated": "2026-07-28T16:34:06Z",
+      "portolan_registry:updated": null,
       "portolan_registry:first_registered": "2026-08-11T17:41:15+00:00",
-      "portolan_registry:kind": "official",
+      "portolan_registry:kind": "mirror",
       "portolan_registry:producers": [
         {
           "name": "Microsoft AI for Good Research Lab",
@@ -2600,6 +2758,354 @@
         {
           "name": "European Space Agency / Copernicus",
           "url": "https://sentinels.copernicus.eu/"
+        },
+        {
+          "name": "DATA Archiving and Networked Services (DANS)",
+          "url": "https://research.tudelft.nl/en/publications/ai4smallfarms-a-dataset-for-crop-field-delineation-in-southeast-a"
+        },
+        {
+          "name": "Agrarmarkt Austria",
+          "url": "https://geometadatensuche.inspire.gv.at/metadatensuche/inspire/api/records/9db8a0c3-e92a-4df4-9d55-8210e326a7ed"
+        },
+        {
+          "name": "Joint Research Centre, European Commission",
+          "url": "https://data.jrc.ec.europa.eu/dataset/b9fb9e67-78a9-4327-9d59-39a928d812d3"
+        },
+        {
+          "name": "Agentschap Landbouw & Zeevisserij (Government)",
+          "url": "https://landbouwcijfers.vlaanderen.be/open-geodata-landbouwgebruikspercelen"
+        },
+        {
+          "name": "Ministry of Agriculture and Food",
+          "url": "https://www.mzh.government.bg"
+        },
+        {
+          "name": "Mendeley Data",
+          "url": "https://data.mendeley.com/datasets/vz6d7tw87f/1#file-5ac1542b-12ef-4dce-8258-113b5c5d87c9"
+        },
+        {
+          "name": "Kanton Aargau, via geodienste.ch",
+          "url": "https://www.geodienste.ch/services/lwb_nutzungsflaechen"
+        },
+        {
+          "name": "Kanton Appenzell Innerrhoden, via geodienste.ch",
+          "url": "https://www.geodienste.ch/services/lwb_nutzungsflaechen"
+        },
+        {
+          "name": "Kanton Appenzell Ausserrhoden, via geodienste.ch",
+          "url": "https://www.geodienste.ch/services/lwb_nutzungsflaechen"
+        },
+        {
+          "name": "Kanton Bern, via geodienste.ch",
+          "url": "https://www.geodienste.ch/services/lwb_nutzungsflaechen"
+        },
+        {
+          "name": "Kanton Basel-Landschaft, via geodienste.ch",
+          "url": "https://www.geodienste.ch/services/lwb_nutzungsflaechen"
+        },
+        {
+          "name": "Kanton Fribourg, via geodienste.ch",
+          "url": "https://www.geodienste.ch/services/lwb_nutzungsflaechen"
+        },
+        {
+          "name": "\u00c9tat de Gen\u00e8ve, Office cantonal de l'agriculture et de la nature",
+          "url": "https://ge.ch/sitg/"
+        },
+        {
+          "name": "Kanton Jura, via geodienste.ch",
+          "url": "https://www.geodienste.ch/services/lwb_nutzungsflaechen"
+        },
+        {
+          "name": "Kanton Luzern, via geodienste.ch",
+          "url": "https://www.geodienste.ch/services/lwb_nutzungsflaechen"
+        },
+        {
+          "name": "Kanton St. Gallen, via geodienste.ch",
+          "url": "https://www.geodienste.ch/services/lwb_nutzungsflaechen"
+        },
+        {
+          "name": "Kanton Schaffhausen, via geodienste.ch",
+          "url": "https://www.geodienste.ch/services/lwb_nutzungsflaechen"
+        },
+        {
+          "name": "Kanton Solothurn, via geodienste.ch",
+          "url": "https://www.geodienste.ch/services/lwb_nutzungsflaechen"
+        },
+        {
+          "name": "Kanton Schwyz, Amt f\u00fcr Landwirtschaft",
+          "url": "https://www.sz.ch/landwirtschaft"
+        },
+        {
+          "name": "Kanton Thurgau, via geodienste.ch",
+          "url": "https://www.geodienste.ch/services/lwb_nutzungsflaechen"
+        },
+        {
+          "name": "Kanton Uri, via geodienste.ch",
+          "url": "https://www.geodienste.ch/services/lwb_nutzungsflaechen"
+        },
+        {
+          "name": "Kanton Valais, via geodienste.ch",
+          "url": "https://www.geodienste.ch/services/lwb_nutzungsflaechen"
+        },
+        {
+          "name": "Kanton Zug, via geodienste.ch",
+          "url": "https://www.geodienste.ch/services/lwb_nutzungsflaechen"
+        },
+        {
+          "name": "Kanton Z\u00fcrich, Amt f\u00fcr Landschaft und Natur",
+          "url": "https://www.zh.ch/de/umwelt-tiere/landwirtschaft.html"
+        },
+        {
+          "name": "Czech Ministry of Agriculture (Ministr Zem\u011bd\u011blstv\u00ed)",
+          "url": "https://mze.gov.cz/public/portal/mze/farmar/LPIS"
+        },
+        {
+          "name": "ML/SLA Niedersachsen",
+          "url": "https://sla.niedersachsen.de/landentwicklung/LEA/"
+        },
+        {
+          "name": "Land Schleswig-Holstein",
+          "url": "https://sh-mis.gdi-sh.de/catalog/#/datasets/iso/21f67269-780f-4f3c-8f66-03dde27acfe7"
+        },
+        {
+          "name": "Danish Agricultural Agency",
+          "url": "https://lbst.dk/"
+        },
+        {
+          "name": "Construction Sector Development Agency",
+          "url": "https://www.geoportal.lt/geoportal/nacionaline-mokejimo-agentura-prie-zemes-ukio-ministerijos#savedSearchId={56542726-DC0B-461E-A32C-3E9A4A693E27}&collapsed=true>, EuroCrops <https://github.com/maja601/EuroCrops"
+        },
+        {
+          "name": "P\u00f5llumajanduse Registrite ja Informatsiooni Amet",
+          "url": "http://data.europa.eu/88u/dataset/pria-pollud"
+        },
+        {
+          "name": "Fondo Espa\u00f1ol de Garant\u00eda Agraria (FEGA)",
+          "url": "https://www.fega.gob.es"
+        },
+        {
+          "name": "Gobierno Vasco",
+          "url": "https://www.euskadi.eus/web01-tramite/es/contenidos/tramite_servicio/datos_geograficos_sigpac/es_def/index.shtml"
+        },
+        {
+          "name": "Catalonia Department of Agriculture, Livestock, Fisheries and Food",
+          "url": "https://agricultura.gencat.cat/ca/ambits/desenvolupament-rural/sigpac/mapa-cultius/"
+        },
+        {
+          "name": "Unidad de Cartograf\u00eda. Secretar\u00eda General. Consejer\u00eda de Agricultura, Ganader\u00eda y Desarrollo Rural.",
+          "url": "https://datosabiertos.castillalamancha.es"
+        },
+        {
+          "name": "Govern de les Illes Balears",
+          "url": "https://www.caib.es"
+        },
+        {
+          "name": "Spanish Agricultural Guarantee Fund (FEGA) of the Ministry of Agriculture, Fisheries and Food",
+          "url": "https://www.fega.gob.es/es/PwfGcp/es/el_fega/index.jsp"
+        },
+        {
+          "name": "Finnish Food Authority",
+          "url": "https://www.ruokavirasto.fi/en/about-us/open-information/spatial-data-sets/"
+        },
+        {
+          "name": "Anstitut National de l'Information G\u00e9ographique et Foresti\u00e8re",
+          "url": "https://www.data.gouv.fr/en/datasets/registre-parcellaire-graphique-rpg-contours-des-parcelles-et-ilots-culturaux-et-leur-groupe-de-cultures-majoritaire/"
+        },
+        {
+          "name": "University of Maryland",
+          "url": "https://doi.org/10.5281/zenodo.10479122"
+        },
+        {
+          "name": "Agencija za pla\u0107anja u poljoprivredi, ribarstvu i ruralnom razvoju",
+          "url": "https://www.apprrr.hr/prostorni-podaci-servisi/"
+        },
+        {
+          "name": "Department of Agriculture, Food and the Marine",
+          "url": "https://www.gov.ie/en/organisation/department-of-agriculture-food-and-the-marine/"
+        },
+        {
+          "name": "Zenodo",
+          "url": "https://zenodo.org"
+        },
+        {
+          "name": "Japanese Ministry of Agriculture, Forestry and Fisheries (MAFF, \u8fb2\u6797\u6c34\u7523\u7701)",
+          "url": "https://download.fude.maff.go.jp/"
+        },
+        {
+          "name": "Agricultural Impacts Research Group, Clark University",
+          "url": "https://github.com/agroimpacts/lacunalabels"
+        },
+        {
+          "name": "Nacionalin\u0117 mok\u0117jimo agent\u016bra prie \u017dem\u0117s \u016bkio ministerijos",
+          "url": "https://www.nma.lt>, Europe-LAND HE Project <https://doi.org/10.5281/zenodo.14230620"
+        },
+        {
+          "name": "Rural Support Service Republic of Latvia (Lauku atbalsta dienests)",
+          "url": "https://www.lad.gov.lv/lv/lauku-registra-dati"
+        },
+        {
+          "name": "RVO / PDOK",
+          "url": "https://www.pdok.nl/introductie/-/article/basisregistratie-gewaspercelen-brp-"
+        },
+        {
+          "name": "IPAP - Instituto de Financiamento da Agricultura e Pescas",
+          "url": "https://www.ifap.pt/isip/ows/"
+        },
+        {
+          "name": "NASA Harvest",
+          "url": "https://source.coop/nasa/rwanda-field-boundary-competition"
+        },
+        {
+          "name": "Jordbruksverket (The Swedish Board of Agriculture)",
+          "url": "https://jordbruksverket.se"
+        },
+        {
+          "name": "Ministry of Agriculture, Forestry and Food (Ministrstvo za kmetijstvo, gozdarstvo in prehrano)",
+          "url": "https://www.gov.si/drzavni-organi/ministrstva/ministrstvo-za-kmetijstvo-gozdarstvo-in-prehrano/"
+        },
+        {
+          "name": "P\u00f4dohospod\u00e1rska platobn\u00e1 agent\u00fara",
+          "url": "https://www.apa.sk"
+        },
+        {
+          "name": "World Resources Institute and Arizona State University",
+          "url": "https://source.coop/wri-data-lab/trazoannotations"
+        },
+        {
+          "name": "ESA Fusion Competition via Source Cooperative",
+          "url": "https://source.coop/esa/fusion-competition"
+        },
+        {
+          "name": "Conab",
+          "url": "https://portaldeinformacoes.conab.gov.br/mapeamentos-agricolas-downloads.html"
+        },
+        {
+          "name": "University of Saskatchewan",
+          "url": "https://doi.org/10.17632/2y568rt76w.2"
+        },
+        {
+          "name": "Kanton Glarus, via geodienste.ch",
+          "url": "https://www.geodienste.ch/services/lwb_nutzungsflaechen"
+        },
+        {
+          "name": "Kanton Graub\u00fcnden, via geodienste.ch",
+          "url": "https://www.geodienste.ch/services/lwb_nutzungsflaechen"
+        },
+        {
+          "name": "Land Brandenburg",
+          "url": "https://geobroker.geobasis-bb.de/gbss.php?MODE=GetProductInformation&PRODUCTID=9e95f21f-4ecf-4682-9a44-e5f7609f6fa0"
+        },
+        {
+          "name": "Ministerium f\u00fcr L\u00e4ndlichen Raum und Verbraucherschutz Baden-W\u00fcrttemberg",
+          "url": "https://mlr.baden-wuerttemberg.de"
+        },
+        {
+          "name": "Bayerische Vermessungsverwaltung",
+          "url": "https://www.ldbv.bayern.de"
+        },
+        {
+          "name": "Bayerisches Staatsministerium f\u00fcr Ern\u00e4hrung, Landwirtschaft, Forsten und Tourismus",
+          "url": "https://www.stmelf.bayern.de"
+        },
+        {
+          "name": "Land Hessen",
+          "url": "https://www.geoportal.hessen.de/spatial-objects/886"
+        },
+        {
+          "name": "Ministerium f\u00fcr Landwirtschaft und Umwelt M-V",
+          "url": "https://www.geodaten-mv.de/dienste/feldblock_atom?type=dataset&id=f18122c4-2585-4c22-9c48-9e960e8dhd34"
+        },
+        {
+          "name": "Land Nordrhein-Westfalen / Open.NRW",
+          "url": "https://www.opengeodata.nrw.de/produkte/umwelt_klima/bodennutzung/landwirtschaft/"
+        },
+        {
+          "name": "S\u00e4chsisches Landesamt f\u00fcr Umwelt, Landwirtschaft und Geologie",
+          "url": "https://geoportal.sachsen.de"
+        },
+        {
+          "name": "Ministerium f\u00fcr Umwelt, Klima, Mobilit\u00e4t, Agrar und Verbraucherschutz",
+          "url": "https://geoportal.saarland.de"
+        },
+        {
+          "name": "Ministerium f\u00fcr Wirtschaft, Tourismus, Landwirtschaft und Forsten (MWL) Sachsen-Anhalt",
+          "url": "https://mwl.sachsen-anhalt.de"
+        },
+        {
+          "name": "Th\u00fcringer Landesamt f\u00fcr Landwirtschaft und L\u00e4ndlichen Raum",
+          "url": "https://geomis.geoportal-th.de/geonetwork/srv/ger/catalog.search#/metadata/D872F2D6-60BC-11D6-B67D-00E0290F5BA0"
+        },
+        {
+          "name": "Johann Heinrich von Th\u00fcnen-Institut",
+          "url": "https://doi.org/10.5281/zenodo.10619783"
+        },
+        {
+          "name": "Lauku atbalsta dienests",
+          "url": "https://www.lad.gov.lv/lv/lauku-registra-dati>, EuroCrops <https://github.com/maja601/EuroCrops"
+        },
+        {
+          "name": "Ministry of Regional Development and Public Administration",
+          "url": "http://spatial.mdrap.ro>, EuroCrops <https://github.com/maja601/EuroCrops"
+        },
+        {
+          "name": "Ministrstvo za kmetijstvo, gozdarstvo in prehrano",
+          "url": "https://rkg.gov.si/vstop/>, EuroCrops <https://github.com/maja601/EuroCrops"
+        },
+        {
+          "name": "Junta de Andaluc\u00eda",
+          "url": "https://www.juntadeandalucia.es"
+        },
+        {
+          "name": "Gobierno de Aragon",
+          "url": "https://www.aragon.es"
+        },
+        {
+          "name": "Gobierno de Cantabria",
+          "url": "https://mapas.cantabria.es"
+        },
+        {
+          "name": "Junta de Castilla y Le\u00f3n",
+          "url": "https://datos.jcyl.es/web/jcyl/set/es/sector-publico/sigpac/1284212629849"
+        },
+        {
+          "name": "Gobierno de Canarias - Consejer\u00eda de Agricultura, Ganader\u00eda, Pesca y Soberan\u00eda Alimentaria",
+          "url": "https://www.gobiernodecanarias.org/agpsa/"
+        },
+        {
+          "name": "Virtual Office for Rural Environment",
+          "url": "https://ovmediorural.xunta.gal/es/consultas-publicas/sixpac"
+        },
+        {
+          "name": "Comunidad de Madrid",
+          "url": "https://www.comunidad.madrid"
+        },
+        {
+          "name": "Autonome Provinz Bozen - S\u00fcdtirol",
+          "url": "https://agricoltura.provincia.bz.it/it/home"
+        },
+        {
+          "name": "Pula Advisors",
+          "url": "https://ecass-project-documentation.readthedocs.io/en/latest/modules/data_access.html"
+        },
+        {
+          "name": "Administration des services techniques de l'agriculture",
+          "url": "https://asta.etat.lu/en"
+        },
+        {
+          "name": "Aqualinc Research Limited",
+          "url": "https://environment.govt.nz/publications/national-irrigated-land-spatial-dataset-2020-update"
+        },
+        {
+          "name": "Agencja Restrukturyzacji i Modernizacji Rolnictwa",
+          "url": "https://geoportal.arimr.gov.pl/mapy/apps/sites/#/portal"
+        },
+        {
+          "name": "California Department of Water Resources",
+          "url": "https://data.cnra.ca.gov/dataset/statewide-crop-mapping"
+        },
+        {
+          "name": "United States Department of Agriculture",
+          "url": "https://www.nass.usda.gov"
         }
       ],
       "portolan_registry:processors": [
@@ -2610,6 +3116,10 @@
         {
           "name": "Taylor Geospatial",
           "url": "https://taylorgeospatial.org/"
+        },
+        {
+          "name": "Fields of the World",
+          "url": "https://fieldsofthe.world"
         }
       ],
       "portolan_registry:host": {
@@ -2617,24 +3127,219 @@
         "url": "https://taylorgeospatial.org/"
       },
       "portolan_registry:licenses": {
-        "CC-BY-4.0": 11
+        "CC-BY-4.0": 129,
+        "CC-BY-NC-4.0": 1,
+        "CC-BY-SA-3.0": 9,
+        "CC-BY-SA-4.0": 17,
+        "CC0-1.0": 55,
+        "DL-DE-BY-2.0": 10,
+        "DL-DE-ZERO-2.0": 4,
+        "GPL-2.0-or-later": 2,
+        "other": 61
       },
-      "portolan_registry:collection_count": 11,
-      "portolan_registry:feature_count": 0,
-      "portolan_registry:item_count": 215,
-      "portolan_registry:asset_count": 72,
-      "portolan_registry:total_size_bytes": 345312485304,
+      "portolan_registry:collection_count": 288,
+      "portolan_registry:feature_count": 165746095,
+      "portolan_registry:item_count": 1142,
+      "portolan_registry:asset_count": 3111,
+      "portolan_registry:total_size_bytes": 1494020116048,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": [
-        "2024-01-01T00:00:00Z",
-        "2025-12-31T23:59:59Z"
+        "2005-01-01T00:00:00Z",
+        "2026-12-31T23:59:59Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
       "portolan_registry:stac_invalid_since": "2026-10-21T18:00:06.870049+00:00",
+      "portolan_registry:has_agents_md": true,
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
+    },
+    {
+      "rel": "child",
+      "href": "https://data.source.coop/portolan-mirrors/global-drought-hazard/catalog.json",
+      "type": "application/json",
+      "title": "Global Drought Hazard",
+      "bbox": [
+        -180.0,
+        -89.9999928,
+        179.9999856,
+        90.0
+      ],
+      "portolan_registry:id": "global-drought-hazard",
+      "portolan_registry:status": "valid",
+      "portolan_registry:api_type": "static",
+      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version_mixed": false,
+      "portolan_registry:stac_version": "1.1.0",
+      "portolan_registry:logo": null,
+      "portolan_registry:updated": "2026-11-20T12:50:43Z",
+      "portolan_registry:first_registered": "2026-11-20T14:39:11+01:00",
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Institute for International Law of Peace and Armed Conflict (IFHV), Ruhr University Bochum",
+          "url": "https://www.ifhv.de"
+        }
+      ],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": {
+        "name": "Portolan Mirrors",
+        "url": "https://source.coop/portolan-mirrors/global-drought-hazard"
+      },
+      "portolan_registry:licenses": {
+        "CC-BY-4.0": 1
+      },
+      "portolan_registry:collection_count": 1,
+      "portolan_registry:feature_count": 0,
+      "portolan_registry:item_count": 5,
+      "portolan_registry:asset_count": 2,
+      "portolan_registry:total_size_bytes": 412959,
+      "portolan_registry:counts_partial": false,
+      "portolan_registry:temporal_extent": [
+        "1902-01-01T00:00:00Z",
+        "2018-12-31T23:59:59Z"
+      ],
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:stale_since": null,
+      "portolan_registry:failure_reason": null,
+      "portolan_registry:stac_valid": true,
+      "portolan_registry:stac_invalid_since": null,
+      "portolan_registry:has_agents_md": true,
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
+    },
+    {
+      "rel": "child",
+      "href": "https://data.source.coop/portolan-mirrors/global-mangrove-watch/catalog.json",
+      "type": "application/json",
+      "title": "Global Mangrove Watch v4.1.12",
+      "bbox": [
+        -180.0,
+        -39.0,
+        180.0,
+        35.0
+      ],
+      "portolan_registry:id": "global-mangrove-watch",
+      "portolan_registry:status": "valid",
+      "portolan_registry:api_type": "static",
+      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version_mixed": false,
+      "portolan_registry:stac_version": "1.1.0",
+      "portolan_registry:logo": null,
+      "portolan_registry:updated": "2026-11-20T11:29:32Z",
+      "portolan_registry:first_registered": "2026-11-20T14:50:16+01:00",
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Global Mangrove Watch",
+          "url": "https://www.globalmangrovewatch.org"
+        }
+      ],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": {
+        "name": "Portolan Mirrors",
+        "url": "https://source.coop/portolan-mirrors/global-mangrove-watch"
+      },
+      "portolan_registry:licenses": {
+        "CC-BY-4.0": 11
+      },
+      "portolan_registry:collection_count": 11,
+      "portolan_registry:feature_count": 2722324,
+      "portolan_registry:item_count": 199,
+      "portolan_registry:asset_count": 26,
+      "portolan_registry:total_size_bytes": 1085750852,
+      "portolan_registry:counts_partial": false,
+      "portolan_registry:temporal_extent": [
+        "1985-01-01T00:00:00Z",
+        "2025-12-31T23:59:59Z"
+      ],
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:stale_since": null,
+      "portolan_registry:failure_reason": null,
+      "portolan_registry:stac_valid": true,
+      "portolan_registry:stac_invalid_since": null,
+      "portolan_registry:has_agents_md": true,
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
+    },
+    {
+      "rel": "child",
+      "href": "https://data.source.coop/portolan-mirrors/global-surface-water/catalog.json",
+      "type": "application/json",
+      "title": "Global Surface Water Explorer v1.5",
+      "bbox": [
+        -180.0,
+        -60,
+        180.0,
+        80
+      ],
+      "portolan_registry:id": "global-surface-water",
+      "portolan_registry:status": "valid",
+      "portolan_registry:api_type": "static",
+      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version_mixed": false,
+      "portolan_registry:stac_version": "1.1.0",
+      "portolan_registry:logo": {
+        "href": "https://data.source.coop/portolan-mirrors/global-surface-water/_assets/logo.png",
+        "type": "image/png",
+        "title": "European Commission Joint Research Centre"
+      },
+      "portolan_registry:updated": "2026-11-24T10:55:48Z",
+      "portolan_registry:first_registered": "2026-11-24T12:04:05+01:00",
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "European Commission Joint Research Centre (JRC)",
+          "url": "https://global-surface-water.appspot.com/"
+        },
+        {
+          "name": "Google",
+          "url": "https://earthengine.google.com/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "Google",
+          "url": "https://earthengine.google.com/"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "Portolan Mirrors",
+        "url": "https://source.coop/portolan-mirrors/global-surface-water"
+      },
+      "portolan_registry:licenses": {
+        "CC-BY-4.0": 6
+      },
+      "portolan_registry:collection_count": 6,
+      "portolan_registry:feature_count": 0,
+      "portolan_registry:item_count": 3024,
+      "portolan_registry:asset_count": 24,
+      "portolan_registry:total_size_bytes": 622402926,
+      "portolan_registry:counts_partial": false,
+      "portolan_registry:temporal_extent": [
+        "1984-03-16T00:00:00Z",
+        "2024-12-31T23:59:59Z"
+      ],
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:stale_since": null,
+      "portolan_registry:failure_reason": null,
+      "portolan_registry:stac_valid": true,
+      "portolan_registry:stac_invalid_since": null,
       "portolan_registry:has_agents_md": true,
       "portolan_registry:has_readme": true,
       "portolan_registry:deprecated": false,
@@ -2728,8 +3433,8 @@
         "2026-11-14T21:20:41Z",
         "2026-11-14T21:20:41Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -2791,8 +3496,8 @@
         "2025-01-07T00:02:35Z",
         "2025-01-20T23:57:35Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -2818,7 +3523,7 @@
       "portolan_registry:id": "grand-lyon-data",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -2901,14 +3606,77 @@
         "etalab-2.0": 43
       },
       "portolan_registry:collection_count": 43,
-      "portolan_registry:feature_count": 979650,
+      "portolan_registry:feature_count": 979677,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 281,
-      "portolan_registry:total_size_bytes": 500908621,
+      "portolan_registry:total_size_bytes": 470711180,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:stale_since": null,
+      "portolan_registry:failure_reason": null,
+      "portolan_registry:stac_valid": true,
+      "portolan_registry:stac_invalid_since": null,
+      "portolan_registry:has_agents_md": true,
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
+    },
+    {
+      "rel": "child",
+      "href": "https://data.source.coop/portolan-mirrors/gwl-fcs30d/catalog.json",
+      "type": "application/json",
+      "title": "GWL_FCS30D global wetland maps (Portolan mirror)",
+      "bbox": [
+        -180.0,
+        -60.000202534466084,
+        180.0,
+        80.0
+      ],
+      "portolan_registry:id": "gwl-fcs30d",
+      "portolan_registry:status": "valid",
+      "portolan_registry:api_type": "static",
+      "portolan_registry:spec_version": "0.3.0",
+      "portolan_registry:spec_version_mixed": false,
+      "portolan_registry:stac_version": "1.1.0",
+      "portolan_registry:logo": null,
+      "portolan_registry:updated": "2026-11-20T11:42:50Z",
+      "portolan_registry:first_registered": "2026-11-20T15:32:19+01:00",
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Aerospace Information Research Institute, Chinese Academy of Sciences (Liangyun Liu, Xiao Zhang et al.)",
+          "url": "http://english.aircas.cas.cn/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "Portolan Mirrors",
+          "url": "https://github.com/nlebovits/gwl-fcs30d"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "Portolan Mirrors",
+        "url": "https://github.com/nlebovits/gwl-fcs30d"
+      },
+      "portolan_registry:licenses": {
+        "CC-BY-4.0": 1
+      },
+      "portolan_registry:collection_count": 1,
+      "portolan_registry:feature_count": 0,
+      "portolan_registry:item_count": 0,
+      "portolan_registry:asset_count": 27,
+      "portolan_registry:total_size_bytes": 58356731521,
+      "portolan_registry:counts_partial": false,
+      "portolan_registry:temporal_extent": [
+        "2000-01-01T00:00:00Z",
+        "2022-12-31T23:59:59Z"
+      ],
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -2934,7 +3702,7 @@
       "portolan_registry:id": "hamburg-transparenzportal",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -3000,11 +3768,11 @@
       "portolan_registry:feature_count": 485072,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 241,
-      "portolan_registry:total_size_bytes": 133518386,
+      "portolan_registry:total_size_bytes": 130728373,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -3030,7 +3798,7 @@
       "portolan_registry:id": "harmonized-field-data",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.1.2",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -3038,7 +3806,7 @@
         "type": "image/svg+xml",
         "title": "Fields of the World"
       },
-      "portolan_registry:updated": "2026-11-18T16:10:09Z",
+      "portolan_registry:updated": "2026-11-26T15:39:07Z",
       "portolan_registry:first_registered": "2026-10-06T18:13:12+00:00",
       "portolan_registry:kind": "mirror",
       "portolan_registry:producers": [
@@ -3383,6 +4151,10 @@
           "url": "https://www.nass.usda.gov"
         },
         {
+          "name": "World Resources Institute and Arizona State University",
+          "url": "https://source.coop/wri-data-lab/trazoannotations"
+        },
+        {
           "name": "ESA Fusion Competition via Source Cooperative",
           "url": "https://source.coop/esa/fusion-competition"
         }
@@ -3398,7 +4170,7 @@
         "url": "https://fieldsofthe.world"
       },
       "portolan_registry:licenses": {
-        "CC-BY-4.0": 34,
+        "CC-BY-4.0": 35,
         "CC-BY-NC-4.0": 1,
         "CC-BY-SA-3.0": 1,
         "CC-BY-SA-4.0": 6,
@@ -3408,18 +4180,18 @@
         "GPL-2.0-or-later": 2,
         "other": 15
       },
-      "portolan_registry:collection_count": 78,
-      "portolan_registry:feature_count": 165749275,
-      "portolan_registry:item_count": 394,
-      "portolan_registry:asset_count": 431,
-      "portolan_registry:total_size_bytes": 84121807614,
+      "portolan_registry:collection_count": 79,
+      "portolan_registry:feature_count": 165746095,
+      "portolan_registry:item_count": 399,
+      "portolan_registry:asset_count": 436,
+      "portolan_registry:total_size_bytes": 84125125943,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": [
         "2005-01-01T00:00:00Z",
         "2026-12-31T23:59:59Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -3445,7 +4217,7 @@
       "portolan_registry:id": "helsinki-hri",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -3480,17 +4252,17 @@
         "CC-BY-4.0": 40
       },
       "portolan_registry:collection_count": 40,
-      "portolan_registry:feature_count": 702545,
+      "portolan_registry:feature_count": 702721,
       "portolan_registry:item_count": 0,
-      "portolan_registry:asset_count": 256,
-      "portolan_registry:total_size_bytes": 230349386,
+      "portolan_registry:asset_count": 257,
+      "portolan_registry:total_size_bytes": 221088718,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": [
         "2022-01-01T00:00:00Z",
         "2022-12-31T23:59:59Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -3516,7 +4288,7 @@
       "portolan_registry:id": "hurricane-melissa-impact",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -3558,14 +4330,14 @@
       "portolan_registry:feature_count": 11147,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 20,
-      "portolan_registry:total_size_bytes": 6236294,
+      "portolan_registry:total_size_bytes": 6057836,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": [
         "2025-10-29T00:00:00Z",
         "2025-11-04T23:59:59Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -3618,12 +4390,12 @@
       "portolan_registry:total_size_bytes": 52954370343,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
-      "portolan_registry:stac_valid": true,
-      "portolan_registry:stac_invalid_since": null,
+      "portolan_registry:stac_valid": false,
+      "portolan_registry:stac_invalid_since": "2026-11-20T14:32:34.789132+00:00",
       "portolan_registry:has_agents_md": true,
       "portolan_registry:has_readme": true,
       "portolan_registry:deprecated": false,
@@ -3645,7 +4417,7 @@
       "portolan_registry:id": "infrabel-open-data",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -3676,14 +4448,14 @@
         "CC0-1.0": 10
       },
       "portolan_registry:collection_count": 10,
-      "portolan_registry:feature_count": 28252,
+      "portolan_registry:feature_count": 28251,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 61,
-      "portolan_registry:total_size_bytes": 49018007,
+      "portolan_registry:total_size_bytes": 48063084,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -3709,7 +4481,7 @@
       "portolan_registry:id": "ireland-open-geodata",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -3752,14 +4524,14 @@
         "CC-BY-4.0": 34
       },
       "portolan_registry:collection_count": 34,
-      "portolan_registry:feature_count": 215431,
+      "portolan_registry:feature_count": 215433,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 220,
-      "portolan_registry:total_size_bytes": 942275394,
+      "portolan_registry:total_size_bytes": 910179464,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -3785,11 +4557,11 @@
       "portolan_registry:id": "italian-cadastre",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": null,
-      "portolan_registry:updated": "2026-11-10T08:03:05Z",
+      "portolan_registry:updated": "2026-11-20T07:39:05Z",
       "portolan_registry:first_registered": "2026-11-10T07:47:56+00:00",
       "portolan_registry:kind": "mirror",
       "portolan_registry:producers": [
@@ -3815,14 +4587,14 @@
       "portolan_registry:feature_count": 87222661,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 6,
-      "portolan_registry:total_size_bytes": 15578593774,
+      "portolan_registry:total_size_bytes": 15578593840,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": [
         "2026-09-23T00:00:00Z",
         "2026-09-23T00:00:00Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -3868,8 +4640,8 @@
       "portolan_registry:total_size_bytes": null,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
@@ -3923,12 +4695,12 @@
       "portolan_registry:total_size_bytes": null,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
-      "portolan_registry:stac_valid": true,
-      "portolan_registry:stac_invalid_since": null,
+      "portolan_registry:stac_valid": false,
+      "portolan_registry:stac_invalid_since": "2026-11-20T14:32:34.789132+00:00",
       "portolan_registry:has_agents_md": true,
       "portolan_registry:has_readme": true,
       "portolan_registry:deprecated": false,
@@ -3950,7 +4722,7 @@
       "portolan_registry:id": "koebenhavn-kommune",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -3982,14 +4754,14 @@
         "CC0-1.0": 1
       },
       "portolan_registry:collection_count": 35,
-      "portolan_registry:feature_count": 137546,
+      "portolan_registry:feature_count": 137598,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 227,
-      "portolan_registry:total_size_bytes": 46039798,
+      "portolan_registry:total_size_bytes": 44494980,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -4015,7 +4787,7 @@
       "portolan_registry:id": "koeln-offene-daten",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -4099,14 +4871,77 @@
         "DL-DE-ZERO-2.0": 35
       },
       "portolan_registry:collection_count": 37,
-      "portolan_registry:feature_count": 361311,
+      "portolan_registry:feature_count": 361290,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 237,
-      "portolan_registry:total_size_bytes": 139131529,
+      "portolan_registry:total_size_bytes": 127025435,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:stale_since": null,
+      "portolan_registry:failure_reason": null,
+      "portolan_registry:stac_valid": true,
+      "portolan_registry:stac_invalid_since": null,
+      "portolan_registry:has_agents_md": true,
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
+    },
+    {
+      "rel": "child",
+      "href": "https://data.source.coop/portolan-mirrors/kummu-gdp-pc/catalog.json",
+      "type": "application/json",
+      "title": "Gridded global GDP per capita (PPP), 1990-2024",
+      "bbox": [
+        -180.0,
+        -90.0,
+        180.0,
+        90.0
+      ],
+      "portolan_registry:id": "kummu-gdp-pc",
+      "portolan_registry:status": "valid",
+      "portolan_registry:api_type": "static",
+      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version_mixed": false,
+      "portolan_registry:stac_version": "1.1.0",
+      "portolan_registry:logo": null,
+      "portolan_registry:updated": "2026-11-20T11:51:41Z",
+      "portolan_registry:first_registered": "2026-11-20T12:37:18+01:00",
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "Matti Kummu, Maria Kosonen, and Sina Masoumzadeh Sayyar, Aalto University",
+          "url": "https://zenodo.org/records/18429133"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "Portolan Mirrors",
+          "url": "https://source.coop/portolan-mirrors/kummu-gdp-pc"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "Portolan Mirrors",
+        "url": "https://source.coop/portolan-mirrors/kummu-gdp-pc"
+      },
+      "portolan_registry:licenses": {
+        "CC-BY-4.0": 6
+      },
+      "portolan_registry:collection_count": 6,
+      "portolan_registry:feature_count": 51123,
+      "portolan_registry:item_count": 10,
+      "portolan_registry:asset_count": 29,
+      "portolan_registry:total_size_bytes": 171894651,
+      "portolan_registry:counts_partial": false,
+      "portolan_registry:temporal_extent": [
+        "1990-01-01T00:00:00Z",
+        "2024-12-31T23:59:59Z"
+      ],
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -4132,7 +4967,7 @@
       "portolan_registry:id": "lisboa-cml",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -4163,14 +4998,14 @@
         "CC0-1.0": 35
       },
       "portolan_registry:collection_count": 35,
-      "portolan_registry:feature_count": 181291,
+      "portolan_registry:feature_count": 181810,
       "portolan_registry:item_count": 0,
-      "portolan_registry:asset_count": 247,
-      "portolan_registry:total_size_bytes": 183474469,
+      "portolan_registry:asset_count": 225,
+      "portolan_registry:total_size_bytes": 121697848,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -4196,7 +5031,7 @@
       "portolan_registry:id": "lombardia-geoportale",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -4227,14 +5062,14 @@
         "CC-BY-4.0": 39
       },
       "portolan_registry:collection_count": 39,
-      "portolan_registry:feature_count": 684245,
+      "portolan_registry:feature_count": 684309,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 259,
-      "portolan_registry:total_size_bytes": 863470153,
+      "portolan_registry:total_size_bytes": 798759869,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -4260,7 +5095,7 @@
       "portolan_registry:id": "luxembourg-act",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -4292,17 +5127,17 @@
         "CC0-1.0": 11
       },
       "portolan_registry:collection_count": 17,
-      "portolan_registry:feature_count": 2236294,
+      "portolan_registry:feature_count": 2236634,
       "portolan_registry:item_count": 0,
-      "portolan_registry:asset_count": 105,
-      "portolan_registry:total_size_bytes": 1751208624,
+      "portolan_registry:asset_count": 97,
+      "portolan_registry:total_size_bytes": 1651236638,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": [
         "2023-06-13T00:00:00Z",
         "2024-04-30T23:59:59Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -4499,17 +5334,17 @@
         "CC-BY-4.0": 133
       },
       "portolan_registry:collection_count": 133,
-      "portolan_registry:feature_count": 1680006,
+      "portolan_registry:feature_count": 1679102,
       "portolan_registry:item_count": 0,
-      "portolan_registry:asset_count": 510,
-      "portolan_registry:total_size_bytes": 255394713,
+      "portolan_registry:asset_count": 542,
+      "portolan_registry:total_size_bytes": 352488381,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": [
         null,
         null
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -4570,8 +5405,8 @@
         "2020-01-01T00:00:00Z",
         null
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -4632,8 +5467,8 @@
         "2007-01-01T00:00:00Z",
         null
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
@@ -4652,14 +5487,14 @@
       "title": "Offene Geodaten der Landeshauptstadt M\u00fcnchen",
       "bbox": [
         11.360778275906402,
-        48.0425314073118,
-        11.744715286638398,
+        48.016632910805036,
+        11.793126388167884,
         48.26974742327732
       ],
       "portolan_registry:id": "muenchen-open-data",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -4710,14 +5545,14 @@
         "DL-DE-BY-2.0": 34
       },
       "portolan_registry:collection_count": 34,
-      "portolan_registry:feature_count": 48277,
+      "portolan_registry:feature_count": 48063,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 211,
-      "portolan_registry:total_size_bytes": 28053464,
+      "portolan_registry:total_size_bytes": 26953597,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -4743,11 +5578,15 @@
       "portolan_registry:id": "nasa-firms-active-fire",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
-      "portolan_registry:logo": null,
-      "portolan_registry:updated": "2026-09-08T06:49:50Z",
+      "portolan_registry:logo": {
+        "href": "https://data.source.coop/portolan-mirrors/firms-catalog/detections/detections.logo.png",
+        "type": "image/png",
+        "title": "Catalog logo"
+      },
+      "portolan_registry:updated": "2026-11-26T20:15:24Z",
       "portolan_registry:first_registered": "2026-11-03T09:35:48+00:00",
       "portolan_registry:kind": "mirror",
       "portolan_registry:producers": [
@@ -4765,17 +5604,17 @@
         "CC0-1.0": 1
       },
       "portolan_registry:collection_count": 1,
-      "portolan_registry:feature_count": 632147422,
+      "portolan_registry:feature_count": 632254679,
       "portolan_registry:item_count": 27,
-      "portolan_registry:asset_count": 8,
-      "portolan_registry:total_size_bytes": 365667106,
+      "portolan_registry:asset_count": 9,
+      "portolan_registry:total_size_bytes": 403659506,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": [
         "2000-11-01T00:13:00Z",
-        "2026-11-19T11:04:00Z"
+        "2026-11-26T18:55:00Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -4801,7 +5640,7 @@
       "portolan_registry:id": "nhc-hurricane-melissa-2025",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": null,
@@ -4830,15 +5669,15 @@
       "portolan_registry:collection_count": 43,
       "portolan_registry:feature_count": 4577,
       "portolan_registry:item_count": 0,
-      "portolan_registry:asset_count": 338,
-      "portolan_registry:total_size_bytes": 1931536519,
+      "portolan_registry:asset_count": 295,
+      "portolan_registry:total_size_bytes": 1923601207,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": [
         "2025-10-21T06:00:00Z",
         "2025-11-05T00:00:00Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -4864,7 +5703,7 @@
       "portolan_registry:id": "norge-geonorge",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -4917,14 +5756,14 @@
         "NLOD-2.0": 19
       },
       "portolan_registry:collection_count": 33,
-      "portolan_registry:feature_count": 96488,
+      "portolan_registry:feature_count": 97155,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 220,
-      "portolan_registry:total_size_bytes": 1046931411,
+      "portolan_registry:total_size_bytes": 998176354,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -4950,7 +5789,7 @@
       "portolan_registry:id": "nrw-opengeodata",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -5020,12 +5859,12 @@
       "portolan_registry:collection_count": 24,
       "portolan_registry:feature_count": 194425,
       "portolan_registry:item_count": 0,
-      "portolan_registry:asset_count": 142,
-      "portolan_registry:total_size_bytes": 752169425,
+      "portolan_registry:asset_count": 143,
+      "portolan_registry:total_size_bytes": 716022977,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -5055,7 +5894,7 @@
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": null,
-      "portolan_registry:updated": "2026-11-17T00:23:11Z",
+      "portolan_registry:updated": "2026-11-18T00:00:00Z",
       "portolan_registry:first_registered": "2026-11-13T04:23:39-07:00",
       "portolan_registry:kind": "mirror",
       "portolan_registry:producers": [
@@ -5113,15 +5952,15 @@
       "portolan_registry:collection_count": 7,
       "portolan_registry:feature_count": 0,
       "portolan_registry:item_count": 0,
-      "portolan_registry:asset_count": 91,
-      "portolan_registry:total_size_bytes": 18574986545,
+      "portolan_registry:asset_count": 89,
+      "portolan_registry:total_size_bytes": 18574980388,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": [
         "2010-01-01T00:00:00Z",
         "2025-11-17T00:00:00Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -5191,12 +6030,12 @@
         "2016-01-01T00:00:00Z",
         "2017-05-17T23:59:59Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
-      "portolan_registry:stac_valid": true,
-      "portolan_registry:stac_invalid_since": null,
+      "portolan_registry:stac_valid": false,
+      "portolan_registry:stac_invalid_since": "2026-11-20T14:32:34.789132+00:00",
       "portolan_registry:has_agents_md": true,
       "portolan_registry:has_readme": true,
       "portolan_registry:deprecated": false,
@@ -5256,8 +6095,8 @@
         "0206-08-06T23:50:39Z",
         "2026-10-06T14:52:10.506000Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
@@ -5283,7 +6122,7 @@
       "portolan_registry:id": "ocha-cod-jamaica",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -5328,15 +6167,15 @@
       "portolan_registry:collection_count": 3,
       "portolan_registry:feature_count": 30,
       "portolan_registry:item_count": 0,
-      "portolan_registry:asset_count": 14,
-      "portolan_registry:total_size_bytes": 3245762,
+      "portolan_registry:asset_count": 13,
+      "portolan_registry:total_size_bytes": 3192811,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": [
         "2011-01-01T00:00:00Z",
         null
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -5362,7 +6201,7 @@
       "portolan_registry:id": "oesterreich-bev",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -5395,15 +6234,15 @@
       "portolan_registry:collection_count": 31,
       "portolan_registry:feature_count": 1068553,
       "portolan_registry:item_count": 0,
-      "portolan_registry:asset_count": 223,
-      "portolan_registry:total_size_bytes": 3863129698,
+      "portolan_registry:asset_count": 196,
+      "portolan_registry:total_size_bytes": 935755908,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": [
         "1967-04-01T00:00:00Z",
         "2025-09-09T23:59:59Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -5429,7 +6268,7 @@
       "portolan_registry:id": "osm-geoparquet-north-america",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -5437,7 +6276,7 @@
         "type": "image/png",
         "title": "Geomermaids"
       },
-      "portolan_registry:updated": "2026-11-12T13:35:20Z",
+      "portolan_registry:updated": "2026-11-26T15:09:51Z",
       "portolan_registry:first_registered": "2026-09-22T17:28:55-04:00",
       "portolan_registry:kind": "mirror",
       "portolan_registry:producers": [
@@ -5464,17 +6303,17 @@
         "ODbL-1.0": 16
       },
       "portolan_registry:collection_count": 16,
-      "portolan_registry:feature_count": 241298630,
+      "portolan_registry:feature_count": 241819302,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 1581,
-      "portolan_registry:total_size_bytes": 27709705731,
+      "portolan_registry:total_size_bytes": 27726549987,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": [
-        "2026-11-11T21:22:47Z",
-        "2026-11-11T21:22:47Z"
+        "2026-11-20T21:21:21Z",
+        "2026-11-24T21:21:23Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -5495,16 +6334,16 @@
         -180.0,
         -90.0,
         180.0,
-        89.99854278564453
+        90.0
       ],
       "portolan_registry:id": "overture-portolan",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.1.1",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": null,
-      "portolan_registry:updated": "2026-08-19T00:00:00Z",
+      "portolan_registry:updated": "2026-11-18T00:00:00Z",
       "portolan_registry:first_registered": "2026-08-27T19:10:37+02:00",
       "portolan_registry:kind": "mirror",
       "portolan_registry:producers": [
@@ -5526,13 +6365,13 @@
       },
       "portolan_registry:collection_count": 15,
       "portolan_registry:feature_count": 0,
-      "portolan_registry:item_count": 983,
-      "portolan_registry:asset_count": 76,
+      "portolan_registry:item_count": 1032,
+      "portolan_registry:asset_count": 67,
       "portolan_registry:total_size_bytes": null,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -5551,18 +6390,18 @@
       "title": "IDE Pergamino - Infraestructura de Datos Espaciales",
       "bbox": [
         -61.51124,
-        -35.19623836,
-        -58.84867369,
+        -35.1962384,
+        -58.8486737,
         -32.9103978
       ],
       "portolan_registry:id": "pergamino-ide",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.1.1",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": null,
-      "portolan_registry:updated": "2026-08-14T21:21:48Z",
+      "portolan_registry:updated": "2026-11-20T14:23:25Z",
       "portolan_registry:first_registered": "2026-06-09T10:27:10+00:00",
       "portolan_registry:kind": "mirror",
       "portolan_registry:producers": [
@@ -5573,6 +6412,10 @@
         {
           "name": "Agencia de Recaudaci\u00f3n de la Provincia de Buenos Aires (ARBA)",
           "url": "https://carto.arba.gov.ar/"
+        },
+        {
+          "name": "Overture Maps Foundation",
+          "url": "https://overturemaps.org/"
         },
         {
           "name": "Instituto Geogr\u00e1fico Nacional (IGN)",
@@ -5601,6 +6444,10 @@
           "name": "UTE IATASA - ABS S.A."
         },
         {
+          "name": "European Commission, Joint Research Centre (JRC)",
+          "url": "https://joint-research-centre.ec.europa.eu/"
+        },
+        {
           "name": "Instituto Nacional de Tecnolog\u00eda Agropecuaria (INTA)",
           "url": "https://www.argentina.gob.ar/inta"
         },
@@ -5615,12 +6462,30 @@
         {
           "name": "Base de Asentamientos Humanos de la Rep\u00fablica Argentina (BAHRA)",
           "url": "http://www.bahra.gob.ar/"
+        },
+        {
+          "name": "TECSO"
+        },
+        {
+          "name": "European Space Agency (ESA), Copernicus",
+          "url": "https://sentinels.copernicus.eu/"
         }
       ],
       "portolan_registry:processors": [
         {
           "name": "Municipalidad de Pergamino",
           "url": "https://pergamino.ar/servicios/ide-pergamino/"
+        },
+        {
+          "name": "JRC GloFAS en Source Cooperative (nlebovits/jrc-glofas)",
+          "url": "https://source.coop/nlebovits/jrc-glofas"
+        },
+        {
+          "name": "TECSO"
+        },
+        {
+          "name": "Element 84",
+          "url": "https://element84.com"
         }
       ],
       "portolan_registry:host": {
@@ -5628,21 +6493,26 @@
         "url": "https://source.coop/nlebovits/pergamino-ide"
       },
       "portolan_registry:licenses": {
-        "CC-BY-SA-4.0": 183
+        "CC-BY-SA-4.0": 165,
+        "ODbL-1.0": 3,
+        "other": 17
       },
-      "portolan_registry:collection_count": 183,
-      "portolan_registry:feature_count": 1024255,
-      "portolan_registry:item_count": 0,
-      "portolan_registry:asset_count": 1010,
-      "portolan_registry:total_size_bytes": 388636712,
+      "portolan_registry:collection_count": 185,
+      "portolan_registry:feature_count": 1086388,
+      "portolan_registry:item_count": 76,
+      "portolan_registry:asset_count": 1213,
+      "portolan_registry:total_size_bytes": 617919361,
       "portolan_registry:counts_partial": false,
-      "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:temporal_extent": [
+        "2017-01-27T14:08:34Z",
+        "2026-11-18T00:00:00Z"
+      ],
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
-      "portolan_registry:stac_valid": true,
-      "portolan_registry:stac_invalid_since": null,
+      "portolan_registry:stac_valid": false,
+      "portolan_registry:stac_invalid_since": "2026-11-20T11:37:33.714946+00:00",
       "portolan_registry:has_agents_md": true,
       "portolan_registry:has_readme": true,
       "portolan_registry:deprecated": false,
@@ -5668,7 +6538,7 @@
       "portolan_registry:spec_version_mixed": true,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": null,
-      "portolan_registry:updated": "2026-11-13T15:06:03Z",
+      "portolan_registry:updated": "2026-11-24T18:37:19Z",
       "portolan_registry:first_registered": "2026-08-27T06:08:48+00:00",
       "portolan_registry:kind": "mirror",
       "portolan_registry:producers": [
@@ -5690,17 +6560,17 @@
         "other": 10
       },
       "portolan_registry:collection_count": 10,
-      "portolan_registry:feature_count": 1781528,
+      "portolan_registry:feature_count": 1831010,
       "portolan_registry:item_count": 0,
-      "portolan_registry:asset_count": 73,
-      "portolan_registry:total_size_bytes": 1368336550,
+      "portolan_registry:asset_count": 79,
+      "portolan_registry:total_size_bytes": 1686406260,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": [
         "2026-08-26T11:27:09Z",
-        "2026-11-13T15:03:25Z"
+        "2026-11-23T22:05:04Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
@@ -5719,7 +6589,7 @@
       "title": "Disaster Data Releases from Planet Labs PBC",
       "bbox": [
         -90.48234243738376,
-        -0.8470970048508396,
+        -3.7856178206275937,
         125.25081117895276,
         45.26848632854588
       ],
@@ -5754,20 +6624,20 @@
         "url": "https://www.planet.com/disasterdata/"
       },
       "portolan_registry:licenses": {
-        "CC-BY-NC-4.0": 55
+        "CC-BY-NC-4.0": 64
       },
-      "portolan_registry:collection_count": 55,
+      "portolan_registry:collection_count": 64,
       "portolan_registry:feature_count": 0,
-      "portolan_registry:item_count": 495,
-      "portolan_registry:asset_count": 110,
+      "portolan_registry:item_count": 511,
+      "portolan_registry:asset_count": 128,
       "portolan_registry:total_size_bytes": 20686314,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": [
         "2023-10-11T15:28:40.187000Z",
-        "2026-11-14T01:03:50.520000Z"
+        "2026-11-24T16:45:33.202708Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
@@ -5793,7 +6663,7 @@
       "portolan_registry:id": "polska-gugik",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": null,
@@ -5820,14 +6690,14 @@
         "CC-BY-4.0": 6
       },
       "portolan_registry:collection_count": 6,
-      "portolan_registry:feature_count": 60370,
+      "portolan_registry:feature_count": 60420,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 46,
-      "portolan_registry:total_size_bytes": 3205840126,
+      "portolan_registry:total_size_bytes": 3124772625,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -5853,11 +6723,11 @@
       "portolan_registry:id": "portolan-nl",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.1.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
-        "href": "https://portolan-sdi.github.io/portolan-nl-demo/rijksoverheid.png",
+        "href": "https://data.source.coop/cholmes/portolan-nl/rijksoverheid.png",
         "type": "image/png",
         "title": "Rijksoverheid logo"
       },
@@ -5918,21 +6788,21 @@
         "other": 7
       },
       "portolan_registry:collection_count": 34,
-      "portolan_registry:feature_count": 94984391,
+      "portolan_registry:feature_count": 70795689,
       "portolan_registry:item_count": 17,
-      "portolan_registry:asset_count": 269,
-      "portolan_registry:total_size_bytes": null,
+      "portolan_registry:asset_count": 251,
+      "portolan_registry:total_size_bytes": 25789052820,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": [
         "2009-05-15T00:00:00Z",
         null
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
-      "portolan_registry:stac_valid": false,
-      "portolan_registry:stac_invalid_since": "2026-10-21T18:00:06.870049+00:00",
+      "portolan_registry:stac_valid": true,
+      "portolan_registry:stac_invalid_since": null,
       "portolan_registry:has_agents_md": true,
       "portolan_registry:has_readme": true,
       "portolan_registry:deprecated": false,
@@ -5954,7 +6824,7 @@
       "portolan_registry:id": "praha-ipr",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -6004,11 +6874,11 @@
       "portolan_registry:feature_count": 732056,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 185,
-      "portolan_registry:total_size_bytes": 559439571,
+      "portolan_registry:total_size_bytes": 537046156,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -6071,8 +6941,8 @@
       "portolan_registry:total_size_bytes": 1553059955,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": false,
@@ -6098,7 +6968,7 @@
       "portolan_registry:id": "scotland-sdi",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": null,
@@ -6129,14 +6999,85 @@
         "other": 20
       },
       "portolan_registry:collection_count": 20,
-      "portolan_registry:feature_count": 190430,
+      "portolan_registry:feature_count": 190514,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 139,
-      "portolan_registry:total_size_bytes": 867447134,
+      "portolan_registry:total_size_bytes": 984562896,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:stale_since": null,
+      "portolan_registry:failure_reason": null,
+      "portolan_registry:stac_valid": true,
+      "portolan_registry:stac_invalid_since": null,
+      "portolan_registry:has_agents_md": true,
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
+    },
+    {
+      "rel": "child",
+      "href": "https://data.source.coop/tge-labs/sentinel-2-quarterly-cloudless-mosaics/catalog.json",
+      "type": "application/json",
+      "title": "Sentinel-2 Quarterly Cloudless Mosaics",
+      "bbox": [
+        -180.0,
+        -90.0,
+        180.0,
+        90.0
+      ],
+      "portolan_registry:id": "sentinel-2-quarterly-cloudless-mosaics",
+      "portolan_registry:status": "valid",
+      "portolan_registry:api_type": "static",
+      "portolan_registry:spec_version": "0.3.0",
+      "portolan_registry:spec_version_mixed": false,
+      "portolan_registry:stac_version": "1.1.0",
+      "portolan_registry:logo": null,
+      "portolan_registry:updated": "2026-09-28T10:31:47Z",
+      "portolan_registry:first_registered": "2026-11-26T21:15:17+00:00",
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "European Space Agency (ESA)",
+          "url": "https://sentinels.copernicus.eu/web/sentinel/copernicus/sentinel-2"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "Sinergise Solutions",
+          "url": "https://www.sinergise.com/"
+        },
+        {
+          "name": "CloudFerro",
+          "url": "https://cloudferro.com/"
+        },
+        {
+          "name": "Taylor Geospatial Engine",
+          "url": "https://tgengine.org"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "Taylor Geospatial Engine",
+        "url": "https://tgengine.org"
+      },
+      "portolan_registry:licenses": {
+        "other": 2
+      },
+      "portolan_registry:collection_count": 2,
+      "portolan_registry:feature_count": 2035150,
+      "portolan_registry:item_count": 36,
+      "portolan_registry:asset_count": 5,
+      "portolan_registry:total_size_bytes": 43893387,
+      "portolan_registry:counts_partial": false,
+      "portolan_registry:temporal_extent": [
+        "2017-01-01T00:00:00Z",
+        "2025-12-31T23:59:59Z"
+      ],
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -6218,8 +7159,8 @@
         "2017-01-01T00:00:00Z",
         "2026-07-23T11:09:51Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -6282,12 +7223,12 @@
       "portolan_registry:total_size_bytes": 149277573,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
-      "portolan_registry:stac_valid": true,
-      "portolan_registry:stac_invalid_since": null,
+      "portolan_registry:stac_valid": false,
+      "portolan_registry:stac_invalid_since": "2026-11-20T14:32:34.789132+00:00",
       "portolan_registry:has_agents_md": true,
       "portolan_registry:has_readme": true,
       "portolan_registry:deprecated": false,
@@ -6309,15 +7250,11 @@
       "portolan_registry:id": "st-louis-open-data-mirror",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.1.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
-      "portolan_registry:logo": {
-        "href": "https://data.source.coop/tge-labs/st-louis-open-data-mirror/_assets/fleur-de-lis.svg",
-        "type": "image/svg+xml",
-        "title": "City of St. Louis"
-      },
-      "portolan_registry:updated": "2026-08-14T12:21:16+00:00",
+      "portolan_registry:logo": null,
+      "portolan_registry:updated": "2026-11-24T00:00:00+00:00",
       "portolan_registry:first_registered": "2026-08-11T15:36:02+00:00",
       "portolan_registry:kind": "mirror",
       "portolan_registry:producers": [
@@ -6427,19 +7364,19 @@
       "portolan_registry:collection_count": 67,
       "portolan_registry:feature_count": 7455051,
       "portolan_registry:item_count": 0,
-      "portolan_registry:asset_count": 509,
-      "portolan_registry:total_size_bytes": 1327349941582,
+      "portolan_registry:asset_count": 517,
+      "portolan_registry:total_size_bytes": 2083909685,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": [
         "1930-01-01T00:00:00Z",
         "2026-07-22T00:00:00Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
-      "portolan_registry:stac_valid": false,
-      "portolan_registry:stac_invalid_since": "2026-10-21T18:00:06.870049+00:00",
+      "portolan_registry:stac_valid": true,
+      "portolan_registry:stac_invalid_since": null,
       "portolan_registry:has_agents_md": true,
       "portolan_registry:has_readme": true,
       "portolan_registry:deprecated": false,
@@ -6494,12 +7431,12 @@
       "portolan_registry:total_size_bytes": 31590275,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
-      "portolan_registry:stac_valid": true,
-      "portolan_registry:stac_invalid_since": null,
+      "portolan_registry:stac_valid": false,
+      "portolan_registry:stac_invalid_since": "2026-11-20T14:32:34.789132+00:00",
       "portolan_registry:has_agents_md": true,
       "portolan_registry:has_readme": true,
       "portolan_registry:deprecated": false,
@@ -6521,7 +7458,7 @@
       "portolan_registry:id": "sverige-lantmateriet",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -6556,14 +7493,14 @@
         "CC0-1.0": 37
       },
       "portolan_registry:collection_count": 37,
-      "portolan_registry:feature_count": 125084,
+      "portolan_registry:feature_count": 125171,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 241,
-      "portolan_registry:total_size_bytes": 1632126780,
+      "portolan_registry:total_size_bytes": 1611918088,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -6624,8 +7561,8 @@
         "2023-07-01T00:00:00Z",
         "2025-10-29T23:59:59Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -6651,7 +7588,7 @@
       "portolan_registry:id": "trimet",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.1.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -6659,7 +7596,7 @@
         "type": "image/png",
         "title": "TriMet"
       },
-      "portolan_registry:updated": "2026-08-02T18:02:50Z",
+      "portolan_registry:updated": "2026-11-20T13:52:28Z",
       "portolan_registry:first_registered": "2026-08-03T02:36:57+00:00",
       "portolan_registry:kind": "mirror",
       "portolan_registry:producers": [
@@ -6677,21 +7614,21 @@
         "other": 8
       },
       "portolan_registry:collection_count": 8,
-      "portolan_registry:feature_count": 15232,
+      "portolan_registry:feature_count": 14262,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 74,
-      "portolan_registry:total_size_bytes": 34230556,
+      "portolan_registry:total_size_bytes": 33561056,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": [
         "2013-01-09T00:00:00Z",
         null
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
-      "portolan_registry:stac_valid": false,
-      "portolan_registry:stac_invalid_since": "2026-10-21T18:00:06.870049+00:00",
+      "portolan_registry:stac_valid": true,
+      "portolan_registry:stac_invalid_since": null,
       "portolan_registry:has_agents_md": true,
       "portolan_registry:has_readme": true,
       "portolan_registry:deprecated": false,
@@ -6713,7 +7650,7 @@
       "portolan_registry:id": "unicef-ccrr-2026",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": null,
@@ -6747,14 +7684,142 @@
       "portolan_registry:feature_count": 8807,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 11,
-      "portolan_registry:total_size_bytes": 22729754,
+      "portolan_registry:total_size_bytes": 22254231,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": [
         "2025-01-01T00:00:00Z",
         "2025-12-31T23:59:59Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:stale_since": null,
+      "portolan_registry:failure_reason": null,
+      "portolan_registry:stac_valid": true,
+      "portolan_registry:stac_invalid_since": null,
+      "portolan_registry:has_agents_md": true,
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
+    },
+    {
+      "rel": "child",
+      "href": "https://data.source.coop/portolan-mirrors/unosat/catalog.json",
+      "type": "application/json",
+      "title": "UNOSAT Rapid Mapping Archive",
+      "bbox": [
+        -180.0,
+        -33.34843127899995,
+        180.0,
+        61.89219732100008
+      ],
+      "portolan_registry:id": "unosat",
+      "portolan_registry:status": "valid",
+      "portolan_registry:api_type": "static",
+      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version_mixed": false,
+      "portolan_registry:stac_version": "1.1.0",
+      "portolan_registry:logo": {
+        "href": "https://data.source.coop/portolan-mirrors/unosat/_assets/unosat.png",
+        "type": "image/png",
+        "title": "UNOSAT (UNITAR)"
+      },
+      "portolan_registry:updated": "2026-11-22T09:39:08Z",
+      "portolan_registry:first_registered": "2026-11-22T18:14:39+01:00",
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "United Nations Satellite Centre (UNOSAT), UNITAR",
+          "url": "https://unosat.org"
+        }
+      ],
+      "portolan_registry:processors": [],
+      "portolan_registry:host": {
+        "name": "Portolan Mirrors",
+        "url": "https://source.coop/portolan-mirrors/unosat"
+      },
+      "portolan_registry:licenses": {
+        "CC-BY-3.0-IGO": 3,
+        "CC-BY-4.0": 28,
+        "CC-BY-NC-SA-3.0": 128,
+        "other": 700
+      },
+      "portolan_registry:collection_count": 859,
+      "portolan_registry:feature_count": 39498984,
+      "portolan_registry:item_count": 0,
+      "portolan_registry:asset_count": 3434,
+      "portolan_registry:total_size_bytes": 36509545158,
+      "portolan_registry:counts_partial": false,
+      "portolan_registry:temporal_extent": [
+        "2014-01-02T00:00:00Z",
+        "2026-11-05T23:59:59Z"
+      ],
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:stale_since": null,
+      "portolan_registry:failure_reason": null,
+      "portolan_registry:stac_valid": true,
+      "portolan_registry:stac_invalid_since": null,
+      "portolan_registry:has_agents_md": true,
+      "portolan_registry:has_readme": true,
+      "portolan_registry:deprecated": false,
+      "portolan_registry:deprecated_since": null,
+      "portolan_registry:deprecated_reason": null,
+      "portolan_registry:superseded_by": null
+    },
+    {
+      "rel": "child",
+      "href": "https://data.source.coop/portolan-mirrors/us-census-catalog/catalog.json",
+      "type": "application/json",
+      "title": "US Census Demographics \u2014 Cloud-Native Mirror",
+      "bbox": [
+        -179.231086,
+        -14.548699,
+        -64.565599,
+        71.439786
+      ],
+      "portolan_registry:id": "us-census-catalog",
+      "portolan_registry:status": "valid",
+      "portolan_registry:api_type": "static",
+      "portolan_registry:spec_version": "0.3.0",
+      "portolan_registry:spec_version_mixed": false,
+      "portolan_registry:stac_version": "1.1.0",
+      "portolan_registry:logo": null,
+      "portolan_registry:updated": "2026-11-12T00:00:00Z",
+      "portolan_registry:first_registered": "2026-11-20T11:21:36+01:00",
+      "portolan_registry:kind": "mirror",
+      "portolan_registry:producers": [
+        {
+          "name": "U.S. Census Bureau",
+          "url": "https://www.census.gov/"
+        }
+      ],
+      "portolan_registry:processors": [
+        {
+          "name": "Portolan Mirrors",
+          "url": "https://github.com/portolan-mirrors/us-census-catalog"
+        }
+      ],
+      "portolan_registry:host": {
+        "name": "Portolan Mirrors",
+        "url": "https://github.com/portolan-mirrors/us-census-catalog"
+      },
+      "portolan_registry:licenses": {
+        "CC0-1.0": 53
+      },
+      "portolan_registry:collection_count": 53,
+      "portolan_registry:feature_count": 12366019,
+      "portolan_registry:item_count": 52,
+      "portolan_registry:asset_count": 1228,
+      "portolan_registry:total_size_bytes": 45865603915,
+      "portolan_registry:counts_partial": false,
+      "portolan_registry:temporal_extent": [
+        "2015-01-01T00:00:00Z",
+        "2024-12-31T23:59:59Z"
+      ],
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -6828,8 +7893,8 @@
         "2016-01-01T00:00:00Z",
         "2026-12-31T23:59:59Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -6855,7 +7920,7 @@
       "portolan_registry:id": "vlaanderen-open-data",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -6910,14 +7975,14 @@
         "other": 34
       },
       "portolan_registry:collection_count": 34,
-      "portolan_registry:feature_count": 130112,
+      "portolan_registry:feature_count": 129770,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 211,
-      "portolan_registry:total_size_bytes": 354402198,
+      "portolan_registry:total_size_bytes": 337982507,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -6943,7 +8008,7 @@
       "portolan_registry:id": "wales-datamapwales",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -7001,11 +8066,11 @@
       "portolan_registry:feature_count": 68965,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 245,
-      "portolan_registry:total_size_bytes": 836353378,
+      "portolan_registry:total_size_bytes": 783975126,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -7067,8 +8132,8 @@
         "1981-01-01T00:00:00Z",
         "2016-12-31T23:59:59Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -7086,7 +8151,7 @@
       "type": "application/json",
       "title": "Open Government Data Wien \u2013 offene Geodaten der Stadt Wien",
       "bbox": [
-        16.1000000113934,
+        16.100000012512123,
         47.99999101052992,
         16.680743079881122,
         48.40000904000486
@@ -7094,7 +8159,7 @@
       "portolan_registry:id": "wien-ogd",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -7149,14 +8214,14 @@
         "CC-BY-4.0": 41
       },
       "portolan_registry:collection_count": 41,
-      "portolan_registry:feature_count": 1582162,
+      "portolan_registry:feature_count": 1583316,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 261,
-      "portolan_registry:total_size_bytes": 323410182,
+      "portolan_registry:total_size_bytes": 305781542,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": null,
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -7182,7 +8247,7 @@
       "portolan_registry:id": "worldpop-jamaica",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -7216,14 +8281,14 @@
       "portolan_registry:feature_count": 6076,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 22,
-      "portolan_registry:total_size_bytes": 16238407,
+      "portolan_registry:total_size_bytes": 16247307,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": [
         "2020-01-01T00:00:00Z",
         "2020-12-31T23:59:59Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,
@@ -7249,7 +8314,7 @@
       "portolan_registry:id": "zuerich-ogd",
       "portolan_registry:status": "valid",
       "portolan_registry:api_type": "static",
-      "portolan_registry:spec_version": "0.2.0",
+      "portolan_registry:spec_version": "0.3.0",
       "portolan_registry:spec_version_mixed": false,
       "portolan_registry:stac_version": "1.1.0",
       "portolan_registry:logo": {
@@ -7344,17 +8409,17 @@
         "CC0-1.0": 33
       },
       "portolan_registry:collection_count": 33,
-      "portolan_registry:feature_count": 540889,
+      "portolan_registry:feature_count": 541205,
       "portolan_registry:item_count": 0,
       "portolan_registry:asset_count": 209,
-      "portolan_registry:total_size_bytes": 159989677,
+      "portolan_registry:total_size_bytes": 148803070,
       "portolan_registry:counts_partial": false,
       "portolan_registry:temporal_extent": [
         "2021-12-31T00:00:00Z",
         "2025-12-31T23:59:59Z"
       ],
-      "portolan_registry:last_crawled": "2026-11-19T15:18:13.034432+00:00",
-      "portolan_registry:last_validated": "2026-11-19T15:18:13.034432+00:00",
+      "portolan_registry:last_crawled": "2026-11-26T21:15:39.122215+00:00",
+      "portolan_registry:last_validated": "2026-11-26T21:15:39.122215+00:00",
       "portolan_registry:stale_since": null,
       "portolan_registry:failure_reason": null,
       "portolan_registry:stac_valid": true,

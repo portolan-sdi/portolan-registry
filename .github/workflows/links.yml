@@ -27,6 +27,8 @@ concurrency:
 
 jobs:
   links:
+    # Forks lack the upstream credentials used by scheduled workflows.
+    if: github.repository == 'portolan-sdi/portolan-registry'
     # v1 is a moving major tag. A change to a rule reaches this repo when
     # the tag moves, not when ops merges.
     uses: portolan-sdi/portolan-ops/.github/workflows/reusable-links.yml@v1

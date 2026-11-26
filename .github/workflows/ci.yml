@@ -32,6 +32,8 @@ concurrency:
 
 jobs:
   ci:
+    # Forks lack the upstream credentials used by scheduled workflows.
+    if: github.repository == 'portolan-sdi/portolan-registry'
     # v1 is a moving major tag. Compatible changes reach this repo when
     # ops moves the tag; a breaking change ships as v2 and arrives as a
     # Dependabot PR here (norms/ci.md, "Changing and releasing CI").
@@ -61,6 +63,8 @@ jobs:
       codecov: false
 
   validate-schema:
+    # Forks lack the upstream credentials used by scheduled workflows.
+    if: github.repository == 'portolan-sdi/portolan-registry'
     name: Validate JSON Schema
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -72,7 +76,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: '20'
+          node-version: '26'
 
       - name: Install ajv-cli
         # Exact versions. These CLI tools have no lockfile of their own.
@@ -104,6 +108,8 @@ jobs:
           done
 
   json-lint:
+    # Forks lack the upstream credentials used by scheduled workflows.
+    if: github.repository == 'portolan-sdi/portolan-registry'
     name: Lint JSON Files
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -125,6 +131,8 @@ jobs:
   # 22.12. The family test job in `ci` runs without it. Branch protection
   # requires this check by its name, "Python Tests".
   test:
+    # Forks lack the upstream credentials used by scheduled workflows.
+    if: github.repository == 'portolan-sdi/portolan-registry'
     name: Python Tests
     runs-on: ubuntu-latest
     timeout-minutes: 20
@@ -141,7 +149,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: '22'
+          node-version: '26'
 
       - name: Install stac-node-validator
         run: npm ci --prefix scripts/stac-node-validator --no-audit --no-fund
@@ -152,6 +160,8 @@ jobs:
         run: uv run --frozen --group dev --group validators --group site pytest -v
 
   exports-valid:
+    # Forks lack the upstream credentials used by scheduled workflows.
+    if: github.repository == 'portolan-sdi/portolan-registry'
     name: Validate Exports
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -163,7 +173,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: '20'
+          node-version: '26'
 
       - name: Install ajv-cli
         # Exact versions. These CLI tools have no lockfile of their own.
@@ -188,6 +198,8 @@ jobs:
   # changes a released schema under schemas/. No `paths` filter, so the
   # check reports on every pull request and can be required.
   contract:
+    # Forks lack the upstream credentials used by scheduled workflows.
+    if: github.repository == 'portolan-sdi/portolan-registry'
     name: Contract Version
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -216,6 +228,8 @@ jobs:
   # contract fails here, before it merges. The built site is an artifact of
   # the run, so a consumer can try a contract change before it deploys.
   site-build:
+    # Forks lack the upstream credentials used by scheduled workflows.
+    if: github.repository == 'portolan-sdi/portolan-registry'
     name: Build Site
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -230,7 +244,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: '22'
+          node-version: '26'
 
       - name: Install stac-node-validator
         run: npm ci --prefix scripts/stac-node-validator --no-audit --no-fund
