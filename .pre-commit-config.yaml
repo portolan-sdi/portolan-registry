@@ -19,7 +19,7 @@ exclude: ^exports/
 
 repos:
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: v4.17.0
+    rev: v4.19.4
     hooks:
       - id: commitizen
         stages: [commit-msg]
@@ -37,7 +37,7 @@ repos:
       - id: mixed-line-ending
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.16.3
+    rev: v0.17.6
     hooks:
       - id: ruff-check
         args: [--fix]
@@ -62,7 +62,7 @@ repos:
   # permissions, template injection). Offline mode keeps it
   # deterministic and token-free.
   - repo: https://github.com/zizmorcore/zizmor-pre-commit
-    rev: v1.29.0
+    rev: v1.32.0
     hooks:
       - id: zizmor
         args: [--no-online-audits]
